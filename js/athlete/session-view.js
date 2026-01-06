@@ -14,17 +14,22 @@ export class SessionView {
         this.isPaused = false;
         this.phases = ['warmup', 'workout', 'cooldown'];
         this.currentPhase = this.phases[this.currentPhaseIndex];
-        this.userProfile = getUserProfile();
+        this.userProfile = null; // Will be loaded async
     }
 
     /**
      * Render and show full-screen session UI
      */
-    render() {
+    async render() {
         const overlay = document.getElementById('session-overlay');
         if (!overlay) {
             console.error('Session overlay not found in HTML');
             return;
+        }
+
+        // Load user profile
+        if (!this.userProfile) {
+            this.userProfile = await getUserProfile();
         }
 
         overlay.classList.remove('hidden');
@@ -53,7 +58,7 @@ export class SessionView {
         }
 
         if (completeBtn) {
-            completeBtn.onclick = () => this.completeSet();
+            completeBtn.onclick = () => this.completeSet().catch(err => console.error('Error completing set:', err));
         }
     }
 
@@ -187,7 +192,7 @@ export class SessionView {
     /**
      * Complete current set and move to next
      */
-    completeSet() {
+    async completeSet() {
         const currentPhase = this.phases[this.currentPhaseIndex];
         const phaseVariations = this.session.phases[currentPhase] || [];
         const variation = phaseVariations[this.currentVariationIndex];
@@ -209,7 +214,7 @@ export class SessionView {
             this.currentSet++;
         } else {
             // Complete variation - update milestone
-            this.completeVariation(variation);
+            await this.completeVariation(variation);
             
             // Move to next variation
             this.currentSet = 1;
@@ -226,8 +231,13 @@ export class SessionView {
     /**
      * Complete variation and update milestone
      */
-    completeVariation(variation) {
+    async completeVariation(variation) {
         if (!variation || !variation.exerciseId || !variation.variationId) return;
+
+        // Ensure user profile is loaded
+        if (!this.userProfile) {
+            this.userProfile = await getUserProfile();
+        }
 
         // Update milestone
         const updatedMilestones = updateMilestone(
@@ -238,7 +248,7 @@ export class SessionView {
 
         // Update user profile
         this.userProfile.currentMilestones = updatedMilestones;
-        saveUserProfile(this.userProfile);
+        await saveUserProfile(this.userProfile);
 
         // Check if milestone achieved (3 sessions)
         if (isMilestoneAchieved(variation.exerciseId, variation.variationId, updatedMilestones)) {

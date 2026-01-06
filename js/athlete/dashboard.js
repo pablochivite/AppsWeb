@@ -28,12 +28,12 @@ export function initializeAthleteApp(router) {
         
         // Initialize calendar manager when calendar page is shown
         if (page === 'calendar') {
-            setTimeout(() => {
+            setTimeout(async () => {
                 if (!athleteCalendarManager) {
                     athleteCalendarManager = new AthleteCalendarManager();
                 } else {
                     // Re-render if manager already exists
-                    athleteCalendarManager.renderCalendar();
+                    await athleteCalendarManager.renderCalendar();
                 }
             }, 100);
         }
@@ -55,11 +55,11 @@ window.initDashboard = initDashboard;
  */
 export async function initDashboard() {
     try {
-        // Load userProfile (merge onboarding data)
-        const userProfile = getUserProfile();
+        // Load userProfile (merge onboarding data) - now async
+        const userProfile = await getUserProfile();
         
-        // Check if training system exists
-        let trainingSystem = getTrainingSystem();
+        // Check if training system exists - now async
+        let trainingSystem = await getTrainingSystem();
         
         if (!trainingSystem) {
             // Show empty state
@@ -248,15 +248,15 @@ window.handleSwapVariation = async function(exerciseId, variationId, phaseKey, v
         // Update session
         currentSession.phases[phaseKey][variationIndex] = selected;
         
-        // Update training system
-        const trainingSystem = getTrainingSystem();
+        // Update training system - now async
+        const trainingSystem = await getTrainingSystem();
         if (trainingSystem && trainingSystem.sessions) {
             const sessionIndex = trainingSystem.sessions.findIndex(s => 
                 s.date === currentSession.date || s.day === currentSession.day
             );
             if (sessionIndex !== -1) {
                 trainingSystem.sessions[sessionIndex] = currentSession;
-                saveTrainingSystem(trainingSystem);
+                await saveTrainingSystem(trainingSystem);
             }
         }
         
@@ -309,7 +309,7 @@ async function handleGeneratePlan() {
         }
         
         console.log('Starting plan generation...');
-        const userProfile = getUserProfile();
+        const userProfile = await getUserProfile(); // Now async
         console.log('User profile:', userProfile);
         
         // Add timeout to detect if it's hanging
@@ -327,9 +327,9 @@ async function handleGeneratePlan() {
             throw new Error('No sessions generated in system');
         }
         
-        // Save system
-        saveTrainingSystem(system);
-        console.log('System saved to localStorage');
+        // Save system - now async
+        await saveTrainingSystem(system);
+        console.log('System saved to Firestore/localStorage');
         
         // Render first session
         renderDailySession(system.sessions[0]);

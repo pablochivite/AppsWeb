@@ -7,9 +7,21 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="css/styles.css">
+    <!-- CSS is imported in js/app.js so Vite processes it through PostCSS/Tailwind -->
+    
+    <!-- Import Map for Firebase Module Resolution -->
+    <!-- This allows browsers to resolve bare module specifiers like "firebase/auth" -->
+    <!-- Note: For full functionality (including environment variables), use: npm run dev -->
+    <script type="importmap">
+    {
+      "imports": {
+        "firebase/app": "https://esm.sh/firebase@10.7.1/app",
+        "firebase/auth": "https://esm.sh/firebase@10.7.1/auth",
+        "firebase/firestore": "https://esm.sh/firebase@10.7.1/firestore"
+      }
+    }
+    </script>
 </head>
 <body class="min-h-screen overflow-hidden">
     <div class="flex h-screen">
@@ -75,6 +87,11 @@
     <!-- Session Overlay (Full-Screen Focus Mode) -->
     <div id="session-overlay" class="session-overlay hidden fixed inset-0 z-[200] bg-black/90 backdrop-blur-xl">
         <!-- Content will be injected from html/overlays/session.html -->
+    </div>
+
+    <!-- Authentication Overlay (Login/Signup) -->
+    <div id="auth-overlay" class="hidden">
+        <!-- Content will be injected from html/overlays/auth.html -->
     </div>
 
     <script type="module" src="js/app.js"></script>

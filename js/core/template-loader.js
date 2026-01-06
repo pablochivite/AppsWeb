@@ -17,7 +17,8 @@ const TEMPLATE_MAP = {
     'page-coach-clients': 'html/pages/coach/clients.html',
     'voice-fab-container': 'html/components/voice-fab.html',
     'onboarding-overlay': 'html/overlays/onboarding.html',
-    'session-overlay': 'html/overlays/session.html'
+    'session-overlay': 'html/overlays/session.html',
+    'auth-overlay': 'html/overlays/auth.html'
 };
 
 /**

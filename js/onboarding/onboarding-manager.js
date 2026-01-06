@@ -16,7 +16,8 @@ export class OnboardingManager {
     }
 
     init() {
-        this.showRoleSelection();
+        // Don't show role selection immediately - wait for authentication
+        // Only set up event listeners
         this.setupEventListeners();
     }
 
@@ -290,11 +291,33 @@ export class OnboardingManager {
         }
     }
 
-    completeOnboarding() {
+    async completeOnboarding() {
         console.log('completeOnboarding called');
-        // Save to localStorage
+        
+        // Save onboarding data and role
         saveOnboardingData(this.answers);
-        setUserRole('athlete');
+        await setUserRole('athlete');
+        
+        // Save profile to Firestore (if authenticated)
+        try {
+            const { getAuthUser } = await import('../core/auth-manager.js');
+            const { saveUserProfile } = await import('../core/storage.js');
+            const user = getAuthUser();
+            
+            if (user) {
+                const profile = await saveUserProfile({
+                    preferredDisciplines: this.answers.primaryDiscipline || [],
+                    discomforts: this.answers.discomforts || [],
+                    equipment: [],
+                    goals: [],
+                    currentMilestones: {},
+                    sedentaryImpact: this.answers.sedentaryImpact || null
+                });
+            }
+        } catch (error) {
+            console.error('Error saving onboarding to Firestore:', error);
+            // Continue anyway - localStorage fallback is already saved
+        }
         
         // Hide overlay with transition
         const overlay = document.getElementById('onboarding-overlay');

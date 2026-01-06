@@ -1,4 +1,11 @@
 /* ============================================================================
+   TAILWIND CSS DIRECTIVES
+   ============================================================================ */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================================
    REGAIN DESIGN SYSTEM - CSS CUSTOM PROPERTIES
    ============================================================================ */
 :root {
@@ -308,7 +315,7 @@ input:focus, select:focus, textarea:focus {
     width: 100%;
     height: 100%;
     background: var(--color-bg-primary);
-    z-index: var(--z-modal);
+    z-index: 100; /* Lower than auth overlay (150) but above main content */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -446,6 +453,62 @@ input:focus, select:focus, textarea:focus {
 .voice-transcription {
     border: 1px solid var(--glass-border-standard);
     transition: var(--transition-standard);
+}
+
+/* ============================================================================
+   VOICE FEEDBACK MODAL
+   ============================================================================ */
+.voice-feedback-overlay {
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.voice-feedback-modal {
+    border: 1px solid var(--glass-border-standard);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.voice-transcription-text {
+    border: 1px solid var(--glass-border-standard);
+    transition: var(--transition-standard);
+    word-wrap: break-word;
+}
+
+.voice-message {
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    transition: var(--transition-standard);
+}
+
+.voice-message-success {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--color-text-primary);
+}
+
+.voice-message-error {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: var(--color-text-primary);
+}
+
+.voice-message-info {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border-standard);
+    color: var(--color-text-primary);
+}
+
+.voice-listening-indicator {
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.voice-processing-indicator {
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.voice-pulse-dot {
+    animation: pulse 2s infinite;
 }
 
 /* ============================================================================

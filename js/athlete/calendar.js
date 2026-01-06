@@ -8,10 +8,11 @@ export class AthleteCalendarManager {
         this.currentDate = new Date();
         this.scrollThreshold = 50;
         this.scrollDelta = 0;
-        this.init();
+        // Init will be called and handled asynchronously
+        this.init().catch(err => console.error('Error initializing calendar:', err));
     }
 
-    init() {
+    async init() {
         this.toggle = document.querySelector(`[data-calendar="${this.calendarType}"] .calendar-toggle`);
         this.grid = document.getElementById(`calendar-grid-${this.calendarType}`);
         this.container = document.querySelector(`.calendar-container[data-calendar="${this.calendarType}"]`);
@@ -19,7 +20,7 @@ export class AthleteCalendarManager {
         if (this.toggle && this.grid && this.container) {
             this.setupToggle();
             this.setupScroll();
-            this.renderCalendar();
+            await this.renderCalendar();
         }
     }
 
@@ -38,7 +39,7 @@ export class AthleteCalendarManager {
         
         // Toggle click handler
         this.toggle.addEventListener('click', () => {
-            this.switchView();
+            this.switchView().catch(err => console.error('Error switching view:', err));
         });
     }
 
@@ -58,12 +59,12 @@ export class AthleteCalendarManager {
         });
     }
 
-    switchView() {
+    async switchView() {
         this.currentView = this.currentView === 'weekly' ? 'monthly' : 'weekly';
         this.toggle.setAttribute('data-view', this.currentView);
         this.saveViewPreference(this.currentView);
         this.updateToggleLabels();
-        this.renderCalendar();
+        await this.renderCalendar();
     }
 
     setupScroll() {
@@ -83,10 +84,10 @@ export class AthleteCalendarManager {
                 
                 if (this.scrollDelta > 0) {
                     // Scroll down - next period
-                    this.navigateNext();
+                    this.navigateNext().catch(err => console.error('Error navigating next:', err));
                 } else {
                     // Scroll up - previous period
-                    this.navigatePrevious();
+                    this.navigatePrevious().catch(err => console.error('Error navigating previous:', err));
                 }
                 
                 this.scrollDelta = 0;
@@ -98,22 +99,22 @@ export class AthleteCalendarManager {
         }, { passive: false });
     }
 
-    navigateNext() {
+    async navigateNext() {
         if (this.currentView === 'weekly') {
             this.currentDate.setDate(this.currentDate.getDate() + 7);
         } else {
             this.currentDate.setMonth(this.currentDate.getMonth() + 1);
         }
-        this.renderCalendar();
+        await this.renderCalendar();
     }
 
-    navigatePrevious() {
+    async navigatePrevious() {
         if (this.currentView === 'weekly') {
             this.currentDate.setDate(this.currentDate.getDate() - 7);
         } else {
             this.currentDate.setMonth(this.currentDate.getMonth() - 1);
         }
-        this.renderCalendar();
+        await this.renderCalendar();
     }
 
     getWeekStart(date) {
@@ -178,20 +179,20 @@ export class AthleteCalendarManager {
                date.getFullYear() === today.getFullYear();
     }
 
-    renderCalendar() {
+    async renderCalendar() {
         if (!this.grid) return;
         
         // Fade out
         this.grid.classList.add('fade-out');
         
-        setTimeout(() => {
+        setTimeout(async () => {
             this.grid.innerHTML = '';
             this.grid.className = `calendar-grid ${this.currentView}-view`;
             
             if (this.currentView === 'weekly') {
-                this.renderWeeklyView();
+                await this.renderWeeklyView();
             } else {
-                this.renderMonthlyView();
+                await this.renderMonthlyView();
             }
             
             // Fade in
@@ -200,11 +201,11 @@ export class AthleteCalendarManager {
         }, 150);
     }
 
-    renderWeeklyView() {
+    async renderWeeklyView() {
         const weekStart = this.getWeekStart(this.currentDate);
         const weekDays = this.getWeekDays(weekStart);
         const today = new Date();
-        const trainingSystem = getTrainingSystem();
+        const trainingSystem = await getTrainingSystem();
         
         weekDays.forEach(day => {
             const dayElement = document.createElement('div');
@@ -226,12 +227,12 @@ export class AthleteCalendarManager {
         });
     }
 
-    renderMonthlyView() {
+    async renderMonthlyView() {
         const year = this.currentDate.getFullYear();
         const month = this.currentDate.getMonth();
         const monthDays = this.getMonthDays(year, month);
         const today = new Date();
-        const trainingSystem = getTrainingSystem();
+        const trainingSystem = await getTrainingSystem();
         
         monthDays.forEach(({ date, isCurrentMonth }) => {
             const dayElement = document.createElement('div');

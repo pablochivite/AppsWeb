@@ -1,6 +1,9 @@
 // Main Application Entry Point
 // REGAIN - Movement Engineering System
 
+// Import CSS so Vite processes it through PostCSS/Tailwind
+import '../css/styles.css';
+
 import { SPARouter } from './core/router.js';
 import { setUserRole, getUserRole } from './core/storage.js';
 import { updateNavigationForRole, animateProgressBars } from './core/ui-utils.js';
@@ -8,6 +11,8 @@ import { OnboardingManager } from './onboarding/onboarding-manager.js';
 import { initializeAthleteApp } from './athlete/dashboard.js';
 import { initializeCoachApp } from './coach/dashboard.js';
 import { loadAllTemplates } from './core/template-loader.js';
+import { initAuthManager, onAuthStateChanged, isAuthenticated } from './core/auth-manager.js';
+import { initAuthUI, showAuthOverlay, hideAuthOverlay } from './ui/auth-ui.js';
 
 // Global router instance
 let router = null;
@@ -20,11 +25,11 @@ function showOnboarding() {
     }
 }
 
-function selectRole(role) {
+async function selectRole(role) {
     console.log('selectRole called with:', role);
-    setUserRole(role);
+    await setUserRole(role);
     if (role === 'coach') {
-        // Coach proceeds directly
+        // Coach proceeds directly - no onboarding needed
         console.log('Coach selected - hiding overlay and initializing app');
         const overlay = document.getElementById('onboarding-overlay');
         if (overlay) {
@@ -41,8 +46,8 @@ function selectRole(role) {
             initializeApp(role);
         }
     } else {
-        // Athlete goes through questions
-        console.log('Athlete selected - starting question flow');
+        // STEP 3: Athlete selected - start onboarding questions
+        console.log('Athlete selected - starting onboarding flow');
         onboardingManager.startAthleteFlow();
     }
 }
@@ -91,23 +96,60 @@ document.addEventListener('DOMContentLoaded', async () => {
         // This allows the app to function with minimal degradation
     }
     
+    // Initialize authentication
+    initAuthManager();
+    initAuthUI();
+    
     // Hide all pages first
     document.querySelectorAll('[id^="page-"]').forEach(page => {
         page.classList.add('hidden');
     });
     
-    // Ensure onboarding overlay is visible
-    const overlay = document.getElementById('onboarding-overlay');
-    if (overlay) {
-        overlay.classList.remove('hidden');
-        overlay.style.zIndex = '100';
-        overlay.style.display = 'flex';
-    }
+    // Check authentication state
+    onAuthStateChanged(async (user) => {
+        if (!user) {
+            // STEP 1: User not authenticated - show login
+            console.log('User not authenticated, showing login');
+            // Ensure onboarding overlay is hidden
+            const onboardingOverlay = document.getElementById('onboarding-overlay');
+            if (onboardingOverlay) {
+                onboardingOverlay.classList.add('hidden');
+            }
+            showAuthOverlay('login');
+            return;
+        }
+        
+        // User is authenticated - hide auth overlay
+        hideAuthOverlay();
+        
+        // Get user role
+        const role = await getUserRole();
+        
+        if (!role) {
+            // STEP 2: No role set - show role selection (Athlete or Coach)
+            console.log('User authenticated but no role set, showing role selection');
+            const overlay = document.getElementById('onboarding-overlay');
+            if (overlay) {
+                overlay.classList.remove('hidden');
+                overlay.style.zIndex = '100';
+                overlay.style.display = 'flex';
+            }
+            // Only show role selection, don't start athlete flow yet
+            onboardingManager.showRoleSelection();
+        } else {
+            // Role exists - initialize app
+            console.log('User authenticated with role:', role);
+            // Ensure onboarding overlay is hidden
+            const overlay = document.getElementById('onboarding-overlay');
+            if (overlay) {
+                overlay.classList.add('hidden');
+            }
+            initializeApp(role);
+        }
+    });
     
-    // Reset to role selection
-    onboardingManager.showRoleSelection();
-    
-    // Initialize onboarding manager (sets up event listeners)
+    // Initialize onboarding manager (sets up event listeners only, doesn't show anything)
+    // The manager will only show UI when explicitly called after authentication
     onboardingManager.init();
     
     // Voice FAB click handler (if element exists)

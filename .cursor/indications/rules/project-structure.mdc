@@ -21,8 +21,18 @@ AppsWeb/
 │       ├── integrity-check.mdc       # Cross-file reference integrity rules
 │       └── project-structure.mdc     # This file
 ├── assets/                           # Static assets (images, icons, etc.)
+├── config/                           # Configuration files
+│   ├── firebase.config.js           # Firebase initialization and configuration
+│   ├── vite.config.js                # Vite build tool configuration
+│   └── env.template                  # Environment variables template
 ├── css/
 │   └── styles.css                    # Main stylesheet with REGAIN design system (CSS variables)
+├── docs/                             # Documentation files
+│   ├── ARCHITECTURE_DECISIONS.md    # Phase 1 architecture decisions
+│   ├── FIRESTORE_SCHEMA.md          # Firestore database schema documentation
+│   ├── PHASE1_IMPLEMENTATION_CHECKLIST.md  # Phase 1 setup guide
+│   ├── PHASE1_SUMMARY.md            # Phase 1 summary
+│   └── PHASE2_SUMMARY.md            # Phase 2 summary
 ├── html/                             # Modular HTML templates
 │   ├── components/                   # Reusable UI components
 │   │   ├── sidebar.html             # Sidebar navigation component
@@ -39,18 +49,26 @@ AppsWeb/
 │   │       ├── calendar.html
 │   │       └── clients.html
 │   └── overlays/                     # Overlay templates
+│       ├── auth.html                # Authentication overlay (login/signup)
 │       ├── onboarding.html          # Onboarding overlay (role selection + questions)
 │       └── session.html             # Session overlay (full-screen workout player)
 ├── js/
 │   ├── app.js                        # Main entry point: Router & App initialization
 │   ├── core/                         # Shared "Brain" - No role dependencies
 │   │   ├── router.js                # SPARouter class (role-agnostic)
-│   │   ├── storage.js               # LocalStorage helpers (roles, stats, preferences, userProfile, trainingSystem)
+│   │   ├── storage.js               # Storage helpers (Firestore + localStorage fallback)
 │   │   ├── workout-engine.js        # Session generation logic, progressive overload, milestone tracking
 │   │   ├── ui-utils.js              # Common UI functions (glassmorphism, transitions)
 │   │   ├── template-loader.js       # HTML template loading and injection system
-│   │   └── constants.js             # Shared constants (terminology, config, frameworks, phase criteria)
-│   ├── onboarding/                   # Onboarding flow (shared)
+│   │   ├── constants.js             # Shared constants (terminology, config, frameworks, phase criteria)
+│   │   ├── auth-manager.js          # Authentication state management
+│   │   └── data-migration.js        # localStorage to Firestore migration utility
+│   ├── services/                     # Service layer (Firebase abstraction)
+│   │   ├── authService.js           # Firebase Authentication service wrapper
+│   │   └── dbService.js             # Firestore database service wrapper
+│   ├── ui/                           # UI controllers and managers
+│   │   └── auth-ui.js               # Authentication UI controller (login/signup forms)
+│   ├── onboarding/                  # Onboarding flow (shared)
 │   │   ├── onboarding-manager.js    # OnboardingManager class
 │   │   └── voice-input.js           # VoiceInputManager class
 │   ├── athlete/                     # Athlete-specific functionality
@@ -66,6 +84,7 @@ AppsWeb/
 │   └── data/
 │       └── exercises.json           # Exercise database with variations, target muscles, technique cues
 ├── index.html                        # Minimal HTML shell - templates loaded dynamically
+├── package.json                      # npm dependencies and scripts
 └── AppsWeb_31-12-2025.code-workspace # VS Code workspace file
 ```
 
@@ -90,13 +109,14 @@ AppsWeb/
 - **Purpose**: Main entry point - template loading, router and app initialization
 - **Key Features**:
   - Loads all HTML templates at startup via `template-loader.js`
+  - Initializes authentication manager
   - Role management (Athlete/Coach)
   - App initialization and routing setup
   - Onboarding manager initialization
   - Role-specific app initialization
 - **Location**: `js/app.js`
-- **Uses ES6 Modules**: Imports from core (including template-loader), onboarding, athlete, and coach modules
-- **Initialization Order**: Templates load first, then DOM initialization, then router setup
+- **Uses ES6 Modules**: Imports from core, services, ui, onboarding, athlete, and coach modules
+- **Initialization Order**: Templates load first, then auth initialization, then DOM initialization, then router setup
 
 #### `html/`
 - **Purpose**: Modular HTML templates organized by type
@@ -104,7 +124,7 @@ AppsWeb/
   - `components/`: Reusable UI components (sidebar, voice FAB)
   - `pages/athlete/`: Athlete page templates (home, calendar, modus, explore, profile)
   - `pages/coach/`: Coach page templates (home, calendar, clients)
-  - `overlays/`: Overlay templates (onboarding, session)
+  - `overlays/`: Overlay templates (auth, onboarding, session)
 - **Loading**: Templates are loaded at application startup via `template-loader.js` and injected into containers in `index.html`
 - **Benefits**: Improved maintainability, context density, and separation of concerns
 
@@ -112,16 +132,30 @@ AppsWeb/
 - **Purpose**: Shared core functionality - no role dependencies
 - **Files**:
   - `router.js`: SPARouter class for client-side routing
-  - `storage.js`: LocalStorage helpers for roles, preferences, onboarding data, userProfile, trainingSystem, sessionProgress
+  - `storage.js`: Storage helpers with Firebase integration (Firestore primary, localStorage fallback)
   - `workout-engine.js`: Session generation logic, progressive overload tracking, milestone management, variation swapping (reads from exercises.json)
   - `ui-utils.js`: Common UI functions (glassmorphism, transitions, navigation)
   - `template-loader.js`: HTML template loading and injection system - fetches templates and injects them into DOM containers
   - `constants.js`: REGAIN terminology, configuration constants, framework definitions, phase criteria
+  - `auth-manager.js`: Authentication state management, auth flow coordination
+  - `data-migration.js`: Automatic migration of localStorage data to Firestore on first sign-in
+
+#### `js/services/`
+- **Purpose**: Service layer abstraction for Firebase operations
+- **Files**:
+  - `authService.js`: Firebase Authentication service wrapper (sign in, sign up, sign out, password reset, Google auth)
+  - `dbService.js`: Firestore database service wrapper (user profiles, training systems, sessions, CRUD operations)
+- **Benefits**: UI components never directly import Firebase, centralized error handling, easy to test and mock
+
+#### `js/ui/`
+- **Purpose**: UI controllers and managers for user interactions
+- **Files**:
+  - `auth-ui.js`: Authentication UI controller (handles login/signup forms, error messages, loading states)
 
 #### `js/onboarding/`
 - **Purpose**: Onboarding flow for new users
 - **Files**:
-  - `onboarding-manager.js`: Manages onboarding state and flow
+  - `onboarding-manager.js`: Manages onboarding state and flow, saves to Firestore
   - `voice-input.js`: Web Speech API integration for voice input
 
 #### `js/athlete/`
@@ -144,6 +178,22 @@ AppsWeb/
 - **Purpose**: Data files
 - **Files**:
   - `exercises.json`: Exercise database with variations, target muscles, technique cues, difficulty scores, progression types
+
+#### `config/`
+- **Purpose**: Configuration files for build tools and services
+- **Files**:
+  - `firebase.config.js`: Firebase initialization and service exports (Auth, Firestore)
+  - `vite.config.js`: Vite build tool configuration (dev server, build settings, path aliases)
+  - `env.template`: Environment variables template (copy to `.env` for Firebase credentials)
+
+#### `docs/`
+- **Purpose**: Project documentation
+- **Files**:
+  - `ARCHITECTURE_DECISIONS.md`: Phase 1 architecture decisions and rationale
+  - `FIRESTORE_SCHEMA.md`: Complete Firestore database schema design
+  - `PHASE1_IMPLEMENTATION_CHECKLIST.md`: Step-by-step Phase 1 setup guide
+  - `PHASE1_SUMMARY.md`: Phase 1 foundation summary
+  - `PHASE2_SUMMARY.md`: Phase 2 UI integration and data migration summary
 
 #### `css/styles.css`
 - **Purpose**: Main stylesheet implementing the REGAIN Design System
@@ -199,23 +249,37 @@ AppsWeb/
 
 2. **JavaScript Files**: Place in appropriate subdirectory
    - Main entry point: `js/app.js`
-   - Core/shared utilities: `js/core/` (including template-loader.js)
+   - Core/shared utilities: `js/core/` (including template-loader.js, auth-manager.js, data-migration.js)
+   - Service layer: `js/services/` (Firebase service wrappers)
+   - UI controllers: `js/ui/` (UI interaction managers)
    - Onboarding logic: `js/onboarding/`
    - Athlete-specific: `js/athlete/`
    - Coach-specific: `js/coach/`
    - Data files: `js/data/`
    - **All JS files use ES6 modules** (import/export)
 
-3. **Stylesheet Files**: Place in `css/` directory
+3. **Configuration Files**: Place in `config/` directory
+   - Build tool configs: `config/vite.config.js`
+   - Service configs: `config/firebase.config.js`
+   - Environment templates: `config/env.template`
+   - **Note**: Copy `env.template` to `.env` in root for local development
+
+4. **Documentation Files**: Place in `docs/` directory
+   - Architecture docs: `docs/ARCHITECTURE_*.md`
+   - Schema docs: `docs/*_SCHEMA.md`
+   - Phase summaries: `docs/PHASE*_*.md`
+   - Implementation guides: `docs/*_CHECKLIST.md`
+
+5. **Stylesheet Files**: Place in `css/` directory
    - Main styles: `css/styles.css` (uses CSS custom properties)
    - Additional stylesheets: `css/component-name.css` (if needed)
 
-4. **Static Assets**: Place in `assets/` directory
+6. **Static Assets**: Place in `assets/` directory
    - Images: `assets/images/`
    - Icons: `assets/icons/`
    - Fonts: `assets/fonts/`
 
-5. **Cursor Rules**: Place in `.cursor/rules/` directory
+7. **Cursor Rules**: Place in `.cursor/rules/` directory
    - Use kebab-case naming: `rule-name.mdc`
    - Follow structure defined in `cursor-rules.mdc`
 
@@ -223,13 +287,16 @@ AppsWeb/
 
 This is a **single-page application (SPA)** built with:
 - Vanilla JavaScript (ES6+ modules, no framework)
+- Vite (build tool and dev server)
+- Firebase (Authentication + Firestore)
 - Tailwind CSS (via CDN)
 - Font Awesome icons
 - Custom CSS for REGAIN Design System (with CSS custom properties)
-- Local storage for state management
+- Hybrid storage (Firestore primary, localStorage fallback)
 - **Modular architecture** with ES6 imports/exports
 - **Modular HTML templates** - HTML content organized into separate template files in `html/` directory
 - **Template loading system** - Templates loaded dynamically at startup and injected into DOM containers
+- **Service layer pattern** - Firebase operations abstracted through service layer
 
 ### Key Design Principles
 
@@ -238,6 +305,8 @@ This is a **single-page application (SPA)** built with:
 - Glassmorphism effects throughout
 - Smooth, Apple-inspired interactions
 - Role-based navigation (Athlete/Coach)
+- Firebase Authentication required
+- Firestore for data persistence with localStorage fallback
 
 ## Navigation Structure
 
@@ -255,6 +324,8 @@ All navigation is handled client-side via JavaScript routing in `js/core/router.
 ```
 app.js
   ├── core/template-loader.js  # Loads HTML templates first
+  ├── core/auth-manager.js     # Initializes authentication
+  ├── ui/auth-ui.js            # Auth UI controller
   ├── core/router.js
   ├── core/storage.js
   ├── core/ui-utils.js
@@ -270,6 +341,16 @@ app.js
 template-loader.js
   └── html/**/*.html (fetch)  # Loads all templates from html/ directory
 
+auth-manager.js
+  ├── services/authService.js
+  └── services/dbService.js
+
+authService.js
+  └── config/firebase.config.js
+
+dbService.js
+  └── config/firebase.config.js
+
 workout-engine.js
   ├── data/exercises.json (fetch)
   └── core/constants.js
@@ -277,6 +358,10 @@ workout-engine.js
 session-view.js
   ├── core/workout-engine.js
   └── core/storage.js
+
+storage.js
+  ├── core/auth-manager.js
+  └── services/dbService.js
 ```
 
 ## Architecture Principles
@@ -289,6 +374,10 @@ session-view.js
 6. **Reusability**: Core utilities shared across roles
 7. **Scalability**: Easy to add new features without touching unrelated code
 8. **ID Preservation**: All element IDs, classes, and data attributes are preserved exactly to maintain JavaScript compatibility
+9. **Service Layer**: Firebase operations abstracted through service layer (services/), UI never directly imports Firebase
+10. **Hybrid Storage**: Firestore primary, localStorage fallback for offline/unauth scenarios
+11. **Configuration Management**: All config files in `config/` directory
+12. **Documentation**: All project docs in `docs/` directory
 
 ## Keeping This Document Updated
 
@@ -301,6 +390,8 @@ This document should be updated whenever:
 3. **New Dependencies**: Update module dependencies diagram when imports change
 4. **Structure Reorganization**: Update directory tree when folders are moved/renamed
 5. **Major Feature Additions**: Document new features and their locations
+6. **Configuration Changes**: Update when config files are added/moved
+7. **Documentation Changes**: Update when docs are added/moved
 
 ### Update Checklist
 
@@ -313,6 +404,8 @@ When adding new files or making structural changes:
 - [ ] Mark placeholders vs. implemented files clearly
 - [ ] If adding HTML templates, update `js/core/template-loader.js` TEMPLATE_MAP
 - [ ] Ensure template IDs match container IDs in `index.html`
+- [ ] If adding config files, update `config/` section
+- [ ] If adding docs, update `docs/` section
 
 ### Best Practices
 
@@ -321,6 +414,8 @@ When adding new files or making structural changes:
 3. **Document Purpose**: Explain what each file does, not just where it is
 4. **Track Changes**: Note when files transition from placeholder to implemented
 5. **Reference Other Rules**: Link to related rule files (style.mdc, tech-stack.mdc, etc.)
+6. **Organize by Purpose**: Group files by function (config/, docs/, services/, ui/)
+7. **Maintain Separation**: Keep core, services, ui, and role-specific code separate
 
 ### Automation Note
 
