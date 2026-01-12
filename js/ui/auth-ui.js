@@ -340,11 +340,6 @@ function setupFormToggles() {
  */
 function setupGoogleLogin() {
     document.getElementById('auth-google-login')?.addEventListener('click', async () => {
-        // #region agent log
-        const SERVER_ENDPOINT = 'http://127.0.0.1:7244/ingest/915a47a4-1527-472d-b5cb-4d7f3b093620';
-        fetch(SERVER_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'auth-ui.js:243',message:'Google login button clicked',data:{timestamp:Date.now()},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'C'})}).catch(()=>{});
-        // #endregion
-        
         const btn = document.getElementById('auth-google-login');
         const originalText = btn?.innerHTML;
         
@@ -356,23 +351,11 @@ function setupGoogleLogin() {
             
             hideError('auth-error');
             
-            // #region agent log
-            fetch(SERVER_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'auth-ui.js:254',message:'Calling loginWithGoogle',data:{timestamp:Date.now()},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'C'})}).catch(()=>{});
-            // #endregion
-            
             await loginWithGoogle();
-            
-            // #region agent log
-            fetch(SERVER_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'auth-ui.js:258',message:'Google login successful',data:{timestamp:Date.now()},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'C'})}).catch(()=>{});
-            // #endregion
             
             // Force hide the overlay after successful Google login
             hideAuthOverlay(true);
         } catch (error) {
-            // #region agent log
-            fetch(SERVER_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'auth-ui.js:263',message:'Google login error',data:{error:error.message,timestamp:Date.now()},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'C'})}).catch(()=>{});
-            // #endregion
-            
             showError('auth-error', getErrorMessage(error));
             if (btn) {
                 btn.innerHTML = originalText;

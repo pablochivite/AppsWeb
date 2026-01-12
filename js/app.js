@@ -87,15 +87,11 @@ const onboardingManager = new OnboardingManager(
 // Block Sentry requests - MUST run immediately
 // #region agent log
 (function() {
-    const SERVER_ENDPOINT = 'http://127.0.0.1:7244/ingest/915a47a4-1527-472d-b5cb-4d7f3b093620';
-    fetch(SERVER_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'app.js:88',message:'Blocking Sentry: intercepting fetch',data:{timestamp:Date.now()},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'})}).catch(()=>{});
-    
     // Intercept fetch requests to block Sentry
     const originalFetch = window.fetch;
     window.fetch = function(...args) {
         const url = typeof args[0] === 'string' ? args[0] : args[0]?.url || '';
         if (url.includes('ingest.sentry.io') || url.includes('sentry.io')) {
-            fetch(SERVER_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'app.js:95',message:'Blocking Sentry fetch request',data:{url:url,blocked:true},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'})}).catch(()=>{});
             return Promise.reject(new Error('Sentry request blocked by application'));
         }
         return originalFetch.apply(this, args);
@@ -105,7 +101,6 @@ const onboardingManager = new OnboardingManager(
     const originalXHROpen = XMLHttpRequest.prototype.open;
     XMLHttpRequest.prototype.open = function(method, url, ...rest) {
         if (typeof url === 'string' && (url.includes('ingest.sentry.io') || url.includes('sentry.io'))) {
-            fetch(SERVER_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'app.js:105',message:'Blocking Sentry XHR request',data:{method:method,url:url,blocked:true},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'})}).catch(()=>{});
             this._sentryBlocked = true;
             return;
         }
@@ -115,7 +110,6 @@ const onboardingManager = new OnboardingManager(
     const originalXHRSend = XMLHttpRequest.prototype.send;
     XMLHttpRequest.prototype.send = function(...args) {
         if (this._sentryBlocked) {
-            fetch(SERVER_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'app.js:115',message:'Preventing Sentry XHR send',data:{blocked:true},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'})}).catch(()=>{});
             return;
         }
         return originalXHRSend.apply(this, args);
@@ -126,24 +120,15 @@ const onboardingManager = new OnboardingManager(
     console.error = function(...args) {
         const message = typeof args[0] === 'string' ? args[0] : args.map(String).join(' ');
         if (message.includes('sentry.io') || (message.includes('ERR_CONNECTION_CLOSED') && message.includes('ingest.sentry'))) {
-            fetch(SERVER_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'app.js:125',message:'Suppressing Sentry console error',data:{message:message.substring(0,100)},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'})}).catch(()=>{});
             return; // Suppress the error
         }
         return originalError.apply(this, args);
     };
-    
-    
-    fetch(SERVER_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'app.js:157',message:'Sentry blocking initialized',data:{fetchIntercepted:true,xhrIntercepted:true,consoleSuppressed:true},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'})}).catch(()=>{});
 })();
 // #endregion
 
 // Always show onboarding on page load
 document.addEventListener('DOMContentLoaded', async () => {
-    // #region agent log
-    const SERVER_ENDPOINT = 'http://127.0.0.1:7244/ingest/915a47a4-1527-472d-b5cb-4d7f3b093620';
-    fetch(SERVER_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'app.js:135',message:'DOMContentLoaded fired',data:{timestamp:Date.now()},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'B'})}).catch(()=>{});
-    // #endregion
-    
     // Load all templates first
     try {
         await loadAllTemplates();
