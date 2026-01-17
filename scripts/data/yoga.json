@@ -1,0 +1,421 @@
+{
+  "exercises": [
+    {
+      "id": "downward-facing-dog",
+      "name": "Downward Facing Dog",
+      "targetMuscleGroups": ["shoulders", "hamstrings", "core", "calves", "back"],
+      "category": "flexibility"
+    },
+    {
+      "id": "warrior-ii",
+      "name": "Warrior II",
+      "targetMuscleGroups": ["quads", "glutes", "hip flexors", "core", "shoulders"],
+      "category": "strength"
+    },
+    {
+      "id": "tree-pose",
+      "name": "Tree Pose",
+      "targetMuscleGroups": ["glutes", "hip flexors", "core", "ankles", "balance"],
+      "category": "balance"
+    },
+    {
+      "id": "childs-pose",
+      "name": "Child's Pose",
+      "targetMuscleGroups": ["hips", "back", "shoulders", "ankles"],
+      "category": "flexibility"
+    },
+    {
+      "id": "triangle-pose",
+      "name": "Triangle Pose",
+      "targetMuscleGroups": ["hamstrings", "hip flexors", "core", "side body", "shoulders"],
+      "category": "flexibility"
+    }
+  ],
+  "variations": [
+    {
+      "id": "downward-dog-bent-knees",
+      "exerciseId": "downward-facing-dog",
+      "name": "Downward Dog - Bent Knees Modification",
+      "disciplines": ["yoga"],
+      "difficulty": 3,
+      "metrics": {
+        "mobility": 45,
+        "rotation": 20,
+        "flexibility": 50
+      },
+      "instructions": [
+        "Start on hands and knees in tabletop position",
+        "Tuck toes under and lift hips toward ceiling",
+        "Keep knees slightly bent to protect lower back",
+        "Press palms firmly into mat, spreading fingers wide",
+        "Keep head between arms, neck relaxed",
+        "Hold for 5-8 breaths, focusing on lengthening spine"
+      ],
+      "metadata": {
+        "bilaterality": true,
+        "equipment": []
+      }
+    },
+    {
+      "id": "downward-dog-standard",
+      "exerciseId": "downward-facing-dog",
+      "name": "Downward Dog - Standard",
+      "disciplines": ["yoga"],
+      "difficulty": 5,
+      "metrics": {
+        "mobility": 65,
+        "rotation": 30,
+        "flexibility": 75
+      },
+      "instructions": [
+        "From tabletop, tuck toes and lift hips",
+        "Straighten legs as much as hamstring flexibility allows",
+        "Create an inverted V-shape with body",
+        "Press heels toward floor (they may not touch)",
+        "Keep arms straight, shoulders away from ears",
+        "Engage core to protect lower back",
+        "Hold for 8-10 breaths, breathing deeply"
+      ],
+      "metadata": {
+        "bilaterality": true,
+        "equipment": []
+      }
+    },
+    {
+      "id": "downward-dog-one-legged",
+      "exerciseId": "downward-facing-dog",
+      "name": "Downward Dog - One Leg Lift",
+      "disciplines": ["yoga"],
+      "difficulty": 7,
+      "metrics": {
+        "mobility": 80,
+        "rotation": 45,
+        "flexibility": 85
+      },
+      "instructions": [
+        "Establish standard downward dog position",
+        "Shift weight slightly into left hand and foot",
+        "Lift right leg high, keeping hips square",
+        "Keep both shoulders level, avoid twisting",
+        "Engage core strongly to maintain stability",
+        "Hold for 5 breaths, then switch sides",
+        "Return to standard downward dog between sides"
+      ],
+      "metadata": {
+        "bilaterality": false,
+        "equipment": []
+      }
+    },
+    {
+      "id": "warrior-ii-beginner",
+      "exerciseId": "warrior-ii",
+      "name": "Warrior II - Modified Stance",
+      "disciplines": ["yoga"],
+      "difficulty": 4,
+      "metrics": {
+        "mobility": 55,
+        "rotation": 60,
+        "flexibility": 50
+      },
+      "instructions": [
+        "Start in standing position, step feet wide apart",
+        "Turn right foot out 90 degrees, left foot slightly in",
+        "Bend right knee to a shallow angle (not fully to 90)",
+        "Keep front knee tracking over ankle, not past toes",
+        "Extend arms parallel to floor at shoulder height",
+        "Gaze over front middle finger",
+        "Hold for 5-7 breaths, focusing on hip stability"
+      ],
+      "metadata": {
+        "bilaterality": false,
+        "equipment": []
+      }
+    },
+    {
+      "id": "warrior-ii-standard",
+      "exerciseId": "warrior-ii",
+      "name": "Warrior II - Standard",
+      "disciplines": ["yoga"],
+      "difficulty": 6,
+      "metrics": {
+        "mobility": 70,
+        "rotation": 75,
+        "flexibility": 65
+      },
+      "instructions": [
+        "Step feet 4-5 feet apart in wide stance",
+        "Turn right foot out 90 degrees, left foot 15 degrees in",
+        "Bend right knee to 90-degree angle, thigh parallel to floor",
+        "Keep front knee stacked directly over ankle",
+        "Square hips toward side of mat, engage core",
+        "Reach arms parallel to floor, active through fingertips",
+        "Gaze over front middle finger, keep neck aligned",
+        "Hold for 8-10 breaths with steady, deep breathing"
+      ],
+      "metadata": {
+        "bilaterality": false,
+        "equipment": []
+      }
+    },
+    {
+      "id": "warrior-ii-extended",
+      "exerciseId": "warrior-ii",
+      "name": "Warrior II - Extended Hold with Reverse Bind",
+      "disciplines": ["yoga"],
+      "difficulty": 8,
+      "metrics": {
+        "mobility": 85,
+        "rotation": 90,
+        "flexibility": 80
+      },
+      "instructions": [
+        "Establish standard Warrior II position",
+        "Maintain 90-degree front knee bend and hip alignment",
+        "Reach back arm up and overhead, then behind back",
+        "Reach front arm down and behind back, clasping hands",
+        "Open chest and shoulders, avoid collapsing forward",
+        "Keep core engaged and hips level throughout bind",
+        "Hold for 5-8 breaths, then release and switch sides",
+        "This variation requires significant shoulder mobility"
+      ],
+      "metadata": {
+        "bilaterality": false,
+        "equipment": []
+      }
+    },
+    {
+      "id": "tree-pose-ankle",
+      "exerciseId": "tree-pose",
+      "name": "Tree Pose - Foot at Ankle",
+      "disciplines": ["yoga"],
+      "difficulty": 3,
+      "metrics": {
+        "mobility": 40,
+        "rotation": 35,
+        "flexibility": 45
+      },
+      "instructions": [
+        "Stand on left leg, shift weight into standing foot",
+        "Place right foot on inside of left ankle (avoid knee)",
+        "Find a focal point on the floor to maintain balance",
+        "Press foot into ankle and ankle into foot for stability",
+        "Keep hips level, avoid leaning to either side",
+        "Hold for 5-7 breaths, then switch legs",
+        "Focus on rooting down through standing leg"
+      ],
+      "metadata": {
+        "bilaterality": false,
+        "equipment": []
+      }
+    },
+    {
+      "id": "tree-pose-calf",
+      "exerciseId": "tree-pose",
+      "name": "Tree Pose - Foot at Calf",
+      "disciplines": ["yoga"],
+      "difficulty": 5,
+      "metrics": {
+        "mobility": 60,
+        "rotation": 50,
+        "flexibility": 65
+      },
+      "instructions": [
+        "Stand on left leg, establish balance",
+        "Bend right knee and place foot on inside of left calf",
+        "Press foot firmly into calf, avoid pressure on knee joint",
+        "Keep hips square and level, engage standing leg glute",
+        "Bring hands to heart center (Anjali Mudra)",
+        "Fix gaze on a stable point ahead",
+        "Hold for 8-10 breaths with steady breathing",
+        "Maintain core engagement throughout"
+      ],
+      "metadata": {
+        "bilaterality": false,
+        "equipment": []
+      }
+    },
+    {
+      "id": "tree-pose-full",
+      "exerciseId": "tree-pose",
+      "name": "Tree Pose - Full with Arms Overhead",
+      "disciplines": ["yoga"],
+      "difficulty": 7,
+      "metrics": {
+        "mobility": 75,
+        "rotation": 65,
+        "flexibility": 80
+      },
+      "instructions": [
+        "Establish tree pose with foot at inner thigh",
+        "Press lifted foot firmly into standing leg",
+        "Engage standing leg strongly, rooting through foot",
+        "Maintain hip alignment and square pelvis",
+        "Reach arms overhead, keeping shoulders relaxed",
+        "Option to bring palms together or keep arms parallel",
+        "Fix gaze on a point ahead, breathe steadily",
+        "Hold for 10-15 breaths, building balance and focus"
+      ],
+      "metadata": {
+        "bilaterality": false,
+        "equipment": []
+      }
+    },
+    {
+      "id": "childs-pose-standard",
+      "exerciseId": "childs-pose",
+      "name": "Child's Pose - Standard",
+      "disciplines": ["yoga"],
+      "difficulty": 2,
+      "metrics": {
+        "mobility": 50,
+        "rotation": 25,
+        "flexibility": 60
+      },
+      "instructions": [
+        "Start on hands and knees in tabletop position",
+        "Sit back on heels, big toes touching",
+        "Knees can be together or slightly apart",
+        "Lower torso between thighs, forehead toward mat",
+        "Extend arms forward, palms down",
+        "Relax shoulders and breathe deeply into back body",
+        "Hold for 10-20 breaths or as needed for recovery",
+        "This is a resting pose - find comfort and ease"
+      ],
+      "metadata": {
+        "bilaterality": true,
+        "equipment": []
+      }
+    },
+    {
+      "id": "childs-pose-extended",
+      "exerciseId": "childs-pose",
+      "name": "Child's Pose - Extended Arms",
+      "disciplines": ["yoga"],
+      "difficulty": 4,
+      "metrics": {
+        "mobility": 65,
+        "rotation": 35,
+        "flexibility": 75
+      },
+      "instructions": [
+        "Begin in standard child's pose position",
+        "Keep hips back on heels, maintain position",
+        "Walk hands further forward, extending reach",
+        "Press palms actively into mat, engage latissimus",
+        "Feel stretch through shoulders, armpits, and side body",
+        "Keep hips grounded, don't lift off heels",
+        "Breathe deeply and hold for 10-15 breaths",
+        "To deepen, press hips back more actively"
+      ],
+      "metadata": {
+        "bilaterality": true,
+        "equipment": []
+      }
+    },
+    {
+      "id": "childs-pose-side-stretch",
+      "exerciseId": "childs-pose",
+      "name": "Child's Pose - Side Stretch Variation",
+      "disciplines": ["yoga"],
+      "difficulty": 5,
+      "metrics": {
+        "mobility": 70,
+        "rotation": 55,
+        "flexibility": 80
+      },
+      "instructions": [
+        "Start in extended child's pose position",
+        "Keep both palms planted, maintain hip position",
+        "Walk hands to the right side of mat",
+        "Feel stretch through left side body and latissimus",
+        "Keep hips centered, avoid shifting weight",
+        "Breathe into the stretch, hold for 5-8 breaths",
+        "Walk hands back to center, then repeat on left side",
+        "Focus on lateral flexion and rotation of spine"
+      ],
+      "metadata": {
+        "bilaterality": false,
+        "equipment": []
+      }
+    },
+    {
+      "id": "triangle-pose-with-block",
+      "exerciseId": "triangle-pose",
+      "name": "Triangle Pose - With Block Support",
+      "disciplines": ["yoga"],
+      "difficulty": 4,
+      "metrics": {
+        "mobility": 60,
+        "rotation": 70,
+        "flexibility": 65
+      },
+      "instructions": [
+        "Step feet 3-4 feet apart, turn right foot out 90 degrees",
+        "Turn left foot in slightly, keep both legs straight",
+        "Reach right arm down, placing hand on block inside right foot",
+        "Block height: start high, lower as flexibility increases",
+        "Extend left arm up toward ceiling, palm facing forward",
+        "Open chest and hips toward side of mat",
+        "Keep both legs engaged, avoid locking knees",
+        "Hold for 5-8 breaths, then switch sides"
+      ],
+      "metadata": {
+        "bilaterality": false,
+        "equipment": ["yoga-block"]
+      }
+    },
+    {
+      "id": "triangle-pose-standard",
+      "exerciseId": "triangle-pose",
+      "name": "Triangle Pose - Standard",
+      "disciplines": ["yoga"],
+      "difficulty": 6,
+      "metrics": {
+        "mobility": 75,
+        "rotation": 85,
+        "flexibility": 80
+      },
+      "instructions": [
+        "Step feet wide apart (about 4 feet), right foot out 90 degrees",
+        "Left foot turns in 15 degrees, keep both legs straight and strong",
+        "Extend arms parallel to floor, reaching to opposite sides",
+        "Hinge at right hip, reaching right hand down to shin or ankle",
+        "Keep torso long, avoid collapsing into front leg",
+        "Extend left arm straight up, opening chest and shoulders",
+        "Gaze up toward top hand or forward for neck comfort",
+        "Keep hips level, engage core, hold for 8-10 breaths"
+      ],
+      "metadata": {
+        "bilaterality": false,
+        "equipment": []
+      }
+    },
+    {
+      "id": "triangle-pose-reverse-bind",
+      "exerciseId": "triangle-pose",
+      "name": "Triangle Pose - Reverse Bind",
+      "disciplines": ["yoga"],
+      "difficulty": 8,
+      "metrics": {
+        "mobility": 90,
+        "rotation": 95,
+        "flexibility": 90
+      },
+      "instructions": [
+        "Establish standard triangle pose position",
+        "Maintain strong foundation in both legs",
+        "Reach top arm behind back, palm facing out",
+        "Reach bottom arm around front leg, clasping hands behind leg",
+        "This bind requires significant shoulder and chest flexibility",
+        "Open chest further, rotating torso toward ceiling",
+        "Keep legs engaged and hips level throughout bind",
+        "Hold for 5-8 breaths, focusing on breath in restricted position",
+        "Release carefully and switch sides"
+      ],
+      "metadata": {
+        "bilaterality": false,
+        "equipment": []
+      }
+    }
+  ]
+}

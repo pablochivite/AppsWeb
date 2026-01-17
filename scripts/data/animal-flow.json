@@ -1,0 +1,673 @@
+{
+  "exercises": [
+    {
+      "id": "beast-crawl",
+      "name": "Beast Crawl",
+      "targetMuscleGroups": ["shoulders", "triceps", "core", "quadriceps", "glutes"],
+      "category": "locomotion"
+    },
+    {
+      "id": "crab-reach",
+      "name": "Crab Reach",
+      "targetMuscleGroups": ["shoulders", "triceps", "core", "glutes", "hamstrings"],
+      "category": "reach"
+    },
+    {
+      "id": "ape-reach",
+      "name": "Ape Reach",
+      "targetMuscleGroups": ["shoulders", "lats", "core", "hip-flexors", "quadriceps"],
+      "category": "reach"
+    },
+    {
+      "id": "loaded-beast",
+      "name": "Loaded Beast",
+      "targetMuscleGroups": ["shoulders", "triceps", "core", "quadriceps", "glutes", "hip-flexors"],
+      "category": "transition"
+    },
+    {
+      "id": "side-kickthrough",
+      "name": "Side Kickthrough",
+      "targetMuscleGroups": ["core", "obliques", "hip-flexors", "shoulders", "glutes"],
+      "category": "transition"
+    },
+    {
+      "id": "underswitch",
+      "name": "Underswitch",
+      "targetMuscleGroups": ["core", "obliques", "shoulders", "hip-flexors", "glutes"],
+      "category": "transition"
+    },
+    {
+      "id": "front-kickthrough",
+      "name": "Front Kickthrough",
+      "targetMuscleGroups": ["core", "hip-flexors", "shoulders", "quadriceps", "glutes"],
+      "category": "transition"
+    }
+  ],
+  "variations": [
+    {
+      "id": "beast-crawl-static",
+      "exerciseId": "beast-crawl",
+      "name": "Static Beast Hold",
+      "disciplines": ["animal-flow"],
+      "difficulty": 2,
+      "metrics": {
+        "mobility": 45,
+        "rotation": 20,
+        "flexibility": 50
+      },
+      "instructions": [
+        "Start on hands and knees with knees hovering 1-2 inches off ground",
+        "Position hands directly under shoulders, fingers spread wide",
+        "Keep knees bent at 90-degree angle, hovering above ground",
+        "Maintain neutral spine with core engaged",
+        "Hold position for time, breathing steadily",
+        "Focus on shoulder stability and core engagement",
+        "Keep weight evenly distributed between hands and feet"
+      ],
+      "metadata": {
+        "bilaterality": true,
+        "equipment": []
+      }
+    },
+    {
+      "id": "beast-crawl-forward",
+      "exerciseId": "beast-crawl",
+      "name": "Forward Beast Crawl",
+      "disciplines": ["animal-flow"],
+      "difficulty": 4,
+      "metrics": {
+        "mobility": 60,
+        "rotation": 30,
+        "flexibility": 65
+      },
+      "instructions": [
+        "Start in static beast position with knees hovering",
+        "Move opposite hand and foot simultaneously (right hand, left foot)",
+        "Keep knees low to ground throughout movement",
+        "Maintain controlled, deliberate pace",
+        "Keep core tight to prevent sagging or arching",
+        "Move forward in straight line",
+        "Focus on smooth, coordinated movement patterns"
+      ],
+      "metadata": {
+        "bilaterality": true,
+        "equipment": []
+      }
+    },
+    {
+      "id": "beast-crawl-backward",
+      "exerciseId": "beast-crawl",
+      "name": "Backward Beast Crawl",
+      "disciplines": ["animal-flow"],
+      "difficulty": 5,
+      "metrics": {
+        "mobility": 65,
+        "rotation": 35,
+        "flexibility": 70
+      },
+      "instructions": [
+        "Start in static beast position",
+        "Move opposite hand and foot backward simultaneously",
+        "Requires greater shoulder mobility and core control",
+        "Keep knees hovering low to ground",
+        "Maintain neutral spine throughout",
+        "Move backward in controlled, coordinated pattern",
+        "More challenging than forward crawl due to reduced visibility"
+      ],
+      "metadata": {
+        "bilaterality": true,
+        "equipment": []
+      }
+    },
+    {
+      "id": "beast-crawl-lateral",
+      "exerciseId": "beast-crawl",
+      "name": "Lateral Beast Crawl",
+      "disciplines": ["animal-flow"],
+      "difficulty": 6,
+      "metrics": {
+        "mobility": 70,
+        "rotation": 50,
+        "flexibility": 75
+      },
+      "instructions": [
+        "Start in static beast position",
+        "Move both hands to one side, then both feet",
+        "Maintain beast position while moving laterally",
+        "Requires significant core stability and coordination",
+        "Keep body aligned and avoid rotation",
+        "Move in controlled side-to-side pattern",
+        "Advanced progression requiring greater mobility and control"
+      ],
+      "metadata": {
+        "bilaterality": true,
+        "equipment": []
+      }
+    },
+    {
+      "id": "crab-reach-static",
+      "exerciseId": "crab-reach",
+      "name": "Static Crab Position",
+      "disciplines": ["animal-flow"],
+      "difficulty": 3,
+      "metrics": {
+        "mobility": 55,
+        "rotation": 25,
+        "flexibility": 70
+      },
+      "instructions": [
+        "Sit on ground with hands behind you, fingers pointing toward body",
+        "Lift hips up to create tabletop position",
+        "Keep knees bent at 90 degrees, feet flat on ground",
+        "Maintain straight line from shoulders to knees",
+        "Hold position with core and glutes engaged",
+        "Focus on shoulder extension and hip extension",
+        "Breathe steadily while maintaining position"
+      ],
+      "metadata": {
+        "bilaterality": true,
+        "equipment": []
+      }
+    },
+    {
+      "id": "crab-reach-same-side",
+      "exerciseId": "crab-reach",
+      "name": "Same-Side Crab Reach",
+      "disciplines": ["animal-flow"],
+      "difficulty": 5,
+      "metrics": {
+        "mobility": 70,
+        "rotation": 40,
+        "flexibility": 80
+      },
+      "instructions": [
+        "Start in static crab position",
+        "Lift same-side hand and foot simultaneously",
+        "Reach hand forward and up while lifting foot",
+        "Maintain balance on opposite hand and foot",
+        "Keep core engaged to prevent sagging",
+        "Return to starting position with control",
+        "Alternate sides for each repetition",
+        "Requires significant shoulder mobility and core stability"
+      ],
+      "metadata": {
+        "bilaterality": false,
+        "equipment": []
+      }
+    },
+    {
+      "id": "crab-reach-opposite-side",
+      "exerciseId": "crab-reach",
+      "name": "Opposite-Side Crab Reach",
+      "disciplines": ["animal-flow"],
+      "difficulty": 6,
+      "metrics": {
+        "mobility": 75,
+        "rotation": 55,
+        "flexibility": 85
+      },
+      "instructions": [
+        "Start in static crab position",
+        "Lift opposite hand and foot simultaneously (right hand, left foot)",
+        "Reach hand across body while lifting opposite foot",
+        "Creates diagonal line through body",
+        "Requires greater rotational control and stability",
+        "Maintain crab position on supporting limbs",
+        "Return to center with control",
+        "More challenging due to cross-body coordination"
+      ],
+      "metadata": {
+        "bilaterality": false,
+        "equipment": []
+      }
+    },
+    {
+      "id": "crab-reach-rotational",
+      "exerciseId": "crab-reach",
+      "name": "Rotational Crab Reach",
+      "disciplines": ["animal-flow"],
+      "difficulty": 7,
+      "metrics": {
+        "mobility": 80,
+        "rotation": 70,
+        "flexibility": 90
+      },
+      "instructions": [
+        "Start in static crab position",
+        "Reach one hand across body and rotate torso",
+        "Lift opposite foot while rotating",
+        "Create full rotational movement through spine",
+        "Maintain balance throughout rotation",
+        "Return to center and alternate sides",
+        "Requires exceptional spinal rotation and shoulder mobility",
+        "Advanced movement combining reach with rotation"
+      ],
+      "metadata": {
+        "bilaterality": false,
+        "equipment": []
+      }
+    },
+    {
+      "id": "ape-reach-static",
+      "exerciseId": "ape-reach",
+      "name": "Static Ape Position",
+      "disciplines": ["animal-flow"],
+      "difficulty": 3,
+      "metrics": {
+        "mobility": 60,
+        "rotation": 20,
+        "flexibility": 65
+      },
+      "instructions": [
+        "Start in deep squat position with feet wider than shoulder-width",
+        "Place hands on ground in front of you, shoulder-width apart",
+        "Keep hips low, weight on balls of feet",
+        "Maintain upright torso with chest up",
+        "Hold position with core engaged",
+        "Focus on hip and ankle mobility",
+        "Breathe deeply while maintaining position"
+      ],
+      "metadata": {
+        "bilaterality": true,
+        "equipment": []
+      }
+    },
+    {
+      "id": "ape-reach-forward",
+      "exerciseId": "ape-reach",
+      "name": "Forward Ape Reach",
+      "disciplines": ["animal-flow"],
+      "difficulty": 5,
+      "metrics": {
+        "mobility": 70,
+        "rotation": 30,
+        "flexibility": 75
+      },
+      "instructions": [
+        "Start in static ape position",
+        "Shift weight forward onto hands",
+        "Lift one hand and reach forward",
+        "Maintain deep squat position with supporting hand",
+        "Return hand to ground and alternate",
+        "Keep hips low throughout movement",
+        "Requires hip flexibility and shoulder stability",
+        "Move in controlled, deliberate pattern"
+      ],
+      "metadata": {
+        "bilaterality": false,
+        "equipment": []
+      }
+    },
+    {
+      "id": "ape-reach-lateral",
+      "exerciseId": "ape-reach",
+      "name": "Lateral Ape Reach",
+      "disciplines": ["animal-flow"],
+      "difficulty": 6,
+      "metrics": {
+        "mobility": 75,
+        "rotation": 45,
+        "flexibility": 80
+      },
+      "instructions": [
+        "Start in static ape position",
+        "Shift weight to one side",
+        "Reach opposite hand laterally across body",
+        "Maintain deep squat while reaching",
+        "Creates rotational challenge through core",
+        "Return to center and alternate sides",
+        "Requires greater hip mobility and rotational control",
+        "Advanced progression of forward reach"
+      ],
+      "metadata": {
+        "bilaterality": false,
+        "equipment": []
+      }
+    },
+    {
+      "id": "ape-reach-rotational",
+      "exerciseId": "ape-reach",
+      "name": "Rotational Ape Reach",
+      "disciplines": ["animal-flow"],
+      "difficulty": 8,
+      "metrics": {
+        "mobility": 85,
+        "rotation": 75,
+        "flexibility": 90
+      },
+      "instructions": [
+        "Start in static ape position",
+        "Rotate torso and reach hand behind opposite leg",
+        "Create full spinal rotation while maintaining squat",
+        "Lift opposite foot slightly to enhance rotation",
+        "Return to center through controlled rotation",
+        "Alternate sides with smooth transitions",
+        "Requires exceptional hip flexibility and spinal rotation",
+        "Ultimate test of ape position mobility"
+      ],
+      "metadata": {
+        "bilaterality": false,
+        "equipment": []
+      }
+    },
+    {
+      "id": "loaded-beast-basic",
+      "exerciseId": "loaded-beast",
+      "name": "Basic Loaded Beast",
+      "disciplines": ["animal-flow"],
+      "difficulty": 4,
+      "metrics": {
+        "mobility": 65,
+        "rotation": 25,
+        "flexibility": 70
+      },
+      "instructions": [
+        "Start in static beast position",
+        "Lift one hand and opposite foot simultaneously",
+        "Reach hand forward while lifting foot",
+        "Keep supporting limbs stable",
+        "Maintain beast position with core engaged",
+        "Return to starting position with control",
+        "Alternate sides for each repetition",
+        "Foundation for more advanced loaded beast variations"
+      ],
+      "metadata": {
+        "bilaterality": false,
+        "equipment": []
+      }
+    },
+    {
+      "id": "loaded-beast-rotational",
+      "exerciseId": "loaded-beast",
+      "name": "Rotational Loaded Beast",
+      "disciplines": ["animal-flow"],
+      "difficulty": 6,
+      "metrics": {
+        "mobility": 75,
+        "rotation": 60,
+        "flexibility": 80
+      },
+      "instructions": [
+        "Start in static beast position",
+        "Lift one hand and rotate it across body",
+        "Simultaneously lift opposite foot",
+        "Create rotational movement through core",
+        "Reach hand toward opposite side while rotating",
+        "Maintain balance on supporting limbs",
+        "Return to center with control",
+        "Requires significant rotational mobility and stability"
+      ],
+      "metadata": {
+        "bilaterality": false,
+        "equipment": []
+      }
+    },
+    {
+      "id": "loaded-beast-extended",
+      "exerciseId": "loaded-beast",
+      "name": "Extended Loaded Beast",
+      "disciplines": ["animal-flow"],
+      "difficulty": 7,
+      "metrics": {
+        "mobility": 80,
+        "rotation": 65,
+        "flexibility": 85
+      },
+      "instructions": [
+        "Start in static beast position",
+        "Lift one hand and reach it fully extended forward",
+        "Simultaneously lift opposite foot and extend it back",
+        "Create long line from fingertips to toes",
+        "Maintain beast position on supporting limbs",
+        "Hold extended position briefly",
+        "Return to center with control",
+        "Requires exceptional shoulder and hip flexibility",
+        "Advanced progression emphasizing full-body extension"
+      ],
+      "metadata": {
+        "bilaterality": false,
+        "equipment": []
+      }
+    },
+    {
+      "id": "side-kickthrough-basic",
+      "exerciseId": "side-kickthrough",
+      "name": "Basic Side Kickthrough",
+      "disciplines": ["animal-flow"],
+      "difficulty": 5,
+      "metrics": {
+        "mobility": 70,
+        "rotation": 50,
+        "flexibility": 75
+      },
+      "instructions": [
+        "Start in beast position",
+        "Shift weight to one side",
+        "Lift opposite leg and kick it through to side",
+        "Rotate hips and torso to allow leg passage",
+        "Place foot on ground on opposite side",
+        "Return leg through to starting position",
+        "Maintain control throughout rotation",
+        "Foundation movement for side transitions"
+      ],
+      "metadata": {
+        "bilaterality": false,
+        "equipment": []
+      }
+    },
+    {
+      "id": "side-kickthrough-extended",
+      "exerciseId": "side-kickthrough",
+      "name": "Extended Side Kickthrough",
+      "disciplines": ["animal-flow"],
+      "difficulty": 7,
+      "metrics": {
+        "mobility": 80,
+        "rotation": 70,
+        "flexibility": 85
+      },
+      "instructions": [
+        "Start in beast position",
+        "Shift weight to one side",
+        "Kick leg through with full extension",
+        "Reach leg as far as possible to side",
+        "Create maximum rotational range of motion",
+        "Maintain control at full extension",
+        "Return through with control",
+        "Requires exceptional hip mobility and rotational control",
+        "Advanced progression emphasizing range of motion"
+      ],
+      "metadata": {
+        "bilaterality": false,
+        "equipment": []
+      }
+    },
+    {
+      "id": "side-kickthrough-flow",
+      "exerciseId": "side-kickthrough",
+      "name": "Side Kickthrough Flow",
+      "disciplines": ["animal-flow"],
+      "difficulty": 8,
+      "metrics": {
+        "mobility": 85,
+        "rotation": 80,
+        "flexibility": 90
+      },
+      "instructions": [
+        "Start in beast position",
+        "Perform side kickthrough to one side",
+        "Transition through to crab position",
+        "Immediately kickthrough back to beast",
+        "Continue flowing between positions",
+        "Maintain smooth, continuous movement",
+        "Alternate sides for continuous flow",
+        "Requires mastery of individual components",
+        "Advanced flow pattern combining multiple transitions"
+      ],
+      "metadata": {
+        "bilaterality": false,
+        "equipment": []
+      }
+    },
+    {
+      "id": "underswitch-basic",
+      "exerciseId": "underswitch",
+      "name": "Basic Underswitch",
+      "disciplines": ["animal-flow"],
+      "difficulty": 6,
+      "metrics": {
+        "mobility": 75,
+        "rotation": 65,
+        "flexibility": 80
+      },
+      "instructions": [
+        "Start in beast position",
+        "Shift weight to one hand",
+        "Lift opposite hand and rotate it under body",
+        "Simultaneously rotate hips and torso",
+        "Place hand on opposite side",
+        "Lift original hand and return to center",
+        "Maintain control throughout rotation",
+        "Foundation for underswitch transitions"
+      ],
+      "metadata": {
+        "bilaterality": false,
+        "equipment": []
+      }
+    },
+    {
+      "id": "underswitch-extended",
+      "exerciseId": "underswitch",
+      "name": "Extended Underswitch",
+      "disciplines": ["animal-flow"],
+      "difficulty": 7,
+      "metrics": {
+        "mobility": 80,
+        "rotation": 75,
+        "flexibility": 85
+      },
+      "instructions": [
+        "Start in beast position",
+        "Perform basic underswitch",
+        "Extend reaching hand fully across body",
+        "Create maximum rotational range",
+        "Lift opposite foot during switch for added challenge",
+        "Maintain balance throughout extended position",
+        "Return to center with control",
+        "Requires exceptional rotational mobility and core stability"
+      ],
+      "metadata": {
+        "bilaterality": false,
+        "equipment": []
+      }
+    },
+    {
+      "id": "underswitch-flow",
+      "exerciseId": "underswitch",
+      "name": "Underswitch Flow",
+      "disciplines": ["animal-flow"],
+      "difficulty": 9,
+      "metrics": {
+        "mobility": 90,
+        "rotation": 85,
+        "flexibility": 95
+      },
+      "instructions": [
+        "Start in beast position",
+        "Perform underswitch to one side",
+        "Continue rotation to transition to crab",
+        "Flow back through underswitch to beast",
+        "Create continuous rotational flow",
+        "Alternate directions for continuous movement",
+        "Maintain smooth transitions between positions",
+        "Requires mastery of rotation and position transitions",
+        "Ultimate flow pattern combining multiple advanced movements"
+      ],
+      "metadata": {
+        "bilaterality": false,
+        "equipment": []
+      }
+    },
+    {
+      "id": "front-kickthrough-basic",
+      "exerciseId": "front-kickthrough",
+      "name": "Basic Front Kickthrough",
+      "disciplines": ["animal-flow"],
+      "difficulty": 5,
+      "metrics": {
+        "mobility": 70,
+        "rotation": 30,
+        "flexibility": 80
+      },
+      "instructions": [
+        "Start in beast position",
+        "Shift weight to one side",
+        "Lift opposite leg and kick it forward",
+        "Extend leg through space between hand and foot",
+        "Place foot on ground in front",
+        "Return leg through to starting position",
+        "Maintain control throughout movement",
+        "Foundation for front transitions"
+      ],
+      "metadata": {
+        "bilaterality": false,
+        "equipment": []
+      }
+    },
+    {
+      "id": "front-kickthrough-extended",
+      "exerciseId": "front-kickthrough",
+      "name": "Extended Front Kickthrough",
+      "disciplines": ["animal-flow"],
+      "difficulty": 7,
+      "metrics": {
+        "mobility": 80,
+        "rotation": 40,
+        "flexibility": 90
+      },
+      "instructions": [
+        "Start in beast position",
+        "Shift weight to one side",
+        "Kick leg forward with full extension",
+        "Reach leg as far forward as possible",
+        "Create maximum hip flexor stretch",
+        "Maintain control at full extension",
+        "Return through with control",
+        "Requires exceptional hip flexor flexibility and core strength",
+        "Advanced progression emphasizing forward range of motion"
+      ],
+      "metadata": {
+        "bilaterality": false,
+        "equipment": []
+      }
+    },
+    {
+      "id": "front-kickthrough-ape-transition",
+      "exerciseId": "front-kickthrough",
+      "name": "Front Kickthrough to Ape",
+      "disciplines": ["animal-flow"],
+      "difficulty": 8,
+      "metrics": {
+        "mobility": 85,
+        "rotation": 50,
+        "flexibility": 95
+      },
+      "instructions": [
+        "Start in beast position",
+        "Perform front kickthrough",
+        "As leg extends forward, transition weight",
+        "Land in ape position with leg forward",
+        "Maintain control throughout transition",
+        "Return to beast through reverse kickthrough",
+        "Create smooth flow between positions",
+        "Requires mastery of both positions and transition",
+        "Advanced flow pattern combining beast and ape positions"
+      ],
+      "metadata": {
+        "bilaterality": false,
+        "equipment": []
+      }
+    }
+  ]
+}
+

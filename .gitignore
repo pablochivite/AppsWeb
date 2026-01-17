@@ -47,3 +47,5 @@ ui-debug.log
 
 # Vite
 .vite/
+
+serviceAccountKey.json

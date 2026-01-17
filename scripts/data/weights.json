@@ -1,0 +1,473 @@
+{
+  "exercises": [
+    {
+      "id": "squat",
+      "name": "Squat",
+      "targetMuscleGroups": ["quadriceps", "glutes", "hamstrings", "core", "calves"],
+      "category": "lower-body"
+    },
+    {
+      "id": "deadlift",
+      "name": "Deadlift",
+      "targetMuscleGroups": ["hamstrings", "glutes", "erector-spinae", "lats", "core", "traps"],
+      "category": "posterior-chain"
+    },
+    {
+      "id": "bench-press",
+      "name": "Bench Press",
+      "targetMuscleGroups": ["pectorals", "anterior-deltoids", "triceps", "core"],
+      "category": "push"
+    },
+    {
+      "id": "overhead-press",
+      "name": "Overhead Press",
+      "targetMuscleGroups": ["anterior-deltoids", "lateral-deltoids", "triceps", "core", "upper-trapezius"],
+      "category": "push"
+    },
+    {
+      "id": "barbell-row",
+      "name": "Barbell Row",
+      "targetMuscleGroups": ["latissimus-dorsi", "rhomboids", "middle-trapezius", "posterior-deltoids", "biceps", "core"],
+      "category": "pull"
+    }
+  ],
+  "variations": [
+    {
+      "id": "squat-goblet",
+      "exerciseId": "squat",
+      "name": "Goblet Squat",
+      "disciplines": ["weights"],
+      "difficulty": 3,
+      "metrics": {
+        "mobility": 65,
+        "rotation": 25,
+        "flexibility": 70
+      },
+      "instructions": [
+        "Hold a dumbbell or kettlebell vertically against chest with both hands",
+        "Stand with feet shoulder-width apart, toes slightly turned out",
+        "Keep chest up, shoulders back, core engaged",
+        "Initiate descent by pushing hips back and bending knees",
+        "Descend until thighs are parallel to floor or below",
+        "Keep knees tracking over toes, avoid inward collapse",
+        "Drive through mid-foot and heels to return to standing",
+        "Maintain upright torso throughout movement",
+        "Focus on depth and control over speed",
+        "3 sets of 8-12 repetitions"
+      ],
+      "metadata": {
+        "bilaterality": true,
+        "equipment": ["dumbbell", "kettlebell"]
+      }
+    },
+    {
+      "id": "squat-back-barbell",
+      "exerciseId": "squat",
+      "name": "Back Squat - Barbell",
+      "disciplines": ["weights"],
+      "difficulty": 6,
+      "metrics": {
+        "mobility": 75,
+        "rotation": 30,
+        "flexibility": 80
+      },
+      "instructions": [
+        "Position barbell across upper traps and rear deltoids (high bar position)",
+        "Feet shoulder-width to slightly wider, toes turned out 15-30 degrees",
+        "Unrack bar, take 2-3 steps back, establish stable base",
+        "Brace core, maintain neutral spine, chest up",
+        "Break at hips and knees simultaneously to initiate descent",
+        "Lower under control until hips are below parallel",
+        "Keep knees tracking over toes, maintain arch in feet",
+        "Drive through entire foot, emphasize pushing floor away",
+        "Rise explosively, maintain torso angle on ascent",
+        "Keep bar path vertical, avoid forward lean",
+        "4 sets of 5-8 repetitions at working weight"
+      ],
+      "metadata": {
+        "bilaterality": true,
+        "equipment": ["barbell", "squat-rack"]
+      }
+    },
+    {
+      "id": "squat-front-barbell",
+      "exerciseId": "squat",
+      "name": "Front Squat - Barbell",
+      "disciplines": ["weights"],
+      "difficulty": 8,
+      "metrics": {
+        "mobility": 85,
+        "rotation": 35,
+        "flexibility": 90
+      },
+      "instructions": [
+        "Position barbell across anterior deltoids and clavicles",
+        "Cross arms or use clean grip (fingertips only, elbows high)",
+        "Elbows must stay parallel to floor throughout movement",
+        "Unrack and step back, feet shoulder-width apart",
+        "Core must be extremely tight - front squat requires greater core stability",
+        "Maintain upright torso throughout - more vertical than back squat",
+        "Descend with control, knees track forward more than back squat",
+        "Achieve full depth - hips below parallel, knees past toes acceptable",
+        "Drive up explosively, keeping torso vertical",
+        "This variation requires superior ankle, hip, and thoracic spine mobility",
+        "3-4 sets of 4-6 repetitions - typically 10-15% lighter than back squat"
+      ],
+      "metadata": {
+        "bilaterality": true,
+        "equipment": ["barbell", "squat-rack"]
+      }
+    },
+    {
+      "id": "deadlift-romanian-dumbbell",
+      "exerciseId": "deadlift",
+      "name": "Romanian Deadlift - Dumbbell",
+      "disciplines": ["weights"],
+      "difficulty": 4,
+      "metrics": {
+        "mobility": 60,
+        "rotation": 20,
+        "flexibility": 75
+      },
+      "instructions": [
+        "Stand holding dumbbells at arms length, feet hip-width apart",
+        "Maintain slight knee bend throughout entire movement",
+        "Initiate movement by pushing hips back, not bending at waist",
+        "Lower weight along front of legs, keeping back flat",
+        "Feel stretch in hamstrings - stop when you feel tension limit",
+        "Keep dumbbells close to body throughout descent",
+        "Drive hips forward to return to standing, engaging glutes",
+        "Maintain neutral spine - avoid rounding or overextending",
+        "Focus on hamstring and glute engagement over range of motion",
+        "3 sets of 10-12 repetitions"
+      ],
+      "metadata": {
+        "bilaterality": true,
+        "equipment": ["dumbbell"]
+      }
+    },
+    {
+      "id": "deadlift-conventional-barbell",
+      "exerciseId": "deadlift",
+      "name": "Conventional Deadlift - Barbell",
+      "disciplines": ["weights"],
+      "difficulty": 7,
+      "metrics": {
+        "mobility": 70,
+        "rotation": 25,
+        "flexibility": 65
+      },
+      "instructions": [
+        "Stand with feet hip-width apart, toes under bar (mid-foot)",
+        "Bend at hips and knees, grip bar just outside legs",
+        "Hands: overhand or mixed grip (alternating) for heavy loads",
+        "Set back: pull slack out of bar, engage lats, chest up",
+        "Shoulders slightly in front of bar, shins touching bar",
+        "Take deep breath, brace core as if preparing for punch",
+        "Drive through entire foot, push floor away",
+        "Keep bar path vertical, maintain contact with legs throughout lift",
+        "Extend hips and knees simultaneously, finish with hips fully extended",
+        "Control descent by reversing the movement pattern",
+        "Reset between reps: release bar, re-establish setup position",
+        "4-5 sets of 3-6 repetitions at working weight"
+      ],
+      "metadata": {
+        "bilaterality": true,
+        "equipment": ["barbell", "weight-plates"]
+      }
+    },
+    {
+      "id": "deadlift-sumo-barbell",
+      "exerciseId": "deadlift",
+      "name": "Sumo Deadlift - Barbell",
+      "disciplines": ["weights"],
+      "difficulty": 8,
+      "metrics": {
+        "mobility": 80,
+        "rotation": 40,
+        "flexibility": 85
+      },
+      "instructions": [
+        "Feet wide stance (2-3 feet apart), toes pointed out 45 degrees",
+        "Bar positioned closer to body due to wide stance",
+        "Grip bar inside legs, hands between knees",
+        "Requires significant hip mobility and adductor flexibility",
+        "Torso more upright than conventional deadlift",
+        "Descend by pushing hips back and spreading knees wide",
+        "Maintain upright chest, neutral spine throughout",
+        "Drive through entire foot, focus on hip extension",
+        "Knees track over toes, push knees out throughout lift",
+        "Sumo reduces range of motion but increases mobility demands",
+        "Common for athletes with longer limbs or hip mobility restrictions",
+        "4-5 sets of 3-5 repetitions - typically allows 5-10% more weight than conventional"
+      ],
+      "metadata": {
+        "bilaterality": true,
+        "equipment": ["barbell", "weight-plates"]
+      }
+    },
+    {
+      "id": "bench-press-dumbbell",
+      "exerciseId": "bench-press",
+      "name": "Dumbbell Bench Press",
+      "disciplines": ["weights"],
+      "difficulty": 4,
+      "metrics": {
+        "mobility": 50,
+        "rotation": 30,
+        "flexibility": 45
+      },
+      "instructions": [
+        "Lie on bench, feet flat on floor, maintain arch in lower back",
+        "Start with dumbbells at chest level, elbows at 45-degree angle",
+        "Press dumbbells up and slightly together (converging path)",
+        "Full range of motion: lower until chest stretch is felt",
+        "Drive through entire foot, engage glutes and core for stability",
+        "Keep shoulder blades retracted and depressed throughout",
+        "Control the negative - 2-3 second descent",
+        "Press explosively but controlled - full lockout at top",
+        "Dumbbells allow greater range of motion than barbell",
+        "3 sets of 8-12 repetitions"
+      ],
+      "metadata": {
+        "bilaterality": true,
+        "equipment": ["dumbbell", "bench"]
+      }
+    },
+    {
+      "id": "bench-press-barbell-flat",
+      "exerciseId": "bench-press",
+      "name": "Barbell Bench Press - Flat",
+      "disciplines": ["weights"],
+      "difficulty": 6,
+      "metrics": {
+        "mobility": 55,
+        "rotation": 35,
+        "flexibility": 50
+      },
+      "instructions": [
+        "Position on bench: eyes directly under bar when racked",
+        "Establish arch: retract shoulder blades, slight arch in lower back",
+        "Feet drive into floor, glutes and core engaged",
+        "Grip bar: pinkies on ring marks (approximately 1.5x shoulder width)",
+        "Unrack bar, hold directly over shoulders",
+        "Lower bar with control to mid-chest (nipple line)",
+        "Tuck elbows 45-60 degrees, don't flare excessively",
+        "Bar should touch chest lightly - don't bounce",
+        "Drive bar up in slight arc back toward face",
+        "Press through entire foot, maintain tight arch",
+        "Lockout over shoulders, maintain shoulder blade position",
+        "4-5 sets of 4-8 repetitions at working weight"
+      ],
+      "metadata": {
+        "bilaterality": true,
+        "equipment": ["barbell", "bench", "weight-plates"]
+      }
+    },
+    {
+      "id": "bench-press-incline-barbell",
+      "exerciseId": "bench-press",
+      "name": "Incline Barbell Bench Press",
+      "disciplines": ["weights"],
+      "difficulty": 7,
+      "metrics": {
+        "mobility": 65,
+        "rotation": 40,
+        "flexibility": 60
+      },
+      "instructions": [
+        "Set bench to 30-45 degree incline (30 degrees preferred for strength)",
+        "Stabilization demands greater due to inclined position",
+        "Grip slightly narrower than flat bench to protect shoulders",
+        "Lower bar to upper chest/clavicle area",
+        "Incline position increases anterior deltoid involvement",
+        "Maintain tight arch and leg drive despite incline",
+        "Shoulder mobility becomes more critical - ensure adequate warm-up",
+        "Bar path more vertical than flat bench",
+        "Control negative phase - gravity assistance requires extra control",
+        "Typically 10-20% lighter than flat bench for same rep range",
+        "4 sets of 5-8 repetitions - excellent upper chest development"
+      ],
+      "metadata": {
+        "bilaterality": true,
+        "equipment": ["barbell", "incline-bench", "weight-plates"]
+      }
+    },
+    {
+      "id": "overhead-press-dumbbell-standing",
+      "exerciseId": "overhead-press",
+      "name": "Standing Dumbbell Shoulder Press",
+      "disciplines": ["weights"],
+      "difficulty": 5,
+      "metrics": {
+        "mobility": 70,
+        "rotation": 35,
+        "flexibility": 60
+      },
+      "instructions": [
+        "Stand with feet hip-width apart, slight knee bend",
+        "Hold dumbbells at shoulder height, palms facing forward",
+        "Engage core and glutes - standing press requires full body stability",
+        "Press dumbbells up and slightly together (converging path)",
+        "Full extension overhead - arms straight but not hyperextended",
+        "Lower with control to starting position",
+        "Avoid excessive arch in lower back - engage core to prevent",
+        "Can press both simultaneously or alternate (unilateral increases core demand)",
+        "Standing position challenges stability and core strength significantly",
+        "3-4 sets of 8-10 repetitions"
+      ],
+      "metadata": {
+        "bilaterality": true,
+        "equipment": ["dumbbell"]
+      }
+    },
+    {
+      "id": "overhead-press-barbell-strict",
+      "exerciseId": "overhead-press",
+      "name": "Standing Barbell Strict Press",
+      "disciplines": ["weights"],
+      "difficulty": 7,
+      "metrics": {
+        "mobility": 75,
+        "rotation": 40,
+        "flexibility": 70
+      },
+      "instructions": [
+        "Stand with feet hip-width apart, slight knee bend",
+        "Start bar at upper chest/clavicle height (front rack position)",
+        "Grip just outside shoulder width, wrists straight",
+        "Brace core and glutes - maintain rigid midline",
+        "Press bar vertically overhead - no leg drive in strict press",
+        "Keep torso upright, avoid excessive lean back",
+        "Full lockout overhead: bar directly over mid-foot when viewed from side",
+        "Lower bar with control to starting position",
+        "Strict press requires exceptional shoulder, core, and hip stability",
+        "No momentum from legs - pure upper body strength movement",
+        "Thoracic spine extension and shoulder mobility are critical",
+        "4 sets of 5-6 repetitions - typically 60-70% of push press weight"
+      ],
+      "metadata": {
+        "bilaterality": true,
+        "equipment": ["barbell", "weight-plates"]
+      }
+    },
+    {
+      "id": "overhead-press-behind-neck",
+      "exerciseId": "overhead-press",
+      "name": "Behind-Neck Press - Barbell",
+      "disciplines": ["weights"],
+      "difficulty": 9,
+      "metrics": {
+        "mobility": 90,
+        "rotation": 50,
+        "flexibility": 85
+      },
+      "instructions": [
+        "ADVANCED MOVEMENT - Requires exceptional shoulder and thoracic mobility",
+        "Unrack bar behind neck, wider grip than front press",
+        "Feet hip-width apart, slight knee bend for stability",
+        "Brace core and glutes strongly - increased stability demand",
+        "Press bar vertically from behind neck position",
+        "Maintain upright torso - avoid forward lean",
+        "Full lockout overhead, bar path must be perfectly vertical",
+        "Lower with extreme control back to behind-neck position",
+        "This variation significantly increases shoulder external rotation demand",
+        "Only for athletes with excellent shoulder mobility and strength",
+        "Higher injury risk if mobility insufficient - use with caution",
+        "3-4 sets of 4-6 repetitions - typically 10-15% lighter than front press"
+      ],
+      "metadata": {
+        "bilaterality": true,
+        "equipment": ["barbell", "weight-plates"]
+      }
+    },
+    {
+      "id": "barbell-row-bent-over-dumbbell",
+      "exerciseId": "barbell-row",
+      "name": "Bent-Over Dumbbell Row",
+      "disciplines": ["weights"],
+      "difficulty": 4,
+      "metrics": {
+        "mobility": 60,
+        "rotation": 30,
+        "flexibility": 65
+      },
+      "instructions": [
+        "Stand holding dumbbells, feet hip-width apart",
+        "Hinge at hips until torso is 45 degrees or parallel to floor",
+        "Maintain slight knee bend, neutral spine throughout",
+        "Pull dumbbells to lower ribs/upper abdomen",
+        "Elbows travel back and up, squeeze shoulder blades together",
+        "Lower with control, full extension at bottom",
+        "Can row both simultaneously or alternate (unilateral)",
+        "Focus on lat and rhomboid engagement over weight moved",
+        "Keep head in neutral position - avoid looking up",
+        "3 sets of 10-12 repetitions per side if alternating"
+      ],
+      "metadata": {
+        "bilaterality": true,
+        "equipment": ["dumbbell"]
+      }
+    },
+    {
+      "id": "barbell-row-pendlay",
+      "exerciseId": "barbell-row",
+      "name": "Pendlay Row - Barbell",
+      "disciplines": ["weights"],
+      "difficulty": 7,
+      "metrics": {
+        "mobility": 70,
+        "rotation": 35,
+        "flexibility": 70
+      },
+      "instructions": [
+        "Bar on floor, stance similar to deadlift setup",
+        "Bend at hips until torso is parallel to floor",
+        "Grip bar just outside shoulder width, overhand or mixed",
+        "Set back: engage lats, chest up, neutral spine",
+        "Explosively pull bar to lower chest/upper abdomen",
+        "Bar touches torso - full contact for maximum engagement",
+        "Lower bar back to floor under control - full reset between reps",
+        "Maintain parallel torso throughout - no upward movement with pull",
+        "This variation emphasizes explosive pulling power",
+        "Full reset allows maximum force production each repetition",
+        "Excellent for developing posterior chain and upper back strength",
+        "4-5 sets of 5-8 repetitions at working weight"
+      ],
+      "metadata": {
+        "bilaterality": true,
+        "equipment": ["barbell", "weight-plates"]
+      }
+    },
+    {
+      "id": "barbell-row-yates",
+      "exerciseId": "barbell-row",
+      "name": "Yates Row - Barbell (Underhand Grip)",
+      "disciplines": ["weights"],
+      "difficulty": 6,
+      "metrics": {
+        "mobility": 65,
+        "rotation": 32,
+        "flexibility": 68
+      },
+      "instructions": [
+        "Similar setup to Pendlay but with underhand (supinated) grip",
+        "Torso at 30-45 degree angle (more upright than Pendlay)",
+        "Grip bar shoulder-width apart, palms facing up",
+        "Pull bar to lower abdomen/upper hip area",
+        "Underhand grip increases biceps and lower lat involvement",
+        "Elbows stay closer to body - different muscle emphasis",
+        "Can use slightly more weight due to increased biceps contribution",
+        "Excellent for biceps and lower lats development",
+        "Controlled negative - 2 second descent",
+        "Keep core engaged throughout - maintain torso angle",
+        "4 sets of 6-10 repetitions - popular bodybuilding variation"
+      ],
+      "metadata": {
+        "bilaterality": true,
+        "equipment": ["barbell", "weight-plates"]
+      }
+    }
+  ]
+}
+

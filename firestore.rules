@@ -108,6 +108,30 @@ service cloud.firestore {
     }
     
     // ============================================================================
+    // MASTER DATA COLLECTIONS
+    // ============================================================================
+    
+    /**
+     * Exercises collection: Master exercise data
+     * - Authenticated users can read exercises
+     * - Client writes are denied (data is managed server-side)
+     */
+    match /exercises/{exerciseId} {
+      allow read: if isAuthenticated();
+      allow write: if false;
+    }
+    
+    /**
+     * Variations collection: Exercise variations data
+     * - Authenticated users can read variations
+     * - Client writes are denied (data is managed server-side)
+     */
+    match /variations/{variationId} {
+      allow read: if isAuthenticated();
+      allow write: if false;
+    }
+    
+    // ============================================================================
     // DEFAULT DENY ALL RULE
     // ============================================================================
     

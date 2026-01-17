@@ -21,43 +21,153 @@ import {
     DEFAULT_WEEKLY_CONFIG,
     TERMINOLOGY
 } from './constants.js';
+import { getAllExercises, getAllVariations } from '../../src/services/exerciseService.js';
 
 /**
- * Load exercises from exercises.json
- * @returns {Promise<Object>} Exercises data
+ * Load exercises from Firestore and transform to expected structure
+ * @returns {Promise<Object>} Exercises data in format { exercises: [...] }
  */
 export async function loadExercises() {
     try {
-        // Try multiple possible paths
-        const paths = [
-            './js/data/exercises.json',
-            'js/data/exercises.json',
-            '/js/data/exercises.json'
-        ];
+        console.log('[Workout Engine] Loading exercises from Firestore...');
         
-        let lastError = null;
-        for (const path of paths) {
-            try {
-                console.log(`Trying to load exercises from: ${path}`);
-                const response = await fetch(path);
-                
-                if (!response.ok) {
-                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        // Fetch exercises and variations from Firestore
+        const [exercises, variations] = await Promise.all([
+            getAllExercises(),
+            getAllVariations()
+        ]);
+        
+        console.log(`[Workout Engine] Loaded ${exercises.length} exercises and ${variations.length} variations from Firestore`);
+        
+        // Create a map of exerciseId -> exercise for quick lookup
+        const exerciseMap = new Map();
+        exercises.forEach(exercise => {
+            exerciseMap.set(exercise.id, exercise);
+        });
+        
+        // Group variations by exerciseId
+        const variationsByExercise = new Map();
+        variations.forEach(variation => {
+            const exerciseId = variation.exerciseId;
+            if (!exerciseId) {
+                console.warn(`[Workout Engine] Variation ${variation.id} missing exerciseId, skipping`);
+                return;
+            }
+            
+            if (!variationsByExercise.has(exerciseId)) {
+                variationsByExercise.set(exerciseId, []);
+            }
+            variationsByExercise.get(exerciseId).push(variation);
+        });
+        
+        // Transform to expected structure
+        const transformedExercises = exercises.map(exercise => {
+            const exerciseVariations = variationsByExercise.get(exercise.id) || [];
+            
+            // Determine discipline from variations (use first discipline found)
+            // Map Firestore discipline names to expected format
+            const disciplineMap = {
+                'pilates': 'Pilates',
+                'animal-flow': 'Animal Flow',
+                'animalflow': 'Animal Flow',
+                'weights': 'Weights',
+                'crossfit': 'Crossfit',
+                'calisthenics': 'Calisthenics',
+                'yoga': 'Yoga' // In case yoga is in the data
+            };
+            
+            let discipline = null;
+            if (exerciseVariations.length > 0) {
+                const firstVariation = exerciseVariations[0];
+                if (firstVariation.disciplines && firstVariation.disciplines.length > 0) {
+                    const disciplineKey = firstVariation.disciplines[0].toLowerCase();
+                    discipline = disciplineMap[disciplineKey] || 
+                                disciplineKey.charAt(0).toUpperCase() + disciplineKey.slice(1);
+                }
+            }
+            
+            // Transform variations to expected format
+            const transformedVariations = exerciseVariations.map(variation => {
+                // Map bilaterality from boolean to string
+                let bilaterality = 'bilateral';
+                if (variation.metadata?.bilaterality !== undefined) {
+                    bilaterality = variation.metadata.bilaterality ? 'bilateral' : 'unilateral';
                 }
                 
-                const data = await response.json();
-                console.log(`Successfully loaded ${data.exercises?.length || 0} exercises from ${path}`);
-                return data;
-            } catch (error) {
-                console.warn(`Failed to load from ${path}:`, error.message);
-                lastError = error;
-                continue;
+                // Map target muscles from exercise targetMuscleGroups
+                // Split into primary (first 2-3) and secondary (rest)
+                const targetMuscleGroups = exercise.targetMuscleGroups || [];
+                const primaryMuscles = targetMuscleGroups.slice(0, Math.min(3, targetMuscleGroups.length));
+                const secondaryMuscles = targetMuscleGroups.slice(3);
+                
+                // Infer progression_type from difficulty (simple heuristic)
+                let progressionType = 'stability';
+                const difficulty = variation.difficulty || 0;
+                if (difficulty >= 7) {
+                    progressionType = 'leverage';
+                } else if (difficulty >= 5) {
+                    progressionType = 'duration';
+                } else if (difficulty >= 3) {
+                    progressionType = 'form';
+                }
+                
+                return {
+                    id: variation.id,
+                    name: variation.name,
+                    weight: 0, // Default weight (can be enhanced later)
+                    bilaterality: bilaterality,
+                    difficulty_score: variation.difficulty || 0,
+                    progression_type: progressionType,
+                    target_muscles: {
+                        primary: primaryMuscles.map(m => m.toLowerCase()),
+                        secondary: secondaryMuscles.map(m => m.toLowerCase())
+                    },
+                    technique_cues: variation.instructions || []
+                };
+            }).sort((a, b) => a.difficulty_score - b.difficulty_score); // Sort by difficulty
+            
+            return {
+                id: exercise.id,
+                name: exercise.name,
+                description: exercise.description || `${exercise.name} - A ${exercise.category || 'core'} exercise`,
+                discipline: discipline || 'Pilates', // Default fallback
+                variations: transformedVariations
+            };
+        }).filter(exercise => exercise.variations.length > 0); // Only include exercises with variations
+        
+        console.log(`[Workout Engine] Transformed to ${transformedExercises.length} exercises with variations`);
+        
+        return {
+            exercises: transformedExercises
+        };
+    } catch (error) {
+        console.error('[Workout Engine] Error loading exercises from Firestore:', error);
+        
+        // Fallback to local JSON if Firestore fails
+        console.log('[Workout Engine] Attempting fallback to local JSON...');
+        try {
+            const paths = [
+                './js/data/exercises.json',
+                'js/data/exercises.json',
+                '/js/data/exercises.json'
+            ];
+            
+            for (const path of paths) {
+                try {
+                    const response = await fetch(path);
+                    if (response.ok) {
+                        const data = await response.json();
+                        console.log(`[Workout Engine] Fallback: Loaded ${data.exercises?.length || 0} exercises from ${path}`);
+                        return data;
+                    }
+                } catch (e) {
+                    continue;
+                }
             }
+        } catch (fallbackError) {
+            console.error('[Workout Engine] Fallback also failed:', fallbackError);
         }
         
-        throw lastError || new Error('Could not load exercises.json from any path');
-    } catch (error) {
-        console.error('Error loading exercises:', error);
         throw new Error(`Failed to load exercises: ${error.message}`);
     }
 }
@@ -932,6 +1042,69 @@ export async function generateWeeklySystem(userProfile = {}, config = {}) {
     } catch (error) {
         console.error('Error in generateWeeklySystem:', error);
         throw error;
+    }
+}
+
+/**
+ * Calculate projected metrics from a planned session
+ * Iterates through all phases and their variations to sum up mobility, rotation, and flexibility scores
+ * 
+ * @param {Object} session - Planned session object with phases.warmup, phases.workout, phases.cooldown arrays
+ * @returns {Promise<Object>} Projected metrics { mobility: number, rotation: number, flexibility: number }
+ */
+export async function calculateProjectedMetrics(session) {
+    try {
+        if (!session || !session.phases) {
+            return { mobility: 0, rotation: 0, flexibility: 0 };
+        }
+
+        const metricsTotals = { mobility: 0, rotation: 0, flexibility: 0 };
+        let variationCount = 0;
+
+        // Iterate through all 3 phases
+        const phases = ['warmup', 'workout', 'cooldown'];
+        
+        for (const phaseName of phases) {
+            const phaseVariations = session.phases[phaseName] || [];
+            
+            if (!Array.isArray(phaseVariations) || phaseVariations.length === 0) {
+                continue;
+            }
+
+            // Iterate through variations in the phase
+            for (const variation of phaseVariations) {
+                if (!variation || !variation.variationId) {
+                    continue;
+                }
+
+                // Fetch variation master data to get metrics
+                const { getExerciseById } = await import('../../src/services/exerciseService.js');
+                const variationMaster = await getExerciseById(variation.variationId);
+                
+                if (variationMaster && variationMaster.metrics) {
+                    const metrics = variationMaster.metrics;
+                    metricsTotals.mobility += metrics.mobility || 0;
+                    metricsTotals.rotation += metrics.rotation || 0;
+                    metricsTotals.flexibility += metrics.flexibility || 0;
+                    variationCount++;
+                }
+            }
+        }
+
+        // Calculate averages (avoid division by zero)
+        if (variationCount === 0) {
+            return { mobility: 0, rotation: 0, flexibility: 0 };
+        }
+
+        return {
+            mobility: Math.round(metricsTotals.mobility / variationCount),
+            rotation: Math.round(metricsTotals.rotation / variationCount),
+            flexibility: Math.round(metricsTotals.flexibility / variationCount)
+        };
+    } catch (error) {
+        console.error('Error calculating projected metrics:', error);
+        // Return zeros on error to prevent UI breakage
+        return { mobility: 0, rotation: 0, flexibility: 0 };
     }
 }
 
