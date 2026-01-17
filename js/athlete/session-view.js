@@ -1,6 +1,8 @@
 // Athlete Session View - Active workout player/interface
 import { updateMilestone, getCurrentVariation, getNextVariation, isMilestoneAchieved } from '../core/workout-engine.js';
 import { getUserProfile, saveUserProfile, saveSessionProgress, getSessionProgress, clearSessionProgress } from '../core/storage.js';
+import { getAuthUser } from '../core/auth-manager.js';
+import { saveSessionOnComplete } from '../../src/ui/session-view.js';
 
 export class SessionView {
     constructor(session) {
@@ -264,8 +266,10 @@ export class SessionView {
         this.currentPhaseIndex++;
         
         if (this.currentPhaseIndex >= this.phases.length) {
-            // Session complete
-            this.endSession();
+            // Session complete - call async endSession and handle promise
+            this.endSession().catch(err => {
+                console.error('Error in endSession:', err);
+            });
             return;
         }
 
@@ -340,7 +344,24 @@ export class SessionView {
     /**
      * End session and update milestones
      */
-    endSession() {
+    async endSession() {
+        try {
+            // Get current user ID
+            const user = getAuthUser();
+            if (!user || !user.uid) {
+                console.error('Cannot save session: User not authenticated');
+                // Still allow session to complete even if save fails
+            } else {
+                // Save completed session to Firestore before redirecting
+                await saveSessionOnComplete(this, user.uid);
+                console.log('✓ Session saved successfully to Firestore');
+            }
+        } catch (error) {
+            console.error('Error saving session to Firestore:', error);
+            // Don't block session completion if save fails
+            // User can still complete the session, but streak won't update
+        }
+        
         // Final milestone updates are already done per variation
         // Clear saved progress
         clearSessionProgress();

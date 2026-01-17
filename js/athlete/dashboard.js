@@ -1,8 +1,9 @@
 // Athlete Dashboard/Homepage Logic
 import { AthleteCalendarManager } from './calendar.js';
-import { generateWeeklySystem, findAlternativeVariation, loadExercises } from '../core/workout-engine.js';
+import { generateWeeklySystem, findAlternativeVariation, loadExercises, calculateProjectedMetrics } from '../core/workout-engine.js';
 import { getUserProfile, saveUserProfile, getTrainingSystem, saveTrainingSystem } from '../core/storage.js';
 import { SessionView } from './session-view.js';
+import { init as initDashboardUI } from '../../src/ui/dashboard.js';
 
 let athleteCalendarManager = null;
 let routerInstance = null;
@@ -21,8 +22,9 @@ export function initializeAthleteApp(router) {
         
         // Initialize dashboard when home page is shown
         if (page === 'home') {
-            setTimeout(() => {
-                initDashboard();
+            setTimeout(async () => {
+                // initDashboard() will call initDashboardUI() with session metrics
+                await initDashboard();
             }, 100);
         }
         
@@ -40,9 +42,10 @@ export function initializeAthleteApp(router) {
     };
     
     // Also call on initial load if already on home
-    setTimeout(() => {
+    setTimeout(async () => {
         if (router.currentPage === 'home') {
-            initDashboard();
+            // initDashboard() will call initDashboardUI() with session metrics
+            await initDashboard();
         }
     }, 100);
 }
@@ -64,19 +67,29 @@ export async function initDashboard() {
         if (!trainingSystem) {
             // Show empty state
             renderEmptyState();
+            // No training system - show zeros for session rating
+            await initDashboardUI({ mobility: 0, rotation: 0, flexibility: 0 });
             return;
         }
         
-        // Render first session
+        // Render first session (today's session)
         const firstSession = trainingSystem.sessions && trainingSystem.sessions[0];
         if (firstSession) {
-            renderDailySession(firstSession);
+            await renderDailySession(firstSession);
         } else {
             renderEmptyState();
+            // No session (rest day) - show zeros for session rating
+            await initDashboardUI({ mobility: 0, rotation: 0, flexibility: 0 });
         }
     } catch (error) {
         console.error('Error initializing dashboard:', error);
         renderEmptyState();
+        // On error, show zeros for session rating
+        try {
+            await initDashboardUI({ mobility: 0, rotation: 0, flexibility: 0 });
+        } catch (uiError) {
+            console.error('Error initializing dashboard UI:', uiError);
+        }
     }
 }
 
@@ -87,7 +100,7 @@ let currentSession = null;
  * Populate existing Daily Session card with session data
  * @param {Object} session - Session object from training system
  */
-function renderDailySession(session) {
+async function renderDailySession(session) {
     currentSession = session; // Store for swap functionality
     
     // Update title with workout info
@@ -110,6 +123,17 @@ function renderDailySession(session) {
     if (startBtn) {
         startBtn.onclick = () => handleStartSession(session);
         startBtn.disabled = false;
+    }
+    
+    // Calculate and update session rating (projected metrics)
+    try {
+        const projectedMetrics = await calculateProjectedMetrics(session);
+        // Update dashboard UI with session metrics
+        await initDashboardUI(projectedMetrics);
+    } catch (error) {
+        console.error('Error calculating projected metrics:', error);
+        // Still show dashboard with zeros if calculation fails
+        await initDashboardUI({ mobility: 0, rotation: 0, flexibility: 0 });
     }
 }
 
@@ -332,7 +356,7 @@ async function handleGeneratePlan() {
         console.log('System saved to Firestore/localStorage');
         
         // Render first session
-        renderDailySession(system.sessions[0]);
+        await renderDailySession(system.sessions[0]);
         console.log('Dashboard rendered successfully');
         
     } catch (error) {

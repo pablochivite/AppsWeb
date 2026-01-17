@@ -1,0 +1,558 @@
+{
+  "exercises": [
+    {
+      "id": "push-up",
+      "name": "Push-Up",
+      "targetMuscleGroups": ["chest", "triceps", "shoulders", "core"],
+      "category": "push"
+    },
+    {
+      "id": "pull-up",
+      "name": "Pull-Up",
+      "targetMuscleGroups": ["lats", "biceps", "rhomboids", "rear-deltoids"],
+      "category": "pull"
+    },
+    {
+      "id": "dip",
+      "name": "Dip",
+      "targetMuscleGroups": ["triceps", "chest", "shoulders", "core"],
+      "category": "push"
+    },
+    {
+      "id": "pistol-squat",
+      "name": "Pistol Squat",
+      "targetMuscleGroups": ["quadriceps", "glutes", "hamstrings", "calves", "core"],
+      "category": "legs"
+    },
+    {
+      "id": "muscle-up",
+      "name": "Muscle-Up",
+      "targetMuscleGroups": ["lats", "triceps", "chest", "shoulders", "core"],
+      "category": "pull"
+    }
+  ],
+  "variations": [
+    {
+      "id": "push-up-incline",
+      "exerciseId": "push-up",
+      "name": "Incline Push-Up",
+      "disciplines": ["calisthenics"],
+      "difficulty": 2,
+      "metrics": {
+        "mobility": 25,
+        "rotation": 10,
+        "flexibility": 30
+      },
+      "instructions": [
+        "Place hands on elevated surface (bench, box, or wall)",
+        "Position hands slightly wider than shoulder-width",
+        "Keep body in straight line from head to heels",
+        "Lower chest toward surface by bending elbows",
+        "Push back up to starting position",
+        "Maintain core engagement throughout movement"
+      ],
+      "metadata": {
+        "bilaterality": true,
+        "equipment": ["bench", "box", "wall"]
+      }
+    },
+    {
+      "id": "push-up-standard",
+      "exerciseId": "push-up",
+      "name": "Standard Push-Up",
+      "disciplines": ["calisthenics"],
+      "difficulty": 3,
+      "metrics": {
+        "mobility": 40,
+        "rotation": 15,
+        "flexibility": 45
+      },
+      "instructions": [
+        "Start in plank position with hands directly under shoulders",
+        "Feet together, body forming straight line",
+        "Lower body by bending elbows, keeping them at 45-degree angle",
+        "Descend until chest nearly touches ground",
+        "Push through palms to return to starting position",
+        "Keep core tight and hips level throughout"
+      ],
+      "metadata": {
+        "bilaterality": true,
+        "equipment": []
+      }
+    },
+    {
+      "id": "push-up-decline",
+      "exerciseId": "push-up",
+      "name": "Decline Push-Up",
+      "disciplines": ["calisthenics"],
+      "difficulty": 4,
+      "metrics": {
+        "mobility": 50,
+        "rotation": 20,
+        "flexibility": 55
+      },
+      "instructions": [
+        "Place feet on elevated surface (bench or box)",
+        "Hands on ground, slightly wider than shoulder-width",
+        "Maintain straight body alignment",
+        "Lower chest toward ground with controlled movement",
+        "Push up explosively to starting position",
+        "Focus on upper chest and anterior deltoid engagement"
+      ],
+      "metadata": {
+        "bilaterality": true,
+        "equipment": ["bench", "box"]
+      }
+    },
+    {
+      "id": "push-up-diamond",
+      "exerciseId": "push-up",
+      "name": "Diamond Push-Up",
+      "disciplines": ["calisthenics"],
+      "difficulty": 5,
+      "metrics": {
+        "mobility": 60,
+        "rotation": 25,
+        "flexibility": 65
+      },
+      "instructions": [
+        "Start in standard push-up position",
+        "Place hands together forming diamond shape with thumbs and index fingers",
+        "Keep elbows close to body during descent",
+        "Lower until chest nearly touches hands",
+        "Push up focusing on triceps contraction",
+        "Maintain strict form - no sagging or arching"
+      ],
+      "metadata": {
+        "bilaterality": true,
+        "equipment": []
+      }
+    },
+    {
+      "id": "push-up-archer",
+      "exerciseId": "push-up",
+      "name": "Archer Push-Up",
+      "disciplines": ["calisthenics"],
+      "difficulty": 7,
+      "metrics": {
+        "mobility": 75,
+        "rotation": 50,
+        "flexibility": 70
+      },
+      "instructions": [
+        "Start in wide push-up position",
+        "Shift weight to one side while extending opposite arm",
+        "Lower body toward working arm side",
+        "Keep extended arm straight and elevated",
+        "Push up to center position",
+        "Alternate sides for each repetition",
+        "Requires significant shoulder stability and core strength"
+      ],
+      "metadata": {
+        "bilaterality": false,
+        "equipment": []
+      }
+    },
+    {
+      "id": "pull-up-assisted",
+      "exerciseId": "pull-up",
+      "name": "Assisted Pull-Up",
+      "disciplines": ["calisthenics"],
+      "difficulty": 2,
+      "metrics": {
+        "mobility": 35,
+        "rotation": 20,
+        "flexibility": 40
+      },
+      "instructions": [
+        "Use resistance band or assistance machine",
+        "Grasp bar with overhand grip, shoulder-width apart",
+        "Hang with arms fully extended",
+        "Pull body up until chin clears bar",
+        "Control descent to full extension",
+        "Focus on engaging lats and biceps",
+        "Reduce assistance as strength improves"
+      ],
+      "metadata": {
+        "bilaterality": true,
+        "equipment": ["resistance-band", "assistance-machine"]
+      }
+    },
+    {
+      "id": "pull-up-standard",
+      "exerciseId": "pull-up",
+      "name": "Standard Pull-Up",
+      "disciplines": ["calisthenics"],
+      "difficulty": 5,
+      "metrics": {
+        "mobility": 55,
+        "rotation": 30,
+        "flexibility": 60
+      },
+      "instructions": [
+        "Hang from bar with overhand grip, shoulder-width apart",
+        "Engage core and retract shoulder blades",
+        "Pull body up by driving elbows down and back",
+        "Continue until chin clears bar",
+        "Lower with control to full arm extension",
+        "Maintain hollow body position throughout",
+        "Avoid kipping or swinging"
+      ],
+      "metadata": {
+        "bilaterality": true,
+        "equipment": ["pull-up-bar"]
+      }
+    },
+    {
+      "id": "pull-up-wide-grip",
+      "exerciseId": "pull-up",
+      "name": "Wide Grip Pull-Up",
+      "disciplines": ["calisthenics"],
+      "difficulty": 6,
+      "metrics": {
+        "mobility": 65,
+        "rotation": 35,
+        "flexibility": 70
+      },
+      "instructions": [
+        "Grasp bar with overhand grip, wider than shoulder-width",
+        "Hang with arms fully extended",
+        "Focus on lat engagement from the start",
+        "Pull up emphasizing back muscles over biceps",
+        "Bring chest toward bar at top",
+        "Lower with full control",
+        "Requires greater shoulder mobility and lat strength"
+      ],
+      "metadata": {
+        "bilaterality": true,
+        "equipment": ["pull-up-bar"]
+      }
+    },
+    {
+      "id": "pull-up-l-sit",
+      "exerciseId": "pull-up",
+      "name": "L-Sit Pull-Up",
+      "disciplines": ["calisthenics"],
+      "difficulty": 8,
+      "metrics": {
+        "mobility": 80,
+        "rotation": 40,
+        "flexibility": 85
+      },
+      "instructions": [
+        "Begin in hanging position with legs extended in L-sit",
+        "Maintain L-sit position throughout entire movement",
+        "Pull body up while keeping legs parallel to ground",
+        "Bring chest to bar with legs elevated",
+        "Lower with control maintaining L-sit",
+        "Requires exceptional core strength and hip flexibility",
+        "Advanced progression combining pull strength with core stability"
+      ],
+      "metadata": {
+        "bilaterality": true,
+        "equipment": ["pull-up-bar"]
+      }
+    },
+    {
+      "id": "dip-bench",
+      "exerciseId": "dip",
+      "name": "Bench Dip",
+      "disciplines": ["calisthenics"],
+      "difficulty": 2,
+      "metrics": {
+        "mobility": 30,
+        "rotation": 15,
+        "flexibility": 35
+      },
+      "instructions": [
+        "Sit on edge of bench with hands gripping edge",
+        "Slide forward so bodyweight is supported by arms",
+        "Lower body by bending elbows",
+        "Descend until elbows reach 90-degree angle",
+        "Push up to starting position",
+        "Keep feet on ground for assistance if needed",
+        "Focus on triceps engagement"
+      ],
+      "metadata": {
+        "bilaterality": true,
+        "equipment": ["bench"]
+      }
+    },
+    {
+      "id": "dip-standard",
+      "exerciseId": "dip",
+      "name": "Standard Dip",
+      "disciplines": ["calisthenics"],
+      "difficulty": 4,
+      "metrics": {
+        "mobility": 50,
+        "rotation": 25,
+        "flexibility": 55
+      },
+      "instructions": [
+        "Support bodyweight on parallel bars or dip station",
+        "Start with arms fully extended, body vertical",
+        "Lower body by bending elbows",
+        "Descend until shoulders are below elbows",
+        "Push up explosively to starting position",
+        "Keep core engaged and avoid swinging",
+        "Focus on triceps and anterior deltoids"
+      ],
+      "metadata": {
+        "bilaterality": true,
+        "equipment": ["parallel-bars", "dip-station"]
+      }
+    },
+    {
+      "id": "dip-ring",
+      "exerciseId": "dip",
+      "name": "Ring Dip",
+      "disciplines": ["calisthenics"],
+      "difficulty": 7,
+      "metrics": {
+        "mobility": 75,
+        "rotation": 60,
+        "flexibility": 80
+      },
+      "instructions": [
+        "Support bodyweight on gymnastic rings",
+        "Start with arms extended, rings turned out",
+        "Lower body with controlled movement",
+        "Rings will naturally turn inward during descent",
+        "Push up while turning rings back out",
+        "Requires significant shoulder stability and wrist strength",
+        "Much more challenging than bar dips due to instability"
+      ],
+      "metadata": {
+        "bilaterality": true,
+        "equipment": ["gymnastic-rings"]
+      }
+    },
+    {
+      "id": "dip-weighted",
+      "exerciseId": "dip",
+      "name": "Weighted Dip",
+      "disciplines": ["calisthenics"],
+      "difficulty": 6,
+      "metrics": {
+        "mobility": 55,
+        "rotation": 30,
+        "flexibility": 60
+      },
+      "instructions": [
+        "Perform standard dip with added weight",
+        "Use dip belt or weighted vest",
+        "Start with light weight and progress gradually",
+        "Maintain strict form throughout movement",
+        "Lower with control, push up explosively",
+        "Focus on progressive overload",
+        "Ensure shoulder mobility before adding weight"
+      ],
+      "metadata": {
+        "bilaterality": true,
+        "equipment": ["parallel-bars", "dip-belt", "weighted-vest"]
+      }
+    },
+    {
+      "id": "pistol-squat-assisted",
+      "exerciseId": "pistol-squat",
+      "name": "Assisted Pistol Squat",
+      "disciplines": ["calisthenics"],
+      "difficulty": 4,
+      "metrics": {
+        "mobility": 70,
+        "rotation": 30,
+        "flexibility": 85
+      },
+      "instructions": [
+        "Hold onto support (pole, TRX, or door frame)",
+        "Lift one leg straight out in front",
+        "Lower body on standing leg while maintaining balance",
+        "Descend as low as possible with control",
+        "Use support to assist balance and strength",
+        "Push up through heel to return to standing",
+        "Focus on ankle mobility and hip flexibility"
+      ],
+      "metadata": {
+        "bilaterality": false,
+        "equipment": ["pole", "trx", "door-frame"]
+      }
+    },
+    {
+      "id": "pistol-squat-standard",
+      "exerciseId": "pistol-squat",
+      "name": "Standard Pistol Squat",
+      "disciplines": ["calisthenics"],
+      "difficulty": 7,
+      "metrics": {
+        "mobility": 85,
+        "rotation": 40,
+        "flexibility": 90
+      },
+      "instructions": [
+        "Stand on one leg with other leg extended forward",
+        "Lower body by bending standing leg",
+        "Keep extended leg parallel to ground",
+        "Descend until hamstring touches calf",
+        "Maintain upright torso throughout movement",
+        "Push through heel to return to standing",
+        "Requires exceptional leg strength, balance, and flexibility"
+      ],
+      "metadata": {
+        "bilaterality": false,
+        "equipment": []
+      }
+    },
+    {
+      "id": "pistol-squat-elevated",
+      "exerciseId": "pistol-squat",
+      "name": "Elevated Pistol Squat",
+      "disciplines": ["calisthenics"],
+      "difficulty": 5,
+      "metrics": {
+        "mobility": 75,
+        "rotation": 35,
+        "flexibility": 88
+      },
+      "instructions": [
+        "Stand on elevated surface (box or platform)",
+        "Allow non-working leg to hang down",
+        "Lower body on standing leg",
+        "Descend until hamstring touches calf",
+        "Push up to starting position",
+        "Easier than standard due to reduced range of motion",
+        "Good progression toward full pistol squat"
+      ],
+      "metadata": {
+        "bilaterality": false,
+        "equipment": ["box", "platform"]
+      }
+    },
+    {
+      "id": "pistol-squat-weighted",
+      "exerciseId": "pistol-squat",
+      "name": "Weighted Pistol Squat",
+      "disciplines": ["calisthenics"],
+      "difficulty": 9,
+      "metrics": {
+        "mobility": 90,
+        "rotation": 45,
+        "flexibility": 95
+      },
+      "instructions": [
+        "Perform standard pistol squat with added weight",
+        "Hold weight plate, kettlebell, or dumbbell",
+        "Maintain strict form despite added load",
+        "Lower with control, push up explosively",
+        "Requires mastery of bodyweight version first",
+        "Extreme test of single-leg strength and stability",
+        "Progressive overload for advanced athletes"
+      ],
+      "metadata": {
+        "bilaterality": false,
+        "equipment": ["weight-plate", "kettlebell", "dumbbell"]
+      }
+    },
+    {
+      "id": "muscle-up-strict",
+      "exerciseId": "muscle-up",
+      "name": "Strict Muscle-Up",
+      "disciplines": ["calisthenics"],
+      "difficulty": 8,
+      "metrics": {
+        "mobility": 80,
+        "rotation": 50,
+        "flexibility": 75
+      },
+      "instructions": [
+        "Hang from bar with false grip (wrists over bar)",
+        "Pull up explosively until chest reaches bar",
+        "Transition by rotating wrists and pushing down",
+        "Complete transition to support position",
+        "Lower with control back to hang",
+        "No kipping or momentum allowed",
+        "Requires exceptional pulling and pushing strength"
+      ],
+      "metadata": {
+        "bilaterality": true,
+        "equipment": ["pull-up-bar"]
+      }
+    },
+    {
+      "id": "muscle-up-kipping",
+      "exerciseId": "muscle-up",
+      "name": "Kipping Muscle-Up",
+      "disciplines": ["calisthenics"],
+      "difficulty": 6,
+      "metrics": {
+        "mobility": 70,
+        "rotation": 55,
+        "flexibility": 70
+      },
+      "instructions": [
+        "Hang from bar with standard grip",
+        "Generate momentum with leg swing (kip)",
+        "Pull up as momentum peaks",
+        "Use momentum to assist transition",
+        "Complete transition to support position",
+        "Lower with control",
+        "Easier than strict but requires coordination"
+      ],
+      "metadata": {
+        "bilaterality": true,
+        "equipment": ["pull-up-bar"]
+      }
+    },
+    {
+      "id": "muscle-up-ring",
+      "exerciseId": "muscle-up",
+      "name": "Ring Muscle-Up",
+      "disciplines": ["calisthenics"],
+      "difficulty": 9,
+      "metrics": {
+        "mobility": 85,
+        "rotation": 70,
+        "flexibility": 80
+      },
+      "instructions": [
+        "Hang from gymnastic rings with false grip",
+        "Pull up explosively",
+        "Transition by turning rings out and pushing",
+        "Complete transition to support position",
+        "Rings require greater stability than bar",
+        "Much more challenging due to instability",
+        "Ultimate test of upper body strength and coordination"
+      ],
+      "metadata": {
+        "bilaterality": true,
+        "equipment": ["gymnastic-rings"]
+      }
+    },
+    {
+      "id": "muscle-up-assisted",
+      "exerciseId": "muscle-up",
+      "name": "Assisted Muscle-Up",
+      "disciplines": ["calisthenics"],
+      "difficulty": 4,
+      "metrics": {
+        "mobility": 65,
+        "rotation": 40,
+        "flexibility": 65
+      },
+      "instructions": [
+        "Use resistance band for assistance",
+        "Place band around bar and foot or knee",
+        "Perform muscle-up with reduced bodyweight",
+        "Focus on proper transition technique",
+        "Reduce assistance as strength improves",
+        "Good progression toward unassisted muscle-up",
+        "Practice false grip and transition separately"
+      ],
+      "metadata": {
+        "bilaterality": true,
+        "equipment": ["pull-up-bar", "resistance-band"]
+      }
+    }
+  ]
+}
+

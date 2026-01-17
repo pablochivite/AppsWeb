@@ -36,7 +36,7 @@ When selecting or suggesting exercises, the AI must prioritize:
 
 ## 5. Data Architecture (Exercises vs. Variations)
 - **Exercise**: The parent entity (e.g., "Push-up"). Not always suitable for Progressive Overload (e.g., pure mobility).
-- **Variation**: Specific instance with changes in weight, range of motion, bilaterality and difficulty.
+- **Variation**: Specific instance with changes in technique, range of motion, bilaterality and difficulty.
 - **Overload Period**: Transition state between two variations. Considered completed (Milestone) after 3 successful sessions with the new variation.
 
 ## 6. Terminology & Data Hierarchy
@@ -45,14 +45,14 @@ To maintain consistency across the codebase (JS) and the database (JSON), the fo
 
 - **Session**: A single iteration of a Training (e.g., "Leg Day Session #3").
 - **Workout**: A label denoting the specific routine or type of workout. Also referred to as "Routine" (e.g., Leg, Shoulder, Chest, Back, Pull, Push, Upper body, Lower body).
-- **Discipline**: The method or style of training (e.g., CrossFit, Animal Flow, Pilates, Weights).
+- **Discipline**: The method or style of training (Yoga, CrossFit, Animal Flow, Pilates, Weights).
 - **Training Framework**: The components of the training system logic, usually functioning in pairs or packs (e.g., Push-Pull, Upper-Lower, Chest-Back-Legs).
-- **Phases**: The components of a Session: Warm-up (cardio, mobility), Workout, Core, Cool-down (stretching, mobility)…
+- **Phases**: The components of a Session: Warm-up (cardio/ mobility/core), Workout, Cool-down (stretching, mobility)…
 - **Training System**: The complete cycle with a specific order/pattern of trainings. Can be weekly or monthly (e.g., Mon: Pull, Wed: Push, Fri: Legs, Sun: Animal Flow).
 - **Exercise**: The movement entity that typically houses multiple variations (e.g., "Push-up").
 - **Superset**: A set of 2 or more exercises performed without rest. They function as a single, longer exercise unit.
 - **Set**: A group of repetitions of a variation.
-- **Variation**: Specific element inside of an exercise that changes in load, leverage, stability, duration, range of motion or form that influence difficulty mainly and muscle engagement. *Note: Assigning weight or changing bilaterality/range of motion automatically creates a Variation.*
+- **Variation**: Specific element inside of an exercise that changes in form leverage, stability, duration, range of motion or form that influence difficulty mainly and muscle engagement. *Changing bilaterality/range of motion automatically creates a Variation.*
 - **Overload**: Attempting a variation that the user theoretically cannot yet perform successfully (e.g., One-arm push-up).
 - **Progressive overload**: The order in which variations of an exercise are established depending on the difficulty of each variation. Difficulty means change in weight or form
 -**Form**: One of the several criteria that identifies a variation of an exercise. For example: diamond push ups are a variation of a normal push up because of its form.

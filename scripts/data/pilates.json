@@ -1,0 +1,491 @@
+{
+  "exercises": [
+    {
+      "id": "the-hundred",
+      "name": "The Hundred",
+      "targetMuscleGroups": ["core", "abdominals", "hip flexors", "shoulders", "breathing"],
+      "category": "core"
+    },
+    {
+      "id": "roll-up",
+      "name": "Roll Up",
+      "targetMuscleGroups": ["core", "abdominals", "spinal flexors", "hamstrings", "hip flexors"],
+      "category": "flexibility"
+    },
+    {
+      "id": "single-leg-stretch",
+      "name": "Single Leg Stretch",
+      "targetMuscleGroups": ["core", "abdominals", "hip flexors", "quadriceps", "coordination"],
+      "category": "core"
+    },
+    {
+      "id": "swan-dive",
+      "name": "Swan Dive",
+      "targetMuscleGroups": ["back extensors", "glutes", "shoulders", "spinal extensors", "posterior chain"],
+      "category": "extension"
+    },
+    {
+      "id": "teaser",
+      "name": "Teaser",
+      "targetMuscleGroups": ["core", "abdominals", "hip flexors", "balance", "coordination"],
+      "category": "core"
+    }
+  ],
+  "variations": [
+    {
+      "id": "hundred-bent-knees",
+      "exerciseId": "the-hundred",
+      "name": "The Hundred - Bent Knees Modification",
+      "disciplines": ["pilates"],
+      "difficulty": 3,
+      "metrics": {
+        "mobility": 40,
+        "rotation": 15,
+        "flexibility": 35
+      },
+      "instructions": [
+        "Lie supine on mat with knees bent, feet flat on floor",
+        "Lift head and shoulders off mat, chin toward chest",
+        "Extend arms straight alongside body, palms down",
+        "Pump arms up and down in small, controlled movements",
+        "Inhale for 5 counts, exhale for 5 counts (10 cycles = 100)",
+        "Keep lower back pressed into mat, core engaged",
+        "Maintain neutral neck position, avoid straining",
+        "Focus on steady, rhythmic breathing throughout"
+      ],
+      "metadata": {
+        "bilaterality": true,
+        "equipment": ["mat"]
+      }
+    },
+    {
+      "id": "hundred-tabletop",
+      "exerciseId": "the-hundred",
+      "name": "The Hundred - Tabletop Position",
+      "disciplines": ["pilates"],
+      "difficulty": 5,
+      "metrics": {
+        "mobility": 55,
+        "rotation": 20,
+        "flexibility": 50
+      },
+      "instructions": [
+        "Lie supine, lift head and shoulders off mat",
+        "Bring knees to tabletop position (90-degree hip and knee angles)",
+        "Extend arms straight, hovering just above mat",
+        "Pump arms vigorously up and down, 2-3 inch range",
+        "Inhale for 5 arm pumps, exhale for 5 arm pumps",
+        "Keep shoulders relaxed, avoid tension in neck",
+        "Maintain stable tabletop position, core fully engaged",
+        "Complete 10 breathing cycles (100 total pumps)",
+        "Lower head and legs with control to finish"
+      ],
+      "metadata": {
+        "bilaterality": true,
+        "equipment": ["mat"]
+      }
+    },
+    {
+      "id": "hundred-extended-legs",
+      "exerciseId": "the-hundred",
+      "name": "The Hundred - Extended Legs",
+      "disciplines": ["pilates"],
+      "difficulty": 7,
+      "metrics": {
+        "mobility": 70,
+        "rotation": 25,
+        "flexibility": 75
+      },
+      "instructions": [
+        "Lie supine, lift head and shoulders off mat",
+        "Extend legs to 45-degree angle (or lower if hamstring flexibility allows)",
+        "Keep legs together, toes pointed, inner thighs engaged",
+        "Extend arms straight alongside body, palms down",
+        "Pump arms with controlled, rhythmic movements",
+        "Maintain 45-degree leg angle throughout entire exercise",
+        "Inhale for 5 counts, exhale for 5 counts",
+        "Keep lower back pressed into mat - if it lifts, raise legs slightly",
+        "Complete 10 full breathing cycles (100 pumps total)",
+        "This variation requires strong core and hip flexor control"
+      ],
+      "metadata": {
+        "bilaterality": true,
+        "equipment": ["mat"]
+      }
+    },
+    {
+      "id": "hundred-double-leg-lower",
+      "exerciseId": "the-hundred",
+      "name": "The Hundred - With Double Leg Lower",
+      "disciplines": ["pilates"],
+      "difficulty": 9,
+      "metrics": {
+        "mobility": 85,
+        "rotation": 30,
+        "flexibility": 90
+      },
+      "instructions": [
+        "Begin in extended legs position at 45 degrees",
+        "Start arm pumping and breathing rhythm",
+        "On each exhale, lower legs 5-10 degrees",
+        "On each inhale, return legs to 45 degrees",
+        "Maintain arm pumping throughout entire movement",
+        "Keep lower back pressed into mat at all times",
+        "If back lifts off mat, stop lowering and return to start",
+        "This advanced variation challenges core endurance significantly",
+        "Complete 10 breathing cycles with leg lowering",
+        "Requires exceptional core strength and control"
+      ],
+      "metadata": {
+        "bilaterality": true,
+        "equipment": ["mat"]
+      }
+    },
+    {
+      "id": "roll-up-assisted",
+      "exerciseId": "roll-up",
+      "name": "Roll Up - Assisted with Strap",
+      "disciplines": ["pilates"],
+      "difficulty": 4,
+      "metrics": {
+        "mobility": 50,
+        "rotation": 20,
+        "flexibility": 60
+      },
+      "instructions": [
+        "Lie supine with legs extended, arms overhead holding strap or towel",
+        "Keep legs together, inner thighs engaged, toes pointed",
+        "Inhale to prepare, exhale and lift arms toward ceiling",
+        "Continue exhaling, articulating spine one vertebra at a time",
+        "Use strap to assist forward flexion if needed",
+        "Roll up to seated position, reaching forward over legs",
+        "Inhale at top, then exhale to roll back down vertebra by vertebra",
+        "Control the descent, don't collapse",
+        "Repeat 5-8 times, focusing on spinal articulation"
+      ],
+      "metadata": {
+        "bilaterality": true,
+        "equipment": ["mat", "resistance-band"]
+      }
+    },
+    {
+      "id": "roll-up-standard",
+      "exerciseId": "roll-up",
+      "name": "Roll Up - Standard",
+      "disciplines": ["pilates"],
+      "difficulty": 6,
+      "metrics": {
+        "mobility": 70,
+        "rotation": 30,
+        "flexibility": 80
+      },
+      "instructions": [
+        "Lie supine, legs extended, arms reaching overhead",
+        "Keep legs together, inner thighs engaged, feet flexed",
+        "Inhale to prepare, exhale and lift arms toward ceiling",
+        "Continue exhaling, tuck chin and begin spinal articulation",
+        "Roll up one vertebra at a time: cervical, thoracic, lumbar",
+        "Keep legs grounded, avoid using momentum",
+        "Reach forward over legs in seated position, spine long",
+        "Inhale at top, maintaining length",
+        "Exhale to initiate roll down, reversing the articulation",
+        "Control each vertebra as you lower, don't collapse",
+        "Complete 8-10 repetitions with full control"
+      ],
+      "metadata": {
+        "bilaterality": true,
+        "equipment": ["mat"]
+      }
+    },
+    {
+      "id": "roll-up-single-leg",
+      "exerciseId": "roll-up",
+      "name": "Roll Up - Single Leg Variation",
+      "disciplines": ["pilates"],
+      "difficulty": 8,
+      "metrics": {
+        "mobility": 85,
+        "rotation": 40,
+        "flexibility": 90
+      },
+      "instructions": [
+        "Lie supine with one leg extended, one leg bent (foot on mat)",
+        "Arms reaching overhead, maintain neutral pelvis",
+        "Inhale to prepare, exhale and roll up with control",
+        "As you roll up, extend the bent leg to match the other",
+        "Both legs extended and together at seated position",
+        "Reach forward over extended legs, maintaining length",
+        "Inhale at top, then exhale to roll back down",
+        "As you roll down, bend one leg again to assist control",
+        "Alternate which leg is bent on each repetition",
+        "This variation challenges unilateral stability and control",
+        "Complete 6-8 repetitions, alternating legs"
+      ],
+      "metadata": {
+        "bilaterality": false,
+        "equipment": ["mat"]
+      }
+    },
+    {
+      "id": "single-leg-stretch-beginner",
+      "exerciseId": "single-leg-stretch",
+      "name": "Single Leg Stretch - Beginner",
+      "disciplines": ["pilates"],
+      "difficulty": 4,
+      "metrics": {
+        "mobility": 50,
+        "rotation": 25,
+        "flexibility": 45
+      },
+      "instructions": [
+        "Lie supine, lift head and shoulders off mat",
+        "Bring both knees to chest, hands on knees",
+        "Extend right leg to tabletop (90-degree angle)",
+        "Keep left knee pulled in, right hand on left knee, left hand on left ankle",
+        "Switch legs: extend left leg, pull right knee in",
+        "Keep head lifted, shoulders relaxed, core engaged",
+        "Move with control, don't rush the switching",
+        "Breathe naturally, maintain steady rhythm",
+        "Complete 8-10 repetitions per side",
+        "Focus on stability of torso while legs move"
+      ],
+      "metadata": {
+        "bilaterality": false,
+        "equipment": ["mat"]
+      }
+    },
+    {
+      "id": "single-leg-stretch-standard",
+      "exerciseId": "single-leg-stretch",
+      "name": "Single Leg Stretch - Standard",
+      "disciplines": ["pilates"],
+      "difficulty": 6,
+      "metrics": {
+        "mobility": 65,
+        "rotation": 35,
+        "flexibility": 60
+      },
+      "instructions": [
+        "Lie supine, lift head and shoulders off mat",
+        "Bring both knees to chest, maintaining C-curve of spine",
+        "Extend right leg to 45-degree angle (or lower if control allows)",
+        "Keep left knee pulled in, right hand on left knee, left hand on left shin",
+        "Switch legs with controlled movement: extend left, pull right in",
+        "Maintain stable torso - no rocking or momentum",
+        "Keep lower back pressed into mat throughout",
+        "Head stays lifted, gaze toward knees",
+        "Breathe: exhale on switch, inhale to hold",
+        "Complete 10-12 repetitions per side",
+        "Focus on precision and control over speed"
+      ],
+      "metadata": {
+        "bilaterality": false,
+        "equipment": ["mat"]
+      }
+    },
+    {
+      "id": "single-leg-stretch-double-pump",
+      "exerciseId": "single-leg-stretch",
+      "name": "Single Leg Stretch - Double Pump",
+      "disciplines": ["pilates"],
+      "difficulty": 8,
+      "metrics": {
+        "mobility": 80,
+        "rotation": 45,
+        "flexibility": 75
+      },
+      "instructions": [
+        "Begin in standard single leg stretch position",
+        "Extend right leg to 45 degrees, left knee pulled in",
+        "Perform two small pumps with the extended leg (flex and point foot)",
+        "Then switch legs: extend left, pull right in",
+        "Perform two pumps with new extended leg",
+        "Continue alternating with double pump on each extension",
+        "Maintain stable torso throughout - no movement in upper body",
+        "Keep lower back pressed into mat, core fully engaged",
+        "The double pump challenges stability and coordination",
+        "Complete 8-10 repetitions per side with double pumps",
+        "This advanced variation requires exceptional core control"
+      ],
+      "metadata": {
+        "bilaterality": false,
+        "equipment": ["mat"]
+      }
+    },
+    {
+      "id": "swan-dive-preparation",
+      "exerciseId": "swan-dive",
+      "name": "Swan Dive - Preparation (Swan)",
+      "disciplines": ["pilates"],
+      "difficulty": 5,
+      "metrics": {
+        "mobility": 60,
+        "rotation": 30,
+        "flexibility": 55
+      },
+      "instructions": [
+        "Lie prone on mat, legs together, arms bent with hands by shoulders",
+        "Press palms into mat, keeping elbows close to body",
+        "Inhale and lift head, chest, and upper torso off mat",
+        "Keep pubic bone pressed into mat, avoid compressing lower back",
+        "Lengthen through crown of head, gaze forward or slightly up",
+        "Engage glutes and hamstrings to support back extension",
+        "Hold for 3-5 breaths, maintaining length",
+        "Exhale to lower with control, vertebra by vertebra",
+        "Repeat 5-8 times, building back extension strength",
+        "Focus on length over height in the extension"
+      ],
+      "metadata": {
+        "bilaterality": true,
+        "equipment": ["mat"]
+      }
+    },
+    {
+      "id": "swan-dive-standard",
+      "exerciseId": "swan-dive",
+      "name": "Swan Dive - Standard",
+      "disciplines": ["pilates"],
+      "difficulty": 7,
+      "metrics": {
+        "mobility": 75,
+        "rotation": 40,
+        "flexibility": 70
+      },
+      "instructions": [
+        "Begin in prone position, hands by shoulders",
+        "Inhale and lift into swan position (upper body extended)",
+        "From swan, lift legs off mat, engaging glutes and hamstrings",
+        "Balance on pubic bone, creating a 'flying' position",
+        "Keep arms extended forward or alongside body",
+        "Maintain length through entire spine, avoid compression",
+        "Hold for 2-3 breaths in the 'dive' position",
+        "Exhale to lower legs, then upper body with control",
+        "Repeat 6-8 times, focusing on smooth transitions",
+        "This exercise requires strong posterior chain activation",
+        "Keep neck long, avoid hyperextension"
+      ],
+      "metadata": {
+        "bilaterality": true,
+        "equipment": ["mat"]
+      }
+    },
+    {
+      "id": "swan-dive-rocking",
+      "exerciseId": "swan-dive",
+      "name": "Swan Dive - Rocking Variation",
+      "disciplines": ["pilates"],
+      "difficulty": 9,
+      "metrics": {
+        "mobility": 90,
+        "rotation": 50,
+        "flexibility": 85
+      },
+      "instructions": [
+        "Begin in standard swan dive position (flying)",
+        "From balanced position, rock forward and back",
+        "Rock forward: lift chest and legs higher, balance on lower ribs/upper abdomen",
+        "Rock back: shift weight toward pubic bone, maintain extension",
+        "Keep arms extended, use them to help control the rocking motion",
+        "Maintain spinal extension throughout entire rocking movement",
+        "Rock smoothly, 5-8 times forward and back",
+        "This advanced variation requires exceptional back strength and control",
+        "Focus on fluid movement, not jerky motions",
+        "Finish by lowering legs, then upper body with control",
+        "Only attempt if standard swan dive is mastered"
+      ],
+      "metadata": {
+        "bilaterality": true,
+        "equipment": ["mat"]
+      }
+    },
+    {
+      "id": "teaser-preparation",
+      "exerciseId": "teaser",
+      "name": "Teaser - Preparation (Roll Back)",
+      "disciplines": ["pilates"],
+      "difficulty": 5,
+      "metrics": {
+        "mobility": 55,
+        "rotation": 25,
+        "flexibility": 60
+      },
+      "instructions": [
+        "Sit tall with knees bent, feet flat on mat",
+        "Arms extended forward at shoulder height",
+        "Inhale to prepare, exhale and roll back vertebra by vertebra",
+        "Roll back until you feel abdominal engagement, but maintain balance",
+        "Keep knees together, maintain C-curve of spine",
+        "Inhale at bottom, then exhale to roll back up to seated",
+        "Use abdominals to control the movement, not momentum",
+        "Repeat 8-10 times, building core strength and control",
+        "This preparation builds the strength needed for full teaser",
+        "Focus on spinal articulation and core engagement"
+      ],
+      "metadata": {
+        "bilaterality": true,
+        "equipment": ["mat"]
+      }
+    },
+    {
+      "id": "teaser-single-leg",
+      "exerciseId": "teaser",
+      "name": "Teaser - Single Leg",
+      "disciplines": ["pilates"],
+      "difficulty": 7,
+      "metrics": {
+        "mobility": 75,
+        "rotation": 35,
+        "flexibility": 80
+      },
+      "instructions": [
+        "Lie supine, one leg extended, one leg bent (foot on mat)",
+        "Arms extended overhead, maintaining neutral spine",
+        "Inhale to prepare, exhale and roll up to seated position",
+        "As you roll up, extend the bent leg to match the other",
+        "Both legs extended at 45-degree angle, arms parallel to legs",
+        "Balance in V-sit position, maintaining C-curve",
+        "Hold for 2-3 breaths, maintaining balance and control",
+        "Exhale to roll back down, bending one leg to assist",
+        "Alternate which leg is bent on each repetition",
+        "Complete 6-8 repetitions, focusing on control over height",
+        "This variation builds toward full double-leg teaser"
+      ],
+      "metadata": {
+        "bilaterality": false,
+        "equipment": ["mat"]
+      }
+    },
+    {
+      "id": "teaser-full",
+      "exerciseId": "teaser",
+      "name": "Teaser - Full (Double Leg)",
+      "disciplines": ["pilates"],
+      "difficulty": 9,
+      "metrics": {
+        "mobility": 90,
+        "rotation": 40,
+        "flexibility": 95
+      },
+      "instructions": [
+        "Lie supine with both legs extended together",
+        "Arms extended overhead, maintaining length through body",
+        "Inhale to prepare, exhale and roll up vertebra by vertebra",
+        "Simultaneously lift legs to meet torso in V-sit position",
+        "Balance on sit bones, legs at 45-degree angle (or higher)",
+        "Arms parallel to legs, maintaining C-curve of spine",
+        "Hold balanced position for 3-5 breaths",
+        "Exhale to roll back down with control, lowering legs simultaneously",
+        "Keep legs together throughout entire movement",
+        "This is one of Pilates' most advanced exercises",
+        "Requires exceptional core strength, balance, and flexibility",
+        "Complete 4-6 repetitions with full control",
+        "Focus on precision and control over achieving extreme angles"
+      ],
+      "metadata": {
+        "bilaterality": true,
+        "equipment": ["mat"]
+      }
+    }
+  ]
+}
+
