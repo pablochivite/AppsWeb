@@ -55,6 +55,41 @@ users/
   goals: string[]
   sedentaryImpact?: string        // From onboarding question 1
   
+  // Baseline Assessment (from Phase 2 onboarding)
+  baselineAssessment?: {
+    mobility: {
+      overheadReach: number      // 1-5
+      shoulderRotation: number   // 1-5
+      hipFlexibility: number     // 1-5
+      overallScore: number       // Calculated average (1-5)
+    }
+    rotation: {
+      spinalRotation: number     // 1-5
+      dailyRotationFrequency: number  // 1-4 (Rarely → Very Often)
+      overallScore: number       // Calculated (1-5 equivalent)
+    }
+    flexibility: {
+      lowerBody: number          // 1-5
+      upperBody: number          // 1-5
+      overallScore: number       // Calculated average (1-5)
+    }
+    physiological?: {
+      age?: number
+      activityLevel?: 'sedentary' | 'lightly-active' | 'moderately-active' | 'very-active' | 'extremely-active'
+      height?: number            // cm
+      weight?: number            // kg
+      bodyFatPercent?: number    // 0-100
+      injuryHistory?: string     // Free text
+    }
+    baselineMetrics: {
+      mobility: number           // 0-100 (converted from overallScore)
+      rotation: number           // 0-100 (converted from overallScore)
+      flexibility: number        // 0-100 (converted from overallScore)
+    }
+    completedAt: Timestamp
+    version: string              // "1.0"
+  }
+  
   // Metadata
   createdAt: Timestamp
   updatedAt: Timestamp
@@ -73,6 +108,37 @@ users/
   "discomforts": ["lower back"],
   "equipment": [],
   "goals": ["strength", "flexibility"],
+  "baselineAssessment": {
+    "mobility": {
+      "overheadReach": 4,
+      "shoulderRotation": 3,
+      "hipFlexibility": 3,
+      "overallScore": 3.3
+    },
+    "rotation": {
+      "spinalRotation": 3,
+      "dailyRotationFrequency": 2,
+      "overallScore": 3.2
+    },
+    "flexibility": {
+      "lowerBody": 3,
+      "upperBody": 4,
+      "overallScore": 3.5
+    },
+    "physiological": {
+      "age": 30,
+      "activityLevel": "moderately-active",
+      "height": 175,
+      "weight": 75
+    },
+    "baselineMetrics": {
+      "mobility": 66,
+      "rotation": 64,
+      "flexibility": 70
+    },
+    "completedAt": "2025-01-15T10:30:00Z",
+    "version": "1.0"
+  },
   "createdAt": "2025-01-01T00:00:00Z",
   "updatedAt": "2025-01-15T10:30:00Z"
 }

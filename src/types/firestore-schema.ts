@@ -98,3 +98,48 @@ export interface WorkoutSession {
   createdAt?: any; // Firestore Timestamp
 }
 
+/**
+ * Baseline Assessment data structure
+ * Stores mobility, rotation, and flexibility baseline scores from onboarding
+ */
+export interface BaselineAssessment {
+  // Mobility scores (1-5 scale, will map to 0-100 for consistency)
+  mobility: {
+    overheadReach: number;      // 1-5
+    shoulderRotation: number;   // 1-5  
+    hipFlexibility: number;     // 1-5
+    overallScore: number;       // Calculated average (1-5)
+  };
+  
+  // Rotation scores
+  rotation: {
+    spinalRotation: number;     // 1-5
+    dailyRotationFrequency: number; // 1-4 (Rarely → Very Often)
+    overallScore: number;       // Calculated (1-5 equivalent)
+  };
+  
+  // Flexibility scores  
+  flexibility: {
+    lowerBody: number;          // 1-5
+    upperBody: number;          // 1-5
+    overallScore: number;       // Calculated average (1-5)
+  };
+  
+  // Physiological data (optional)
+  physiological?: {
+    age?: number;
+    activityLevel?: 'sedentary' | 'lightly-active' | 'moderately-active' | 'very-active' | 'extremely-active';
+    height?: number;            // cm
+    weight?: number;            // kg
+    bodyFatPercent?: number;    // 0-100
+    injuryHistory?: string;     // Free text
+  };
+  
+  // Metadata
+  completedAt?: any;            // Firestore Timestamp
+  version: string;              // "1.0" for future assessment iterations
+  
+  // Calculated baseline metrics (0-100 scale, matching ExerciseMetrics)
+  baselineMetrics: ExerciseMetrics;
+}
+

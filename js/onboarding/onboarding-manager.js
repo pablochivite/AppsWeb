@@ -1,6 +1,7 @@
 // Onboarding Manager for athlete onboarding flow
 import { VoiceInputManager } from './voice-input.js';
-import { saveOnboardingData, setUserRole } from '../core/storage.js';
+import { saveOnboardingData, setUserRole, saveBaselineAssessment } from '../core/storage.js';
+import { BaselineAssessmentManager } from './baseline-assessment-manager.js';
 
 export class OnboardingManager {
     constructor(onRoleSelect, onComplete) {
@@ -11,6 +12,7 @@ export class OnboardingManager {
             primaryDiscipline: []
         };
         this.voiceManager = new VoiceInputManager();
+        this.baselineManager = null;
         this.onRoleSelect = onRoleSelect; // Callback for role selection
         this.onComplete = onComplete; // Callback for completing onboarding
     }
@@ -89,8 +91,8 @@ export class OnboardingManager {
                 if (btn && !btn.hasAttribute('disabled') && btn.style.pointerEvents !== 'none') {
                     console.log('Continue button clicked. Disciplines:', this.answers.primaryDiscipline);
                     if (this.answers.primaryDiscipline.length > 0) {
-                        console.log('Completing onboarding...');
-                        this.completeOnboarding();
+                        console.log('Starting baseline assessment...');
+                        this.startBaselineAssessment();
                     } else {
                         console.log('No disciplines selected');
                         alert('Please select at least one discipline to continue.');
@@ -289,6 +291,27 @@ export class OnboardingManager {
                 }
             }
         }
+    }
+
+    startBaselineAssessment() {
+        // Initialize baseline assessment manager
+        this.baselineManager = new BaselineAssessmentManager(async (assessment) => {
+            await this.handleBaselineComplete(assessment);
+        });
+        this.baselineManager.init();
+        
+        // Show question 4 (first baseline assessment question)
+        this.showQuestion(4);
+    }
+
+    async handleBaselineComplete(assessment) {
+        console.log('Baseline assessment completed:', assessment);
+        
+        // Save baseline assessment
+        await saveBaselineAssessment(assessment);
+        
+        // Continue to complete onboarding
+        await this.completeOnboarding();
     }
 
     async completeOnboarding() {

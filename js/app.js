@@ -9,7 +9,6 @@ import { setUserRole, getUserRole } from './core/storage.js';
 import { updateNavigationForRole, animateProgressBars } from './core/ui-utils.js';
 import { OnboardingManager } from './onboarding/onboarding-manager.js';
 import { initializeAthleteApp } from './athlete/dashboard.js';
-import { initializeCoachApp } from './coach/dashboard.js';
 import { loadAllTemplates } from './core/template-loader.js';
 import { initAuthManager, onAuthStateChanged, isAuthenticated } from './core/auth-manager.js';
 import { initAuthUI, showAuthOverlay, hideAuthOverlay } from './ui/auth-ui.js';
@@ -27,29 +26,11 @@ function showOnboarding() {
 
 async function selectRole(role) {
     console.log('selectRole called with:', role);
-    await setUserRole(role);
-    if (role === 'coach') {
-        // Coach proceeds directly - no onboarding needed
-        console.log('Coach selected - hiding overlay and initializing app');
-        const overlay = document.getElementById('onboarding-overlay');
-        if (overlay) {
-            overlay.style.transition = 'opacity 0.3s ease-out';
-            overlay.style.opacity = '0';
-            setTimeout(() => {
-                overlay.classList.add('hidden');
-                overlay.style.display = 'none';
-                console.log('Onboarding overlay hidden for coach');
-                initializeApp(role);
-            }, 300);
-        } else {
-            console.log('Overlay not found, initializing app directly');
-            initializeApp(role);
-        }
-    } else {
-        // STEP 3: Athlete selected - start onboarding questions
-        console.log('Athlete selected - starting onboarding flow');
-        onboardingManager.startAthleteFlow();
-    }
+    // Always set role to 'athlete' since we only support athlete now
+    await setUserRole('athlete');
+    // Start onboarding questions
+    console.log('Starting onboarding flow');
+    onboardingManager.startAthleteFlow();
 }
 
 function initializeApp(role) {
@@ -59,23 +40,21 @@ function initializeApp(role) {
         overlay.classList.add('hidden');
     }
     
+    // Always use 'athlete' role
+    const userRole = 'athlete';
+    
     // Initialize router
     router = new SPARouter();
-    router.init(role);
+    router.init(userRole);
     
-    // Update navigation based on role
-    updateNavigationForRole(role);
+    // Update navigation for athlete
+    updateNavigationForRole(userRole);
     
-    // Initialize role-specific functionality
-    if (role === 'athlete') {
-        initializeAthleteApp(router);
-    } else if (role === 'coach') {
-        initializeCoachApp(router);
-    }
+    // Initialize athlete functionality
+    initializeAthleteApp(router);
     
-    // Show appropriate home page
-    const homePage = role === 'coach' ? 'coach-home' : 'home';
-    router.navigateTo(homePage);
+    // Navigate to home page
+    router.navigateTo('home');
 }
 
 // Initialize onboarding manager with callbacks
@@ -285,8 +264,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.log('[DEBUG] User role from storage:', role);
         
         if (!role) {
-            // STEP 2: No role set - show role selection (Athlete or Coach)
-            console.log('[DEBUG] User authenticated but no role set, showing role selection');
+            // STEP 2: No role set - show onboarding for athlete
+            console.log('[DEBUG] User authenticated but no role set, showing onboarding');
             
             // Ensure auth overlay is hidden
             const authOverlay = document.getElementById('auth-overlay');

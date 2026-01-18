@@ -27,7 +27,7 @@ async function ensureImports() {
 /**
  * Get the current user role
  * Cache-First: Returns localStorage immediately, updates from Firestore in background
- * @returns {Promise<string|null>} 'athlete', 'coach', or null
+ * @returns {Promise<string|null>} 'athlete' or null
  */
 export async function getUserRole() {
     await ensureImports();
@@ -61,7 +61,7 @@ export async function getUserRole() {
 /**
  * Set the user role
  * Optimistic update: Saves to localStorage immediately, syncs to Firestore in background
- * @param {string} role - 'athlete' or 'coach'
+ * @param {string} role - 'athlete'
  */
 export async function setUserRole(role) {
     await ensureImports();
@@ -105,8 +105,8 @@ export function saveOnboardingData(data) {
 }
 
 /**
- * Get calendar view preference for a specific calendar type
- * @param {string} calendarType - 'athlete' or 'coach'
+ * Get calendar view preference
+ * @param {string} calendarType - 'athlete'
  * @returns {string} 'weekly' or 'monthly'
  */
 export function getCalendarViewPreference(calendarType) {
@@ -115,8 +115,8 @@ export function getCalendarViewPreference(calendarType) {
 }
 
 /**
- * Save calendar view preference for a specific calendar type
- * @param {string} calendarType - 'athlete' or 'coach'
+ * Save calendar view preference
+ * @param {string} calendarType - 'athlete'
  * @param {string} view - 'weekly' or 'monthly'
  */
 export function saveCalendarViewPreference(calendarType, view) {
@@ -190,6 +190,42 @@ export async function getUserProfile() {
     
     // Return immediately with cached/local data
     return localProfile;
+}
+
+/**
+ * Save baseline assessment
+ * Saves baseline mobility/rotation/flexibility assessment to user profile
+ * @param {Object} assessment - Baseline assessment object
+ */
+export async function saveBaselineAssessment(assessment) {
+    await ensureImports();
+    const user = getAuthUser();
+    
+    // Add completedAt timestamp if not present
+    if (!assessment.completedAt) {
+        assessment.completedAt = new Date().toISOString();
+    }
+    
+    // Save to Firestore profile (if authenticated)
+    if (user) {
+        try {
+            // Get current profile and merge baseline assessment
+            const currentProfile = await getFirestoreProfile(user.uid);
+            await saveFirestoreProfile(user.uid, {
+                ...currentProfile,
+                baselineAssessment: assessment
+            });
+        } catch (error) {
+            console.error('Error saving baseline assessment to Firestore:', error);
+            // Fall through to localStorage fallback
+        }
+    }
+    
+    // Always save to localStorage as fallback
+    const storedProfile = localStorage.getItem('userProfile');
+    let profile = storedProfile ? JSON.parse(storedProfile) : {};
+    profile.baselineAssessment = assessment;
+    localStorage.setItem('userProfile', JSON.stringify(profile));
 }
 
 /**
