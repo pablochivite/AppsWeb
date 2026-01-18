@@ -35,7 +35,6 @@ export const TERMINOLOGY = {
     
     // Roles
     ROLE_ATHLETE: 'athlete',
-    ROLE_COACH: 'coach',
     
     // Progression Types
     PROGRESSION_LOAD: 'load',

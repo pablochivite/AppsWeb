@@ -52,35 +52,21 @@ export function updateActiveNav(pageId) {
 }
 
 /**
- * Show/hide pages based on role
- * @param {string} role - 'athlete' or 'coach'
+ * Update navigation for athlete role
+ * @param {string} role - Always 'athlete' (kept for compatibility)
  */
 export function updateNavigationForRole(role) {
-    // Hide/show athlete navigation items
+    // Show all navigation items (all are athlete items now)
     const athleteNavItems = document.querySelectorAll('.athlete-nav-item');
     athleteNavItems.forEach(item => {
-        item.style.display = role === 'athlete' ? 'block' : 'none';
+        item.style.display = 'block';
     });
     
-    // Hide/show coach navigation items
-    const coachNavItems = document.querySelectorAll('.coach-nav-item');
-    coachNavItems.forEach(item => {
-        item.style.display = role === 'coach' ? 'block' : 'none';
-    });
-    
-    // Update active state for first visible nav item
-    if (role === 'athlete') {
-        const firstAthleteNav = document.querySelector('.athlete-nav-item .nav-item');
-        if (firstAthleteNav) {
-            document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
-            firstAthleteNav.classList.add('active');
-        }
-    } else if (role === 'coach') {
-        const firstCoachNav = document.querySelector('.coach-nav-item .nav-item');
-        if (firstCoachNav) {
-            document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
-            firstCoachNav.classList.add('active');
-        }
+    // Update active state for first nav item
+    const firstNav = document.querySelector('.athlete-nav-item .nav-item');
+    if (firstNav) {
+        document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+        firstNav.classList.add('active');
     }
 }
 

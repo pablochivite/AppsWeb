@@ -3,22 +3,15 @@
             <div id="onboarding-role-selection">
                 <div class="onboarding-header mb-12">
                     <h2 class="text-5xl font-bold text-white mb-4">Welcome to REGAIN</h2>
-                    <p class="text-xl text-white/60">Choose your role to get started</p>
+                    <p class="text-xl text-white/60">Your AI-powered training companion</p>
                 </div>
                 <div class="onboarding-cards">
                     <button class="onboarding-card" data-role="athlete">
                         <div class="onboarding-card-icon mb-6">
                             <i class="fas fa-dumbbell text-6xl text-white"></i>
                         </div>
-                        <h3 class="text-2xl font-bold text-white mb-2">I am an Athlete</h3>
-                        <p class="text-white/70">Track your workouts and progress</p>
-                    </button>
-                    <button class="onboarding-card" data-role="coach">
-                        <div class="onboarding-card-icon mb-6">
-                            <i class="fas fa-users text-6xl text-white"></i>
-                        </div>
-                        <h3 class="text-2xl font-bold text-white mb-2">I am a Coach</h3>
-                        <p class="text-white/70">Manage clients and training programs</p>
+                        <h3 class="text-2xl font-bold text-white mb-2">Get Started</h3>
+                        <p class="text-white/70">Begin your personalized training journey</p>
                     </button>
                 </div>
             </div>
@@ -26,47 +19,32 @@
             <!-- Question 1: Sedentary Impact -->
             <div id="onboarding-question-1" class="hidden">
                 <div class="onboarding-header mb-8">
+                    <div class="flex justify-center mb-4">
+                        <div class="text-sm text-white/60">Step 1 of 17</div>
+                    </div>
                     <h2 class="text-4xl font-bold text-white mb-4">Let's get to know you</h2>
-                    <p class="text-xl text-white/60 mb-8">Do you spend many hours sitting?</p>
+                    <p class="text-xl text-white/60 mb-8">How many hours per day do you spend sitting? Select the range that best fits your daily routine.</p>
                 </div>
-                <div class="flex items-center justify-center mb-6">
-                    <button class="voice-mic-button glass-strong rounded-full p-6 mb-4 transition-all duration-300 hover:scale-105">
-                        <i class="fas fa-microphone text-3xl text-white"></i>
-                    </button>
-                </div>
-                <div class="voice-transcription hidden glass rounded-lg p-4 mb-6 text-center text-white/80 min-h-[3rem]"></div>
-                <div class="onboarding-options grid grid-cols-2 gap-4 max-w-md mx-auto mb-6">
-                    <button class="onboarding-option glass-strong rounded-xl p-6 text-center transition-all duration-300 hover:scale-105" data-answer="sedentary" data-value="yes">
-                        <i class="fas fa-check-circle text-4xl text-white mb-3"></i>
-                        <p class="text-lg font-semibold text-white">Yes</p>
-                    </button>
-                    <button class="onboarding-option glass-strong rounded-xl p-6 text-center transition-all duration-300 hover:scale-105" data-answer="sedentary" data-value="no">
-                        <i class="fas fa-times-circle text-4xl text-white mb-3"></i>
-                        <p class="text-lg font-semibold text-white">No</p>
-                    </button>
-                </div>
-                <div class="onboarding-scale flex items-center justify-center gap-2 mb-6">
-                    <span class="text-white/60 text-sm">Scale:</span>
-                    <button class="onboarding-scale-btn glass rounded-lg px-4 py-2 text-white hover:bg-white/10 transition-all" data-answer="sedentary" data-value="1">1</button>
-                    <button class="onboarding-scale-btn glass rounded-lg px-4 py-2 text-white hover:bg-white/10 transition-all" data-answer="sedentary" data-value="2">2</button>
-                    <button class="onboarding-scale-btn glass rounded-lg px-4 py-2 text-white hover:bg-white/10 transition-all" data-answer="sedentary" data-value="3">3</button>
-                    <button class="onboarding-scale-btn glass rounded-lg px-4 py-2 text-white hover:bg-white/10 transition-all" data-answer="sedentary" data-value="4">4</button>
-                    <button class="onboarding-scale-btn glass rounded-lg px-4 py-2 text-white hover:bg-white/10 transition-all" data-answer="sedentary" data-value="5">5</button>
+                <div class="onboarding-scale flex flex-col items-center gap-3 mb-6">
+                    <div class="flex items-center justify-center gap-2 flex-wrap max-w-2xl">
+                        <button class="onboarding-scale-btn glass rounded-lg px-6 py-3 text-white hover:bg-white/10 transition-all" data-answer="sedentary" data-value="0-2">0-2 hours</button>
+                        <button class="onboarding-scale-btn glass rounded-lg px-6 py-3 text-white hover:bg-white/10 transition-all" data-answer="sedentary" data-value="2-4">2-4 hours</button>
+                        <button class="onboarding-scale-btn glass rounded-lg px-6 py-3 text-white hover:bg-white/10 transition-all" data-answer="sedentary" data-value="4-6">4-6 hours</button>
+                        <button class="onboarding-scale-btn glass rounded-lg px-6 py-3 text-white hover:bg-white/10 transition-all" data-answer="sedentary" data-value="6-8">6-8 hours</button>
+                        <button class="onboarding-scale-btn glass rounded-lg px-6 py-3 text-white hover:bg-white/10 transition-all" data-answer="sedentary" data-value="8+">8+ hours</button>
+                    </div>
                 </div>
             </div>
 
             <!-- Question 2: Current Discomforts -->
             <div id="onboarding-question-2" class="hidden">
                 <div class="onboarding-header mb-8">
+                    <div class="flex justify-center mb-4">
+                        <div class="text-sm text-white/60">Step 2 of 17</div>
+                    </div>
                     <h2 class="text-4xl font-bold text-white mb-4">Understanding your needs</h2>
-                    <p class="text-xl text-white/60 mb-8">What areas cause you discomfort?</p>
+                    <p class="text-xl text-white/60 mb-8">What areas cause you discomfort? You can select multiple options.</p>
                 </div>
-                <div class="flex items-center justify-center mb-6">
-                    <button class="voice-mic-button glass-strong rounded-full p-6 mb-4 transition-all duration-300 hover:scale-105">
-                        <i class="fas fa-microphone text-3xl text-white"></i>
-                    </button>
-                </div>
-                <div class="voice-transcription hidden glass rounded-lg p-4 mb-6 text-center text-white/80 min-h-[3rem]"></div>
                 <div class="onboarding-options grid grid-cols-2 gap-4 max-w-2xl mx-auto mb-6">
                     <button class="onboarding-option glass-strong rounded-xl p-6 text-center transition-all duration-300 hover:scale-105" data-answer="discomfort" data-value="Back">
                         <i class="fas fa-user text-4xl text-white mb-3"></i>
@@ -95,8 +73,11 @@
             <!-- Question 3: Primary Discipline Interest -->
             <div id="onboarding-question-3" class="hidden">
                 <div class="onboarding-header mb-8">
+                    <div class="flex justify-center mb-4">
+                        <div class="text-sm text-white/60">Step 3 of 17</div>
+                    </div>
                     <h2 class="text-4xl font-bold text-white mb-4">Choose your Training System</h2>
-                    <p class="text-xl text-white/60 mb-8">Which Training System Discipline interests you most?</p>
+                    <p class="text-xl text-white/60 mb-8">What are your favourite disciplines? You can select multiple disciplines.</p>
                 </div>
                 <div class="flex items-center justify-center mb-6">
                     <button class="voice-mic-button glass-strong rounded-full p-6 mb-4 transition-all duration-300 hover:scale-105">
@@ -129,6 +110,376 @@
                 <div class="flex justify-center mt-8">
                     <button id="discipline-complete" class="bg-white text-black px-8 py-3 rounded-lg font-semibold hover:scale-105 transition-all duration-300 opacity-50 cursor-not-allowed" style="display: block;">
                         Continue
+                    </button>
+                </div>
+            </div>
+
+            <!-- Question 4: Baseline Assessment - Mobility: Overhead Reach -->
+            <div id="onboarding-question-4" class="hidden">
+                <div class="onboarding-header mb-8">
+                    <div class="flex justify-center mb-4">
+                        <div class="text-sm text-white/60">Step 4 of 17</div>
+                    </div>
+                    <h2 class="text-4xl font-bold text-white mb-4">Baseline Assessment</h2>
+                    <p class="text-xl text-white/60 mb-4">Mobility Check</p>
+                    <p class="text-lg text-white/50 mb-8">Raise both arms straight overhead. How comfortable/complete is this movement?</p>
+                </div>
+                <div class="onboarding-scale flex items-center justify-center gap-2 mb-6">
+                    <span class="text-white/60 text-sm">Scale:</span>
+                    <button class="onboarding-scale-btn glass rounded-lg px-4 py-2 text-white hover:bg-white/10 transition-all" data-answer="baseline-mobility-overhead" data-value="1">1</button>
+                    <button class="onboarding-scale-btn glass rounded-lg px-4 py-2 text-white hover:bg-white/10 transition-all" data-answer="baseline-mobility-overhead" data-value="2">2</button>
+                    <button class="onboarding-scale-btn glass rounded-lg px-4 py-2 text-white hover:bg-white/10 transition-all" data-answer="baseline-mobility-overhead" data-value="3">3</button>
+                    <button class="onboarding-scale-btn glass rounded-lg px-4 py-2 text-white hover:bg-white/10 transition-all" data-answer="baseline-mobility-overhead" data-value="4">4</button>
+                    <button class="onboarding-scale-btn glass rounded-lg px-4 py-2 text-white hover:bg-white/10 transition-all" data-answer="baseline-mobility-overhead" data-value="5">5</button>
+                </div>
+                <div class="flex justify-center gap-2 text-xs text-white/40 max-w-md mx-auto mb-6">
+                    <span>1: Very limited</span>
+                    <span class="mx-2">→</span>
+                    <span>5: Full range</span>
+                </div>
+                <div class="flex justify-center mt-8">
+                    <button id="mobility-overhead-continue" class="bg-white text-black px-8 py-3 rounded-lg font-semibold hover:scale-105 transition-all duration-300 opacity-50 cursor-not-allowed">
+                        Continue
+                    </button>
+                </div>
+            </div>
+
+            <!-- Question 5: Baseline Assessment - Mobility: Shoulder Rotation -->
+            <div id="onboarding-question-5" class="hidden">
+                <div class="onboarding-header mb-8">
+                    <div class="flex justify-center mb-4">
+                        <div class="text-sm text-white/60">Step 5 of 17</div>
+                    </div>
+                    <h2 class="text-4xl font-bold text-white mb-4">Mobility Check</h2>
+                    <p class="text-lg text-white/50 mb-8">Reach one hand behind your back (top to bottom). How far can you reach?</p>
+                </div>
+                <div class="onboarding-scale flex items-center justify-center gap-2 mb-6">
+                    <span class="text-white/60 text-sm">Scale:</span>
+                    <button class="onboarding-scale-btn glass rounded-lg px-4 py-2 text-white hover:bg-white/10 transition-all" data-answer="baseline-mobility-shoulder" data-value="1">1</button>
+                    <button class="onboarding-scale-btn glass rounded-lg px-4 py-2 text-white hover:bg-white/10 transition-all" data-answer="baseline-mobility-shoulder" data-value="2">2</button>
+                    <button class="onboarding-scale-btn glass rounded-lg px-4 py-2 text-white hover:bg-white/10 transition-all" data-answer="baseline-mobility-shoulder" data-value="3">3</button>
+                    <button class="onboarding-scale-btn glass rounded-lg px-4 py-2 text-white hover:bg-white/10 transition-all" data-answer="baseline-mobility-shoulder" data-value="4">4</button>
+                    <button class="onboarding-scale-btn glass rounded-lg px-4 py-2 text-white hover:bg-white/10 transition-all" data-answer="baseline-mobility-shoulder" data-value="5">5</button>
+                </div>
+                <div class="flex justify-center gap-2 text-xs text-white/40 max-w-md mx-auto mb-6">
+                    <span>1: Can't reach</span>
+                    <span class="mx-2">→</span>
+                    <span>5: Easily touch hands</span>
+                </div>
+                <div class="flex justify-center mt-8">
+                    <button id="mobility-shoulder-continue" class="bg-white text-black px-8 py-3 rounded-lg font-semibold hover:scale-105 transition-all duration-300 opacity-50 cursor-not-allowed">
+                        Continue
+                    </button>
+                </div>
+            </div>
+
+            <!-- Question 6: Baseline Assessment - Mobility: Hip/Hamstring Flexibility -->
+            <div id="onboarding-question-6" class="hidden">
+                <div class="onboarding-header mb-8">
+                    <div class="flex justify-center mb-4">
+                        <div class="text-sm text-white/60">Step 6 of 17</div>
+                    </div>
+                    <h2 class="text-4xl font-bold text-white mb-4">Mobility Check</h2>
+                    <p class="text-lg text-white/50 mb-8">Bend forward and try to touch your toes (knees slightly bent is okay). How far can you reach?</p>
+                </div>
+                <div class="onboarding-scale flex items-center justify-center gap-2 mb-6">
+                    <span class="text-white/60 text-sm">Scale:</span>
+                    <button class="onboarding-scale-btn glass rounded-lg px-4 py-2 text-white hover:bg-white/10 transition-all" data-answer="baseline-mobility-hip" data-value="1">1</button>
+                    <button class="onboarding-scale-btn glass rounded-lg px-4 py-2 text-white hover:bg-white/10 transition-all" data-answer="baseline-mobility-hip" data-value="2">2</button>
+                    <button class="onboarding-scale-btn glass rounded-lg px-4 py-2 text-white hover:bg-white/10 transition-all" data-answer="baseline-mobility-hip" data-value="3">3</button>
+                    <button class="onboarding-scale-btn glass rounded-lg px-4 py-2 text-white hover:bg-white/10 transition-all" data-answer="baseline-mobility-hip" data-value="4">4</button>
+                    <button class="onboarding-scale-btn glass rounded-lg px-4 py-2 text-white hover:bg-white/10 transition-all" data-answer="baseline-mobility-hip" data-value="5">5</button>
+                </div>
+                <div class="flex justify-center gap-2 text-xs text-white/40 max-w-md mx-auto mb-6">
+                    <span>1: Can't reach knees</span>
+                    <span class="mx-2">→</span>
+                    <span>5: Touch toes/palms flat</span>
+                </div>
+                <div class="flex justify-center mt-8">
+                    <button id="mobility-hip-continue" class="bg-white text-black px-8 py-3 rounded-lg font-semibold hover:scale-105 transition-all duration-300 opacity-50 cursor-not-allowed">
+                        Continue
+                    </button>
+                </div>
+            </div>
+
+            <!-- Question 7: Baseline Assessment - Spinal Rotation -->
+            <div id="onboarding-question-7" class="hidden">
+                <div class="onboarding-header mb-8">
+                    <div class="flex justify-center mb-4">
+                        <div class="text-sm text-white/60">Step 7 of 17</div>
+                    </div>
+                    <h2 class="text-4xl font-bold text-white mb-4">Rotation & Flexibility</h2>
+                    <p class="text-lg text-white/50 mb-8">Spinal Rotation: Rotate your torso to look behind (both sides). How much can you turn?</p>
+                </div>
+                <div class="onboarding-scale flex items-center justify-center gap-2 mb-4">
+                    <span class="text-white/60 text-sm">Scale:</span>
+                    <button class="onboarding-scale-btn glass rounded-lg px-4 py-2 text-white hover:bg-white/10 transition-all" data-answer="baseline-rotation-spinal" data-value="1">1</button>
+                    <button class="onboarding-scale-btn glass rounded-lg px-4 py-2 text-white hover:bg-white/10 transition-all" data-answer="baseline-rotation-spinal" data-value="2">2</button>
+                    <button class="onboarding-scale-btn glass rounded-lg px-4 py-2 text-white hover:bg-white/10 transition-all" data-answer="baseline-rotation-spinal" data-value="3">3</button>
+                    <button class="onboarding-scale-btn glass rounded-lg px-4 py-2 text-white hover:bg-white/10 transition-all" data-answer="baseline-rotation-spinal" data-value="4">4</button>
+                    <button class="onboarding-scale-btn glass rounded-lg px-4 py-2 text-white hover:bg-white/10 transition-all" data-answer="baseline-rotation-spinal" data-value="5">5</button>
+                </div>
+                <div class="flex justify-center gap-2 text-xs text-white/40 max-w-md mx-auto mb-6">
+                    <span>1: Barely moves</span>
+                    <span class="mx-2">→</span>
+                    <span>5: Full 180° rotation</span>
+                </div>
+                <div class="flex justify-center mt-8">
+                    <button id="rotation-spinal-continue" class="bg-white text-black px-8 py-3 rounded-lg font-semibold hover:scale-105 transition-all duration-300 opacity-50 cursor-not-allowed">
+                        Continue
+                    </button>
+                </div>
+            </div>
+
+            <!-- Question 8: Baseline Assessment - Daily Rotation Frequency -->
+            <div id="onboarding-question-8" class="hidden">
+                <div class="onboarding-header mb-8">
+                    <div class="flex justify-center mb-4">
+                        <div class="text-sm text-white/60">Step 8 of 17</div>
+                    </div>
+                    <h2 class="text-4xl font-bold text-white mb-4">Rotation & Flexibility</h2>
+                    <p class="text-lg text-white/50 mb-8">How often do you perform twisting/rotational movements in daily life?</p>
+                </div>
+                <div class="onboarding-options grid grid-cols-2 gap-4 max-w-md mx-auto mb-6">
+                    <button class="onboarding-option glass-strong rounded-xl p-4 text-center transition-all duration-300 hover:scale-105" data-answer="baseline-rotation-frequency" data-value="1">
+                        <p class="text-sm font-semibold text-white">Rarely</p>
+                    </button>
+                    <button class="onboarding-option glass-strong rounded-xl p-4 text-center transition-all duration-300 hover:scale-105" data-answer="baseline-rotation-frequency" data-value="2">
+                        <p class="text-sm font-semibold text-white">Sometimes</p>
+                    </button>
+                    <button class="onboarding-option glass-strong rounded-xl p-4 text-center transition-all duration-300 hover:scale-105" data-answer="baseline-rotation-frequency" data-value="3">
+                        <p class="text-sm font-semibold text-white">Often</p>
+                    </button>
+                    <button class="onboarding-option glass-strong rounded-xl p-4 text-center transition-all duration-300 hover:scale-105" data-answer="baseline-rotation-frequency" data-value="4">
+                        <p class="text-sm font-semibold text-white">Very Often</p>
+                    </button>
+                </div>
+                <div class="flex justify-center mt-8">
+                    <button id="rotation-frequency-continue" class="bg-white text-black px-8 py-3 rounded-lg font-semibold hover:scale-105 transition-all duration-300 opacity-50 cursor-not-allowed">
+                        Continue
+                    </button>
+                </div>
+            </div>
+
+            <!-- Question 9: Baseline Assessment - Lower Body Flexibility -->
+            <div id="onboarding-question-9" class="hidden">
+                <div class="onboarding-header mb-8">
+                    <div class="flex justify-center mb-4">
+                        <div class="text-sm text-white/60">Step 9 of 17</div>
+                    </div>
+                    <h2 class="text-4xl font-bold text-white mb-4">Rotation & Flexibility</h2>
+                    <p class="text-lg text-white/50 mb-8">Lower Body: Can you comfortably sit cross-legged on the floor?</p>
+                </div>
+                <div class="onboarding-scale flex items-center justify-center gap-2 mb-4">
+                    <span class="text-white/60 text-sm">Scale:</span>
+                    <button class="onboarding-scale-btn glass rounded-lg px-4 py-2 text-white hover:bg-white/10 transition-all" data-answer="baseline-flexibility-lower" data-value="1">1</button>
+                    <button class="onboarding-scale-btn glass rounded-lg px-4 py-2 text-white hover:bg-white/10 transition-all" data-answer="baseline-flexibility-lower" data-value="2">2</button>
+                    <button class="onboarding-scale-btn glass rounded-lg px-4 py-2 text-white hover:bg-white/10 transition-all" data-answer="baseline-flexibility-lower" data-value="3">3</button>
+                    <button class="onboarding-scale-btn glass rounded-lg px-4 py-2 text-white hover:bg-white/10 transition-all" data-answer="baseline-flexibility-lower" data-value="4">4</button>
+                    <button class="onboarding-scale-btn glass rounded-lg px-4 py-2 text-white hover:bg-white/10 transition-all" data-answer="baseline-flexibility-lower" data-value="5">5</button>
+                </div>
+                <div class="flex justify-center gap-2 text-xs text-white/40 max-w-md mx-auto mb-6">
+                    <span>1: Very uncomfortable</span>
+                    <span class="mx-2">→</span>
+                    <span>5: Very comfortable</span>
+                </div>
+                <div class="flex justify-center mt-8">
+                    <button id="flexibility-lower-continue" class="bg-white text-black px-8 py-3 rounded-lg font-semibold hover:scale-105 transition-all duration-300 opacity-50 cursor-not-allowed">
+                        Continue
+                    </button>
+                </div>
+            </div>
+
+            <!-- Question 10: Baseline Assessment - Upper Body Flexibility -->
+            <div id="onboarding-question-10" class="hidden">
+                <div class="onboarding-header mb-8">
+                    <div class="flex justify-center mb-4">
+                        <div class="text-sm text-white/60">Step 10 of 17</div>
+                    </div>
+                    <h2 class="text-4xl font-bold text-white mb-4">Rotation & Flexibility</h2>
+                    <p class="text-lg text-white/50 mb-8">Upper Body: Can you comfortably reach behind your head to touch opposite shoulder?</p>
+                </div>
+                <div class="onboarding-scale flex items-center justify-center gap-2 mb-4">
+                    <span class="text-white/60 text-sm">Scale:</span>
+                    <button class="onboarding-scale-btn glass rounded-lg px-4 py-2 text-white hover:bg-white/10 transition-all" data-answer="baseline-flexibility-upper" data-value="1">1</button>
+                    <button class="onboarding-scale-btn glass rounded-lg px-4 py-2 text-white hover:bg-white/10 transition-all" data-answer="baseline-flexibility-upper" data-value="2">2</button>
+                    <button class="onboarding-scale-btn glass rounded-lg px-4 py-2 text-white hover:bg-white/10 transition-all" data-answer="baseline-flexibility-upper" data-value="3">3</button>
+                    <button class="onboarding-scale-btn glass rounded-lg px-4 py-2 text-white hover:bg-white/10 transition-all" data-answer="baseline-flexibility-upper" data-value="4">4</button>
+                    <button class="onboarding-scale-btn glass rounded-lg px-4 py-2 text-white hover:bg-white/10 transition-all" data-answer="baseline-flexibility-upper" data-value="5">5</button>
+                </div>
+                <div class="flex justify-center gap-2 text-xs text-white/40 max-w-md mx-auto mb-6">
+                    <span>1: Can't reach</span>
+                    <span class="mx-2">→</span>
+                    <span>5: Very comfortable</span>
+                </div>
+                <div class="flex justify-center mt-8">
+                    <button id="flexibility-upper-continue" class="bg-white text-black px-8 py-3 rounded-lg font-semibold hover:scale-105 transition-all duration-300 opacity-50 cursor-not-allowed">
+                        Continue
+                    </button>
+                </div>
+            </div>
+
+            <!-- Question 11: Physiological Data Introduction -->
+            <div id="onboarding-question-11" class="hidden">
+                <div class="onboarding-header mb-8">
+                    <div class="flex justify-center mb-4">
+                        <div class="text-sm text-white/60">Step 11 of 17 (Optional)</div>
+                    </div>
+                    <h2 class="text-4xl font-bold text-white mb-4">Physiological Data</h2>
+                    <p class="text-lg text-white/60 mb-8">Help us personalize your training with some additional information. All fields are optional - you can skip any question or skip this entire section.</p>
+                </div>
+                <div class="flex justify-center gap-4 mt-8">
+                    <button id="physiological-skip-all" class="glass-strong text-white px-8 py-3 rounded-lg font-semibold hover:scale-105 transition-all duration-300">
+                        Skip for now
+                    </button>
+                    <button id="physiological-start" class="bg-white text-black px-8 py-3 rounded-lg font-semibold hover:scale-105 transition-all duration-300">
+                        Continue
+                    </button>
+                </div>
+            </div>
+
+            <!-- Question 12: Age -->
+            <div id="onboarding-question-12" class="hidden">
+                <div class="onboarding-header mb-8">
+                    <div class="flex justify-center mb-4">
+                        <div class="text-sm text-white/60">Step 12 of 17 (Optional)</div>
+                    </div>
+                    <h2 class="text-4xl font-bold text-white mb-4">Physiological Data</h2>
+                    <p class="text-lg text-white/60 mb-8">What is your age?</p>
+                </div>
+                <div class="max-w-md mx-auto mb-8">
+                    <input type="number" id="physiological-age" min="18" max="99" placeholder="Enter your age" class="w-full glass-strong rounded-lg px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-white/20 text-center text-2xl">
+                </div>
+                <div class="flex justify-center gap-4 mt-8">
+                    <button id="age-skip" class="glass-strong text-white px-8 py-3 rounded-lg font-semibold hover:scale-105 transition-all duration-300">
+                        Skip
+                    </button>
+                    <button id="age-continue" class="bg-white text-black px-8 py-3 rounded-lg font-semibold hover:scale-105 transition-all duration-300 opacity-50 cursor-not-allowed" disabled>
+                        Continue
+                    </button>
+                </div>
+            </div>
+
+            <!-- Question 13: Activity Level -->
+            <div id="onboarding-question-13" class="hidden">
+                <div class="onboarding-header mb-8">
+                    <div class="flex justify-center mb-4">
+                        <div class="text-sm text-white/60">Step 13 of 17 (Optional)</div>
+                    </div>
+                    <h2 class="text-4xl font-bold text-white mb-4">Physiological Data</h2>
+                    <p class="text-lg text-white/60 mb-8">What is your activity level?</p>
+                </div>
+                <div class="grid grid-cols-2 gap-3 max-w-md mx-auto mb-8">
+                    <button class="onboarding-option glass-strong rounded-xl p-4 text-center transition-all duration-300 hover:scale-105" data-answer="physiological-activity" data-value="sedentary">
+                        <p class="text-sm font-semibold text-white">Sedentary</p>
+                    </button>
+                    <button class="onboarding-option glass-strong rounded-xl p-4 text-center transition-all duration-300 hover:scale-105" data-answer="physiological-activity" data-value="lightly-active">
+                        <p class="text-sm font-semibold text-white">Lightly Active</p>
+                    </button>
+                    <button class="onboarding-option glass-strong rounded-xl p-4 text-center transition-all duration-300 hover:scale-105" data-answer="physiological-activity" data-value="moderately-active">
+                        <p class="text-sm font-semibold text-white">Moderately Active</p>
+                    </button>
+                    <button class="onboarding-option glass-strong rounded-xl p-4 text-center transition-all duration-300 hover:scale-105" data-answer="physiological-activity" data-value="very-active">
+                        <p class="text-sm font-semibold text-white">Very Active</p>
+                    </button>
+                    <button class="onboarding-option glass-strong rounded-xl p-4 text-center transition-all duration-300 hover:scale-105 col-span-2" data-answer="physiological-activity" data-value="extremely-active">
+                        <p class="text-sm font-semibold text-white">Extremely Active</p>
+                    </button>
+                </div>
+                <div class="flex justify-center gap-4 mt-8">
+                    <button id="activity-skip" class="glass-strong text-white px-8 py-3 rounded-lg font-semibold hover:scale-105 transition-all duration-300">
+                        Skip
+                    </button>
+                    <button id="activity-continue" class="bg-white text-black px-8 py-3 rounded-lg font-semibold hover:scale-105 transition-all duration-300 opacity-50 cursor-not-allowed">
+                        Continue
+                    </button>
+                </div>
+            </div>
+
+            <!-- Question 14: Height -->
+            <div id="onboarding-question-14" class="hidden">
+                <div class="onboarding-header mb-8">
+                    <div class="flex justify-center mb-4">
+                        <div class="text-sm text-white/60">Step 14 of 17 (Optional)</div>
+                    </div>
+                    <h2 class="text-4xl font-bold text-white mb-4">Physiological Data</h2>
+                    <p class="text-lg text-white/60 mb-8">What is your height?</p>
+                </div>
+                <div class="max-w-md mx-auto mb-8">
+                    <input type="number" id="physiological-height" min="100" max="250" placeholder="Height in cm" class="w-full glass-strong rounded-lg px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-white/20 text-center text-2xl">
+                </div>
+                <div class="flex justify-center gap-4 mt-8">
+                    <button id="height-skip" class="glass-strong text-white px-8 py-3 rounded-lg font-semibold hover:scale-105 transition-all duration-300">
+                        Skip
+                    </button>
+                    <button id="height-continue" class="bg-white text-black px-8 py-3 rounded-lg font-semibold hover:scale-105 transition-all duration-300 opacity-50 cursor-not-allowed" disabled>
+                        Continue
+                    </button>
+                </div>
+            </div>
+
+            <!-- Question 15: Weight -->
+            <div id="onboarding-question-15" class="hidden">
+                <div class="onboarding-header mb-8">
+                    <div class="flex justify-center mb-4">
+                        <div class="text-sm text-white/60">Step 15 of 17 (Optional)</div>
+                    </div>
+                    <h2 class="text-4xl font-bold text-white mb-4">Physiological Data</h2>
+                    <p class="text-lg text-white/60 mb-8">What is your weight?</p>
+                </div>
+                <div class="max-w-md mx-auto mb-8">
+                    <input type="number" id="physiological-weight" min="30" max="300" step="0.1" placeholder="Weight in kg" class="w-full glass-strong rounded-lg px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-white/20 text-center text-2xl">
+                </div>
+                <div class="flex justify-center gap-4 mt-8">
+                    <button id="weight-skip" class="glass-strong text-white px-8 py-3 rounded-lg font-semibold hover:scale-105 transition-all duration-300">
+                        Skip
+                    </button>
+                    <button id="weight-continue" class="bg-white text-black px-8 py-3 rounded-lg font-semibold hover:scale-105 transition-all duration-300 opacity-50 cursor-not-allowed" disabled>
+                        Continue
+                    </button>
+                </div>
+            </div>
+
+            <!-- Question 16: Body Fat % -->
+            <div id="onboarding-question-16" class="hidden">
+                <div class="onboarding-header mb-8">
+                    <div class="flex justify-center mb-4">
+                        <div class="text-sm text-white/60">Step 16 of 17 (Optional)</div>
+                    </div>
+                    <h2 class="text-4xl font-bold text-white mb-4">Physiological Data</h2>
+                    <p class="text-lg text-white/60 mb-8">What is your body fat percentage? (Optional)</p>
+                </div>
+                <div class="max-w-md mx-auto mb-8">
+                    <input type="number" id="physiological-bodyfat" min="0" max="100" step="0.1" placeholder="Body fat percentage" class="w-full glass-strong rounded-lg px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-white/20 text-center text-2xl">
+                </div>
+                <div class="flex justify-center gap-4 mt-8">
+                    <button id="bodyfat-skip" class="glass-strong text-white px-8 py-3 rounded-lg font-semibold hover:scale-105 transition-all duration-300">
+                        Skip
+                    </button>
+                    <button id="bodyfat-continue" class="bg-white text-black px-8 py-3 rounded-lg font-semibold hover:scale-105 transition-all duration-300 opacity-50 cursor-not-allowed" disabled>
+                        Continue
+                    </button>
+                </div>
+            </div>
+
+            <!-- Question 17: Injury History -->
+            <div id="onboarding-question-17" class="hidden">
+                <div class="onboarding-header mb-8">
+                    <div class="flex justify-center mb-4">
+                        <div class="text-sm text-white/60">Step 17 of 17 (Optional)</div>
+                    </div>
+                    <h2 class="text-4xl font-bold text-white mb-4">Physiological Data</h2>
+                    <p class="text-lg text-white/60 mb-8">Any past injuries that affect movement? (Optional)</p>
+                </div>
+                <div class="max-w-md mx-auto mb-8">
+                    <textarea id="physiological-injury" rows="4" placeholder="Joint injuries, surgeries, etc." class="w-full glass-strong rounded-lg px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-white/20 resize-none"></textarea>
+                </div>
+                <div class="flex justify-center gap-4 mt-8">
+                    <button id="injury-skip" class="glass-strong text-white px-8 py-3 rounded-lg font-semibold hover:scale-105 transition-all duration-300">
+                        Skip
+                    </button>
+                    <button id="injury-complete" class="bg-white text-black px-8 py-3 rounded-lg font-semibold hover:scale-105 transition-all duration-300 opacity-50 cursor-not-allowed" disabled>
+                        Finish
                     </button>
                 </div>
             </div>

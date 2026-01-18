@@ -134,24 +134,38 @@ export class VoiceInputManager {
     parseAnswer(transcript, questionType) {
         switch(questionType) {
             case 'sedentary':
-                // Parse yes/no or numbers 1-5
-                if (transcript.includes('yes') || transcript.includes('yeah') || transcript.includes('yep')) {
-                    return 'yes';
+                // Parse hour intervals: 0-2, 2-4, 4-6, 6-8, 8+
+                const lowerTranscript = transcript.toLowerCase();
+                
+                // Check for explicit hour ranges
+                if (lowerTranscript.includes('0 to 2') || lowerTranscript.includes('zero to two') || 
+                    (lowerTranscript.includes('0') && lowerTranscript.includes('2') && !lowerTranscript.includes('4'))) {
+                    return '0-2';
                 }
-                if (transcript.includes('no') || transcript.includes('nope') || transcript.includes('nah')) {
-                    return 'no';
+                if (lowerTranscript.includes('2 to 4') || lowerTranscript.includes('two to four')) {
+                    return '2-4';
                 }
-                // Check for numbers
+                if (lowerTranscript.includes('4 to 6') || lowerTranscript.includes('four to six')) {
+                    return '4-6';
+                }
+                if (lowerTranscript.includes('6 to 8') || lowerTranscript.includes('six to eight')) {
+                    return '6-8';
+                }
+                if (lowerTranscript.includes('8') || lowerTranscript.includes('eight') || lowerTranscript.includes('more')) {
+                    return '8+';
+                }
+                
+                // Check for numbers and map to closest interval
                 const numbers = transcript.match(/\d+/);
                 if (numbers) {
                     const num = parseInt(numbers[0]);
-                    if (num >= 1 && num <= 5) return num.toString();
+                    if (num <= 2) return '0-2';
+                    if (num <= 4) return '2-4';
+                    if (num <= 6) return '4-6';
+                    if (num <= 8) return '6-8';
+                    return '8+';
                 }
-                // Check for words like "one", "two", etc.
-                const numberWords = { 'one': '1', 'two': '2', 'three': '3', 'four': '4', 'five': '5' };
-                for (const [word, num] of Object.entries(numberWords)) {
-                    if (transcript.includes(word)) return num;
-                }
+                
                 return null;
 
             case 'discomforts':
