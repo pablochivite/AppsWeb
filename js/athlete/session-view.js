@@ -4,6 +4,105 @@ import { getUserProfile, saveUserProfile, saveSessionProgress, getSessionProgres
 import { getAuthUser } from '../core/auth-manager.js';
 import { saveSessionOnComplete } from '../../src/ui/session-view.js';
 
+/**
+ * Show completion modal with streak information
+ * @param {string} userId - User ID
+ */
+async function showCompletionModal(userId) {
+    try {
+        // Load completion modal template if not already loaded
+        const modalContainer = document.getElementById('completion-modal-container');
+        if (modalContainer && !modalContainer.querySelector('#completion-modal')) {
+            const { loadTemplate, injectTemplate } = await import('../core/template-loader.js');
+            const html = await loadTemplate('html/components/completion-modal.html');
+            injectTemplate('completion-modal-container', html);
+        }
+        
+        const modal = document.getElementById('completion-modal');
+        const modalContent = modal?.querySelector('.completion-modal-content');
+        const streakInfo = document.getElementById('completion-streak-info');
+        const streakValue = document.getElementById('completion-streak-value');
+        const closeBtn = document.getElementById('completion-modal-close');
+        
+        if (!modal || !closeBtn) {
+            console.warn('Completion modal not found, falling back to alert');
+            alert('Session completed! Great work!');
+            return;
+        }
+        
+        // Fetch fresh profile data to get updated streak
+        // Wait a bit for Firestore transaction to complete
+        setTimeout(async () => {
+            if (userId) {
+                try {
+                    const { getUserProfile } = await import('../services/dbService.js');
+                    const profile = await getUserProfile(userId, { skipCache: true });
+                    if (profile && profile.currentStreak !== undefined && profile.currentStreak > 0) {
+                        if (streakInfo && streakValue) {
+                            streakValue.textContent = profile.currentStreak;
+                            streakInfo.classList.remove('hidden');
+                        }
+                    }
+                } catch (error) {
+                    console.error('Error fetching streak for modal:', error);
+                    // Continue without streak info
+                }
+            }
+        }, 500);
+        
+        // Show modal with animation
+        modal.classList.remove('hidden');
+        requestAnimationFrame(() => {
+            if (modalContent) {
+                modalContent.style.transform = 'scale(1)';
+                modalContent.style.opacity = '1';
+            }
+        });
+        
+        // Close button handler
+        const closeModal = () => {
+            if (modalContent) {
+                modalContent.style.transform = 'scale(0.95)';
+                modalContent.style.opacity = '0';
+            }
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                if (streakInfo) {
+                    streakInfo.classList.add('hidden');
+                }
+                // Reset for next time
+                if (modalContent) {
+                    modalContent.style.transform = 'scale(0.95)';
+                    modalContent.style.opacity = '0';
+                }
+            }, 300);
+        };
+        
+        closeBtn.onclick = closeModal;
+        
+        // Also close on background click
+        modal.onclick = (e) => {
+            if (e.target === modal) {
+                closeModal();
+            }
+        };
+        
+        // Close on Escape key
+        const escapeHandler = (e) => {
+            if (e.key === 'Escape') {
+                closeModal();
+                document.removeEventListener('keydown', escapeHandler);
+            }
+        };
+        document.addEventListener('keydown', escapeHandler);
+        
+    } catch (error) {
+        console.error('Error showing completion modal:', error);
+        // Fallback to alert
+        alert('Session completed! Great work!');
+    }
+}
+
 export class SessionView {
     constructor(session) {
         this.session = session;
@@ -345,9 +444,10 @@ export class SessionView {
      * End session and update milestones
      */
     async endSession() {
+        // Get current user ID (define at function scope so it's available later)
+        const user = getAuthUser();
+        
         try {
-            // Get current user ID
-            const user = getAuthUser();
             if (!user || !user.uid) {
                 console.error('Cannot save session: User not authenticated');
                 // Still allow session to complete even if save fails
@@ -355,6 +455,32 @@ export class SessionView {
                 // Save completed session to Firestore before redirecting
                 await saveSessionOnComplete(this, user.uid);
                 console.log('✓ Session saved successfully to Firestore');
+                
+                // Mark session as completed in training system
+                try {
+                    const { getTrainingSystem, saveTrainingSystem } = await import('../core/storage.js');
+                    const trainingSystem = await getTrainingSystem();
+                    
+                    if (trainingSystem && trainingSystem.sessions) {
+                        const sessionDate = this.session.date || new Date().toISOString().split('T')[0];
+                        const sessionIndex = trainingSystem.sessions.findIndex(s => s.date === sessionDate);
+                        
+                        if (sessionIndex !== -1) {
+                            // Mark session as completed
+                            trainingSystem.sessions[sessionIndex] = {
+                                ...trainingSystem.sessions[sessionIndex],
+                                completed: true,
+                                completedAt: new Date().toISOString()
+                            };
+                            
+                            await saveTrainingSystem(trainingSystem);
+                            console.log('✓ Session marked as completed in training system');
+                        }
+                    }
+                } catch (error) {
+                    console.error('Error marking session as completed:', error);
+                    // Non-critical, continue
+                }
             }
         } catch (error) {
             console.error('Error saving session to Firestore:', error);
@@ -366,15 +492,27 @@ export class SessionView {
         // Clear saved progress
         clearSessionProgress();
         
-        // Show completion message
-        alert('Session completed! Great work!');
-        
-        // Hide overlay
+        // Hide session overlay first
         this.hide();
         
-        // Refresh dashboard to show updated milestones
+        // Show completion modal with updated streak
+        await showCompletionModal(user?.uid);
+        
+        // Refresh dashboard to show updated streak and milestones
         if (window.initDashboard) {
-            window.initDashboard();
+            // Delay to ensure Firestore transaction completes and user sees the modal
+            setTimeout(async () => {
+                // Force refresh profile data from Firestore by clearing cache
+                const { getAuthUser } = await import('../core/auth-manager.js');
+                const refreshUser = getAuthUser();
+                if (refreshUser) {
+                    // Clear both Firestore cache and localStorage cache to force refresh
+                    const cacheKey = `firestore_cache_profile_${refreshUser.uid}`;
+                    localStorage.removeItem(cacheKey);
+                    localStorage.removeItem('userProfile'); // Also clear localStorage cache
+                }
+                await window.initDashboard();
+            }, 2000); // Increased delay to ensure Firestore transaction completes
         }
     }
 

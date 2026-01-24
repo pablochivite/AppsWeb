@@ -1,175 +1,22 @@
-                <div class="max-w-7xl mx-auto">
+                <div class="max-w-7xl mx-auto" id="my-training-container">
                     <div class="mb-8">
                         <h2 class="text-4xl font-bold text-white mb-2">My Training</h2>
                         <p class="text-white/60">Your Training System & Cycle</p>
                     </div>
 
-                    <!-- Training Cycle Info -->
-                    <div class="glass-strong rounded-2xl p-6 mb-6 card-hover">
-                        <h3 class="text-xl font-semibold text-white mb-4">Current Training Cycle</h3>
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-white/60 mb-1">Week 3 of 8</p>
-                                <div class="w-64 bg-white/10 rounded-full h-3">
-                                    <div class="bg-white h-full rounded-full" style="width: 37.5%"></div>
-                                </div>
-                            </div>
-                            <span class="text-white font-semibold">Push/Pull Focus</span>
-                        </div>
+                    <!-- Training Cycle Info - Will be dynamically rendered -->
+                    <div id="training-cycle-info" class="glass-strong rounded-2xl p-6 mb-6 card-hover">
+                        <!-- Content will be dynamically rendered by modus-operandi.js -->
                     </div>
 
-                    <!-- Training Framework Cards -->
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-                        <!-- Push/Pull Framework -->
-                        <div class="glass-strong rounded-2xl p-6 card-hover">
-                            <div class="flex items-center justify-between mb-4">
-                                <h3 class="text-xl font-semibold text-white">Push/Pull</h3>
-                                <i class="fas fa-sync-alt text-white"></i>
-                            </div>
-                            <div class="space-y-4">
-                                <div>
-                                    <div class="flex items-center justify-between mb-2">
-                                        <span class="text-sm text-white/70">Pilates</span>
-                                        <span class="text-sm font-semibold text-white">40%</span>
-                                    </div>
-                                    <div class="w-full bg-white/10 rounded-full h-2">
-                                        <div class="bg-white h-full rounded-full" style="width: 40%"></div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="flex items-center justify-between mb-2">
-                                        <span class="text-sm text-white/70">Weights</span>
-                                        <span class="text-sm font-semibold text-white">35%</span>
-                                    </div>
-                                    <div class="w-full bg-white/10 rounded-full h-2">
-                                        <div class="bg-white h-full rounded-full" style="width: 35%"></div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="flex items-center justify-between mb-2">
-                                        <span class="text-sm text-white/70">Yoga</span>
-                                        <span class="text-sm font-semibold text-white">15%</span>
-                                    </div>
-                                    <div class="w-full bg-white/10 rounded-full h-2">
-                                        <div class="bg-white h-full rounded-full" style="width: 15%"></div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="flex items-center justify-between mb-2">
-                                        <span class="text-sm text-white/70">Animal Flow</span>
-                                        <span class="text-sm font-semibold text-white">10%</span>
-                                    </div>
-                                    <div class="w-full bg-white/10 rounded-full h-2">
-                                        <div class="bg-white h-full rounded-full" style="width: 10%"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Back/Chest Framework -->
-                        <div class="glass-strong rounded-2xl p-6 card-hover">
-                            <div class="flex items-center justify-between mb-4">
-                                <h3 class="text-xl font-semibold text-white">Back/Chest</h3>
-                                <i class="fas fa-dumbbell text-white"></i>
-                            </div>
-                            <div class="space-y-4">
-                                <div>
-                                    <div class="flex items-center justify-between mb-2">
-                                        <span class="text-sm text-white/70">Pilates</span>
-                                        <span class="text-sm font-semibold text-white">30%</span>
-                                    </div>
-                                    <div class="w-full bg-white/10 rounded-full h-2">
-                                        <div class="bg-white h-full rounded-full" style="width: 30%"></div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="flex items-center justify-between mb-2">
-                                        <span class="text-sm text-white/70">Weights</span>
-                                        <span class="text-sm font-semibold text-white">45%</span>
-                                    </div>
-                                    <div class="w-full bg-white/10 rounded-full h-2">
-                                        <div class="bg-white h-full rounded-full" style="width: 45%"></div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="flex items-center justify-between mb-2">
-                                        <span class="text-sm text-white/70">Yoga</span>
-                                        <span class="text-sm font-semibold text-white">20%</span>
-                                    </div>
-                                    <div class="w-full bg-white/10 rounded-full h-2">
-                                        <div class="bg-white h-full rounded-full" style="width: 20%"></div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="flex items-center justify-between mb-2">
-                                        <span class="text-sm text-white/70">Animal Flow</span>
-                                        <span class="text-sm font-semibold text-white">5%</span>
-                                    </div>
-                                    <div class="w-full bg-white/10 rounded-full h-2">
-                                        <div class="bg-white h-full rounded-full" style="width: 5%"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <!-- Training Framework Cards - Will be dynamically rendered -->
+                    <div id="training-frameworks-container" class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                        <!-- Content will be dynamically rendered by modus-operandi.js -->
                     </div>
 
-                    <!-- Session Rating -->
-                    <div class="glass-strong rounded-2xl p-6 card-hover">
-                        <div class="flex items-center justify-between mb-6">
-                            <h3 class="text-xl font-semibold text-white">Session Rating</h3>
-                            <i class="fas fa-chart-line text-white"></i>
-                        </div>
-                        
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                            <!-- Mobility Progress -->
-                            <div>
-                                <div class="flex items-center justify-between mb-2">
-                                    <div class="flex items-center">
-                                        <i class="fas fa-arrows-alt text-white mr-2"></i>
-                                        <span class="font-medium text-white">Mobility</span>
-                                    </div>
-                                    <span class="text-white font-semibold">75%</span>
-                                </div>
-                                <div class="w-full bg-white/10 rounded-full h-3 overflow-hidden border border-white/10">
-                                    <div class="bg-white h-full rounded-full progress-bar" style="width: 75%"></div>
-                                </div>
-                            </div>
-
-                            <!-- Rotation Progress -->
-                            <div>
-                                <div class="flex items-center justify-between mb-2">
-                                    <div class="flex items-center">
-                                        <i class="fas fa-sync-alt text-white mr-2"></i>
-                                        <span class="font-medium text-white">Rotation</span>
-                                    </div>
-                                    <span class="text-white font-semibold">68%</span>
-                                </div>
-                                <div class="w-full bg-white/10 rounded-full h-3 overflow-hidden border border-white/10">
-                                    <div class="bg-white h-full rounded-full progress-bar" style="width: 68%"></div>
-                                </div>
-                            </div>
-
-                            <!-- Flexibility Progress -->
-                            <div>
-                                <div class="flex items-center justify-between mb-2">
-                                    <div class="flex items-center">
-                                        <i class="fas fa-bend text-white mr-2"></i>
-                                        <span class="font-medium text-white">Flexibility</span>
-                                    </div>
-                                    <span class="text-white font-semibold">82%</span>
-                                </div>
-                                <div class="w-full bg-white/10 rounded-full h-3 overflow-hidden border border-white/10">
-                                    <div class="bg-white h-full rounded-full progress-bar" style="width: 82%"></div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="mt-6 pt-6 border-t border-zinc-800">
-                            <div class="flex items-center justify-between">
-                                <span class="text-sm text-white/60">Overall Score</span>
-                                <span class="text-2xl font-bold text-white">75%</span>
-                            </div>
-                        </div>
+                    <!-- Weekly Rating -->
+                    <div id="weekly-rating-card" class="glass-strong rounded-2xl p-6 card-hover">
+                        <!-- Content will be dynamically rendered by modus-operandi.js -->
                     </div>
                 </div>
 

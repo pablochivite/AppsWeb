@@ -46,7 +46,8 @@ export class DashboardPage {
   async generatePlan() {
     await this.generatePlanButton.click();
     // Wait for generation to complete (button text changes or session appears)
-    await this.page.waitForTimeout(5000); // Adjust based on actual generation time
+    // AI generation can take up to 2 minutes
+    await this.page.waitForTimeout(2000); // Initial wait before full timeout in tests
   }
 
   /**

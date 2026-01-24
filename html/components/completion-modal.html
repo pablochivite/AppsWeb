@@ -1,0 +1,33 @@
+<!-- Session Completion Modal -->
+<div id="completion-modal" class="hidden fixed inset-0 z-[250] bg-black/80 backdrop-blur-md flex items-center justify-center">
+    <div class="completion-modal-content glass-strong rounded-2xl p-8 max-w-md w-full mx-4 transform transition-all duration-300 scale-95 opacity-0" style="transform: scale(0.95); opacity: 0;">
+        <div class="text-center">
+            <!-- Success Icon -->
+            <div class="mb-6 flex justify-center">
+                <div class="w-20 h-20 rounded-full bg-green-500/20 border-2 border-green-500/50 flex items-center justify-center">
+                    <i class="fas fa-check text-4xl text-green-400"></i>
+                </div>
+            </div>
+            
+            <!-- Title -->
+            <h2 class="text-3xl font-bold text-white mb-2">Session Completed!</h2>
+            <p class="text-white/70 text-lg mb-6">Great work! Keep it up! 💪</p>
+            
+            <!-- Streak Update (if available) -->
+            <div id="completion-streak-info" class="hidden mb-6 p-4 bg-white/5 rounded-lg border border-white/10">
+                <p class="text-sm text-white/60 mb-1">Your streak is now</p>
+                <p class="text-2xl font-bold text-white" id="completion-streak-value">0</p>
+                <p class="text-sm text-white/60">days in a row! 🔥</p>
+            </div>
+            
+            <!-- Action Button -->
+            <button 
+                id="completion-modal-close" 
+                class="w-full bg-white hover:bg-white/90 text-black font-semibold px-6 py-3 rounded-xl transition-all duration-300 hover:scale-[1.02]"
+            >
+                Awesome!
+            </button>
+        </div>
+    </div>
+</div>
+

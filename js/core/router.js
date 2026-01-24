@@ -24,9 +24,39 @@ export class SPARouter {
                 this.navigateTo(page);
             });
         });
+
+        // Listen for hash changes (back/forward buttons)
+        window.addEventListener('hashchange', () => {
+            const page = this.getPageFromHash();
+            if (page && page !== this.currentPage) {
+                this.navigateTo(page, false); // false = don't update hash since it's already updated
+            }
+        });
     }
 
-    navigateTo(page) {
+    /**
+     * Get page name from URL hash
+     * @returns {string|null} Page name or null if invalid
+     */
+    getPageFromHash() {
+        const hash = window.location.hash;
+        if (!hash || hash === '#') {
+            return null;
+        }
+        
+        // Remove the # and get the page name
+        const page = hash.substring(1);
+        
+        // Validate that the page exists
+        const pageElement = document.getElementById(`page-${page}`);
+        if (pageElement) {
+            return page;
+        }
+        
+        return null;
+    }
+
+    navigateTo(page, updateHash = true) {
         // Hide all pages
         document.querySelectorAll('[id^="page-"]').forEach(pageEl => {
             pageEl.classList.add('hidden');
@@ -49,6 +79,11 @@ export class SPARouter {
         }
 
         this.currentPage = page;
+
+        // Update URL hash to maintain page state on reload
+        if (updateHash) {
+            window.location.hash = page;
+        }
     }
 }
 

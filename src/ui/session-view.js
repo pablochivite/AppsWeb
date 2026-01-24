@@ -5,7 +5,7 @@
  * This module integrates with the existing session-view to save completed sessions.
  */
 
-import { saveCompletedSession } from '../services/dbService.js';
+import { saveCompletedSession } from '../../js/services/dbService.js';
 
 /**
  * Construct sessionData object from session state

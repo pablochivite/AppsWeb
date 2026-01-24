@@ -152,6 +152,22 @@ function isOfflineError(error) {
   );
 }
 
+/**
+ * Check if error is a permission error
+ * These are expected when rules aren't deployed or user doesn't have data yet
+ */
+function isPermissionError(error) {
+  return error && (
+    error.code === 'permission-denied' ||
+    error.code === 'PERMISSION_DENIED' ||
+    (error.message && (
+      error.message.includes('Missing or insufficient permissions') ||
+      error.message.includes('permission-denied') ||
+      error.message.includes('PERMISSION_DENIED')
+    ))
+  );
+}
+
 // ============================================================================
 // COLLECTION PATHS
 // ============================================================================
@@ -193,7 +209,17 @@ function getUserTrainingSystemsRef(userId) {
 }
 
 /**
- * Get user sessions sub-collection reference (within a workout)
+ * Get sessions sub-collection reference (within a training system)
+ * @param {string} userId - User ID
+ * @param {string} systemId - Training system ID
+ * @returns {import('firebase/firestore').CollectionReference}
+ */
+function getSystemSessionsRef(userId, systemId) {
+  return collection(db, 'users', userId, 'trainingSystems', systemId, 'sessions');
+}
+
+/**
+ * Get user sessions sub-collection reference (within a workout) - DEPRECATED
  * @param {string} userId - User ID
  * @param {string} workoutId - Workout ID
  * @returns {import('firebase/firestore').CollectionReference}
@@ -292,6 +318,15 @@ async function fetchUserProfileFromFirestore(userId, cacheKey) {
     
     if (userSnap.exists()) {
       const profile = { id: userSnap.id, ...userSnap.data() };
+      
+      // Auto-backfill longestStreak if missing (non-blocking)
+      if (profile.longestStreak === undefined) {
+        // Backfill in background - don't block profile loading
+        backfillLongestStreak(userId).catch(err => {
+          console.warn('Background longestStreak backfill failed (non-critical):', err);
+        });
+      }
+      
       // Update cache for next time
       saveToCache(cacheKey, profile);
       return profile;
@@ -320,18 +355,21 @@ async function fetchUserProfileFromFirestore(userId, cacheKey) {
 // ============================================================================
 
 /**
- * Save training system
+ * Save training system (without sessions - sessions are stored separately)
  * @param {string} userId - User ID
- * @param {Object} trainingSystem - Training system object
+ * @param {Object} trainingSystem - Training system object (sessions array is ignored)
  * @returns {Promise<string>} Training system ID
  */
 export async function saveTrainingSystem(userId, trainingSystem) {
   try {
     const systemsRef = getUserTrainingSystemsRef(userId);
     
+    // Extract sessions separately (they're stored in sub-collection)
+    const { sessions, ...systemDataWithoutSessions } = trainingSystem;
+    
     // Convert dates to Firestore Timestamps
     const systemData = {
-      ...trainingSystem,
+      ...systemDataWithoutSessions,
       startDate: trainingSystem.startDate ? Timestamp.fromDate(new Date(trainingSystem.startDate)) : null,
       createdAt: trainingSystem.createdAt ? Timestamp.fromDate(new Date(trainingSystem.createdAt)) : serverTimestamp(),
       updatedAt: serverTimestamp()
@@ -339,9 +377,9 @@ export async function saveTrainingSystem(userId, trainingSystem) {
     
     let systemId;
     if (trainingSystem.id) {
-      // Update existing
+      // Update existing or create if doesn't exist (upsert)
       const systemRef = doc(systemsRef, trainingSystem.id);
-      await withTimeout(updateDoc(systemRef, systemData), NETWORK_TIMEOUT);
+      await withTimeout(setDoc(systemRef, systemData, { merge: true }), NETWORK_TIMEOUT);
       systemId = trainingSystem.id;
     } else {
       // Create new
@@ -349,13 +387,23 @@ export async function saveTrainingSystem(userId, trainingSystem) {
       systemId = docRef.id;
     }
     
+    // If sessions are provided, save them to the sub-collection
+    if (sessions && Array.isArray(sessions) && sessions.length > 0) {
+      console.log(`Saving ${sessions.length} sessions to system ${systemId}`);
+      for (const session of sessions) {
+        await saveSessionToSystem(userId, systemId, session);
+      }
+    }
+    
     // Update cache optimistically
     const cacheKey = `${CACHE_KEYS.TRAINING_SYSTEM(userId)}_${systemId}`;
     const cachedSystem = {
-      ...trainingSystem,
+      ...systemDataWithoutSessions,
       id: systemId,
       startDate: trainingSystem.startDate,
-      createdAt: trainingSystem.createdAt || new Date().toISOString()
+      createdAt: trainingSystem.createdAt || new Date().toISOString(),
+      // Don't cache sessions - they're loaded separately
+      sessions: []
     };
     saveToCache(cacheKey, cachedSystem);
     
@@ -376,16 +424,16 @@ export async function saveTrainingSystem(userId, trainingSystem) {
 }
 
 /**
- * Get training system by ID
+ * Get training system by ID (without sessions - sessions are loaded separately)
  * Implements Cache-First pattern
  * @param {string} userId - User ID
  * @param {string} systemId - Training system ID
- * @param {Object} options - Options { skipCache: boolean, returnStale: boolean }
- * @returns {Promise<Object|null>} Training system or null
+ * @param {Object} options - Options { skipCache: boolean, returnStale: boolean, includeSessions: boolean }
+ * @returns {Promise<Object|null>} Training system or null (sessions are empty array unless includeSessions=true)
  */
 export async function getTrainingSystem(userId, systemId, options = {}) {
   const cacheKey = `${CACHE_KEYS.TRAINING_SYSTEM(userId)}_${systemId}`;
-  const { skipCache = false, returnStale = true } = options;
+  const { skipCache = false, returnStale = true, includeSessions = false } = options;
   
   // STEP 1: Return cached data immediately if available
   if (!skipCache) {
@@ -393,24 +441,35 @@ export async function getTrainingSystem(userId, systemId, options = {}) {
     if (cached) {
       if (!isCacheStale({ _cachedAt: JSON.parse(localStorage.getItem(cacheKey))._cachedAt })) {
         // Update in background
-        fetchTrainingSystemFromFirestore(userId, systemId, cacheKey).catch(() => {});
+        fetchTrainingSystemFromFirestore(userId, systemId, cacheKey, includeSessions).catch(() => {});
+        // Load sessions separately if requested
+        if (includeSessions && (!cached.sessions || cached.sessions.length === 0)) {
+          const sessions = await getSystemSessions(userId, systemId);
+          cached.sessions = sessions;
+        }
         return cached;
       } else if (returnStale) {
         // Return stale, update in background
-        fetchTrainingSystemFromFirestore(userId, systemId, cacheKey).catch(() => {});
+        fetchTrainingSystemFromFirestore(userId, systemId, cacheKey, includeSessions).catch(() => {});
+        // Load sessions separately if requested
+        if (includeSessions && (!cached.sessions || cached.sessions.length === 0)) {
+          const sessions = await getSystemSessions(userId, systemId);
+          cached.sessions = sessions;
+        }
         return cached;
       }
     }
   }
   
   // STEP 2: Fetch from Firestore
-  return await fetchTrainingSystemFromFirestore(userId, systemId, cacheKey);
+  return await fetchTrainingSystemFromFirestore(userId, systemId, cacheKey, includeSessions);
 }
 
 /**
  * Fetch training system from Firestore and update cache
+ * @param {boolean} includeSessions - If true, also load sessions from sub-collection
  */
-async function fetchTrainingSystemFromFirestore(userId, systemId, cacheKey) {
+async function fetchTrainingSystemFromFirestore(userId, systemId, cacheKey, includeSessions = false) {
   try {
     const systemsRef = getUserTrainingSystemsRef(userId);
     const systemRef = doc(systemsRef, systemId);
@@ -423,8 +482,14 @@ async function fetchTrainingSystemFromFirestore(userId, systemId, cacheKey) {
         id: systemSnap.id,
         ...data,
         startDate: data.startDate?.toDate?.()?.toISOString() || data.startDate,
-        createdAt: data.createdAt?.toDate?.()?.toISOString() || data.createdAt
+        createdAt: data.createdAt?.toDate?.()?.toISOString() || data.createdAt,
+        sessions: [] // Sessions are stored separately
       };
+      
+      // Load sessions if requested
+      if (includeSessions) {
+        system.sessions = await getSystemSessions(userId, systemId);
+      }
       
       saveToCache(cacheKey, system);
       return system;
@@ -439,6 +504,12 @@ async function fetchTrainingSystemFromFirestore(userId, systemId, cacheKey) {
         console.warn('Offline detected, returning cached training system');
         return cached;
       }
+    }
+    
+    if (isPermissionError(error)) {
+      // Permission errors are expected when rules aren't deployed or user has no data
+      console.warn('Permission denied while fetching training system (this is expected for new users or when rules aren\'t deployed):', error.message);
+      return null;
     }
     
     console.error('Error getting training system:', error);
@@ -518,7 +589,24 @@ async function fetchAllTrainingSystemsFromFirestore(userId, cacheKey) {
       };
     });
     
-    saveToCache(cacheKey, systems);
+    // If Firestore returns empty array, clear all training system caches
+    if (systems.length === 0) {
+      // Clear the list cache
+      localStorage.removeItem(cacheKey);
+      // Clear individual system caches (they all start with the same prefix)
+      const prefix = `firestore_cache_training_system_${userId}_`;
+      Object.keys(localStorage).forEach(key => {
+        if (key.startsWith(prefix)) {
+          localStorage.removeItem(key);
+        }
+      });
+      // Clear the legacy localStorage trainingSystem key
+      localStorage.removeItem('trainingSystem');
+      console.log('[dbService] Training systems empty in Firestore - cleared all caches');
+    } else {
+      saveToCache(cacheKey, systems);
+    }
+    
     return systems;
   } catch (error) {
     // CRITICAL: Always check for cached data on ANY network error
@@ -535,7 +623,9 @@ async function fetchAllTrainingSystemsFromFirestore(userId, cacheKey) {
     
     // No cache available: This is expected for first-time users or when cache was cleared
     // Use warning instead of error - this is not a critical failure
-    if (isOfflineError(error)) {
+    if (isPermissionError(error)) {
+      console.warn('⚠️ Permission denied while loading training systems (this is expected for new users or when rules aren\'t deployed). Rules may need to be deployed.');
+    } else if (isOfflineError(error)) {
       console.warn('⚠️ Network timeout - no cached training systems available. This is normal for new users.');
     } else {
       console.warn('⚠️ Could not load training systems (network issue). This is normal for new users or when offline.');
@@ -565,64 +655,305 @@ export async function deleteTrainingSystem(userId, systemId) {
 }
 
 // ============================================================================
-// SESSION OPERATIONS
+// SESSION OPERATIONS (within training systems)
 // ============================================================================
 
 /**
- * Save session (within a training system)
+ * Save session to a training system's sessions sub-collection
+ * @param {string} userId - User ID
+ * @param {string} systemId - Training system ID
+ * @param {Object} session - Session object
+ * @returns {Promise<string>} Session ID
+ */
+export async function saveSessionToSystem(userId, systemId, session) {
+  try {
+    const sessionsRef = getSystemSessionsRef(userId, systemId);
+    
+    // Prepare session data
+    const sessionData = {
+      ...session,
+      updatedAt: serverTimestamp()
+    };
+    
+    // Remove id from data if present (it's the document ID)
+    const { id, ...sessionDataWithoutId } = sessionData;
+    
+    // Remove undefined values (Firestore doesn't allow undefined)
+    const cleanedSessionData = Object.fromEntries(
+      Object.entries(sessionDataWithoutId).filter(([_, value]) => value !== undefined)
+    );
+    
+    let sessionId;
+    if (session.id) {
+      // Update existing or create if doesn't exist (upsert)
+      const sessionRef = doc(sessionsRef, session.id);
+      await withTimeout(setDoc(sessionRef, cleanedSessionData, { merge: true }), NETWORK_TIMEOUT);
+      sessionId = session.id;
+    } else {
+      // Create new
+      const docRef = await withTimeout(addDoc(sessionsRef, {
+        ...cleanedSessionData,
+        createdAt: serverTimestamp()
+      }), NETWORK_TIMEOUT);
+      sessionId = docRef.id;
+    }
+    
+    return sessionId;
+  } catch (error) {
+    if (isOfflineError(error)) {
+      console.warn('Offline detected while saving session to system');
+      return session.id || `temp-${Date.now()}`;
+    }
+    
+    console.error('Error saving session to system:', error);
+    throw new Error(`Failed to save session: ${error.message}`);
+  }
+}
+
+/**
+ * Get all sessions for a training system
+ * @param {string} userId - User ID
+ * @param {string} systemId - Training system ID
+ * @returns {Promise<Array>} Array of sessions
+ */
+export async function getSystemSessions(userId, systemId) {
+  try {
+    const sessionsRef = getSystemSessionsRef(userId, systemId);
+    const q = query(sessionsRef, orderBy('day', 'asc'));
+    const querySnapshot = await withTimeout(getDocs(q), NETWORK_TIMEOUT);
+    
+    return querySnapshot.docs.map(doc => {
+      const data = doc.data();
+      return {
+        id: doc.id,
+        ...data,
+        createdAt: data.createdAt?.toDate?.()?.toISOString() || data.createdAt,
+        updatedAt: data.updatedAt?.toDate?.()?.toISOString() || data.updatedAt,
+        completedAt: data.completedAt?.toDate?.()?.toISOString() || data.completedAt
+      };
+    });
+  } catch (error) {
+    if (isOfflineError(error)) {
+      console.warn('Offline detected while fetching system sessions');
+      return [];
+    }
+    
+    if (isPermissionError(error)) {
+      // Permission errors are expected when rules aren't deployed or user has no data
+      console.warn('Permission denied while fetching system sessions (this is expected for new users or when rules aren\'t deployed):', error.message);
+      return [];
+    }
+    
+    console.error('Error getting system sessions:', error);
+    throw new Error(`Failed to get system sessions: ${error.message}`);
+  }
+}
+
+/**
+ * Get session by ID from a training system
+ * @param {string} userId - User ID
+ * @param {string} systemId - Training system ID
+ * @param {string} sessionId - Session ID
+ * @returns {Promise<Object|null>} Session or null
+ */
+export async function getSystemSession(userId, systemId, sessionId) {
+  try {
+    const sessionsRef = getSystemSessionsRef(userId, systemId);
+    const sessionRef = doc(sessionsRef, sessionId);
+    const sessionSnap = await withTimeout(getDoc(sessionRef), NETWORK_TIMEOUT);
+    
+    if (sessionSnap.exists()) {
+      const data = sessionSnap.data();
+      return {
+        id: sessionSnap.id,
+        ...data,
+        createdAt: data.createdAt?.toDate?.()?.toISOString() || data.createdAt,
+        updatedAt: data.updatedAt?.toDate?.()?.toISOString() || data.updatedAt,
+        completedAt: data.completedAt?.toDate?.()?.toISOString() || data.completedAt
+      };
+    }
+    
+    return null;
+  } catch (error) {
+    if (isOfflineError(error)) {
+      console.warn('Offline detected while fetching session');
+      return null;
+    }
+    
+    console.error('Error getting session:', error);
+    throw new Error(`Failed to get session: ${error.message}`);
+  }
+}
+
+/**
+ * Save session (backwards compatibility - redirects to saveSessionToSystem)
  * @param {string} userId - User ID
  * @param {string} systemId - Training system ID
  * @param {Object} session - Session object
  * @returns {Promise<string>} Session ID
  */
 export async function saveSession(userId, systemId, session) {
-  try {
-    // Sessions are stored as part of the training system's sessions array
-    // For now, we'll update the entire training system
-    // Future: Could store sessions as sub-collection if needed for scalability
-    const system = await getTrainingSystem(userId, systemId);
-    if (!system) {
-      throw new Error('Training system not found');
-    }
-    
-    // Update or add session in sessions array
-    const sessions = system.sessions || [];
-    const sessionIndex = sessions.findIndex(s => s.id === session.id || s.date === session.date);
-    
-    if (sessionIndex >= 0) {
-      sessions[sessionIndex] = session;
-    } else {
-      sessions.push(session);
-    }
-    
-    system.sessions = sessions;
-    await saveTrainingSystem(userId, system);
-    
-    return session.id || `session-${Date.now()}`;
-  } catch (error) {
-    console.error('Error saving session:', error);
-    throw new Error(`Failed to save session: ${error.message}`);
-  }
+  return await saveSessionToSystem(userId, systemId, session);
 }
 
 /**
- * Get session by ID
+ * Get session by ID (backwards compatibility)
  * @param {string} userId - User ID
  * @param {string} systemId - Training system ID
  * @param {string} sessionId - Session ID
  * @returns {Promise<Object|null>} Session or null
  */
 export async function getSession(userId, systemId, sessionId) {
+  return await getSystemSession(userId, systemId, sessionId);
+}
+
+/**
+ * Get user completed sessions sub-collection reference
+ * @param {string} userId - User ID
+ * @returns {import('firebase/firestore').CollectionReference}
+ */
+function getUserCompletedSessionsRef(userId) {
+  return collection(db, 'users', userId, 'completedSessions');
+}
+
+/**
+ * Save completed session to Firebase
+ * Stores completed sessions in a separate sub-collection for easy querying
+ * @param {string} userId - User ID
+ * @param {Object} sessionData - Completed session data
+ * @returns {Promise<string>} Session document ID
+ */
+export async function saveCompletedSession(userId, sessionData) {
   try {
-    const system = await getTrainingSystem(userId, systemId);
-    if (!system || !system.sessions) {
-      return null;
+    const sessionsRef = getUserCompletedSessionsRef(userId);
+    
+    // Ensure date is in ISO format (YYYY-MM-DD)
+    const sessionDate = sessionData.date || new Date().toISOString().split('T')[0];
+    
+    // Convert dates to Firestore Timestamps
+    const sessionDoc = {
+      ...sessionData,
+      date: sessionDate,
+      startedAt: sessionData.startedAt ? Timestamp.fromDate(new Date(sessionData.startedAt)) : serverTimestamp(),
+      completedAt: sessionData.completedAt ? Timestamp.fromDate(new Date(sessionData.completedAt)) : serverTimestamp(),
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp()
+    };
+    
+    // Check if session already exists for this date
+    const existingQuery = query(
+      sessionsRef,
+      where('date', '==', sessionDate),
+      limit(1)
+    );
+    
+    const existingSnap = await withTimeout(getDocs(existingQuery), NETWORK_TIMEOUT);
+    
+    let sessionId;
+    if (!existingSnap.empty) {
+      // Update existing session
+      const existingDoc = existingSnap.docs[0];
+      const docRef = doc(sessionsRef, existingDoc.id);
+      await withTimeout(updateDoc(docRef, sessionDoc), NETWORK_TIMEOUT);
+      sessionId = existingDoc.id;
+    } else {
+      // Create new session
+      const docRef = await withTimeout(addDoc(sessionsRef, sessionDoc), NETWORK_TIMEOUT);
+      sessionId = docRef.id;
     }
     
-    return system.sessions.find(s => s.id === sessionId || s.date === sessionId) || null;
+    return sessionId;
   } catch (error) {
-    console.error('Error getting session:', error);
-    throw new Error(`Failed to get session: ${error.message}`);
+    if (isOfflineError(error)) {
+      console.warn('Offline detected while saving completed session, will retry when online');
+      // Firestore persistence will handle retry
+      return `temp-${Date.now()}`;
+    }
+    
+    console.error('Error saving completed session:', error);
+    throw new Error(`Failed to save completed session: ${error.message}`);
+  }
+}
+
+/**
+ * Get completed sessions for a user
+ * @param {string} userId - User ID
+ * @param {Object} options - Options { limit: number, startDate: string, endDate: string }
+ * @returns {Promise<Array>} Array of completed sessions
+ */
+export async function getCompletedSessions(userId, options = {}) {
+  try {
+    const { limit: limitCount = 50, startDate, endDate } = options;
+    const sessionsRef = getUserCompletedSessionsRef(userId);
+    
+    let q = query(sessionsRef, orderBy('date', 'desc'), limit(limitCount));
+    
+    if (startDate || endDate) {
+      const constraints = [];
+      if (startDate) {
+        constraints.push(where('date', '>=', startDate));
+      }
+      if (endDate) {
+        constraints.push(where('date', '<=', endDate));
+      }
+      q = query(sessionsRef, ...constraints, orderBy('date', 'desc'), limit(limitCount));
+    }
+    
+    const querySnapshot = await withTimeout(getDocs(q), NETWORK_TIMEOUT);
+    
+    return querySnapshot.docs.map(doc => {
+      const data = doc.data();
+      return {
+        id: doc.id,
+        ...data,
+        startedAt: data.startedAt?.toDate?.()?.toISOString() || data.startedAt,
+        completedAt: data.completedAt?.toDate?.()?.toISOString() || data.completedAt,
+        createdAt: data.createdAt?.toDate?.()?.toISOString() || data.createdAt
+      };
+    });
+  } catch (error) {
+    if (isOfflineError(error)) {
+      console.warn('Offline detected while fetching completed sessions');
+      return [];
+    }
+    
+    console.error('Error getting completed sessions:', error);
+    throw new Error(`Failed to get completed sessions: ${error.message}`);
+  }
+}
+
+/**
+ * Check if a session is completed for a given date
+ * @param {string} userId - User ID
+ * @param {string} date - Date in YYYY-MM-DD format
+ * @returns {Promise<boolean>} True if session is completed
+ */
+export async function isSessionCompleted(userId, date) {
+  try {
+    const sessionsRef = getUserCompletedSessionsRef(userId);
+    const q = query(
+      sessionsRef,
+      where('date', '==', date),
+      limit(1)
+    );
+    
+    const querySnapshot = await withTimeout(getDocs(q), NETWORK_TIMEOUT);
+    return !querySnapshot.empty;
+  } catch (error) {
+    if (isOfflineError(error)) {
+      // On offline, assume not completed to be safe
+      return false;
+    }
+    
+    if (isPermissionError(error)) {
+      // Permission errors are expected when rules aren't deployed or user has no data
+      // Assume session is not completed (safe default)
+      console.warn('Permission denied while checking session completion (this is expected for new users or when rules aren\'t deployed):', error.message);
+      return false;
+    }
+    
+    console.error('Error checking if session is completed:', error);
+    return false;
   }
 }
 
@@ -653,5 +984,64 @@ function docToObject(docSnap) {
     id: docSnap.id,
     ...converted
   };
+}
+
+/**
+ * Backfill longestStreak field for existing users
+ * Sets longestStreak to currentStreak if it's missing
+ * This is a simple initialization - for accurate historical calculation,
+ * use the backfillLongestStreak function from src/services/dbService.js
+ * 
+ * @param {string} userId - User ID
+ * @returns {Promise<number>} The longest streak value (currentStreak or 0)
+ */
+export async function backfillLongestStreak(userId) {
+  try {
+    console.log('[Backfill] Initializing longestStreak for user:', userId);
+    
+    const userRef = getUserDocRef(userId);
+    const userSnap = await withTimeout(getDoc(userRef), NETWORK_TIMEOUT);
+    
+    if (!userSnap.exists()) {
+      console.log('[Backfill] User profile does not exist');
+      return 0;
+    }
+    
+    const userData = userSnap.data();
+    const currentStreak = userData.currentStreak || 0;
+    const existingLongestStreak = userData.longestStreak;
+    
+    console.log('[Backfill] Current streak:', currentStreak);
+    console.log('[Backfill] Existing longestStreak:', existingLongestStreak);
+    
+    // If longestStreak is missing, set it to currentStreak (or 0 if no streak)
+    if (existingLongestStreak === undefined) {
+      const longestStreak = currentStreak;
+      await withTimeout(updateDoc(userRef, {
+        longestStreak: longestStreak,
+        updatedAt: serverTimestamp()
+      }), NETWORK_TIMEOUT);
+      
+      console.log('[Backfill] ✓ Initialized longestStreak to:', longestStreak);
+      return longestStreak;
+    }
+    
+    // If currentStreak is higher than longestStreak, update it
+    if (currentStreak > existingLongestStreak) {
+      await withTimeout(updateDoc(userRef, {
+        longestStreak: currentStreak,
+        updatedAt: serverTimestamp()
+      }), NETWORK_TIMEOUT);
+      
+      console.log('[Backfill] ✓ Updated longestStreak:', existingLongestStreak, '->', currentStreak);
+      return currentStreak;
+    }
+    
+    console.log('[Backfill] ✓ longestStreak already up to date:', existingLongestStreak);
+    return existingLongestStreak;
+  } catch (error) {
+    console.error('[Backfill] Error backfilling longestStreak:', error);
+    throw new Error(`Failed to backfill longest streak: ${error.message}`);
+  }
 }
 

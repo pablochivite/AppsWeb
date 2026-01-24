@@ -9,7 +9,8 @@ export class OnboardingManager {
         this.answers = {
             sedentaryImpact: null,
             discomforts: [],
-            primaryDiscipline: []
+            primaryDiscipline: [],
+            objectives: []
         };
         this.voiceManager = new VoiceInputManager();
         this.baselineManager = null;
@@ -307,6 +308,9 @@ export class OnboardingManager {
     async handleBaselineComplete(assessment) {
         console.log('Baseline assessment completed:', assessment);
         
+        // Store objectives from assessment
+        this.answers.objectives = assessment.objectives || [];
+        
         // Save baseline assessment
         await saveBaselineAssessment(assessment);
         
@@ -332,7 +336,8 @@ export class OnboardingManager {
                     preferredDisciplines: this.answers.primaryDiscipline || [],
                     discomforts: this.answers.discomforts || [],
                     equipment: [],
-                    goals: [],
+                    goals: this.answers.objectives || [],
+                    objectives: this.answers.objectives || [],
                     currentMilestones: {},
                     sedentaryImpact: this.answers.sedentaryImpact || null
                 });

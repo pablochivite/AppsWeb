@@ -166,3 +166,58 @@ export const DEFAULT_WEEKLY_CONFIG = {
     restDays: [2, 4, 6] // Tuesday, Thursday, Saturday (0 = Sunday)
 };
 
+/**
+ * Clean framework name by removing discipline names
+ * Frameworks should NEVER include disciplines like "Animal Flow", "Pilates", etc.
+ * @param {string} framework - Potentially dirty framework string
+ * @returns {string} Cleaned framework name
+ */
+export function cleanFrameworkName(framework) {
+    if (!framework || typeof framework !== 'string') {
+        return 'Workout';
+    }
+    
+    let cleaned = framework.trim();
+    
+    // List of discipline names to remove (case-insensitive)
+    const disciplines = [
+        'Animal Flow',
+        'Pilates',
+        'Yoga',
+        'Weights',
+        'Calisthenics',
+        'Crossfit',
+        'CrossFit'
+    ];
+    
+    // Remove discipline names (case-insensitive)
+    disciplines.forEach(discipline => {
+        // Remove " and Discipline" or "Discipline and " patterns
+        const patterns = [
+            new RegExp(`\\s+and\\s+${discipline}`, 'gi'),
+            new RegExp(`${discipline}\\s+and\\s+`, 'gi'),
+            new RegExp(`\\s+&\\s+${discipline}`, 'gi'),
+            new RegExp(`${discipline}\\s+&\\s+`, 'gi'),
+            new RegExp(`\\s*-\\s*${discipline}`, 'gi'),
+            new RegExp(`${discipline}\\s*-\\s*`, 'gi'),
+            new RegExp(`^${discipline}\\s+`, 'gi'),
+            new RegExp(`\\s+${discipline}$`, 'gi')
+        ];
+        
+        patterns.forEach(pattern => {
+            cleaned = cleaned.replace(pattern, '');
+        });
+    });
+    
+    // Clean up extra spaces and separators
+    cleaned = cleaned.replace(/\s+/g, ' ').trim();
+    cleaned = cleaned.replace(/^\s*[-\/]\s*/, '').replace(/\s*[-\/]\s*$/, '');
+    
+    // If nothing left after cleaning, return default
+    if (!cleaned || cleaned.length === 0) {
+        return 'Workout';
+    }
+    
+    return cleaned;
+}
+

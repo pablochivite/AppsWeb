@@ -24,9 +24,17 @@
     </script>
 </head>
 <body class="min-h-screen overflow-hidden">
+    <!-- Mobile Menu Button -->
+    <button id="mobile-menu-button" class="mobile-menu-button hidden" aria-label="Toggle menu">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Sidebar Overlay (Mobile) -->
+    <div id="sidebar-overlay" class="sidebar-overlay"></div>
+
     <div class="flex h-screen">
         <!-- Sidebar Navigation -->
-        <aside id="sidebar-container" class="w-64 glass border-r border-zinc-800 flex flex-col z-10">
+        <aside id="sidebar-container" class="glass border-r border-zinc-800 flex flex-col z-10">
             <!-- Content will be injected from html/components/sidebar.html -->
         </aside>
 
@@ -92,6 +100,11 @@
     <!-- Authentication Overlay (Login/Signup) -->
     <div id="auth-overlay" class="hidden">
         <!-- Content will be injected from html/overlays/auth.html -->
+    </div>
+
+    <!-- Session Completion Modal -->
+    <div id="completion-modal-container">
+        <!-- Content will be injected from html/components/completion-modal.html -->
     </div>
 
     <script type="module" src="js/app.js"></script>

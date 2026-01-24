@@ -20,7 +20,8 @@ export class BaselineAssessmentManager {
                 lowerBody: null,
                 upperBody: null
             },
-            physiological: {}
+            physiological: {},
+            objectives: []
         };
         this.onComplete = onComplete;
     }
@@ -336,27 +337,55 @@ export class BaselineAssessmentManager {
             });
         }
 
-        // Question 17: Injury History - Skip or Finish
+        // Question 17: Injury History - Skip or Continue
         const injurySkipBtn = document.getElementById('injury-skip');
         if (injurySkipBtn) {
             injurySkipBtn.addEventListener('click', () => {
                 this.collectInjuryHistory();
-                this.completeAssessment();
+                this.showQuestion(18);
             });
         }
 
         const injuryInput = document.getElementById('physiological-injury');
+        const injuryContinueBtn = document.getElementById('injury-continue');
+        
         if (injuryInput) {
             injuryInput.addEventListener('input', () => {
                 this.updateInjuryUI();
             });
         }
 
-        const injuryCompleteBtn = document.getElementById('injury-complete');
-        if (injuryCompleteBtn) {
-            injuryCompleteBtn.addEventListener('click', () => {
+        if (injuryContinueBtn) {
+            injuryContinueBtn.addEventListener('click', () => {
                 this.collectInjuryHistory();
-                this.completeAssessment();
+                this.showQuestion(18);
+            });
+            
+            // Enable continue button by default since field is optional
+            injuryContinueBtn.removeAttribute('disabled');
+            injuryContinueBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+            injuryContinueBtn.style.opacity = '1';
+            injuryContinueBtn.style.cursor = 'pointer';
+            injuryContinueBtn.style.pointerEvents = 'auto';
+        }
+
+        // Question 18: Training Objectives (multi-select)
+        this.answers.objectives = [];
+        document.querySelectorAll('[data-answer="objective"]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const value = btn.getAttribute('data-value');
+                this.toggleObjective(value);
+            });
+        });
+
+        const objectivesCompleteBtn = document.getElementById('objectives-complete');
+        if (objectivesCompleteBtn) {
+            objectivesCompleteBtn.addEventListener('click', () => {
+                if (this.answers.objectives.length > 0) {
+                    this.completeAssessment();
+                } else {
+                    alert('Please select at least one objective to continue.');
+                }
             });
         }
     }
@@ -682,10 +711,42 @@ export class BaselineAssessmentManager {
     }
 
     updateInjuryUI() {
-        const injuryInput = document.getElementById('physiological-injury');
-        const finishBtn = document.getElementById('injury-complete');
-        if (finishBtn && injuryInput) {
-            if (injuryInput.value.trim()) {
+        // Injury field is optional, so continue button is always enabled
+        // This method is kept for consistency but doesn't need to disable the button
+        const continueBtn = document.getElementById('injury-continue');
+        if (continueBtn) {
+            continueBtn.removeAttribute('disabled');
+            continueBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+            continueBtn.style.opacity = '1';
+            continueBtn.style.cursor = 'pointer';
+            continueBtn.style.pointerEvents = 'auto';
+        }
+    }
+
+    toggleObjective(value) {
+        const index = this.answers.objectives.indexOf(value);
+        if (index > -1) {
+            this.answers.objectives.splice(index, 1);
+        } else {
+            this.answers.objectives.push(value);
+        }
+        this.updateObjectivesUI();
+    }
+
+    updateObjectivesUI() {
+        document.querySelectorAll('[data-answer="objective"]').forEach(btn => {
+            const value = btn.getAttribute('data-value');
+            if (this.answers.objectives.includes(value)) {
+                btn.classList.add('selected');
+            } else {
+                btn.classList.remove('selected');
+            }
+        });
+        
+        // Enable/disable Finish button based on selections
+        const finishBtn = document.getElementById('objectives-complete');
+        if (finishBtn) {
+            if (this.answers.objectives.length > 0) {
                 finishBtn.removeAttribute('disabled');
                 finishBtn.classList.remove('opacity-50', 'cursor-not-allowed');
                 finishBtn.style.opacity = '1';
@@ -721,6 +782,11 @@ export class BaselineAssessmentManager {
         const questionEl = document.getElementById(questionId);
         if (questionEl) {
             questionEl.classList.remove('hidden');
+        }
+
+        // Initialize UI for question 18 (objectives)
+        if (step === 18) {
+            this.updateObjectivesUI();
         }
     }
 
@@ -778,6 +844,7 @@ export class BaselineAssessmentManager {
             physiological: Object.keys(this.answers.physiological).length > 0 
                 ? this.answers.physiological 
                 : undefined,
+            objectives: this.answers.objectives || [],
             baselineMetrics: {
                 mobility: scaleTo100(mobilityOverall),
                 rotation: scaleTo100(rotationOverall),

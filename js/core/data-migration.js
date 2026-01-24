@@ -69,6 +69,7 @@ async function migrateUserProfile(userId) {
             discomforts: localProfile?.discomforts || onboardingData?.discomforts || [],
             equipment: localProfile?.equipment || [],
             goals: localProfile?.goals || [],
+            objectives: localProfile?.objectives || onboardingData?.objectives || [],
             currentMilestones: localProfile?.currentMilestones || {},
             sedentaryImpact: onboardingData?.sedentaryImpact || null
         };

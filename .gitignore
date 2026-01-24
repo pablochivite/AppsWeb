@@ -49,3 +49,7 @@ ui-debug.log
 .vite/
 
 serviceAccountKey.json
+
+# Functions
+functions/lib/
+functions/node_modules/
