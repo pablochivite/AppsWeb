@@ -4,6 +4,8 @@ import { generateWeeklySystem, findAlternativeVariation, loadExercises, calculat
 import { getUserProfile, saveUserProfile, getTrainingSystem, saveTrainingSystem } from '../core/storage.js';
 import { SessionView } from './session-view.js';
 import { init as initDashboardUI } from '../../src/ui/dashboard.js';
+import { getAuthUser } from '../core/auth-manager.js';
+import { cleanFrameworkName } from '../core/constants.js';
 
 let athleteCalendarManager = null;
 let routerInstance = null;
@@ -39,6 +41,22 @@ export function initializeAthleteApp(router) {
                 }
             }, 100);
         }
+        
+        // Initialize profile when profile page is shown
+        if (page === 'profile') {
+            setTimeout(async () => {
+                const { initProfile } = await import('./profile.js');
+                await initProfile();
+            }, 100);
+        }
+        
+        // Initialize My Training page when modus page is shown
+        if (page === 'modus') {
+            setTimeout(async () => {
+                const { initMyTraining } = await import('./modus-operandi.js');
+                await initMyTraining();
+            }, 100);
+        }
     };
     
     // Also call on initial load if already on home
@@ -48,42 +66,384 @@ export function initializeAthleteApp(router) {
             await initDashboard();
         }
     }, 100);
+    
+    // Initialize weekly generator for automatic session generation
+    // This runs in the background and checks periodically
+    setTimeout(async () => {
+        const user = getAuthUser();
+        if (user) {
+            const { getTrainingSystem } = await import('../core/storage.js');
+            const trainingSystem = await getTrainingSystem();
+            if (trainingSystem && trainingSystem.id) {
+                const { initializeWeeklyGenerator } = await import('../services/weeklyGenerator.js');
+                initializeWeeklyGenerator(user.uid, trainingSystem.id);
+            }
+        }
+    }, 2000); // Wait 2 seconds after app load to not block initial rendering
 }
 
 // Export initDashboard to window for session completion callback
 window.initDashboard = initDashboard;
 
 /**
- * Initialize dashboard - load and render first session
+ * Get today's date in YYYY-MM-DD format
+ * @returns {string} Today's date
+ */
+function getTodayDate() {
+    return new Date().toISOString().split('T')[0];
+}
+
+/**
+ * Extract framework name from potentially combined "Discipline - Framework" string
+ * Uses the cleanFrameworkName utility to remove discipline names
+ * @param {string} label - Potentially combined label
+ * @returns {string} Framework name only
+ */
+function extractFrameworkName(label) {
+    if (!label) return 'Daily';
+    return cleanFrameworkName(label);
+}
+
+/**
+ * Check if a date is today
+ * @param {string} date - Date in YYYY-MM-DD format
+ * @returns {boolean} True if date is today
+ */
+function isToday(date) {
+    return date === getTodayDate();
+}
+
+/**
+ * Check if a date is in the past (before today)
+ * @param {string} date - Date in YYYY-MM-DD format
+ * @returns {boolean} True if date is in the past
+ */
+function isPastDate(date) {
+    return date < getTodayDate();
+}
+
+/**
+ * Check if today is a training day
+ * @param {Object} trainingSystem - Training system object
+ * @returns {boolean} True if today is a training day
+ */
+function isTodayTrainingDay(trainingSystem) {
+    if (!trainingSystem) {
+        return false;
+    }
+    
+    const today = getTodayDate();
+    
+    // PRIORITY 1: Check if there's a session with exact date match for today (moved/rescheduled session)
+    // This allows moved sessions to make today a training day even if it's not in the weekly pattern
+    if (trainingSystem.sessions && Array.isArray(trainingSystem.sessions)) {
+        const sessionForToday = trainingSystem.sessions.find(session => {
+            if (!session || !session.date) return false;
+            // Normalize session date for comparison
+            const sessionDateStr = typeof session.date === 'string' 
+                ? session.date.split('T')[0] 
+                : new Date(session.date).toISOString().split('T')[0];
+            return sessionDateStr === today;
+        });
+        
+        if (sessionForToday) {
+            // Found a session for today - it's a training day
+            return true;
+        }
+    }
+    
+    // PRIORITY 2: Fall back to weekly pattern check
+    if (!trainingSystem.trainingDaysOfWeek || !Array.isArray(trainingSystem.trainingDaysOfWeek)) {
+        return false;
+    }
+    
+    const todayDate = new Date();
+    const todayDayOfWeek = todayDate.getDay(); // 0 = Sunday, 1 = Monday, etc.
+    return trainingSystem.trainingDaysOfWeek.includes(todayDayOfWeek);
+}
+
+/**
+ * Get the next training day date
+ * @param {Object} trainingSystem - Training system object
+ * @returns {Date|null} Next training day or null
+ */
+function getNextTrainingDay(trainingSystem) {
+    if (!trainingSystem || !trainingSystem.trainingDaysOfWeek || !Array.isArray(trainingSystem.trainingDaysOfWeek)) {
+        return null;
+    }
+    
+    const today = new Date();
+    const todayDayOfWeek = today.getDay();
+    
+    // Find the next training day (excluding today if it's not a training day)
+    for (let i = 1; i <= 7; i++) {
+        const checkDay = (todayDayOfWeek + i) % 7;
+        if (trainingSystem.trainingDaysOfWeek.includes(checkDay)) {
+            const nextDay = new Date(today);
+            nextDay.setDate(today.getDate() + i);
+            return nextDay;
+        }
+    }
+    
+    return null;
+}
+
+/**
+ * Format date for display (e.g., "Monday, January 15" or "Tomorrow")
+ * @param {Date} date - Date to format
+ * @returns {string} Formatted date string
+ */
+function formatNextTrainingDay(date) {
+    if (!date) return '';
+    
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    
+    const dateCopy = new Date(date);
+    dateCopy.setHours(0, 0, 0, 0);
+    
+    if (dateCopy.getTime() === tomorrow.getTime()) {
+        return 'Tomorrow';
+    }
+    
+    const options = { weekday: 'long', month: 'long', day: 'numeric' };
+    return dateCopy.toLocaleDateString('en-US', options);
+}
+
+/**
+ * Show or hide the Session Rating section
+ * @param {boolean} show - Whether to show the section
+ */
+function toggleSessionRatingSection(show) {
+    // Find the Session Rating section by looking for the h3 with "Session Rating" text
+    // The section is in the sidebar, second card after Current Streak
+    const allSections = document.querySelectorAll('.glass-strong.rounded-2xl.p-6.card-hover');
+    for (const section of allSections) {
+        const h3 = section.querySelector('h3');
+        if (h3 && h3.textContent.trim() === 'Session Rating') {
+            section.style.display = show ? 'block' : 'none';
+            return;
+        }
+    }
+    // If not found, try finding by data attributes or other means
+    // This is a fallback - the section should always be found by the h3 text
+    console.warn('Session Rating section not found for toggling');
+}
+
+/**
+ * Render rest day state with streak and next training day
+ * @param {Object} userProfile - User profile object
+ * @param {Object} trainingSystem - Training system object (must exist)
+ */
+function renderRestDayState(userProfile, trainingSystem) {
+    const card = document.getElementById('daily-session-card');
+    if (!card) return;
+    
+    // Verify trainingSystem exists before using it
+    if (!trainingSystem) {
+        console.warn('[Dashboard] renderRestDayState called without trainingSystem');
+        renderEmptyState();
+        return;
+    }
+    
+    const streak = userProfile?.currentStreak || 0;
+    const nextTrainingDay = getNextTrainingDay(trainingSystem);
+    const nextTrainingDayText = formatNextTrainingDay(nextTrainingDay);
+    
+    card.innerHTML = `
+        <div class="text-center py-12">
+            <i class="fas fa-calendar-check text-6xl text-white/20 mb-6"></i>
+            <h3 class="text-2xl font-semibold text-white mb-4">Rest Day</h3>
+            <div class="glass rounded-xl p-6 border border-zinc-800 mb-6 max-w-md mx-auto">
+                <div class="flex items-center justify-center gap-3 mb-4">
+                    <i class="fas fa-fire text-orange-400 text-3xl"></i>
+                    <div>
+                        <div class="text-4xl font-bold text-white">${streak}</div>
+                        <p class="text-sm text-white/60">${streak === 1 ? 'day' : 'days'} in a row</p>
+                    </div>
+                </div>
+                ${nextTrainingDay ? `
+                    <p class="text-white/80 mb-2">Keep your streak going!</p>
+                    <p class="text-white/60 text-sm">Next training: <span class="font-semibold text-white">${nextTrainingDayText}</span></p>
+                ` : `
+                    <p class="text-white/80">Keep your streak going!</p>
+                `}
+            </div>
+        </div>
+    `;
+}
+
+/**
+ * Get the active session to display (today's session if available and not completed)
+ * Only shows a session if today is a training day
+ * @param {Array} sessions - Array of session objects
+ * @param {string} userId - User ID
+ * @param {Object} trainingSystem - Training system object (optional, for checking if today is a training day)
+ * @returns {Promise<Object|null>} Active session or null
+ */
+async function getActiveSession(sessions, userId, trainingSystem = null) {
+    if (!sessions || sessions.length === 0) {
+        return null;
+    }
+    
+    const today = getTodayDate();
+    const todayDate = new Date();
+    const todayDayOfWeek = todayDate.getDay(); // 0 = Sunday, 1 = Monday, etc.
+    
+    // Check if today is a training day (using the updated function that checks for moved sessions)
+    if (trainingSystem) {
+        const isTrainingDay = isTodayTrainingDay(trainingSystem);
+        if (!isTrainingDay) {
+            // Today is not a training day, don't show any session
+            return null;
+        }
+    }
+    
+    const { isSessionCompleted } = await import('../services/dbService.js');
+    
+    // Find today's session
+    const todaySession = sessions.find(s => s.date === today);
+    
+    if (todaySession) {
+        // Check if today's session is completed
+        const completed = await isSessionCompleted(userId, today);
+        if (completed) {
+            // Today's session is completed, don't show it
+            return null;
+        }
+        return todaySession;
+    }
+    
+    // If today is a training day but no session found, this shouldn't happen
+    // But if it does, don't show any session (principle: only show session on training days)
+    return null;
+}
+
+/**
+ * Get previous and next sessions relative to current session
+ * @param {Array} sessions - Array of session objects
+ * @param {Object} currentSession - Current session object
+ * @returns {Object} { previous: Object|null, next: Object|null }
+ */
+function getAdjacentSessions(sessions, currentSession) {
+    if (!sessions || !currentSession || !currentSession.date) {
+        return { previous: null, next: null };
+    }
+    
+    // Sort sessions by date
+    const sortedSessions = [...sessions].sort((a, b) => a.date.localeCompare(b.date));
+    const currentIndex = sortedSessions.findIndex(s => s.date === currentSession.date);
+    
+    if (currentIndex === -1) {
+        return { previous: null, next: null };
+    }
+    
+    return {
+        previous: currentIndex > 0 ? sortedSessions[currentIndex - 1] : null,
+        next: currentIndex < sortedSessions.length - 1 ? sortedSessions[currentIndex + 1] : null
+    };
+}
+
+/**
+ * Initialize dashboard - load and render active session
  */
 export async function initDashboard() {
     try {
         // Load userProfile (merge onboarding data) - now async
-        const userProfile = await getUserProfile();
+        // Force fresh fetch from Firestore if cache was cleared
+        const user = getAuthUser();
+        let userProfile;
+        if (user) {
+            // Check if cache was cleared (indicates we need fresh data)
+            const cacheKey = `firestore_cache_profile_${user.uid}`;
+            const cacheCleared = !localStorage.getItem(cacheKey) && !localStorage.getItem('userProfile');
+            
+            if (cacheCleared) {
+                // Force fresh fetch from Firestore
+                const { getUserProfile: getFirestoreProfile } = await import('../services/dbService.js');
+                const freshProfile = await getFirestoreProfile(user.uid, { skipCache: true });
+                if (freshProfile) {
+                    // Merge with local profile structure
+                    userProfile = await getUserProfile();
+                    userProfile = { ...userProfile, ...freshProfile };
+                    // Update localStorage
+                    localStorage.setItem('userProfile', JSON.stringify(userProfile));
+                } else {
+                    userProfile = await getUserProfile();
+                }
+            } else {
+                userProfile = await getUserProfile();
+            }
+        } else {
+            userProfile = await getUserProfile();
+        }
         
-        // Check if training system exists - now async
-        let trainingSystem = await getTrainingSystem();
+        // Update homepage stats (streak, milestones)
+        await updateHomepageStats(userProfile);
+        
+        // Check if training system exists - use skipCache to detect deletions
+        let trainingSystem = await getTrainingSystem({ skipCache: true });
         
         if (!trainingSystem) {
-            // Show empty state
+            // No training system - show empty state with "Generate My First Plan"
             renderEmptyState();
+            // Hide session rating section
+            toggleSessionRatingSection(false);
             // No training system - show zeros for session rating
             await initDashboardUI({ mobility: 0, rotation: 0, flexibility: 0 });
             return;
         }
         
-        // Render first session (today's session)
-        const firstSession = trainingSystem.sessions && trainingSystem.sessions[0];
-        if (firstSession) {
-            await renderDailySession(firstSession);
+        // Check and generate next week's sessions if needed (background process)
+        if (user && trainingSystem && trainingSystem.id) {
+            // Run in background - don't block dashboard rendering
+            import('../services/weeklyGenerator.js').then(({ checkAndGenerateNextWeek }) => {
+                checkAndGenerateNextWeek(user.uid, trainingSystem.id).catch(err => {
+                    // Silently fail - this is a background process
+                    console.warn('[Dashboard] Weekly generator check failed:', err);
+                });
+            }).catch(err => {
+                // Silently fail if module can't be loaded
+                console.warn('[Dashboard] Could not load weekly generator:', err);
+            });
+        }
+        
+        // Check if today is a training day
+        const isTrainingDay = isTodayTrainingDay(trainingSystem);
+        
+        if (!isTrainingDay) {
+            // Today is NOT a training day - show rest day state
+            renderRestDayState(userProfile, trainingSystem);
+            // Hide session rating section for rest days
+            toggleSessionRatingSection(false);
+            // Show zeros for session rating (rest day)
+            await initDashboardUI({ mobility: 0, rotation: 0, flexibility: 0 });
+            return;
+        }
+        
+        // Today IS a training day - get active session
+        const activeSession = await getActiveSession(trainingSystem.sessions, user?.uid, trainingSystem);
+        
+        if (activeSession) {
+            // Show session rating section for training days
+            toggleSessionRatingSection(true);
+            await renderDailySession(activeSession, trainingSystem.sessions, user?.uid);
         } else {
+            // Today is a training day but no active session (completed or missing)
+            // Show empty state (but don't show "Generate My First Plan" since system exists)
             renderEmptyState();
-            // No session (rest day) - show zeros for session rating
+            // Hide session rating section when no active session
+            toggleSessionRatingSection(false);
+            // No active session - show zeros for session rating
             await initDashboardUI({ mobility: 0, rotation: 0, flexibility: 0 });
         }
     } catch (error) {
         console.error('Error initializing dashboard:', error);
         renderEmptyState();
+        // Hide session rating section on error
+        toggleSessionRatingSection(false);
         // On error, show zeros for session rating
         try {
             await initDashboardUI({ mobility: 0, rotation: 0, flexibility: 0 });
@@ -99,21 +459,93 @@ let currentSession = null;
 /**
  * Populate existing Daily Session card with session data
  * @param {Object} session - Session object from training system
+ * @param {Array} allSessions - All sessions in the training system
+ * @param {string} userId - User ID
  */
-async function renderDailySession(session) {
+async function renderDailySession(session, allSessions = [], userId = null) {
     currentSession = session; // Store for swap functionality
     
-    // Update title with workout info
+    const card = document.getElementById('daily-session-card');
+    if (!card) return;
+    
+    // Check if card is in empty state (has generate button)
+    const generateBtn = document.getElementById('generate-plan-btn');
+    const isEmptyState = generateBtn !== null;
+    
+    // If in empty state, restore the full card structure
+    if (isEmptyState) {
+        // Restore the original card structure
+        const dateText = isToday(session.date) ? 'Today' : 
+                        (() => {
+                            const sessionDate = new Date(session.date);
+                            const today = new Date();
+                            const tomorrow = new Date(today);
+                            tomorrow.setDate(tomorrow.getDate() + 1);
+                            
+                            if (sessionDate.toDateString() === tomorrow.toDateString()) {
+                                return 'Tomorrow';
+                            } else {
+                                const options = { weekday: 'short', month: 'short', day: 'numeric' };
+                                return sessionDate.toLocaleDateString('en-US', options);
+                            }
+                        })();
+        
+        const rawWorkout = session.workout || session.framework || 'Daily';
+        const framework = extractFrameworkName(rawWorkout);
+        
+        card.innerHTML = `
+            <div class="flex items-center justify-between mb-6">
+                <div>
+                    <h3 class="text-xl font-semibold text-white" id="session-title">${framework} Session</h3>
+                    <p class="text-sm text-white/60 mt-1" id="session-workout-info">${session.discipline || ''}</p>
+                </div>
+                <span class="text-xs text-white bg-white/10 px-3 py-1 rounded-full border border-white/20">${dateText}</span>
+            </div>
+            <div id="session-navigation"></div>
+            <div class="space-y-4" id="session-phases"></div>
+            <button id="start-session-btn" class="w-full mt-6 bg-white hover:bg-white/90 text-black font-semibold py-3 rounded-xl transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-white/20">
+                Start Now
+            </button>
+        `;
+    }
+    
+    // Update title with workout info (only show framework, not discipline)
     const titleEl = document.getElementById('session-title');
     const workoutInfoEl = document.getElementById('session-workout-info');
+    const dateBadgeEl = document.querySelector('#daily-session-card .text-xs.text-white');
     
     if (titleEl) {
-        titleEl.textContent = `${session.workout || 'Daily'} Session`;
+        const rawWorkout = session.workout || session.framework || 'Daily';
+        const framework = extractFrameworkName(rawWorkout);
+        titleEl.textContent = `${framework} Session`;
     }
     
     if (workoutInfoEl) {
         workoutInfoEl.textContent = session.discipline || '';
     }
+    
+    // Update date badge
+    if (dateBadgeEl) {
+        if (isToday(session.date)) {
+            dateBadgeEl.textContent = 'Today';
+        } else {
+            const sessionDate = new Date(session.date);
+            const today = new Date();
+            const tomorrow = new Date(today);
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            
+            if (sessionDate.toDateString() === tomorrow.toDateString()) {
+                dateBadgeEl.textContent = 'Tomorrow';
+            } else {
+                // Format date as "Mon, Jan 1"
+                const options = { weekday: 'short', month: 'short', day: 'numeric' };
+                dateBadgeEl.textContent = sessionDate.toLocaleDateString('en-US', options);
+            }
+        }
+    }
+    
+    // Render navigation buttons
+    renderSessionNavigation(session, allSessions, userId);
     
     // Render expandable phases
     renderExpandablePhases(session);
@@ -134,6 +566,89 @@ async function renderDailySession(session) {
         console.error('Error calculating projected metrics:', error);
         // Still show dashboard with zeros if calculation fails
         await initDashboardUI({ mobility: 0, rotation: 0, flexibility: 0 });
+    }
+}
+
+/**
+ * Render navigation buttons for previous/next sessions
+ * @param {Object} currentSession - Current session object
+ * @param {Array} allSessions - All sessions in the training system
+ * @param {string} userId - User ID
+ */
+async function renderSessionNavigation(currentSession, allSessions, userId) {
+    const { previous, next } = getAdjacentSessions(allSessions, currentSession);
+    
+    // Check if previous/next sessions are completed
+    const { isSessionCompleted } = await import('../services/dbService.js');
+    
+    let previousCompleted = false;
+    let nextCompleted = false;
+    
+    if (previous && userId) {
+        previousCompleted = await isSessionCompleted(userId, previous.date);
+    }
+    
+    if (next && userId) {
+        nextCompleted = await isSessionCompleted(userId, next.date);
+    }
+    
+    // Create or update navigation container
+    let navContainer = document.getElementById('session-navigation');
+    if (!navContainer) {
+        const sessionCard = document.getElementById('daily-session-card');
+        if (sessionCard) {
+            const headerDiv = sessionCard.querySelector('.flex.items-center.justify-between.mb-6');
+            if (headerDiv) {
+                navContainer = document.createElement('div');
+                navContainer.id = 'session-navigation';
+                navContainer.className = 'flex items-center justify-between mb-4';
+                headerDiv.parentNode.insertBefore(navContainer, headerDiv.nextSibling);
+            }
+        }
+    }
+    
+    if (navContainer) {
+        navContainer.innerHTML = '';
+        
+        // Previous session button
+        if (previous) {
+            const prevBtn = document.createElement('button');
+            prevBtn.className = 'flex items-center gap-2 px-3 py-2 rounded-lg bg-white/10 hover:bg-white/20 border border-white/20 transition-all duration-300 text-white text-sm';
+            prevBtn.innerHTML = '<i class="fas fa-chevron-left"></i> Previous';
+            if (previousCompleted) {
+                prevBtn.innerHTML += ' <span class="text-xs text-white/60">(Completed)</span>';
+            }
+            prevBtn.onclick = () => navigateToSession(previous, allSessions, userId);
+            navContainer.appendChild(prevBtn);
+        }
+        
+        // Next session button
+        if (next) {
+            const nextBtn = document.createElement('button');
+            nextBtn.className = 'flex items-center gap-2 px-3 py-2 rounded-lg bg-white/10 hover:bg-white/20 border border-white/20 transition-all duration-300 text-white text-sm';
+            if (nextCompleted) {
+                nextBtn.innerHTML = '<span class="text-xs text-white/60">(Completed)</span> ';
+            }
+            nextBtn.innerHTML += 'Next <i class="fas fa-chevron-right"></i>';
+            nextBtn.onclick = () => navigateToSession(next, allSessions, userId);
+            navContainer.appendChild(nextBtn);
+        }
+    }
+}
+
+/**
+ * Navigate to a different session
+ * @param {Object} session - Session to navigate to
+ * @param {Array} allSessions - All sessions in the training system
+ * @param {string} userId - User ID
+ */
+async function navigateToSession(session, allSessions, userId) {
+    await renderDailySession(session, allSessions, userId);
+    
+    // Scroll to top of session card
+    const sessionCard = document.getElementById('daily-session-card');
+    if (sessionCard) {
+        sessionCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 }
 
@@ -294,30 +809,61 @@ window.handleSwapVariation = async function(exerciseId, variationId, phaseKey, v
 };
 
 /**
- * Show empty state with Generate button
+ * Show empty state with Generate button (only if no training system exists)
  */
 function renderEmptyState() {
     const card = document.getElementById('daily-session-card');
     if (!card) return;
     
-    // Store original content structure
-    const originalContent = card.innerHTML;
-    
-    card.innerHTML = `
-        <div class="text-center py-12">
-            <i class="fas fa-dumbbell text-6xl text-white/20 mb-6"></i>
-            <h3 class="text-2xl font-semibold text-white mb-2">Ready to Start?</h3>
-            <p class="text-white/60 mb-8">Generate your first personalized training plan</p>
-            <button id="generate-plan-btn" class="bg-white hover:bg-white/90 text-black font-semibold px-8 py-3 rounded-xl transition-all duration-300 hover:scale-[1.02]">
-                Generate My First Plan
-            </button>
-        </div>
-    `;
-    
-    const generateBtn = document.getElementById('generate-plan-btn');
-    if (generateBtn) {
-        generateBtn.onclick = handleGeneratePlan;
-    }
+    // Check if training system exists - use skipCache to detect deletions
+    getTrainingSystem({ skipCache: true }).then(trainingSystem => {
+        if (trainingSystem) {
+            // Training system exists - don't show "Generate My First Plan"
+            // This should not happen if called correctly, but handle gracefully
+            card.innerHTML = `
+                <div class="text-center py-12">
+                    <i class="fas fa-dumbbell text-6xl text-white/20 mb-6"></i>
+                    <h3 class="text-2xl font-semibold text-white mb-2">No Session Today</h3>
+                    <p class="text-white/60">Check back on your next training day</p>
+                </div>
+            `;
+        } else {
+            // No training system - show generate button
+            card.innerHTML = `
+                <div class="text-center py-12">
+                    <i class="fas fa-dumbbell text-6xl text-white/20 mb-6"></i>
+                    <h3 class="text-2xl font-semibold text-white mb-2">Ready to Start?</h3>
+                    <p class="text-white/60 mb-8">Generate your first personalized training plan</p>
+                    <button id="generate-plan-btn" class="bg-white hover:bg-white/90 text-black font-semibold px-8 py-3 rounded-xl transition-all duration-300 hover:scale-[1.02]">
+                        Generate My First Plan
+                    </button>
+                </div>
+            `;
+            
+            const generateBtn = document.getElementById('generate-plan-btn');
+            if (generateBtn) {
+                generateBtn.onclick = handleGeneratePlan;
+            }
+        }
+    }).catch(error => {
+        console.error('Error checking training system in renderEmptyState:', error);
+        // Fallback to showing generate button
+        card.innerHTML = `
+            <div class="text-center py-12">
+                <i class="fas fa-dumbbell text-6xl text-white/20 mb-6"></i>
+                <h3 class="text-2xl font-semibold text-white mb-2">Ready to Start?</h3>
+                <p class="text-white/60 mb-8">Generate your first personalized training plan</p>
+                <button id="generate-plan-btn" class="bg-white hover:bg-white/90 text-black font-semibold px-8 py-3 rounded-xl transition-all duration-300 hover:scale-[1.02]">
+                    Generate My First Plan
+                </button>
+            </div>
+        `;
+        
+        const generateBtn = document.getElementById('generate-plan-btn');
+        if (generateBtn) {
+            generateBtn.onclick = handleGeneratePlan;
+        }
+    });
 }
 
 /**
@@ -332,36 +878,100 @@ async function handleGeneratePlan() {
             generateBtn.textContent = 'Generating...';
         }
         
-        console.log('Starting plan generation...');
-        const userProfile = await getUserProfile(); // Now async
-        console.log('User profile:', userProfile);
+        console.log('[Plan Generation] Starting AI-powered plan generation...');
         
-        // Add timeout to detect if it's hanging
-        const timeoutPromise = new Promise((_, reject) => {
-            setTimeout(() => reject(new Error('Generation timeout after 30 seconds')), 30000);
+        // Load user profile (includes onboarding + baselineAssessment + milestones)
+        const userProfile = await getUserProfile();
+        console.log('[Plan Generation] User profile loaded:', {
+            hasBaselineAssessment: !!userProfile.baselineAssessment,
+            hasMilestones: !!userProfile.currentMilestones,
+            preferredDisciplines: userProfile.preferredDisciplines,
+            discomforts: userProfile.discomforts,
+            equipment: userProfile.equipment
         });
         
-        const systemPromise = generateWeeklySystem(userProfile);
-        const system = await Promise.race([systemPromise, timeoutPromise]);
+        // Verify user has completed baseline assessment
+        if (!userProfile.baselineAssessment) {
+            throw new Error('Please complete your baseline assessment before generating a training plan.');
+        }
         
-        console.log('System generated:', system);
+        // ALWAYS use AI generation - this is an AI-driven app
+        // forceAI: true ensures it never falls back to rule-based generation
+        const systemPromise = generateWeeklySystem(userProfile, {}, { useAI: true, forceAI: true });
+        
+        // Set up timeout warning (but don't cancel the operation)
+        let timeoutWarningShown = false;
+        const timeoutWarning = setTimeout(() => {
+            timeoutWarningShown = true;
+            if (generateBtn) {
+                generateBtn.textContent = 'Still generating... This may take a while';
+            }
+            console.log('[Plan Generation] Generation taking longer than expected, but continuing...');
+        }, 60000);
+        
+        // Wait for generation to complete (no timeout cancellation)
+        let system;
+        try {
+            system = await systemPromise;
+        } finally {
+            clearTimeout(timeoutWarning);
+        }
+        
+        console.log('[Plan Generation] System generated:', {
+            id: system.id,
+            framework: system.framework,
+            daysPerWeek: system.daysPerWeek,
+            sessionsCount: system.sessions?.length
+        });
         
         // Validate system
         if (!system || !system.sessions || system.sessions.length === 0) {
             throw new Error('No sessions generated in system');
         }
         
-        // Save system - now async
+        // Save system to Firestore with sessions in sub-collection
         await saveTrainingSystem(system);
-        console.log('System saved to Firestore/localStorage');
+        console.log('[Plan Generation] System saved to Firestore');
         
-        // Render first session
-        await renderDailySession(system.sessions[0]);
-        console.log('Dashboard rendered successfully');
+        // Get user ID for session navigation
+        const user = getAuthUser();
+        
+        // Check if today is a training day
+        const isTrainingDay = isTodayTrainingDay(system);
+        
+        if (!isTrainingDay) {
+            // Today is NOT a training day - show rest day state
+            const userProfile = await getUserProfile();
+            renderRestDayState(userProfile, system);
+            // Hide session rating section for rest days
+            toggleSessionRatingSection(false);
+            await initDashboardUI({ mobility: 0, rotation: 0, flexibility: 0 });
+        } else {
+            // Today IS a training day - render today's session if available and not completed
+            const activeSession = await getActiveSession(system.sessions, user?.uid, system);
+            if (activeSession) {
+                // Show session rating section for training days
+                toggleSessionRatingSection(true);
+                await renderDailySession(activeSession, system.sessions, user?.uid);
+            } else {
+                // Today is a training day but no active session (completed or missing)
+                renderEmptyState();
+                // Hide session rating section when no active session
+                toggleSessionRatingSection(false);
+                await initDashboardUI({ mobility: 0, rotation: 0, flexibility: 0 });
+            }
+        }
+        console.log('[Plan Generation] Dashboard rendered successfully');
+        
+        // Re-enable button and update text
+        if (generateBtn) {
+            generateBtn.disabled = false;
+            generateBtn.textContent = 'Generate My First Plan';
+        }
         
     } catch (error) {
-        console.error('Error generating plan:', error);
-        console.error('Error stack:', error.stack);
+        console.error('[Plan Generation] Error generating plan:', error);
+        console.error('[Plan Generation] Error stack:', error.stack);
         
         if (generateBtn) {
             generateBtn.disabled = false;
@@ -387,5 +997,128 @@ function handleStartSession(session) {
     // Launch SessionView
     const sessionView = new SessionView(session);
     sessionView.render();
+}
+
+/**
+ * Update homepage stats (streak, milestones)
+ * @param {Object} userProfile - User profile object
+ */
+async function updateHomepageStats(userProfile) {
+    try {
+        // Update streak display
+        const streakEl = document.getElementById('current-streak');
+        if (streakEl) {
+            const streak = userProfile.currentStreak || 0;
+            streakEl.textContent = streak;
+            console.log('Updated streak display to:', streak);
+        }
+        
+        // Update milestones display
+        await renderUpcomingMilestones(userProfile);
+    } catch (error) {
+        console.error('Error updating homepage stats:', error);
+    }
+}
+
+/**
+ * Render upcoming milestones on homepage
+ * @param {Object} userProfile - User profile object
+ */
+async function renderUpcomingMilestones(userProfile) {
+    const milestonesList = document.getElementById('upcoming-milestones');
+    if (!milestonesList) {
+        console.warn('Milestones list element not found');
+        return;
+    }
+    
+    const milestones = userProfile.milestones || [];
+    
+    if (milestones.length === 0) {
+        milestonesList.innerHTML = `
+            <div class="glass rounded-lg p-3 border border-zinc-800 text-center">
+                <p class="text-sm text-white/60">No milestones yet. Create one in your Profile!</p>
+            </div>
+        `;
+        return;
+    }
+    
+    // Calculate progress for each milestone and sort by progress (descending - closest to completion first)
+    const milestonesWithProgress = milestones.map(milestone => {
+        const progress = calculateMilestoneProgress(milestone, userProfile);
+        return { ...milestone, progress };
+    }).sort((a, b) => b.progress.percentage - a.progress.percentage);
+    
+    // Show top 3 upcoming milestones
+    const upcomingMilestones = milestonesWithProgress.filter(m => m.progress.percentage < 100).slice(0, 3);
+    
+    if (upcomingMilestones.length === 0) {
+        milestonesList.innerHTML = `
+            <div class="glass rounded-lg p-3 border border-zinc-800 text-center">
+                <p class="text-sm text-white/60">All milestones completed! 🎉</p>
+            </div>
+        `;
+        return;
+    }
+    
+    milestonesList.innerHTML = upcomingMilestones.map(milestone => {
+        const { progress } = milestone;
+        return `
+            <div class="glass rounded-lg p-3 border border-zinc-800">
+                <div class="flex items-center justify-between mb-1">
+                    <span class="text-sm font-medium text-white">${milestone.name}</span>
+                    <span class="text-xs text-white/60">${progress.remainingText}</span>
+                </div>
+                <div class="w-full bg-white/10 rounded-full h-2">
+                    <div class="bg-white h-full rounded-full transition-all duration-500" style="width: ${progress.percentage}%"></div>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+/**
+ * Calculate progress for a milestone
+ * @param {Object} milestone - Milestone object
+ * @param {Object} userProfile - User profile object
+ * @returns {Object} Progress object with percentage and remainingText
+ */
+function calculateMilestoneProgress(milestone, userProfile) {
+    const { type, target, metric } = milestone;
+    
+    let current = 0;
+    let percentage = 0;
+    let remaining = 0;
+    let remainingText = '';
+    
+    switch (type) {
+        case 'streak':
+            current = userProfile.currentStreak || 0;
+            remaining = Math.max(0, target - current);
+            percentage = Math.min(100, (current / target) * 100);
+            remainingText = remaining > 0 ? `${remaining} days left` : 'Completed!';
+            break;
+            
+        case 'sessions':
+            current = userProfile.totalSessions || 0;
+            remaining = Math.max(0, target - current);
+            percentage = Math.min(100, (current / target) * 100);
+            remainingText = remaining > 0 ? `${remaining} sessions left` : 'Completed!';
+            break;
+            
+        case 'metric':
+            // For metric-based milestones (mobility, rotation, flexibility)
+            const baselineMetrics = userProfile.baselineAssessment?.baselineMetrics || {};
+            const currentMetric = baselineMetrics[metric] || 0;
+            remaining = Math.max(0, target - currentMetric);
+            percentage = Math.min(100, (currentMetric / target) * 100);
+            remainingText = remaining > 0 ? `${remaining}% to go` : 'Completed!';
+            break;
+            
+        default:
+            percentage = 0;
+            remainingText = 'Unknown type';
+    }
+    
+    return { percentage, remaining, remainingText, current };
 }
 

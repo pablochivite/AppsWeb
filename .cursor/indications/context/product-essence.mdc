@@ -46,9 +46,9 @@ To maintain consistency across the codebase (JS) and the database (JSON), the fo
 - **Session**: A single iteration of a Training (e.g., "Leg Day Session #3").
 - **Workout**: A label denoting the specific routine or type of workout. Also referred to as "Routine" (e.g., Leg, Shoulder, Chest, Back, Pull, Push, Upper body, Lower body).
 - **Discipline**: The method or style of training (Yoga, CrossFit, Animal Flow, Pilates, Weights).
-- **Training Framework**: The components of the training system logic, usually functioning in pairs or packs (e.g., Push-Pull, Upper-Lower, Chest-Back-Legs).
+- **Training Framework**: The components of the training system logic, usually functioning in pairs or packs (e.g., Push-Pull, Upper-Lower, Chest-Back-Legs). **IMPORTANT: In calendar displays and training day labels, only the Training Framework name should be shown, NOT the discipline. A single session can contain multiple disciplines, so displaying discipline would be misleading.**
 - **Phases**: The components of a Session: Warm-up (cardio/ mobility/core), Workout, Cool-down (stretching, mobility)…
-- **Training System**: The complete cycle with a specific order/pattern of trainings. Can be weekly or monthly (e.g., Mon: Pull, Wed: Push, Fri: Legs, Sun: Animal Flow).
+- **Training System**: The complete weekly cycle with a specific order/pattern of trainings (e.g., Mon: Pull, Wed: Push, Fri: Legs, Sun: Animal Flow).
 - **Exercise**: The movement entity that typically houses multiple variations (e.g., "Push-up").
 - **Superset**: A set of 2 or more exercises performed without rest. They function as a single, longer exercise unit.
 - **Set**: A group of repetitions of a variation.

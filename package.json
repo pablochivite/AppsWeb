@@ -22,6 +22,7 @@
     "test:e2e:report": "playwright show-report"
   },
   "dependencies": {
+    "chart.js": "^4.4.0",
     "firebase": "^10.7.1",
     "firebase-admin": "^13.6.0"
   },

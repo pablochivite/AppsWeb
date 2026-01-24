@@ -40,11 +40,12 @@ test.describe('Onboarding - Athlete Flow', () => {
       disciplines: ['Pilates'],
     });
     
-    // Complete onboarding
+    // Complete onboarding (includes baseline assessment if shown)
     await onboardingPage.completeAthleteOnboarding(answers);
     
     // Verify dashboard appears
-    await expect(page.locator('#page-home')).toBeVisible({ timeout: 10000 });
+    // Note: Baseline assessment may be shown after disciplines, which will delay dashboard appearance
+    await expect(page.locator('#page-home')).toBeVisible({ timeout: 20000 });
   });
 
   test('should answer question 1 (Sedentary Impact)', async ({ page, authPage }) => {
@@ -116,9 +117,51 @@ test.describe('Onboarding - Athlete Flow', () => {
       // Select multiple disciplines
       await onboardingPage.selectDisciplines(['Pilates', 'Animal Flow']);
       
-      // Dashboard should appear after completion
-      await expect(page.locator('#page-home')).toBeVisible({ timeout: 10000 });
+      // Note: After disciplines, baseline assessment may start
+      // Dashboard will appear after baseline assessment completes
+      // Wait longer to account for baseline assessment flow
+      await expect(page.locator('#page-home')).toBeVisible({ timeout: 30000 });
+    }
+  });
+
+  test('should navigate through onboarding questions in order', async ({ page, authPage }) => {
+    await page.goto('/');
+    
+    await authPage.login(
+      process.env.TEST_ATHLETE_EMAIL || 'athlete@test.com',
+      process.env.TEST_ATHLETE_PASSWORD || 'testpass123'
+    );
+    
+    await page.waitForTimeout(2000);
+    
+    const onboardingPage = new OnboardingPage(page);
+    const roleSelectionVisible = await onboardingPage.roleSelection.isVisible().catch(() => false);
+    
+    if (roleSelectionVisible) {
+      // Step 1: Select role
+      await onboardingPage.selectAthleteRole();
+      await page.waitForTimeout(1000);
+      
+      // Step 2: Answer sedentary impact
+      await expect(onboardingPage.question1).toBeVisible();
+      await onboardingPage.answerSedentaryImpact('moderate');
+      await page.waitForTimeout(1000);
+      
+      // Step 3: Select discomforts
+      await expect(onboardingPage.question2).toBeVisible();
+      await onboardingPage.selectDiscomforts(['None']);
+      await page.waitForTimeout(1000);
+      
+      // Step 4: Select disciplines
+      await expect(onboardingPage.question3).toBeVisible();
+      await onboardingPage.selectDisciplines(['Pilates']);
+      
+      // After disciplines, either dashboard appears or baseline assessment starts
+      // Both are valid flows
+      const dashboardVisible = await page.locator('#page-home').isVisible().catch(() => false);
+      const baselineQ4Visible = await page.locator('#onboarding-question-4').isVisible().catch(() => false);
+      
+      expect(dashboardVisible || baselineQ4Visible).toBeTruthy();
     }
   });
 });
-

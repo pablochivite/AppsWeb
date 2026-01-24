@@ -33,6 +33,85 @@ async function selectRole(role) {
     onboardingManager.startAthleteFlow();
 }
 
+/**
+ * Initialize mobile menu functionality
+ */
+function initializeMobileMenu() {
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const sidebarContainer = document.getElementById('sidebar-container');
+    const sidebarOverlay = document.getElementById('sidebar-overlay');
+    
+    if (!mobileMenuButton || !sidebarContainer || !sidebarOverlay) {
+        return;
+    }
+    
+    // Toggle sidebar on button click
+    mobileMenuButton.addEventListener('click', () => {
+        sidebarContainer.classList.toggle('mobile-open');
+        sidebarOverlay.classList.toggle('active');
+        
+        // Update icon
+        const icon = mobileMenuButton.querySelector('i');
+        if (icon) {
+            if (sidebarContainer.classList.contains('mobile-open')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        }
+    });
+    
+    // Close sidebar when overlay is clicked
+    sidebarOverlay.addEventListener('click', () => {
+        sidebarContainer.classList.remove('mobile-open');
+        sidebarOverlay.classList.remove('active');
+        
+        const icon = mobileMenuButton.querySelector('i');
+        if (icon) {
+            icon.classList.remove('fa-times');
+            icon.classList.add('fa-bars');
+        }
+    });
+    
+    // Close sidebar when clicking on nav items (mobile only)
+    const navItems = document.querySelectorAll('.nav-item');
+    navItems.forEach(item => {
+        item.addEventListener('click', () => {
+            // Only close on mobile
+            if (window.innerWidth <= 768) {
+                sidebarContainer.classList.remove('mobile-open');
+                sidebarOverlay.classList.remove('active');
+                
+                const icon = mobileMenuButton.querySelector('i');
+                if (icon) {
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                }
+            }
+        });
+    });
+    
+    // Show/hide mobile menu button based on screen size
+    function handleResize() {
+        if (window.innerWidth <= 768) {
+            mobileMenuButton.classList.remove('hidden');
+        } else {
+            mobileMenuButton.classList.add('hidden');
+            // Ensure sidebar is not in mobile-open state on desktop
+            sidebarContainer.classList.remove('mobile-open');
+            sidebarOverlay.classList.remove('active');
+        }
+    }
+    
+    // Check on load
+    handleResize();
+    
+    // Check on resize
+    window.addEventListener('resize', handleResize);
+}
+
 function initializeApp(role) {
     // Make sure onboarding overlay is hidden
     const overlay = document.getElementById('onboarding-overlay');
@@ -53,8 +132,13 @@ function initializeApp(role) {
     // Initialize athlete functionality
     initializeAthleteApp(router);
     
-    // Navigate to home page
-    router.navigateTo('home');
+    // Initialize mobile menu
+    initializeMobileMenu();
+    
+    // Check if there's a page in the URL hash, otherwise default to home
+    const pageFromHash = router.getPageFromHash();
+    const initialPage = pageFromHash || 'home';
+    router.navigateTo(initialPage, !!pageFromHash); // Only update hash if it wasn't already set
 }
 
 // Initialize onboarding manager with callbacks
@@ -112,6 +196,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     try {
         await loadAllTemplates();
         console.log('Templates loaded successfully');
+        
+        // Initialize mobile menu after templates are loaded
+        initializeMobileMenu();
     } catch (error) {
         console.error('Failed to load templates:', error);
         // Continue execution even if templates fail to load

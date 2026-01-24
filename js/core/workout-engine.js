@@ -187,9 +187,14 @@ export function filterExercisesByDiscipline(exercises, disciplines) {
     if (!disciplines) return exercises;
     
     const disciplineArray = Array.isArray(disciplines) ? disciplines : [disciplines];
-    return exercises.filter(exercise => 
-        exercise.discipline && disciplineArray.includes(exercise.discipline)
-    );
+    // Normalize disciplines to lowercase for case-insensitive comparison
+    const normalizedDisciplines = disciplineArray.map(d => d.toLowerCase().trim());
+    
+    return exercises.filter(exercise => {
+        if (!exercise.discipline) return false;
+        const exerciseDiscipline = exercise.discipline.toLowerCase().trim();
+        return normalizedDisciplines.includes(exerciseDiscipline);
+    });
 }
 
 /**
@@ -474,8 +479,10 @@ export async function generateSession(discipline, workout, userData = {}, previo
             filteredExercises = filterExercisesByDiscomforts(filteredExercises, userData.discomforts);
         }
         
+        // Final safety fallback: if all filters result in zero exercises, use all exercises
         if (filteredExercises.length === 0) {
-            throw new Error(`No exercises available after filtering for ${discipline}/${workout}`);
+            console.warn(`[WARNING] All filters resulted in 0 exercises for ${discipline}/${workout}. Using ALL exercises as final fallback.`);
+            filteredExercises = exerciseList; // Ultimate fallback - user gets a session regardless
         }
         
         // Select exercises for each phase
@@ -880,6 +887,71 @@ function distributeFrameworksAcrossWeek(framework, daysPerWeek) {
 }
 
 /**
+ * Calculate which days of the week are training days
+ * @param {number} daysPerWeek - Number of training days per week
+ * @returns {Array<number>} Array of day of week numbers (0=Sunday, 1=Monday, ..., 6=Saturday)
+ */
+function calculateTrainingDaysOfWeek(daysPerWeek) {
+    // Default patterns for common training frequencies
+    const patterns = {
+        2: [1, 4], // Monday, Thursday
+        3: [1, 3, 5], // Monday, Wednesday, Friday
+        4: [1, 3, 5, 0], // Monday, Wednesday, Friday, Sunday
+        5: [1, 2, 4, 5, 6], // Monday, Tuesday, Thursday, Friday, Saturday
+        6: [1, 2, 3, 4, 5, 6], // Monday through Saturday
+        7: [0, 1, 2, 3, 4, 5, 6] // Every day
+    };
+    
+    // Return pattern if exists, otherwise distribute evenly
+    if (patterns[daysPerWeek]) {
+        return patterns[daysPerWeek];
+    }
+    
+    // For other numbers, distribute evenly across the week
+    const days = [];
+    const step = Math.floor(7 / daysPerWeek);
+    for (let i = 0; i < daysPerWeek; i++) {
+        days.push((i * step + 1) % 7); // Start from Monday (1)
+    }
+    return days.sort((a, b) => a - b);
+}
+
+/**
+ * Find the next training day that is today or in the future
+ * @param {Date} today - Today's date
+ * @param {Array<number>} trainingDaysOfWeek - Array of day of week numbers
+ * @returns {Date} The next training day
+ */
+function findNextTrainingDay(today, trainingDaysOfWeek) {
+    const todayDayOfWeek = today.getDay(); // 0 = Sunday, 1 = Monday, etc.
+    
+    // Find the next training day (including today if it's a training day)
+    for (let i = 0; i < 7; i++) {
+        const checkDay = (todayDayOfWeek + i) % 7;
+        if (trainingDaysOfWeek.includes(checkDay)) {
+            const nextDay = new Date(today);
+            nextDay.setDate(today.getDate() + i);
+            return nextDay;
+        }
+    }
+    
+    // Fallback: return today
+    return today;
+}
+
+/**
+ * Get the start of the week (Monday) for a given date
+ * @param {Date} date - Date to get week start for
+ * @returns {Date} Monday of that week
+ */
+function getWeekStart(date) {
+    const d = new Date(date);
+    const day = d.getDay();
+    const diff = d.getDate() - day + (day === 0 ? -6 : 1); // Adjust when day is Sunday
+    return new Date(d.setDate(diff));
+}
+
+/**
  * Balance disciplines across week
  * @param {Array} disciplines - Available disciplines
  * @param {number} daysPerWeek - Number of training days
@@ -907,14 +979,14 @@ function balanceDisciplinesAcrossWeek(disciplines, daysPerWeek) {
 }
 
 /**
- * Generate a weekly training system
+ * Generate a weekly training system using rule-based logic
  * @param {Object} userProfile - User profile with milestones, goals, discomforts, equipment
  * @param {Object} config - Configuration (daysPerWeek, framework, startDate)
  * @returns {Promise<Object>} Generated weekly training system
  */
-export async function generateWeeklySystem(userProfile = {}, config = {}) {
+async function generateWeeklySystemRuleBased(userProfile = {}, config = {}) {
     try {
-        console.log('generateWeeklySystem called with:', { userProfile, config });
+        console.log('[Rule-Based] Starting rule-based generation...');
         
         // Merge with defaults
         const finalConfig = {
@@ -949,12 +1021,21 @@ export async function generateWeeklySystem(userProfile = {}, config = {}) {
         
         console.log('User preferences:', { preferredDisciplines, equipment, discomforts });
         
+        // DEBUG: Log preferred disciplines and first 3 exercises' disciplines
+        console.log('[DEBUG] Preferred Disciplines:', preferredDisciplines);
+        console.log('[DEBUG] First 3 exercises disciplines:');
+        exerciseList.slice(0, 3).forEach((ex, idx) => {
+            console.log(`  Exercise ${idx + 1}: "${ex.name}" - discipline: "${ex.discipline}"`);
+        });
+        
         // Filter exercises by discipline
         let filteredExercises = filterExercisesByDiscipline(exerciseList, preferredDisciplines);
         console.log(`After discipline filter: ${filteredExercises.length} exercises`);
         
+        // Fallback mechanism: use all exercises if filtering results in empty array
         if (filteredExercises.length === 0) {
-            throw new Error(`No exercises found for disciplines: ${preferredDisciplines.join(', ')}`);
+            console.warn(`[WARNING] No specific exercises found for disciplines: ${preferredDisciplines.join(', ')}, using ALL exercises as fallback`);
+            filteredExercises = exerciseList; // Fallback to all exercises
         }
         
         // Filter by equipment and discomforts
@@ -967,8 +1048,10 @@ export async function generateWeeklySystem(userProfile = {}, config = {}) {
             console.log(`After discomforts filter: ${filteredExercises.length} exercises`);
         }
         
+        // Final safety fallback: if all filters result in zero exercises, use all exercises
         if (filteredExercises.length === 0) {
-            throw new Error('No exercises available after filtering. Try adjusting your preferences.');
+            console.warn('[WARNING] All filters resulted in 0 exercises. Using ALL exercises as final fallback to prevent crash.');
+            filteredExercises = exerciseList; // Ultimate fallback - user gets a plan regardless
         }
         
         // Distribute frameworks and disciplines across week
@@ -979,17 +1062,38 @@ export async function generateWeeklySystem(userProfile = {}, config = {}) {
         console.log('Discipline assignments:', disciplineAssignments);
         
         // Generate sessions for each day
+        // Calculate which days of the week are training days based on daysPerWeek
+        // For 4 days: typically Mon, Wed, Fri, Sun (or spread evenly)
+        const trainingDaysOfWeek = calculateTrainingDaysOfWeek(daysPerWeek);
+        
         const sessions = [];
+        const today = new Date();
         const startDateObj = new Date(startDate);
         
-        for (let day = 0; day < daysPerWeek; day++) {
-            console.log(`Generating session ${day + 1}/${daysPerWeek}...`);
+        // Always use the start of the current week (Monday) as reference
+        // This ensures training days are distributed normally in the current week,
+        // not "squeezed" into the remaining days
+        const weekStart = getWeekStart(today);
+        weekStart.setHours(0, 0, 0, 0);
+        
+        for (let dayIndex = 0; dayIndex < daysPerWeek; dayIndex++) {
+            console.log(`Generating session ${dayIndex + 1}/${daysPerWeek}...`);
             
-            const sessionDate = new Date(startDateObj);
-            sessionDate.setDate(startDateObj.getDate() + day);
+            // Get the day of week for this session (0 = Sunday, 1 = Monday, etc.)
+            const dayOfWeek = trainingDaysOfWeek[dayIndex];
             
-            const sessionDiscipline = disciplineAssignments[day];
-            const sessionWorkout = frameworkAssignments[day];
+            // Calculate the date for this session
+            // Always use the current week's Monday as the starting point
+            const sessionDate = new Date(weekStart);
+            const daysToAdd = dayOfWeek === 0 ? 6 : dayOfWeek - 1; // Convert Sunday (0) to 6 for calculation
+            sessionDate.setDate(weekStart.getDate() + daysToAdd);
+            sessionDate.setHours(0, 0, 0, 0);
+            
+            // Don't move dates to future - let them stay in the current week
+            // This ensures consistent distribution across all weeks
+            
+            const sessionDiscipline = disciplineAssignments[dayIndex];
+            const sessionWorkout = frameworkAssignments[dayIndex];
             
             // Get previous sessions for variety
             const previousSessions = sessions.slice(-2); // Last 2 sessions
@@ -1004,19 +1108,21 @@ export async function generateWeeklySystem(userProfile = {}, config = {}) {
                 previousSessions
             );
             
-            console.log(`Session ${day + 1} generated:`, {
+            console.log(`Session ${dayIndex + 1} generated:`, {
                 discipline: sessionDiscipline,
                 workout: sessionWorkout,
-                warmup: session.phases.warmup?.length || 0,
-                workout: session.phases.workout?.length || 0,
-                cooldown: session.phases.cooldown?.length || 0
+                warmupCount: session.phases.warmup?.length || 0,
+                workoutCount: session.phases.workout?.length || 0,
+                cooldownCount: session.phases.cooldown?.length || 0
             });
             
             sessions.push({
-                day: day + 1, // 1-indexed
+                day: dayIndex + 1, // 1-indexed
+                dayOfWeek: dayOfWeek, // Store day of week (0=Sunday, 1=Monday, etc.)
                 date: sessionDate.toISOString().split('T')[0],
                 discipline: sessionDiscipline,
                 workout: sessionWorkout,
+                framework: sessionWorkout, // Store framework label for this session
                 phases: session.phases,
                 editable: true
             });
@@ -1025,19 +1131,93 @@ export async function generateWeeklySystem(userProfile = {}, config = {}) {
         // Generate system ID
         const systemId = `weekly-system-${Date.now()}`;
         
+        // Use the Monday of the generation week as the system start date
+        // This ensures the calendar can correctly show the recurring pattern starting from this week
+        const systemWeekStart = getWeekStart(today);
+        systemWeekStart.setHours(0, 0, 0, 0);
+        const systemStartDate = systemWeekStart.toISOString().split('T')[0];
+        
         const system = {
             id: systemId,
             type: 'weekly',
-            startDate: startDate,
+            startDate: systemStartDate,
             daysPerWeek: daysPerWeek,
             framework: framework,
+            trainingDaysOfWeek: trainingDaysOfWeek, // Store which days of week are training days
             sessions: sessions,
             editable: true,
             createdAt: new Date().toISOString()
         };
         
-        console.log('Weekly system generated successfully:', system);
+        console.log('[Rule-Based] Weekly system generated successfully:', system);
         return system;
+        
+    } catch (error) {
+        console.error('[Rule-Based] Error in generateWeeklySystem:', error);
+        throw error;
+    }
+}
+
+/**
+ * Generate a weekly training system (AI-powered with fallback)
+ * @param {Object} userProfile - User profile with milestones, goals, discomforts, equipment, baselineAssessment
+ * @param {Object} config - Configuration (daysPerWeek, framework, startDate)
+ * @param {Object} options - Options { useAI: boolean, forceAI: boolean }
+ * @returns {Promise<Object>} Generated weekly training system
+ */
+export async function generateWeeklySystem(userProfile = {}, config = {}, options = {}) {
+    const { useAI = true, forceAI = true } = options; // Default forceAI to true - this is an AI-driven app
+    
+    try {
+        console.log('generateWeeklySystem called with:', { userProfile, config, options });
+        
+        // Merge with defaults
+        const finalConfig = {
+            ...DEFAULT_WEEKLY_CONFIG,
+            ...config
+        };
+        
+        const {
+            daysPerWeek = finalConfig.daysPerWeek,
+            framework = finalConfig.framework,
+            startDate = finalConfig.startDate
+        } = finalConfig;
+        
+        // ALWAYS use AI - this is an AI-driven app
+        // Check if API key is available
+        const hasApiKey = import.meta.env.VITE_OPENAI_API_KEY;
+        
+        if (!hasApiKey && forceAI) {
+            throw new Error('OpenAI API key is required but not configured. Please set VITE_OPENAI_API_KEY in your environment variables.');
+        }
+        
+        if (!hasApiKey) {
+            throw new Error('OpenAI API key not found. This app requires AI-powered generation.');
+        }
+        
+        // Always attempt AI generation - no fallback to rules
+        console.log('[AI] Starting AI-powered generation (AI-driven app - no rule-based fallback)...');
+        
+        // Load exercises for AI context
+        const exercises = await loadExercises();
+        const exerciseList = exercises.exercises || [];
+        
+        if (exerciseList.length === 0) {
+            throw new Error('No exercises found for AI generation');
+        }
+        
+        // Import AI service dynamically
+        const { generateTrainingSystemWithAI } = await import('../services/aiService.js');
+        
+        // Use AI directly - NO FALLBACK to rule-based
+        // If AI fails, throw error (don't silently fall back to rules)
+        try {
+            return await generateTrainingSystemWithAI(userProfile, exerciseList, { daysPerWeek, framework, startDate });
+        } catch (aiError) {
+            console.error('[AI] AI generation failed:', aiError);
+            // Always throw error - never fall back to rules in an AI-driven app
+            throw new Error(`AI generation failed: ${aiError.message}. This app requires AI-powered generation.`);
+        }
         
     } catch (error) {
         console.error('Error in generateWeeklySystem:', error);

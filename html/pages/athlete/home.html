@@ -84,7 +84,7 @@
                                     <i class="fas fa-fire text-white"></i>
                                 </div>
                                 <div class="text-center">
-                                    <div class="text-5xl font-bold text-white mb-2">12</div>
+                                    <div class="text-5xl font-bold text-white mb-2" id="current-streak">0</div>
                                     <p class="text-sm text-white/60">days in a row</p>
                                 </div>
                             </div>
@@ -144,34 +144,8 @@
                             <!-- Upcoming Milestones -->
                             <div class="glass-strong rounded-2xl p-6 card-hover">
                                 <h3 class="text-lg font-semibold text-white mb-4">Upcoming Milestones</h3>
-                                <div class="space-y-3">
-                                    <div class="glass rounded-lg p-3 border border-zinc-800">
-                                        <div class="flex items-center justify-between mb-1">
-                                            <span class="text-sm font-medium text-white">30 Day Streak</span>
-                                            <span class="text-xs text-white/60">18 days left</span>
-                                        </div>
-                                        <div class="w-full bg-white/10 rounded-full h-2">
-                                            <div class="bg-white h-full rounded-full" style="width: 40%"></div>
-                                        </div>
-                                    </div>
-                                    <div class="glass rounded-lg p-3 border border-zinc-800">
-                                        <div class="flex items-center justify-between mb-1">
-                                            <span class="text-sm font-medium text-white">100 Sessions</span>
-                                            <span class="text-xs text-white/60">23 sessions left</span>
-                                        </div>
-                                        <div class="w-full bg-white/10 rounded-full h-2">
-                                            <div class="bg-white h-full rounded-full" style="width: 77%"></div>
-                                        </div>
-                                    </div>
-                                    <div class="glass rounded-lg p-3 border border-zinc-800">
-                                        <div class="flex items-center justify-between mb-1">
-                                            <span class="text-sm font-medium text-white">Flexibility Goal</span>
-                                            <span class="text-xs text-white/60">5% to go</span>
-                                        </div>
-                                        <div class="w-full bg-white/10 rounded-full h-2">
-                                            <div class="bg-white h-full rounded-full" style="width: 95%"></div>
-                                        </div>
-                                    </div>
+                                <div class="space-y-3" id="upcoming-milestones">
+                                    <!-- Milestones will be dynamically rendered here -->
                                 </div>
                             </div>
                         </div>

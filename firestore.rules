@@ -45,12 +45,14 @@ service cloud.firestore {
      * Users collection: Users can only read/write their own profile
      * - Authenticated users can read/write their own user document
      * - Collection-level queries are denied (prevents listing all users)
+     * - Recursive wildcard pattern covers ALL nested subcollections and documents
      */
     match /users/{userId} {
       // Allow read/write only if user owns the document
+      // read includes both get (individual document) and list (queries)
       allow read, write: if isOwner(userId);
       
-      // Explicitly deny collection-level queries (listing all users)
+      // Explicitly deny collection-level queries on users (listing all users)
       allow list: if false;
       
       // Validate user profile data on write
@@ -63,46 +65,16 @@ service cloud.firestore {
             || (hasValidEmail() && isValidRole()));
       
       // ========================================================================
-      // USER SUB-COLLECTIONS
+      // RECURSIVE WILDCARD FOR ALL SUB-COLLECTIONS
       // ========================================================================
       
       /**
-       * Training Systems sub-collection
-       * Users can only access their own training systems
+       * Recursive wildcard pattern that covers ALL nested documents and subcollections
+       * This includes: trainingSystems, milestones, workouts, sessions, completedSessions,
+       * profile, and any future subcollections automatically.
+       * Pattern: {document=**} matches any path depth
        */
-      match /trainingSystems/{systemId} {
-        allow read, write: if isOwner(userId);
-      }
-      
-      /**
-       * Milestones sub-collection
-       * Users can only access their own milestones
-       */
-      match /milestones/{milestoneId} {
-        allow read, write: if isOwner(userId);
-      }
-      
-      /**
-       * Workouts sub-collection
-       * Users can only access their own workouts
-       */
-      match /workouts/{workoutId} {
-        allow read, write: if isOwner(userId);
-        
-        /**
-         * Sessions sub-collection (within workouts)
-         * Users can only access sessions within their own workouts
-         */
-        match /sessions/{sessionId} {
-          allow read, write: if isOwner(userId);
-        }
-      }
-      
-      /**
-       * Profile sub-collection (if used in future)
-       * Users can only access their own profile data
-       */
-      match /profile/{profileId} {
+      match /{document=**} {
         allow read, write: if isOwner(userId);
       }
     }

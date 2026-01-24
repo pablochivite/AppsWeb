@@ -144,7 +144,13 @@ export async function getUserProfile() {
     
     const baseProfile = {
         currentMilestones: {},
+        milestones: [], // User-defined milestones
+        currentStreak: 0,
+        longestStreak: 0, // Personal best streak
+        totalSessions: 0,
+        lastSessionDate: null,
         goals: [],
+        objectives: [],
         equipment: [],
         discomforts: [],
         preferredDisciplines: []
@@ -160,6 +166,7 @@ export async function getUserProfile() {
     if (onboardingData) {
         localProfile.discomforts = onboardingData.discomforts || [];
         localProfile.preferredDisciplines = onboardingData.primaryDiscipline || [];
+        localProfile.objectives = onboardingData.objectives || [];
     }
     
     // Merge stored profile
@@ -251,29 +258,85 @@ export async function saveUserProfile(profile) {
 }
 
 /**
- * Get training system
+ * Get training system (with sessions loaded)
  * Cache-First: Returns localStorage immediately, updates from Firestore in background
- * @returns {Promise<Object|null>} Training system object or null
+ * @param {Object} options - Options { skipCache: boolean }
+ * @returns {Promise<Object|null>} Training system object with sessions array or null
  */
-export async function getTrainingSystem() {
+export async function getTrainingSystem(options = {}) {
     await ensureImports();
     const user = getAuthUser();
+    const { skipCache = false } = options;
     
-    // STEP 1: Return localStorage immediately (instant)
+    // If skipCache is true, fetch from Firebase first (for detecting deletions)
+    if (skipCache && user) {
+        try {
+            const systems = await getAllTrainingSystems(user.uid, { skipCache: true });
+            
+            // If Firebase returns empty array, clear localStorage and return null
+            if (!systems || systems.length === 0) {
+                localStorage.removeItem('trainingSystem');
+                console.log('[storage] No training systems in Firebase - cleared cache');
+                return null;
+            }
+            
+            // Firebase has data - load the latest system with sessions
+            const latest = systems[0];
+            if (latest.id) {
+                const { getTrainingSystem: getDbTrainingSystem } = await import('../services/dbService.js');
+                try {
+                    const systemWithSessions = await getDbTrainingSystem(user.uid, latest.id, { includeSessions: true });
+                    if (systemWithSessions) {
+                        // Update localStorage with fresh data
+                        localStorage.setItem('trainingSystem', JSON.stringify(systemWithSessions));
+                        return systemWithSessions;
+                    }
+                } catch (error) {
+                    console.warn('Failed to load sessions for training system:', error.message);
+                    // Still return the system without sessions
+                    localStorage.setItem('trainingSystem', JSON.stringify(latest));
+                    return latest;
+                }
+            }
+            
+            // Update localStorage and return
+            localStorage.setItem('trainingSystem', JSON.stringify(latest));
+            return latest;
+        } catch (error) {
+            console.warn('Error fetching training system from Firebase:', error.message);
+            // Fall through to cache-first behavior on error
+        }
+    }
+    
+    // STEP 1: Return localStorage immediately (instant) - Cache-First pattern
     const stored = localStorage.getItem('trainingSystem');
     let localSystem = stored ? JSON.parse(stored) : null;
     
     // STEP 2: Update from Firestore in background (non-blocking)
-    // getAllTrainingSystems now uses cache-first and won't throw errors
-    // It will return cached data or empty array if network fails
+    // Load the latest system with sessions included
     if (user) {
         getAllTrainingSystems(user.uid)
-            .then(systems => {
+            .then(async (systems) => {
                 if (systems && Array.isArray(systems) && systems.length > 0) {
                     const latest = systems[0];
+                    // Load sessions for the latest system
+                    if (latest.id) {
+                        const { getTrainingSystem: getDbTrainingSystem } = await import('../services/dbService.js');
+                        try {
+                            const systemWithSessions = await getDbTrainingSystem(user.uid, latest.id, { includeSessions: true });
+                            if (systemWithSessions && systemWithSessions.sessions) {
+                                latest.sessions = systemWithSessions.sessions;
+                            }
+                        } catch (error) {
+                            console.warn('Failed to load sessions for training system:', error.message);
+                        }
+                    }
                     // Update localStorage if we got new data
                     localStorage.setItem('trainingSystem', JSON.stringify(latest));
                     // Note: localSystem is already returned, this update happens in background
+                } else {
+                    // Firebase returned empty array - clear cache
+                    localStorage.removeItem('trainingSystem');
                 }
             })
             .catch(error => {
@@ -281,9 +344,29 @@ export async function getTrainingSystem() {
                 // But keeping for safety
                 console.warn('Background training systems update failed (non-critical):', error.message);
             });
+        
+        // Also try to load sessions for the local system if it exists
+        if (localSystem && localSystem.id && user) {
+            try {
+                const { getSystemSessions } = await import('../services/dbService.js');
+                const sessions = await getSystemSessions(user.uid, localSystem.id);
+                if (sessions && sessions.length > 0) {
+                    localSystem.sessions = sessions;
+                } else if (!localSystem.sessions) {
+                    // If no sessions found in DB, initialize empty array
+                    localSystem.sessions = [];
+                }
+            } catch (error) {
+                console.warn('Failed to load sessions from Firestore (non-critical):', error.message);
+                // Ensure sessions array exists even on error
+                if (!localSystem.sessions) {
+                    localSystem.sessions = [];
+                }
+            }
+        }
     }
     
-    // Return immediately with cached data
+    // Return immediately with cached data (sessions loaded if available)
     return localSystem;
 }
 

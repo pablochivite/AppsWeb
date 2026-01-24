@@ -196,11 +196,24 @@ button, a, .interactive {
    ============================================================================ */
 .nav-item.active {
     background: var(--glass-bg-hover);
-    border-left: 3px solid var(--color-text-primary);
+    position: relative;
 }
 
-.nav-item.active i,
-.nav-item.active span {
+/* Active border - positioned absolutely to not affect icon alignment */
+@media (min-width: 1025px) {
+    .nav-item.active::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 3px;
+        background: var(--color-text-primary);
+    }
+}
+
+.nav-item.active .sidebar-icon,
+.nav-item.active .sidebar-label {
     color: var(--color-text-primary);
 }
 
@@ -208,6 +221,322 @@ button, a, .interactive {
     background: var(--glass-bg-strong);
     transform: translateX(4px);
 }
+
+/* Don't apply translateX to brand link */
+.nav-item:has(.sidebar-brand-text):hover {
+    transform: none;
+}
+
+/* ============================================================================
+   SIDEBAR - COLLAPSIBLE WITH HOVER
+   ============================================================================ */
+#sidebar-container {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    width: 80px;
+    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+    z-index: var(--z-sidebar);
+}
+
+/* Only enable hover on desktop (not mobile/tablet) */
+@media (min-width: 1025px) {
+    #sidebar-container:hover {
+        width: 256px;
+    }
+}
+
+/* Hide text labels by default, show on hover (desktop only) */
+@media (min-width: 1025px) {
+    /* Sidebar icons - fixed width and centered alignment */
+    .sidebar-icon {
+        width: 20px;
+        min-width: 20px;
+        max-width: 20px;
+        text-align: center;
+        font-size: 1.125rem;
+        flex-shrink: 0;
+        display: inline-block;
+        line-height: 1;
+        transition: margin-right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Sidebar labels - completely hidden when collapsed to not affect layout */
+    .sidebar-label {
+        opacity: 0;
+        width: 0;
+        overflow: hidden;
+        white-space: nowrap;
+        transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0.1s, width 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0.1s, margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0.1s;
+        pointer-events: none;
+        margin-left: 0;
+        flex-shrink: 0;
+    }
+
+    #sidebar-container:hover .sidebar-label {
+        opacity: 1;
+        width: auto;
+        pointer-events: auto;
+        margin-left: 0.75rem;
+    }
+
+    /* Logo container adjustments */
+    #sidebar-container:not(:hover) .sidebar-logo-container {
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+    }
+
+    #sidebar-container:hover .sidebar-logo-container {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+    }
+
+    /* Brand text - show "R" when collapsed, "REGAIN" when expanded */
+    .sidebar-brand-text {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        white-space: nowrap;
+        font-size: 1.5rem;
+    }
+
+    .sidebar-brand-letter {
+        display: inline-block;
+    }
+
+    .sidebar-brand-rest {
+        display: inline-block;
+        opacity: 0;
+        width: 0;
+        overflow: hidden;
+        transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0.1s, width 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0.1s;
+    }
+
+    #sidebar-container:hover .sidebar-brand-text {
+        justify-content: flex-start;
+    }
+
+    #sidebar-container:hover .sidebar-brand-rest {
+        opacity: 1;
+        width: auto;
+    }
+
+    /* Adjust padding and spacing for collapsed state - center icons perfectly */
+    #sidebar-container:not(:hover) .nav-item {
+        justify-content: center;
+        align-items: center;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        width: 100%;
+        position: relative;
+    }
+
+    /* Ensure list items don't interfere */
+    #sidebar-container:not(:hover) .athlete-nav-item {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+    }
+
+    /* Adjust nav padding when collapsed */
+    #sidebar-container:not(:hover) nav {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    #sidebar-container:hover nav {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    #sidebar-container:hover .nav-item {
+        justify-content: flex-start;
+        align-items: center;
+        padding-left: 1rem;
+        padding-right: 1rem;
+        position: relative;
+    }
+
+    #sidebar-container:hover .athlete-nav-item {
+        display: block;
+    }
+
+    /* Icon spacing - no margin when collapsed, proper spacing when expanded */
+    #sidebar-container:not(:hover) .sidebar-icon {
+        margin-right: 0;
+        margin-left: 0;
+    }
+
+    #sidebar-container:hover .sidebar-icon {
+        margin-right: 0;
+        margin-left: 0;
+    }
+}
+
+/* On tablet, show sidebar expanded by default */
+@media (min-width: 769px) and (max-width: 1024px) {
+    #sidebar-container {
+        width: 256px;
+    }
+
+    .sidebar-icon {
+        width: 20px;
+        min-width: 20px;
+        text-align: center;
+        font-size: 1.125rem;
+        margin-right: 0;
+    }
+
+    .sidebar-label {
+        opacity: 1;
+        pointer-events: auto;
+        margin-left: 0.75rem;
+    }
+
+    #sidebar-container .nav-item {
+        justify-content: flex-start;
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .sidebar-brand-text {
+        justify-content: flex-start;
+        font-size: 1.5rem;
+    }
+
+    .sidebar-brand-rest {
+        opacity: 1;
+        width: auto;
+    }
+}
+
+/* Adjust main content margin for sidebar */
+main {
+    margin-left: 80px;
+    transition: margin-left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    main {
+        margin-left: 256px;
+    }
+}
+
+/* ============================================================================
+   MOBILE RESPONSIVE
+   ============================================================================ */
+@media (max-width: 768px) {
+    /* Sidebar becomes a drawer on mobile */
+    #sidebar-container {
+        width: 0;
+        transform: translateX(-100%);
+        transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), width 0s 0.4s;
+    }
+
+    #sidebar-container.mobile-open {
+        width: 256px;
+        transform: translateX(0);
+        transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), width 0s;
+    }
+
+    /* Always show text on mobile when open */
+    .sidebar-icon {
+        width: 20px;
+        min-width: 20px;
+        text-align: center;
+        font-size: 1.125rem;
+        margin-right: 0;
+    }
+
+    .sidebar-label {
+        opacity: 1;
+        pointer-events: auto;
+        margin-left: 0.75rem;
+    }
+
+    #sidebar-container.mobile-open .nav-item {
+        justify-content: flex-start;
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    #sidebar-container.mobile-open .sidebar-brand-text {
+        justify-content: flex-start;
+        font-size: 1.5rem;
+    }
+
+    #sidebar-container.mobile-open .sidebar-brand-rest {
+        opacity: 1;
+        width: auto;
+    }
+
+    /* Main content takes full width on mobile */
+    main {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    /* Mobile menu button */
+    .mobile-menu-button {
+        position: fixed;
+        top: 1rem;
+        left: 1rem;
+        z-index: calc(var(--z-sidebar) + 1);
+        width: 48px;
+        height: 48px;
+        background: var(--glass-bg-standard);
+        backdrop-filter: blur(var(--glass-blur-standard));
+        -webkit-backdrop-filter: blur(var(--glass-blur-standard));
+        border: 1px solid var(--glass-border-standard);
+        border-radius: var(--radius-md);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: var(--transition-standard);
+    }
+
+    .mobile-menu-button:hover {
+        background: var(--glass-bg-strong);
+        border-color: var(--glass-border-hover);
+    }
+
+    .mobile-menu-button i {
+        color: var(--color-text-primary);
+        font-size: 1.25rem;
+    }
+
+    /* Overlay when sidebar is open on mobile */
+    .sidebar-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+        z-index: calc(var(--z-sidebar) - 1);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease-in-out;
+    }
+
+    .sidebar-overlay.active {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    /* Adjust page padding on mobile */
+    .page-content {
+        padding: 1rem;
+    }
+}
+
+/* Tablet adjustments - already handled in main sidebar styles */
 
 /* ============================================================================
    EXPLORE FEED (TikTok/Reels Style)
@@ -640,13 +969,16 @@ input:focus, select:focus, textarea:focus {
 /* Monthly View */
 .calendar-grid.monthly-view {
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: var(--spacing-xs);
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: 0.5rem;
+    width: 100%;
 }
 
 .calendar-grid.monthly-view .calendar-day {
     aspect-ratio: 1;
-    padding: var(--radius-md);
+    min-height: 0;
+    min-width: 0;
+    padding: 0.5rem;
     background: var(--glass-bg-standard);
     backdrop-filter: blur(var(--glass-blur-small));
     -webkit-backdrop-filter: blur(var(--glass-blur-small));
@@ -655,8 +987,14 @@ input:focus, select:focus, textarea:focus {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     transition: var(--transition-standard);
+    overflow: hidden;
+}
+
+/* Ensure calendar header matches grid gap */
+.calendar-header {
+    gap: 0.5rem;
 }
 
 .calendar-grid.monthly-view .calendar-day:hover {
@@ -693,16 +1031,56 @@ input:focus, select:focus, textarea:focus {
     font-size: 11px;
     color: var(--color-text-muted);
     margin-top: auto;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    flex-wrap: nowrap;
+}
+
+.calendar-day-events > * {
+    flex-shrink: 0;
 }
 
 .calendar-session-badge {
     font-size: 10px;
     line-height: 1.2;
-    display: inline-block;
-    max-width: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    max-width: calc(100% - 0.5rem); /* Prevent stretching, account for padding */
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    border-radius: 9999px !important; /* Force pill shape (rounded-full) */
+    width: fit-content !important; /* Force fit-content, don't stretch */
+    min-width: fit-content;
+    flex-shrink: 0;
+    transition: var(--transition-standard);
+    user-select: none;
+}
+
+.calendar-session-badge:active {
+    cursor: grabbing;
+}
+
+/* Drag and Drop Visual Feedback */
+.calendar-day.drag-over {
+    background: var(--glass-bg-hover) !important;
+    border-color: var(--glass-border-active) !important;
+    transform: scale(1.02);
+}
+
+.calendar-day.drop-valid {
+    border-color: rgba(34, 197, 94, 0.5) !important; /* Green border for valid drop */
+    box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.2);
+}
+
+.calendar-day.drop-invalid {
+    border-color: rgba(239, 68, 68, 0.5) !important; /* Red border for invalid drop */
+    box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.2);
+    cursor: not-allowed;
 }
 
 /* ============================================================================
