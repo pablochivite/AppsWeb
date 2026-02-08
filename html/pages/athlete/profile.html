@@ -4,89 +4,206 @@
                         <p class="text-white/60">Manage your account and training preferences</p>
                     </div>
 
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                        <!-- Editable User Fields -->
-                        <div class="space-y-6">
-                            <div class="glass-strong rounded-2xl p-6 card-hover">
-                                <h3 class="text-xl font-semibold text-white mb-4">Personal Information</h3>
-                                <div class="space-y-4">
-                                    <div>
-                                        <label class="block text-sm text-white/70 mb-2">Age</label>
-                                        <input type="number" id="profile-age" class="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/20 text-white" placeholder="Enter your age">
-                                    </div>
-                                    <div>
-                                        <label class="block text-sm text-white/70 mb-2">Weight (kg)</label>
-                                        <input type="number" id="profile-weight" class="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/20 text-white" placeholder="Enter your weight">
-                                    </div>
-                                    <div>
-                                        <label class="block text-sm text-white/70 mb-2">Height (cm)</label>
-                                        <input type="number" id="profile-height" class="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/20 text-white" placeholder="Enter your height">
-                                    </div>
-                                    <div>
-                                        <label class="block text-sm text-white/70 mb-2">Body Fat %</label>
-                                        <input type="number" id="profile-bodyfat" class="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/20 text-white" placeholder="Enter body fat %">
-                                    </div>
-                                </div>
-                            </div>
+                    <!-- Segmented Switcher -->
+                    <div class="mb-8">
+                        <div class="profile-switcher">
+                            <button class="profile-switcher-option active" data-section="physiological">
+                                Datos Fisiológicos
+                            </button>
+                            <button class="profile-switcher-option" data-section="preferences">
+                                Preferencias
+                            </button>
+                            <button class="profile-switcher-option" data-section="benchmarks">
+                                Benchmarks
+                            </button>
+                            <button class="profile-switcher-option" data-section="milestones">
+                                Milestones
+                            </button>
+                        </div>
+                    </div>
 
+                    <!-- Profile Content Sections -->
+                    <div class="profile-content-container">
+                        <!-- Physiological Data Section -->
+                        <div id="physiological-content" class="profile-content-section active">
                             <div class="glass-strong rounded-2xl p-6 card-hover">
-                                <h3 class="text-xl font-semibold text-white mb-4">Training Preferences</h3>
+                                <h3 class="text-xl font-semibold text-white mb-6">Datos Fisiológicos</h3>
                                 <div class="space-y-4">
                                     <div>
-                                        <label class="block text-sm text-white/70 mb-2">Time Available (hours/week)</label>
-                                        <input type="number" id="profile-time-available" class="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/20 text-white" placeholder="Enter hours per week">
+                                        <label class="block text-sm text-white/70 mb-2">Edad</label>
+                                        <input type="number" id="profile-age" min="18" max="99" class="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/20 text-white" placeholder="Enter your age">
                                     </div>
                                     <div>
-                                        <label class="block text-sm text-white/70 mb-2">Preferred Training Location</label>
-                                        <select id="profile-location" class="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/20 text-white">
-                                            <option value="">Select location</option>
-                                            <option value="home">Home</option>
-                                            <option value="gym">Gym</option>
-                                            <option value="outside">Outside</option>
-                                            <option value="mixed">Mixed</option>
+                                        <label class="block text-sm text-white/70 mb-2">Peso (kg)</label>
+                                        <input type="number" id="profile-weight" min="30" max="300" step="0.1" class="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/20 text-white" placeholder="Enter your weight">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm text-white/70 mb-2">Altura (cm)</label>
+                                        <input type="number" id="profile-height" min="100" max="250" step="0.1" class="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/20 text-white" placeholder="Enter your height">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm text-white/70 mb-2">% Grasa Corporal</label>
+                                        <input type="number" id="profile-bodyfat" min="0" max="100" step="0.1" class="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/20 text-white" placeholder="Enter body fat %">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm text-white/70 mb-2">Nivel de Actividad</label>
+                                        <select id="profile-activity-level" class="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/20 text-white">
+                                            <option value="">Select activity level</option>
+                                            <option value="sedentary">Sedentary</option>
+                                            <option value="lightly-active">Lightly Active</option>
+                                            <option value="moderately-active">Moderately Active</option>
+                                            <option value="very-active">Very Active</option>
+                                            <option value="extremely-active">Extremely Active</option>
                                         </select>
                                     </div>
                                     <div>
-                                        <label class="block text-sm text-white/70 mb-2">Training Objectives</label>
-                                        <textarea id="profile-objectives" class="w-full px-4 py-2 rounded-lg h-20 bg-white/10 border border-white/20 text-white" placeholder="e.g., Build strength, improve flexibility..."></textarea>
+                                        <label class="block text-sm text-white/70 mb-2">Historial de Lesiones</label>
+                                        <textarea id="profile-injury-history" class="w-full px-4 py-2 rounded-lg h-20 bg-white/10 border border-white/20 text-white" placeholder="Enter any injury history..."></textarea>
                                     </div>
-                                    <div>
-                                        <label class="block text-sm text-white/70 mb-2">Why are you training?</label>
-                                        <select id="profile-training-reason" class="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/20 text-white">
-                                            <option value="">Select reason</option>
-                                            <option value="maintenance">Maintenance</option>
-                                            <option value="marathon-prep">Marathon Prep</option>
-                                            <option value="competition-prep">Competition Prep</option>
-                                            <option value="rehabilitation">Rehabilitation</option>
-                                            <option value="general-fitness">General Fitness</option>
-                                        </select>
-                                    </div>
+                                    <button id="save-physiological-btn" class="w-full mt-4 bg-white hover:bg-white/90 text-black font-semibold py-3 rounded-xl transition-all duration-300 hover:scale-[1.02]" style="background-color: #F2ECE1;">
+                                        Guardar Cambios
+                                    </button>
                                 </div>
-                                <button class="w-full mt-4 bg-white hover:bg-white/90 text-black font-semibold py-3 rounded-xl transition-all duration-300 hover:scale-[1.02]">
-                                    Save Changes
-                                </button>
                             </div>
                         </div>
 
-                        <!-- Personal Stats Dashboard -->
-                        <div class="space-y-6">
-                            <!-- Analysis Chat Component -->
-                            <div id="analysis-chat-container">
-                                <!-- Content will be injected from html/components/analysis-chat.html -->
-                            </div>
-
+                        <!-- Preferences Section -->
+                        <div id="preferences-content" class="profile-content-section">
                             <div class="glass-strong rounded-2xl p-6 card-hover">
-                                <h3 class="text-xl font-semibold text-white mb-4">Progress Charts</h3>
-                                <div class="space-y-4" id="progress-charts">
-                                    <!-- Progress charts will be dynamically rendered here -->
-                                    <div class="text-center py-8">
-                                        <p class="text-sm text-white/60">Progress tracking coming soon</p>
+                                <h3 class="text-xl font-semibold text-white mb-6">Preferencias</h3>
+                                <div class="space-y-4">
+                                    <div>
+                                        <label class="block text-sm text-white/70 mb-2">Disciplinas Preferidas</label>
+                                        <div id="profile-disciplines" class="flex flex-wrap gap-2 mb-2">
+                                            <!-- Disciplines will be rendered as tags -->
+                                        </div>
+                                        <p class="text-xs text-white/50">Estas son las disciplinas que seleccionaste durante el onboarding</p>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm text-white/70 mb-2">Objetivos de Entrenamiento</label>
+                                        <div id="profile-objectives" class="flex flex-wrap gap-2 mb-2">
+                                            <!-- Objectives will be rendered as tags -->
+                                        </div>
+                                        <p class="text-xs text-white/50">Estos son los objetivos que seleccionaste durante el onboarding</p>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm text-white/70 mb-2">Áreas de Molestia</label>
+                                        <div id="profile-discomforts" class="flex flex-wrap gap-2 mb-2">
+                                            <!-- Discomforts will be rendered as tags -->
+                                        </div>
+                                        <p class="text-xs text-white/50">Estas son las áreas que indicaste durante el onboarding</p>
                                     </div>
                                 </div>
                             </div>
+                        </div>
 
+                        <!-- Benchmarks Section -->
+                        <div id="benchmarks-content" class="profile-content-section">
                             <div class="glass-strong rounded-2xl p-6 card-hover">
-                                <h3 class="text-xl font-semibold text-white mb-4">Milestones</h3>
+                                <h3 class="text-xl font-semibold text-white mb-6">Benchmarks</h3>
+                                <div class="space-y-4">
+                                    <!-- Mobility Benchmarks -->
+                                    <div>
+                                        <h4 class="text-lg font-semibold text-white mb-3">Movilidad</h4>
+                                        <div class="space-y-2">
+                                            <div class="flex justify-between items-center">
+                                                <span class="text-sm text-white/70">Overhead Reach</span>
+                                                <span id="benchmark-overhead-reach" class="text-sm text-white font-medium">-</span>
+                                            </div>
+                                            <div class="flex justify-between items-center">
+                                                <span class="text-sm text-white/70">Shoulder Rotation</span>
+                                                <span id="benchmark-shoulder-rotation" class="text-sm text-white font-medium">-</span>
+                                            </div>
+                                            <div class="flex justify-between items-center">
+                                                <span class="text-sm text-white/70">Hip Flexibility</span>
+                                                <span id="benchmark-hip-flexibility" class="text-sm text-white font-medium">-</span>
+                                            </div>
+                                            <div class="flex justify-between items-center pt-2 border-t border-white/10">
+                                                <span class="text-sm font-medium text-white">Overall Score</span>
+                                                <span id="benchmark-mobility-overall" class="text-sm text-white font-semibold">-</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Rotation Benchmarks -->
+                                    <div>
+                                        <h4 class="text-lg font-semibold text-white mb-3">Rotación</h4>
+                                        <div class="space-y-2">
+                                            <div class="flex justify-between items-center">
+                                                <span class="text-sm text-white/70">Spinal Rotation</span>
+                                                <span id="benchmark-spinal-rotation" class="text-sm text-white font-medium">-</span>
+                                            </div>
+                                            <div class="flex justify-between items-center">
+                                                <span class="text-sm text-white/70">Daily Rotation Frequency</span>
+                                                <span id="benchmark-rotation-frequency" class="text-sm text-white font-medium">-</span>
+                                            </div>
+                                            <div class="flex justify-between items-center pt-2 border-t border-white/10">
+                                                <span class="text-sm font-medium text-white">Overall Score</span>
+                                                <span id="benchmark-rotation-overall" class="text-sm text-white font-semibold">-</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Flexibility Benchmarks -->
+                                    <div>
+                                        <h4 class="text-lg font-semibold text-white mb-3">Flexibilidad</h4>
+                                        <div class="space-y-2">
+                                            <div class="flex justify-between items-center">
+                                                <span class="text-sm text-white/70">Lower Body</span>
+                                                <span id="benchmark-lower-body" class="text-sm text-white font-medium">-</span>
+                                            </div>
+                                            <div class="flex justify-between items-center">
+                                                <span class="text-sm text-white/70">Upper Body</span>
+                                                <span id="benchmark-upper-body" class="text-sm text-white font-medium">-</span>
+                                            </div>
+                                            <div class="flex justify-between items-center pt-2 border-t border-white/10">
+                                                <span class="text-sm font-medium text-white">Overall Score</span>
+                                                <span id="benchmark-flexibility-overall" class="text-sm text-white font-semibold">-</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Baseline Metrics (0-100 scale) -->
+                                    <div class="pt-4 border-t border-white/20">
+                                        <h4 class="text-lg font-semibold text-white mb-3">Métricas Base (0-100)</h4>
+                                        <div class="space-y-3">
+                                            <div>
+                                                <div class="flex justify-between items-center mb-1">
+                                                    <span class="text-sm text-white/70">Mobility</span>
+                                                    <span id="baseline-metric-mobility" class="text-sm text-white font-semibold">-</span>
+                                                </div>
+                                                <div class="w-full bg-white/10 rounded-full h-2">
+                                                    <div id="baseline-metric-mobility-bar" class="bg-white h-full rounded-full transition-all duration-500" style="width: 0%"></div>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div class="flex justify-between items-center mb-1">
+                                                    <span class="text-sm text-white/70">Rotation</span>
+                                                    <span id="baseline-metric-rotation" class="text-sm text-white font-semibold">-</span>
+                                                </div>
+                                                <div class="w-full bg-white/10 rounded-full h-2">
+                                                    <div id="baseline-metric-rotation-bar" class="bg-white h-full rounded-full transition-all duration-500" style="width: 0%"></div>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div class="flex justify-between items-center mb-1">
+                                                    <span class="text-sm text-white/70">Flexibility</span>
+                                                    <span id="baseline-metric-flexibility" class="text-sm text-white font-semibold">-</span>
+                                                </div>
+                                                <div class="w-full bg-white/10 rounded-full h-2">
+                                                    <div id="baseline-metric-flexibility-bar" class="bg-white h-full rounded-full transition-all duration-500" style="width: 0%"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Milestones Section -->
+                        <div id="milestones-content" class="profile-content-section">
+                            <div class="glass-strong rounded-2xl p-6 card-hover">
+                                <h3 class="text-xl font-semibold text-white mb-6">Milestones</h3>
                                 <div class="space-y-3" id="milestones-list">
                                     <!-- Milestones will be dynamically rendered here -->
                                 </div>

@@ -10,14 +10,28 @@ const __dirname = path.dirname(__filename);
 // Get the project root (one level up from scripts/)
 const projectRoot = path.resolve(__dirname, '..');
 
-// Initialize Firebase Admin
-const serviceAccount = JSON.parse(
-  fs.readFileSync(path.join(projectRoot, 'serviceAccountKey.json'), 'utf8')
-);
+// Check if using emulator
+const useEmulator = process.env.FIRESTORE_EMULATOR_HOST || process.env.USE_FIREBASE_EMULATOR === 'true';
 
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount)
-});
+if (useEmulator) {
+  // Use emulator
+  const emulatorHost = process.env.FIRESTORE_EMULATOR_HOST || 'localhost:8080';
+  process.env.FIRESTORE_EMULATOR_HOST = emulatorHost;
+  console.log(`🔧 Using Firestore Emulator: ${emulatorHost}`);
+  
+  admin.initializeApp({
+    projectId: process.env.FIREBASE_PROJECT_ID || 'regain-1b588'
+  });
+} else {
+  // Use production
+  const serviceAccount = JSON.parse(
+    fs.readFileSync(path.join(projectRoot, 'serviceAccountKey.json'), 'utf8')
+  );
+  
+  admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount)
+  });
+}
 
 const db = admin.firestore();
 

@@ -26,8 +26,10 @@ users/
     │           └── {sessionId}
     ├── completedSessions/
     │   └── {completedSessionId}
-    └── milestones/
-        └── {milestoneId}
+    ├── milestones/
+    │   └── {milestoneId}
+    └── exerciseHistory/
+        └── {exerciseHistoryId}
 ```
 
 ---
@@ -53,8 +55,7 @@ users/
   discomforts: string[]          // e.g., ['lower back', 'knees']
   equipment: string[]             // e.g., ['dumbbells', 'resistance bands']
   goals: string[]
-  objectives?: string[]           // Training objectives from final onboarding question (baseline assessment Q18)
-  sedentaryImpact?: string        // From onboarding question 1
+  objectives?: string[]           // Training objectives from final onboarding question (baseline assessment Q17)
   
   // Baseline Assessment (from Phase 2 onboarding)
   baselineAssessment?: {
@@ -225,6 +226,12 @@ users/
   technique_cues: string[]
   sets?: number                 // Filled during session
   reps?: number                 // Filled during session
+  // New fields for exercise type determination
+  exerciseType?: 'weight' | 'time' | 'both' | 'reps-only'  // Type of exercise
+  defaultWeight?: number         // Default weight in kg
+  defaultReps?: number           // Default reps
+  defaultTime?: number           // Default time in seconds
+  isIsometric?: boolean          // Whether exercise is isometric
 }
 ```
 
@@ -337,6 +344,78 @@ users/
 
 ---
 
+## Sub-Collection: `users/{uid}/exerciseHistory`
+
+**Path**: `users/{uid}/exerciseHistory/{exerciseHistoryId}`
+
+**Description**: Stores historical performance data for each exercise/variation combination. Tracks weight, reps, and time across all sessions to enable progress tracking and "last time" display.
+
+### Document Fields
+
+```typescript
+{
+  id: string                    // Auto-generated
+  exerciseId: string            // e.g., 'pilates-hundred'
+  variationId: string            // e.g., 'hundred-modified'
+  sessions: Array<{
+    sessionId: string            // Reference to completed session
+    date: Timestamp              // When the session was completed
+    sets: Array<{
+      setNumber: number          // Set number (1, 2, 3, etc.)
+      weight?: number            // Weight in kg (if applicable)
+      reps?: number              // Number of repetitions (if applicable)
+      time?: number              // Time in seconds (if applicable)
+      notes?: string             // Optional notes for this set
+    }>
+  }>
+  lastPerformedAt: Timestamp    // Last time this exercise was performed
+  personalBest?: {
+    weight?: number              // Best weight achieved
+    reps?: number                // Best reps achieved
+    time?: number                // Best time achieved (for time-based exercises)
+  }
+  createdAt: Timestamp
+  updatedAt: Timestamp
+}
+```
+
+### Example
+
+```json
+{
+  "id": "history-abc123",
+  "exerciseId": "pilates-hundred",
+  "variationId": "hundred-modified",
+  "sessions": [
+    {
+      "sessionId": "session-xyz789",
+      "date": "2025-01-15T10:30:00Z",
+      "sets": [
+        {
+          "setNumber": 1,
+          "reps": 10,
+          "time": 60
+        },
+        {
+          "setNumber": 2,
+          "reps": 12,
+          "time": 65
+        }
+      ]
+    }
+  ],
+  "lastPerformedAt": "2025-01-15T10:30:00Z",
+  "personalBest": {
+    "reps": 12,
+    "time": 65
+  },
+  "createdAt": "2025-01-15T10:30:00Z",
+  "updatedAt": "2025-01-15T10:30:00Z"
+}
+```
+
+---
+
 ## Sub-Collection: `users/{uid}/workouts` (Future)
 
 **Path**: `users/{uid}/workouts/{workoutId}`
@@ -376,7 +455,7 @@ users/
   completedAt: Timestamp        // When session completed
   duration: number              // Total duration in seconds
   warmup: Phase                 // Actual performance data
-  workout: Phase                // Actual performance data
+  workoutPhase: Phase           // Actual performance data (renamed from 'workout' to avoid conflict)
   cooldown: Phase               // Actual performance data
   metricsSummary: {
     mobility: number            // 0-100
@@ -385,6 +464,38 @@ users/
   }
   createdAt: Timestamp
   updatedAt: Timestamp
+}
+```
+
+### Phase Structure
+
+```typescript
+{
+  blocks: Array<PerformedVariation>
+  duration: number              // Phase duration in seconds
+}
+```
+
+### PerformedVariation Structure
+
+```typescript
+{
+  variationId: string
+  exerciseId: string
+  sets: Array<SetPerformance>
+}
+```
+
+### SetPerformance Structure
+
+```typescript
+{
+  setNumber: number              // Set number (1, 2, 3, etc.)
+  weight?: number                // Weight in kg (if applicable)
+  reps?: number                  // Number of repetitions (if applicable)
+  time?: number                  // Time in seconds (if applicable)
+  completed: boolean             // Whether the set was completed
+  notes?: string                 // Optional notes for this set
 }
 ```
 

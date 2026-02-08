@@ -400,15 +400,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Initialize onboarding manager (sets up event listeners only, doesn't show anything)
     // The manager will only show UI when explicitly called after authentication
     onboardingManager.init();
-    
-    // Voice FAB click handler (if element exists)
-    const voiceFab = document.getElementById('voiceFab');
-    if (voiceFab) {
-        voiceFab.addEventListener('click', function() {
-            console.log('Voice command feature coming soon!');
-            // Future: Voice command integration
-        });
-    }
 });
 
 // Animate progress bars on page load
@@ -416,35 +407,3 @@ window.addEventListener('load', () => {
     animateProgressBars();
 });
 
-// Save exercise functionality (event delegation)
-document.addEventListener('click', function(e) {
-    // Handle Save Exercise button clicks
-    if (e.target.textContent === 'Save Exercise' || e.target.textContent === 'Saved') {
-        const btn = e.target;
-        const card = btn.closest('.explore-card');
-        if (card) {
-            const bookmark = card.querySelector('.fa-bookmark');
-            const saveBtn = card.querySelector('button:last-child');
-            if (bookmark) {
-                bookmark.classList.toggle('fas');
-                bookmark.classList.toggle('far');
-                if (saveBtn) {
-                    saveBtn.textContent = bookmark.classList.contains('fas') ? 'Saved' : 'Save Exercise';
-                }
-            }
-        }
-    }
-    // Handle bookmark icon clicks
-    if (e.target.classList.contains('fa-bookmark')) {
-        const bookmark = e.target;
-        const card = bookmark.closest('.explore-card');
-        if (card) {
-            const saveBtn = card.querySelector('button:last-child');
-            bookmark.classList.toggle('fas');
-            bookmark.classList.toggle('far');
-            if (saveBtn) {
-                saveBtn.textContent = bookmark.classList.contains('fas') ? 'Saved' : 'Save Exercise';
-            }
-        }
-    }
-});

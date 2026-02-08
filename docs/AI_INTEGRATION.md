@@ -11,7 +11,7 @@ REGAIN now uses **OpenAI GPT-4 Turbo** to generate personalized training systems
 - ✅ **Avoids Repetition**: Never repeats exercise combinations across sessions
 - ✅ **Structured Output**: Returns valid JSON matching our data structure
 - ✅ **Cost-Effective**: ~$0.01-0.02 per training system generation
-- ✅ **Reliable**: Fallback to rule-based generation if AI fails
+- ✅ **Reliable**: AI-powered generation is required for this application
 
 ## Setup
 
@@ -81,12 +81,12 @@ The AI generates:
 - Technique cues and correction reminders
 - Progressive overload considerations
 
-### 4. Fallback Behavior
+### 4. Error Handling
 
 If AI generation fails (API error, network issue, etc.):
-- Automatically falls back to rule-based generation
-- User still gets a training system
-- Error is logged but doesn't block user experience
+- Error is thrown and logged
+- User is notified that AI generation is required
+- This is an AI-driven application - AI generation is mandatory
 
 ## REGAIN Principles in AI Prompt
 
@@ -169,12 +169,12 @@ const MODEL = 'gpt-4o'; // or 'gpt-4-turbo-preview'
 4. Click "Generate My First Plan"
 5. Check browser console for `[AI]` logs
 
-### Test Fallback
+### Test Error Handling
 
 1. Temporarily remove or invalidate `VITE_OPENAI_API_KEY`
 2. Generate a training system
-3. Should fall back to rule-based generation
-4. Check console for `[Rule-Based]` logs
+3. Should show error message that AI is required
+4. Check console for `[AI]` error logs
 
 ## Troubleshooting
 
@@ -201,7 +201,7 @@ const MODEL = 'gpt-4o'; // or 'gpt-4-turbo-preview'
 **Solution:** 
 - Check browser console for full response
 - AI may have returned invalid JSON
-- Fallback to rule-based should occur automatically
+- Error will be thrown - user must retry or check API configuration
 - Report issue with response text
 
 ### AI Generates Wrong Exercises
@@ -218,7 +218,6 @@ const MODEL = 'gpt-4o'; // or 'gpt-4-turbo-preview'
 
 Watch for these log prefixes:
 - `[AI]` - AI generation process
-- `[Rule-Based]` - Fallback rule-based generation
 
 ### Success Indicators
 

@@ -31,8 +31,8 @@ export class BaselineAssessmentManager {
     }
 
     setupEventListeners() {
-        // Mobility questions (4, 5, 6)
-        // Question 4: Overhead Reach
+        // Mobility questions (3, 4, 5)
+        // Question 3: Overhead Reach
         document.querySelectorAll('[data-answer="baseline-mobility-overhead"]').forEach(btn => {
             btn.addEventListener('click', () => {
                 const value = parseInt(btn.getAttribute('data-value'));
@@ -46,14 +46,14 @@ export class BaselineAssessmentManager {
         if (mobilityOverheadContinueBtn) {
             mobilityOverheadContinueBtn.addEventListener('click', () => {
                 if (this.answers.mobility.overheadReach !== null) {
-                    this.showQuestion(5);
+                    this.showQuestion(4);
                 } else {
                     alert('Please answer the question before continuing.');
                 }
             });
         }
 
-        // Question 5: Shoulder Rotation
+        // Question 4: Shoulder Rotation
         document.querySelectorAll('[data-answer="baseline-mobility-shoulder"]').forEach(btn => {
             btn.addEventListener('click', () => {
                 const value = parseInt(btn.getAttribute('data-value'));
@@ -67,14 +67,14 @@ export class BaselineAssessmentManager {
         if (mobilityShoulderContinueBtn) {
             mobilityShoulderContinueBtn.addEventListener('click', () => {
                 if (this.answers.mobility.shoulderRotation !== null) {
-                    this.showQuestion(6);
+                    this.showQuestion(5);
                 } else {
                     alert('Please answer the question before continuing.');
                 }
             });
         }
 
-        // Question 6: Hip Flexibility
+        // Question 5: Hip Flexibility
         document.querySelectorAll('[data-answer="baseline-mobility-hip"]').forEach(btn => {
             btn.addEventListener('click', () => {
                 const value = parseInt(btn.getAttribute('data-value'));
@@ -88,14 +88,14 @@ export class BaselineAssessmentManager {
         if (mobilityHipContinueBtn) {
             mobilityHipContinueBtn.addEventListener('click', () => {
                 if (this.answers.mobility.hipFlexibility !== null) {
-                    this.showQuestion(7);
+                    this.showQuestion(6);
                 } else {
                     alert('Please answer the question before continuing.');
                 }
             });
         }
 
-        // Rotation questions (question 7 - Spinal Rotation)
+        // Rotation questions (question 6 - Spinal Rotation)
         document.querySelectorAll('[data-answer="baseline-rotation-spinal"]').forEach(btn => {
             btn.addEventListener('click', () => {
                 const value = parseInt(btn.getAttribute('data-value'));
@@ -109,14 +109,14 @@ export class BaselineAssessmentManager {
         if (rotationSpinalContinueBtn) {
             rotationSpinalContinueBtn.addEventListener('click', () => {
                 if (this.answers.rotation.spinalRotation !== null) {
-                    this.showQuestion(8);
+                    this.showQuestion(7);
                 } else {
                     alert('Please answer the question before continuing.');
                 }
             });
         }
 
-        // Rotation frequency (question 8)
+        // Rotation frequency (question 7)
         document.querySelectorAll('[data-answer="baseline-rotation-frequency"]').forEach(btn => {
             btn.addEventListener('click', () => {
                 const value = parseInt(btn.getAttribute('data-value'));
@@ -130,14 +130,14 @@ export class BaselineAssessmentManager {
         if (rotationFrequencyContinueBtn) {
             rotationFrequencyContinueBtn.addEventListener('click', () => {
                 if (this.answers.rotation.dailyRotationFrequency !== null) {
-                    this.showQuestion(9);
+                    this.showQuestion(8);
                 } else {
                     alert('Please answer the question before continuing.');
                 }
             });
         }
 
-        // Flexibility questions (question 9 - Lower Body)
+        // Flexibility questions (question 8 - Lower Body)
         document.querySelectorAll('[data-answer="baseline-flexibility-lower"]').forEach(btn => {
             btn.addEventListener('click', () => {
                 const value = parseInt(btn.getAttribute('data-value'));
@@ -151,14 +151,14 @@ export class BaselineAssessmentManager {
         if (flexibilityLowerContinueBtn) {
             flexibilityLowerContinueBtn.addEventListener('click', () => {
                 if (this.answers.flexibility.lowerBody !== null) {
-                    this.showQuestion(10);
+                    this.showQuestion(9);
                 } else {
                     alert('Please answer the question before continuing.');
                 }
             });
         }
 
-        // Upper Body Flexibility (question 10)
+        // Upper Body Flexibility (question 9)
         document.querySelectorAll('[data-answer="baseline-flexibility-upper"]').forEach(btn => {
             btn.addEventListener('click', () => {
                 const value = parseInt(btn.getAttribute('data-value'));
@@ -172,7 +172,7 @@ export class BaselineAssessmentManager {
         if (flexibilityUpperContinueBtn) {
             flexibilityUpperContinueBtn.addEventListener('click', () => {
                 if (this.answers.flexibility.upperBody !== null) {
-                    this.showQuestion(11); // Show intro to physiological data
+                    this.showQuestion(10); // Show intro to physiological data
                 } else {
                     alert('Please answer the question before continuing.');
                 }
@@ -190,15 +190,15 @@ export class BaselineAssessmentManager {
         const physiologicalStartBtn = document.getElementById('physiological-start');
         if (physiologicalStartBtn) {
             physiologicalStartBtn.addEventListener('click', () => {
-                this.showQuestion(12);
+                this.showQuestion(11);
             });
         }
 
-        // Question 12: Age - Skip or Continue
+        // Question 11: Age - Skip or Continue
         const ageSkipBtn = document.getElementById('age-skip');
         if (ageSkipBtn) {
             ageSkipBtn.addEventListener('click', () => {
-                this.showQuestion(13);
+                this.showQuestion(12);
             });
         }
 
@@ -216,7 +216,7 @@ export class BaselineAssessmentManager {
                     const age = parseInt(ageInput.value);
                     if (age >= 18 && age <= 99) {
                         this.answers.physiological.age = age;
-                        this.showQuestion(13);
+                        this.showQuestion(12);
                     } else {
                         alert('Please enter a valid age between 18 and 99.');
                     }
@@ -224,7 +224,7 @@ export class BaselineAssessmentManager {
             });
         }
 
-        // Question 13: Activity Level
+        // Question 12: Activity Level
         document.querySelectorAll('[data-answer="physiological-activity"]').forEach(btn => {
             btn.addEventListener('click', () => {
                 const value = btn.getAttribute('data-value');
@@ -236,18 +236,18 @@ export class BaselineAssessmentManager {
         const activitySkipBtn = document.getElementById('activity-skip');
         if (activitySkipBtn) {
             activitySkipBtn.addEventListener('click', () => {
-                this.showQuestion(14);
+                this.showQuestion(13);
             });
         }
 
         const activityContinueBtn = document.getElementById('activity-continue');
         if (activityContinueBtn) {
             activityContinueBtn.addEventListener('click', () => {
-                this.showQuestion(14);
+                this.showQuestion(13);
             });
         }
 
-        // Question 14: Height - Skip or Continue
+        // Question 13: Height - Skip or Continue
         const heightSkipBtn = document.getElementById('height-skip');
         if (heightSkipBtn) {
             heightSkipBtn.addEventListener('click', () => {
@@ -269,7 +269,7 @@ export class BaselineAssessmentManager {
                     const height = parseFloat(heightInput.value);
                     if (height >= 100 && height <= 250) {
                         this.answers.physiological.height = height;
-                        this.showQuestion(15);
+                        this.showQuestion(14);
                     } else {
                         alert('Please enter a valid height between 100 and 250 cm.');
                     }
@@ -277,11 +277,11 @@ export class BaselineAssessmentManager {
             });
         }
 
-        // Question 15: Weight - Skip or Continue
+        // Question 14: Weight - Skip or Continue
         const weightSkipBtn = document.getElementById('weight-skip');
         if (weightSkipBtn) {
             weightSkipBtn.addEventListener('click', () => {
-                this.showQuestion(16);
+                this.showQuestion(15);
             });
         }
 
@@ -299,7 +299,7 @@ export class BaselineAssessmentManager {
                     const weight = parseFloat(weightInput.value);
                     if (weight >= 30 && weight <= 300) {
                         this.answers.physiological.weight = weight;
-                        this.showQuestion(16);
+                        this.showQuestion(15);
                     } else {
                         alert('Please enter a valid weight between 30 and 300 kg.');
                     }
@@ -307,11 +307,11 @@ export class BaselineAssessmentManager {
             });
         }
 
-        // Question 16: Body Fat % - Skip or Continue
+        // Question 15: Body Fat % - Skip or Continue
         const bodyFatSkipBtn = document.getElementById('bodyfat-skip');
         if (bodyFatSkipBtn) {
             bodyFatSkipBtn.addEventListener('click', () => {
-                this.showQuestion(17);
+                this.showQuestion(16);
             });
         }
 
@@ -329,7 +329,7 @@ export class BaselineAssessmentManager {
                     const bodyFat = parseFloat(bodyFatInput.value);
                     if (bodyFat >= 0 && bodyFat <= 100) {
                         this.answers.physiological.bodyFatPercent = bodyFat;
-                        this.showQuestion(17);
+                        this.showQuestion(16);
                     } else {
                         alert('Please enter a valid body fat percentage between 0 and 100.');
                     }
@@ -337,12 +337,12 @@ export class BaselineAssessmentManager {
             });
         }
 
-        // Question 17: Injury History - Skip or Continue
+        // Question 16: Injury History - Skip or Continue
         const injurySkipBtn = document.getElementById('injury-skip');
         if (injurySkipBtn) {
             injurySkipBtn.addEventListener('click', () => {
                 this.collectInjuryHistory();
-                this.showQuestion(18);
+                this.showQuestion(17);
             });
         }
 
@@ -358,7 +358,7 @@ export class BaselineAssessmentManager {
         if (injuryContinueBtn) {
             injuryContinueBtn.addEventListener('click', () => {
                 this.collectInjuryHistory();
-                this.showQuestion(18);
+                this.showQuestion(17);
             });
             
             // Enable continue button by default since field is optional
@@ -369,7 +369,7 @@ export class BaselineAssessmentManager {
             injuryContinueBtn.style.pointerEvents = 'auto';
         }
 
-        // Question 18: Training Objectives (multi-select)
+        // Question 17: Training Objectives (multi-select)
         this.answers.objectives = [];
         document.querySelectorAll('[data-answer="objective"]').forEach(btn => {
             btn.addEventListener('click', () => {
@@ -784,8 +784,8 @@ export class BaselineAssessmentManager {
             questionEl.classList.remove('hidden');
         }
 
-        // Initialize UI for question 18 (objectives)
-        if (step === 18) {
+        // Initialize UI for question 17 (objectives)
+        if (step === 17) {
             this.updateObjectivesUI();
         }
     }

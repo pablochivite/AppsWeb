@@ -35,7 +35,6 @@ export function generateTestUserProfile(overrides = {}) {
     discomforts: [],
     equipment: [],
     goals: [],
-    sedentaryImpact: 'moderate',
     ...overrides,
   };
 }
@@ -45,9 +44,8 @@ export function generateTestUserProfile(overrides = {}) {
  */
 export function generateOnboardingAnswers(overrides = {}) {
   return {
-    sedentaryImpact: 'moderate',
     discomforts: ['None'],
-    primaryDiscipline: ['Pilates'],
+    disciplines: ['Pilates'],
     ...overrides,
   };
 }

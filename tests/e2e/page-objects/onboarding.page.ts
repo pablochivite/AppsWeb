@@ -52,16 +52,7 @@ export class OnboardingPage {
   }
 
   /**
-   * Answer question 1 (Sedentary Impact)
-   */
-  async answerSedentaryImpact(value: string) {
-    await this.question1.waitFor({ state: 'visible' });
-    await this.page.locator(`[data-answer="sedentary"][data-value="${value}"]`).click();
-    await this.page.waitForTimeout(500); // Wait for transition
-  }
-
-  /**
-   * Answer question 2 (Discomforts) - multi-select
+   * Answer question 1 (Discomforts) - multi-select
    */
   async selectDiscomforts(values: string[]) {
     await this.question2.waitFor({ state: 'visible' });
@@ -73,10 +64,10 @@ export class OnboardingPage {
   }
 
   /**
-   * Answer question 3 (Disciplines) - multi-select
+   * Answer question 2 (Disciplines) - multi-select
    */
   async selectDisciplines(values: string[]) {
-    await this.question3.waitFor({ state: 'visible' });
+    await this.question2.waitFor({ state: 'visible' });
     for (const value of values) {
       await this.page.locator(`[data-answer="discipline"][data-value="${value}"]`).click();
     }
@@ -88,12 +79,10 @@ export class OnboardingPage {
    * Complete full athlete onboarding flow
    */
   async completeAthleteOnboarding(answers: {
-    sedentaryImpact: string;
     discomforts: string[];
     disciplines: string[];
   }) {
     await this.selectAthleteRole();
-    await this.answerSedentaryImpact(answers.sedentaryImpact);
     await this.selectDiscomforts(answers.discomforts);
     await this.selectDisciplines(answers.disciplines);
     // Wait for onboarding to complete and dashboard to appear

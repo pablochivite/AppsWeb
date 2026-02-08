@@ -55,11 +55,19 @@ export async function handleFinishWorkout(sessionState, session, userId) {
         );
 
         // Create PerformedVariation object
-        return {
-          variationId: variation.variationId || variation.id,
-          exerciseId: variation.exerciseId,
-          sets
+        // Ensure all fields are defined (no undefined values)
+        const block = {
+          variationId: variation.variationId || variation.id || null,
+          exerciseId: variation.exerciseId || null,
+          sets: sets || []
         };
+        
+        // Remove any undefined fields
+        if (!block.variationId || !block.exerciseId) {
+          console.warn('[handleFinishWorkout] Missing variationId or exerciseId for variation:', variation);
+        }
+        
+        return block;
       });
 
       // Calculate phase duration (can be tracked separately or estimated)
@@ -142,26 +150,54 @@ function extractSetsForVariation(variation, completedSets, setData = {}) {
     const setKey = `${exerciseId}-${variationId}-set-${setNumber}`;
     const performanceData = setData[setKey] || {};
 
-    sets.push({
+    // Build set object, only including defined values (Firestore doesn't accept undefined)
+    const setObj = {
       setNumber,
-      reps: performanceData.reps || variation.reps || undefined,
-      weight: performanceData.weight || variation.weight || undefined,
-      duration: performanceData.duration || undefined,
-      completed: true,
-      notes: performanceData.notes || undefined
-    });
+      completed: true
+    };
+    
+    // Only add fields if they have actual values (not undefined)
+    if (performanceData.reps !== undefined && performanceData.reps !== null) {
+      setObj.reps = performanceData.reps;
+    } else if (variation.reps !== undefined && variation.reps !== null) {
+      setObj.reps = variation.reps;
+    }
+    
+    if (performanceData.weight !== undefined && performanceData.weight !== null) {
+      setObj.weight = performanceData.weight;
+    } else if (variation.weight !== undefined && variation.weight !== null) {
+      setObj.weight = variation.weight;
+    }
+    
+    if (performanceData.duration !== undefined && performanceData.duration !== null) {
+      setObj.duration = performanceData.duration;
+    }
+    
+    if (performanceData.notes !== undefined && performanceData.notes !== null && performanceData.notes !== '') {
+      setObj.notes = performanceData.notes;
+    }
+    
+    sets.push(setObj);
   });
 
   // If no sets found but variation was in session, assume it was completed
   // (for cases where tracking wasn't fully implemented yet)
   if (sets.length === 0 && variation) {
     // Create a default set indicating the variation was performed
-    sets.push({
+    const defaultSet = {
       setNumber: 1,
-      reps: variation.reps || undefined,
-      weight: variation.weight || undefined,
       completed: true
-    });
+    };
+    
+    // Only add reps/weight if they exist (not undefined)
+    if (variation.reps !== undefined && variation.reps !== null) {
+      defaultSet.reps = variation.reps;
+    }
+    if (variation.weight !== undefined && variation.weight !== null) {
+      defaultSet.weight = variation.weight;
+    }
+    
+    sets.push(defaultSet);
   }
 
   return sets;
@@ -207,14 +243,166 @@ export async function saveSessionOnComplete(sessionViewInstance, userId) {
     const sessionState = {
       startedAt: sessionViewInstance.startedAt,
       completedSets: sessionViewInstance.completedSets || [],
-      setData: sessionViewInstance.setData || {} // Optional: track set performance data
+      setData: sessionViewInstance.setData || {} // Track set performance data (weight/reps/time)
     };
 
+    // Capture completion timestamp and rough duration for downstream analytics
+    const completedAt = new Date();
+    const startedAtDate = sessionState.startedAt
+      ? new Date(sessionState.startedAt)
+      : completedAt;
+    const durationSeconds = Math.max(
+      0,
+      Math.floor((completedAt.getTime() - startedAtDate.getTime()) / 1000)
+    );
+
+    sessionState.completedAt = completedAt.toISOString();
+    sessionState.duration = durationSeconds;
+
+    // Get session date for streak calculation
+    const sessionDate = sessionViewInstance.session.date || new Date().toISOString().split('T')[0];
+
     // Save the session
-    await handleFinishWorkout(sessionState, sessionViewInstance.session, userId);
+    let sessionId = null;
+    try {
+      sessionId = await handleFinishWorkout(sessionState, sessionViewInstance.session, userId);
+      console.log('[SessionView] ✓ Session saved with ID:', sessionId);
+    } catch (sessionError) {
+      console.error('[SessionView] Error saving session:', sessionError);
+      // Even if session save fails, try to update streak and continue
+      // The user completed the session, so we should still track it
+    }
+    
+    // Update streak after saving session (or even if save failed)
+    // This ensures the streak is updated regardless of session save status
+    try {
+      const { updateStreakOnSessionComplete } = await import('../../js/services/dbService.js');
+      const streakInfo = await updateStreakOnSessionComplete(userId, sessionDate);
+      console.log('[SessionView] ✓ Streak updated:', streakInfo);
+      
+      // Clear profile cache immediately after updating streak to ensure fresh data
+      const cacheKey = `firestore_cache_profile_${userId}`;
+      localStorage.removeItem(cacheKey);
+      localStorage.removeItem('userProfile');
+      console.log('[SessionView] ✓ Profile cache cleared after streak update');
+    } catch (streakError) {
+      console.error('[SessionView] Error updating streak:', streakError);
+      console.error('[SessionView] Streak error stack:', streakError.stack);
+      // Non-critical: do not block session completion if streak update fails
+    }
+    
+    // Save exercise history for each completed exercise (only if session was saved)
+    if (sessionId) {
+      try {
+        await saveExerciseHistory(sessionState, sessionViewInstance.session, userId, sessionId);
+      } catch (historyError) {
+        console.error('[SessionView] Error saving exercise history:', historyError);
+        // Non-critical: continue even if history save fails
+      }
+    } else {
+      console.warn('[SessionView] Skipping exercise history save - no sessionId');
+    }
+
+    // Build and persist a performance report for this session (only if session was saved)
+    if (sessionId) {
+      try {
+        const { buildSessionReportData } = await import('../../js/core/workout-metrics.js');
+        const { saveSessionReport } = await import('../../js/services/dbService.js');
+
+        console.log('[SessionView] Building session report data...');
+        const reportData = await buildSessionReportData({
+          session: sessionViewInstance.session,
+          sessionState,
+          userId,
+          sessionId
+        });
+
+        if (reportData) {
+          console.log('[SessionView] Report data built successfully:', {
+            sessionId: reportData.sessionId,
+            sessionDate: reportData.sessionDate,
+            exercisesCount: reportData.exercises?.length || 0
+          });
+          
+          const reportId = await saveSessionReport(userId, reportData);
+          console.log('[SessionView] ✓ Session performance report saved with ID:', reportId);
+          
+          // Clear reports cache to force refresh when user visits My Training
+          const reportsCacheKey = `firestore_cache_session_reports_${userId}`;
+          localStorage.removeItem(reportsCacheKey);
+          console.log('[SessionView] ✓ Reports cache cleared');
+        } else {
+          console.warn('[SessionView] Report data was empty, skipping saveSessionReport');
+        }
+      } catch (reportError) {
+        console.error('[SessionView] Error building or saving session report:', reportError);
+        console.error('[SessionView] Report error stack:', reportError.stack);
+        // Non-critical: do not block session completion if reports fail
+      }
+    } else {
+      console.warn('[SessionView] Skipping report generation - no sessionId');
+    }
+
   } catch (error) {
     console.error('Error saving session on complete:', error);
     // Don't throw - allow session to complete even if save fails
+  }
+}
+
+/**
+ * Save exercise history for all exercises in completed session
+ * @param {Object} sessionState - Session state with setData
+ * @param {Object} session - Original session object
+ * @param {string} userId - User ID
+ * @param {string} sessionId - Completed session ID
+ */
+async function saveExerciseHistory(sessionState, session, userId, sessionId) {
+  try {
+    const { saveExercisePerformance } = await import('../../js/services/exerciseHistoryService.js');
+    
+    // Process each phase
+    const phases = ['warmup', 'workout', 'cooldown'];
+    
+    for (const phaseName of phases) {
+      const phaseVariations = session.phases && session.phases[phaseName] 
+        ? session.phases[phaseName] 
+        : [];
+
+      for (const variation of phaseVariations) {
+        const exerciseId = variation.exerciseId;
+        const variationId = variation.variationId || variation.id;
+        
+        if (!exerciseId || !variationId) continue;
+
+        // Extract sets for this variation
+        const setPattern = `${exerciseId}-${variationId}-set-`;
+        const variationSets = Object.entries(sessionState.setData || {})
+          .filter(([key]) => key.startsWith(setPattern))
+          .map(([key, data]) => {
+            const match = key.match(/set-(\d+)/);
+            return {
+              setNumber: match ? parseInt(match[1], 10) : 1,
+              weight: data.weight,
+              reps: data.reps,
+              time: data.time,
+              notes: data.notes
+            };
+          })
+          .sort((a, b) => a.setNumber - b.setNumber);
+
+        if (variationSets.length > 0) {
+          try {
+            await saveExercisePerformance(userId, exerciseId, variationId, sessionId, variationSets);
+          } catch (error) {
+            console.warn(`Failed to save history for ${exerciseId}/${variationId}:`, error);
+            // Continue with other exercises even if one fails
+          }
+        }
+      }
+    }
+  } catch (error) {
+    console.error('Error saving exercise history:', error);
+    // Don't throw - history saving is non-critical
   }
 }
 

@@ -1,6 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { generateTrainingSystemWithAI } from '../../../js/services/aiService.js';
-import exercisesData from '../../../js/data/exercises.json';
 
 /**
  * Tests for AI Service - Baseline Assessment Integration
@@ -23,7 +22,8 @@ describe('AI Service - Baseline Assessment Integration', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     vi.stubEnv('VITE_OPENAI_API_KEY', 'test-api-key');
-    mockExercises = exercisesData.exercises || [];
+    // Mock exercises data - exercises are now loaded from Firestore in production
+    mockExercises = [];
     
     // Default successful fetch response (will be customized per test)
     mockFetch.mockResolvedValue({

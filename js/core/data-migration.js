@@ -71,7 +71,6 @@ async function migrateUserProfile(userId) {
             goals: localProfile?.goals || [],
             objectives: localProfile?.objectives || onboardingData?.objectives || [],
             currentMilestones: localProfile?.currentMilestones || {},
-            sedentaryImpact: onboardingData?.sedentaryImpact || null
         };
         
         // Save to Firestore

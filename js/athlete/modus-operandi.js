@@ -4,6 +4,8 @@ import { getAuthUser } from '../core/auth-manager.js';
 import { getCompletedSessions } from '../services/dbService.js';
 import { calculateProjectedMetrics } from '../core/workout-engine.js';
 import { cleanFrameworkName } from '../core/constants.js';
+import { initTrainingReports } from './training-reports.js';
+import { normalizeDisciplines } from '../core/ui-utils.js';
 
 /**
  * Initialize My Training page with training system statistics
@@ -35,6 +37,9 @@ export async function initMyTraining() {
         // Calculate and render weekly rating (includes all sessions of the week)
         const weeklyRating = await calculateWeeklyRating(user.uid, trainingSystem);
         renderWeeklyRating(weeklyRating);
+
+        // Initialize training reports section
+        await initTrainingReports();
 
     } catch (error) {
         console.error('[My Training] Error initializing:', error);
@@ -75,7 +80,9 @@ function calculateDisciplineStats(trainingSystem) {
         }
 
         // Count exercises by discipline for this session
-        const discipline = session.discipline || 'Unknown';
+        // Normalize discipline to handle both string (legacy) and array (new) formats
+        const disciplines = normalizeDisciplines(session.discipline);
+        const disciplinesList = disciplines.length > 0 ? disciplines : ['Unknown'];
         let exerciseCount = 0;
 
         // Count exercises in all phases
@@ -84,11 +91,17 @@ function calculateDisciplineStats(trainingSystem) {
             exerciseCount += phaseExercises.length;
         });
 
-        if (!stats[framework].disciplines[discipline]) {
-            stats[framework].disciplines[discipline] = 0;
-        }
-
-        stats[framework].disciplines[discipline] += exerciseCount;
+        // Distribute exercise count across all disciplines in the session
+        // If a session has multiple disciplines, each gets a proportional count
+        const countPerDiscipline = exerciseCount / disciplinesList.length;
+        
+        disciplinesList.forEach(discipline => {
+            if (!stats[framework].disciplines[discipline]) {
+                stats[framework].disciplines[discipline] = 0;
+            }
+            stats[framework].disciplines[discipline] += countPerDiscipline;
+        });
+        
         stats[framework].totalExercises += exerciseCount;
     });
 

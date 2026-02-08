@@ -28,10 +28,6 @@ The solution implements comprehensive state cleanup that runs automatically befo
    - Automatically clears state before each test by overriding the `page` fixture
    - All tests using these fixtures get clean state automatically
 
-3. **Test Setup** (`tests/e2e/utils/test-setup.ts`)
-   - Alternative test export for tests that don't use auth fixtures
-   - Provides the same automatic cleanup
-
 ## How It Works
 
 ### Automatic Cleanup (Recommended)

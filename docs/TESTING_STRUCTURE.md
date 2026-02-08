@@ -27,7 +27,6 @@ tests/
 │   │       ├── dashboard.page.ts
 │   │       └── onboarding.page.ts
 │   └── utils/                     # E2E utilities
-│       ├── constants.ts
 │       └── test-helpers.ts
 │
 ├── unit/                          # Vitest Unit Tests

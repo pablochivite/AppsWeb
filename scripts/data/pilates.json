@@ -3,31 +3,229 @@
     {
       "id": "the-hundred",
       "name": "The Hundred",
-      "targetMuscleGroups": ["core", "abdominals", "hip flexors", "shoulders", "breathing"],
+      "targetMuscleGroups": [
+        "core",
+        "abdominals",
+        "hip flexors",
+        "shoulders",
+        "breathing"
+      ],
       "category": "core"
     },
     {
       "id": "roll-up",
       "name": "Roll Up",
-      "targetMuscleGroups": ["core", "abdominals", "spinal flexors", "hamstrings", "hip flexors"],
+      "targetMuscleGroups": [
+        "core",
+        "abdominals",
+        "spinal flexors",
+        "hamstrings",
+        "hip flexors"
+      ],
       "category": "flexibility"
     },
     {
       "id": "single-leg-stretch",
       "name": "Single Leg Stretch",
-      "targetMuscleGroups": ["core", "abdominals", "hip flexors", "quadriceps", "coordination"],
+      "targetMuscleGroups": [
+        "core",
+        "abdominals",
+        "hip flexors",
+        "quadriceps",
+        "coordination"
+      ],
       "category": "core"
     },
     {
       "id": "swan-dive",
       "name": "Swan Dive",
-      "targetMuscleGroups": ["back extensors", "glutes", "shoulders", "spinal extensors", "posterior chain"],
+      "targetMuscleGroups": [
+        "back extensors",
+        "glutes",
+        "shoulders",
+        "spinal extensors",
+        "posterior chain"
+      ],
       "category": "extension"
     },
     {
       "id": "teaser",
       "name": "Teaser",
-      "targetMuscleGroups": ["core", "abdominals", "hip flexors", "balance", "coordination"],
+      "targetMuscleGroups": [
+        "core",
+        "abdominals",
+        "hip flexors",
+        "balance",
+        "coordination"
+      ],
+      "category": "core"
+    },
+    {
+      "id": "double-leg-stretch",
+      "name": "Double Leg Stretch",
+      "targetMuscleGroups": [
+        "core",
+        "abdominals",
+        "hip flexors",
+        "shoulders",
+        "coordination"
+      ],
+      "category": "core"
+    },
+    {
+      "id": "criss-cross",
+      "name": "Criss Cross",
+      "targetMuscleGroups": [
+        "core",
+        "obliques",
+        "abdominals",
+        "hip flexors",
+        "rotation"
+      ],
+      "category": "core"
+    },
+    {
+      "id": "scissors",
+      "name": "Scissors",
+      "targetMuscleGroups": [
+        "core",
+        "abdominals",
+        "hip flexors",
+        "hamstrings",
+        "flexibility"
+      ],
+      "category": "core"
+    },
+    {
+      "id": "bicycle",
+      "name": "Bicycle",
+      "targetMuscleGroups": [
+        "core",
+        "obliques",
+        "abdominals",
+        "hip flexors",
+        "coordination"
+      ],
+      "category": "core"
+    },
+    {
+      "id": "shoulder-bridge",
+      "name": "Shoulder Bridge",
+      "targetMuscleGroups": [
+        "glutes",
+        "hamstrings",
+        "core",
+        "back extensors",
+        "hip stability"
+      ],
+      "category": "extension"
+    },
+    {
+      "id": "spine-stretch-forward",
+      "name": "Spine Stretch Forward",
+      "targetMuscleGroups": [
+        "spinal flexors",
+        "hamstrings",
+        "back",
+        "flexibility",
+        "posture"
+      ],
+      "category": "flexibility"
+    },
+    {
+      "id": "saw",
+      "name": "Saw",
+      "targetMuscleGroups": [
+        "obliques",
+        "spinal rotation",
+        "hamstrings",
+        "shoulders",
+        "flexibility"
+      ],
+      "category": "flexibility"
+    },
+    {
+      "id": "swimming",
+      "name": "Swimming",
+      "targetMuscleGroups": [
+        "back extensors",
+        "glutes",
+        "shoulders",
+        "posterior chain",
+        "coordination"
+      ],
+      "category": "extension"
+    },
+    {
+      "id": "leg-pull-front",
+      "name": "Leg Pull Front",
+      "targetMuscleGroups": [
+        "shoulders",
+        "core",
+        "glutes",
+        "hip flexors",
+        "stability"
+      ],
+      "category": "strength"
+    },
+    {
+      "id": "side-kicks",
+      "name": "Side Kicks",
+      "targetMuscleGroups": [
+        "hip abductors",
+        "glutes",
+        "core",
+        "legs",
+        "stability"
+      ],
+      "category": "strength"
+    },
+    {
+      "id": "mermaid",
+      "name": "Mermaid",
+      "targetMuscleGroups": [
+        "obliques",
+        "spinal lateral flexion",
+        "shoulders",
+        "flexibility",
+        "side body"
+      ],
+      "category": "flexibility"
+    },
+    {
+      "id": "seal",
+      "name": "Seal",
+      "targetMuscleGroups": [
+        "core",
+        "balance",
+        "coordination",
+        "spinal articulation",
+        "abdominals"
+      ],
+      "category": "core"
+    },
+    {
+      "id": "corkscrew",
+      "name": "Corkscrew",
+      "targetMuscleGroups": [
+        "core",
+        "obliques",
+        "hip flexors",
+        "spinal rotation",
+        "coordination"
+      ],
+      "category": "core"
+    },
+    {
+      "id": "jackknife",
+      "name": "Jackknife",
+      "targetMuscleGroups": [
+        "core",
+        "hip flexors",
+        "shoulders",
+        "flexibility",
+        "coordination"
+      ],
       "category": "core"
     }
   ],
@@ -36,8 +234,11 @@
       "id": "hundred-bent-knees",
       "exerciseId": "the-hundred",
       "name": "The Hundred - Bent Knees Modification",
-      "disciplines": ["pilates"],
+      "disciplines": [
+        "pilates"
+      ],
       "difficulty": 3,
+      "phase": "warmup",
       "metrics": {
         "mobility": 40,
         "rotation": 15,
@@ -53,17 +254,21 @@
         "Maintain neutral neck position, avoid straining",
         "Focus on steady, rhythmic breathing throughout"
       ],
-      "metadata": {
-        "bilaterality": true,
-        "equipment": ["mat"]
-      }
+      "tags": [
+        "core",
+        "bilateral",
+        "isometric"
+      ]
     },
     {
       "id": "hundred-tabletop",
       "exerciseId": "the-hundred",
       "name": "The Hundred - Tabletop Position",
-      "disciplines": ["pilates"],
+      "disciplines": [
+        "pilates"
+      ],
       "difficulty": 5,
+      "phase": "warmup",
       "metrics": {
         "mobility": 55,
         "rotation": 20,
@@ -80,17 +285,21 @@
         "Complete 10 breathing cycles (100 total pumps)",
         "Lower head and legs with control to finish"
       ],
-      "metadata": {
-        "bilaterality": true,
-        "equipment": ["mat"]
-      }
+      "tags": [
+        "core",
+        "bilateral",
+        "isometric"
+      ]
     },
     {
       "id": "hundred-extended-legs",
       "exerciseId": "the-hundred",
       "name": "The Hundred - Extended Legs",
-      "disciplines": ["pilates"],
+      "disciplines": [
+        "pilates"
+      ],
       "difficulty": 7,
+      "phase": "workout",
       "metrics": {
         "mobility": 70,
         "rotation": 25,
@@ -108,17 +317,22 @@
         "Complete 10 full breathing cycles (100 pumps total)",
         "This variation requires strong core and hip flexor control"
       ],
-      "metadata": {
-        "bilaterality": true,
-        "equipment": ["mat"]
-      }
+      "tags": [
+        "core",
+        "legs",
+        "bilateral",
+        "isometric"
+      ]
     },
     {
       "id": "hundred-double-leg-lower",
       "exerciseId": "the-hundred",
       "name": "The Hundred - With Double Leg Lower",
-      "disciplines": ["pilates"],
+      "disciplines": [
+        "pilates"
+      ],
       "difficulty": 9,
+      "phase": "workout",
       "metrics": {
         "mobility": 85,
         "rotation": 30,
@@ -136,17 +350,22 @@
         "Complete 10 breathing cycles with leg lowering",
         "Requires exceptional core strength and control"
       ],
-      "metadata": {
-        "bilaterality": true,
-        "equipment": ["mat"]
-      }
+      "tags": [
+        "core",
+        "legs",
+        "bilateral",
+        "isometric"
+      ]
     },
     {
       "id": "roll-up-assisted",
       "exerciseId": "roll-up",
       "name": "Roll Up - Assisted with Strap",
-      "disciplines": ["pilates"],
+      "disciplines": [
+        "pilates"
+      ],
       "difficulty": 4,
+      "phase": "warmup",
       "metrics": {
         "mobility": 50,
         "rotation": 20,
@@ -163,17 +382,21 @@
         "Control the descent, don't collapse",
         "Repeat 5-8 times, focusing on spinal articulation"
       ],
-      "metadata": {
-        "bilaterality": true,
-        "equipment": ["mat", "resistance-band"]
-      }
+      "tags": [
+        "core",
+        "back",
+        "bilateral"
+      ]
     },
     {
       "id": "roll-up-standard",
       "exerciseId": "roll-up",
       "name": "Roll Up - Standard",
-      "disciplines": ["pilates"],
+      "disciplines": [
+        "pilates"
+      ],
       "difficulty": 6,
+      "phase": "workout",
       "metrics": {
         "mobility": 70,
         "rotation": 30,
@@ -192,17 +415,22 @@
         "Control each vertebra as you lower, don't collapse",
         "Complete 8-10 repetitions with full control"
       ],
-      "metadata": {
-        "bilaterality": true,
-        "equipment": ["mat"]
-      }
+      "tags": [
+        "core",
+        "back",
+        "legs",
+        "bilateral"
+      ]
     },
     {
       "id": "roll-up-single-leg",
       "exerciseId": "roll-up",
       "name": "Roll Up - Single Leg Variation",
-      "disciplines": ["pilates"],
+      "disciplines": [
+        "pilates"
+      ],
       "difficulty": 8,
+      "phase": "workout",
       "metrics": {
         "mobility": 85,
         "rotation": 40,
@@ -221,17 +449,21 @@
         "This variation challenges unilateral stability and control",
         "Complete 6-8 repetitions, alternating legs"
       ],
-      "metadata": {
-        "bilaterality": false,
-        "equipment": ["mat"]
-      }
+      "tags": [
+        "core",
+        "legs",
+        "unilateral"
+      ]
     },
     {
       "id": "single-leg-stretch-beginner",
       "exerciseId": "single-leg-stretch",
       "name": "Single Leg Stretch - Beginner",
-      "disciplines": ["pilates"],
+      "disciplines": [
+        "pilates"
+      ],
       "difficulty": 4,
+      "phase": "warmup",
       "metrics": {
         "mobility": 50,
         "rotation": 25,
@@ -249,17 +481,21 @@
         "Complete 8-10 repetitions per side",
         "Focus on stability of torso while legs move"
       ],
-      "metadata": {
-        "bilaterality": false,
-        "equipment": ["mat"]
-      }
+      "tags": [
+        "core",
+        "legs",
+        "unilateral"
+      ]
     },
     {
       "id": "single-leg-stretch-standard",
       "exerciseId": "single-leg-stretch",
       "name": "Single Leg Stretch - Standard",
-      "disciplines": ["pilates"],
+      "disciplines": [
+        "pilates"
+      ],
       "difficulty": 6,
+      "phase": "workout",
       "metrics": {
         "mobility": 65,
         "rotation": 35,
@@ -278,17 +514,21 @@
         "Complete 10-12 repetitions per side",
         "Focus on precision and control over speed"
       ],
-      "metadata": {
-        "bilaterality": false,
-        "equipment": ["mat"]
-      }
+      "tags": [
+        "core",
+        "legs",
+        "unilateral"
+      ]
     },
     {
       "id": "single-leg-stretch-double-pump",
       "exerciseId": "single-leg-stretch",
       "name": "Single Leg Stretch - Double Pump",
-      "disciplines": ["pilates"],
+      "disciplines": [
+        "pilates"
+      ],
       "difficulty": 8,
+      "phase": "workout",
       "metrics": {
         "mobility": 80,
         "rotation": 45,
@@ -307,17 +547,21 @@
         "Complete 8-10 repetitions per side with double pumps",
         "This advanced variation requires exceptional core control"
       ],
-      "metadata": {
-        "bilaterality": false,
-        "equipment": ["mat"]
-      }
+      "tags": [
+        "core",
+        "legs",
+        "unilateral"
+      ]
     },
     {
       "id": "swan-dive-preparation",
       "exerciseId": "swan-dive",
       "name": "Swan Dive - Preparation (Swan)",
-      "disciplines": ["pilates"],
+      "disciplines": [
+        "pilates"
+      ],
       "difficulty": 5,
+      "phase": "warmup",
       "metrics": {
         "mobility": 60,
         "rotation": 30,
@@ -335,17 +579,22 @@
         "Repeat 5-8 times, building back extension strength",
         "Focus on length over height in the extension"
       ],
-      "metadata": {
-        "bilaterality": true,
-        "equipment": ["mat"]
-      }
+      "tags": [
+        "back",
+        "shoulders",
+        "bilateral",
+        "isometric"
+      ]
     },
     {
       "id": "swan-dive-standard",
       "exerciseId": "swan-dive",
       "name": "Swan Dive - Standard",
-      "disciplines": ["pilates"],
+      "disciplines": [
+        "pilates"
+      ],
       "difficulty": 7,
+      "phase": "workout",
       "metrics": {
         "mobility": 75,
         "rotation": 40,
@@ -364,17 +613,22 @@
         "This exercise requires strong posterior chain activation",
         "Keep neck long, avoid hyperextension"
       ],
-      "metadata": {
-        "bilaterality": true,
-        "equipment": ["mat"]
-      }
+      "tags": [
+        "back",
+        "shoulders",
+        "bilateral",
+        "isometric"
+      ]
     },
     {
       "id": "swan-dive-rocking",
       "exerciseId": "swan-dive",
       "name": "Swan Dive - Rocking Variation",
-      "disciplines": ["pilates"],
+      "disciplines": [
+        "pilates"
+      ],
       "difficulty": 9,
+      "phase": "workout",
       "metrics": {
         "mobility": 90,
         "rotation": 50,
@@ -393,17 +647,21 @@
         "Finish by lowering legs, then upper body with control",
         "Only attempt if standard swan dive is mastered"
       ],
-      "metadata": {
-        "bilaterality": true,
-        "equipment": ["mat"]
-      }
+      "tags": [
+        "back",
+        "shoulders",
+        "bilateral"
+      ]
     },
     {
       "id": "teaser-preparation",
       "exerciseId": "teaser",
       "name": "Teaser - Preparation (Roll Back)",
-      "disciplines": ["pilates"],
+      "disciplines": [
+        "pilates"
+      ],
       "difficulty": 5,
+      "phase": "warmup",
       "metrics": {
         "mobility": 55,
         "rotation": 25,
@@ -421,17 +679,20 @@
         "This preparation builds the strength needed for full teaser",
         "Focus on spinal articulation and core engagement"
       ],
-      "metadata": {
-        "bilaterality": true,
-        "equipment": ["mat"]
-      }
+      "tags": [
+        "core",
+        "bilateral"
+      ]
     },
     {
       "id": "teaser-single-leg",
       "exerciseId": "teaser",
       "name": "Teaser - Single Leg",
-      "disciplines": ["pilates"],
+      "disciplines": [
+        "pilates"
+      ],
       "difficulty": 7,
+      "phase": "workout",
       "metrics": {
         "mobility": 75,
         "rotation": 35,
@@ -450,17 +711,21 @@
         "Complete 6-8 repetitions, focusing on control over height",
         "This variation builds toward full double-leg teaser"
       ],
-      "metadata": {
-        "bilaterality": false,
-        "equipment": ["mat"]
-      }
+      "tags": [
+        "core",
+        "legs",
+        "unilateral"
+      ]
     },
     {
       "id": "teaser-full",
       "exerciseId": "teaser",
       "name": "Teaser - Full (Double Leg)",
-      "disciplines": ["pilates"],
+      "disciplines": [
+        "pilates"
+      ],
       "difficulty": 9,
+      "phase": "workout",
       "metrics": {
         "mobility": 90,
         "rotation": 40,
@@ -481,11 +746,1227 @@
         "Complete 4-6 repetitions with full control",
         "Focus on precision and control over achieving extreme angles"
       ],
-      "metadata": {
-        "bilaterality": true,
-        "equipment": ["mat"]
-      }
+      "tags": [
+        "core",
+        "legs",
+        "bilateral"
+      ]
+    },
+    {
+      "id": "double-leg-stretch-beginner",
+      "exerciseId": "double-leg-stretch",
+      "name": "Double Leg Stretch - Beginner",
+      "disciplines": [
+        "pilates"
+      ],
+      "difficulty": 4,
+      "phase": "warmup",
+      "metrics": {
+        "mobility": 50,
+        "rotation": 20,
+        "flexibility": 45
+      },
+      "instructions": [
+        "Lie supine, lift head and shoulders off mat",
+        "Bring both knees to chest, hands on knees",
+        "Inhale and extend arms overhead, legs to tabletop",
+        "Exhale and circle arms wide, bringing knees back to chest",
+        "Keep head lifted throughout movement",
+        "Maintain C-curve of spine, core engaged",
+        "Move with control, coordinating breath with movement",
+        "Complete 8-10 repetitions"
+      ],
+      "tags": [
+        "core",
+        "legs",
+        "bilateral"
+      ]
+    },
+    {
+      "id": "double-leg-stretch-standard",
+      "exerciseId": "double-leg-stretch",
+      "name": "Double Leg Stretch - Standard",
+      "disciplines": [
+        "pilates"
+      ],
+      "difficulty": 6,
+      "phase": "workout",
+      "metrics": {
+        "mobility": 65,
+        "rotation": 30,
+        "flexibility": 60
+      },
+      "instructions": [
+        "Lie supine, lift head and shoulders off mat",
+        "Bring both knees to chest, maintaining C-curve",
+        "Inhale and extend arms overhead, legs to 45 degrees",
+        "Exhale and circle arms wide, bringing knees back to chest",
+        "Keep lower back pressed into mat throughout",
+        "Coordinate breath with movement precisely",
+        "Maintain stable torso, no rocking",
+        "Complete 10-12 repetitions"
+      ],
+      "tags": [
+        "core",
+        "legs",
+        "bilateral"
+      ]
+    },
+    {
+      "id": "double-leg-stretch-extended",
+      "exerciseId": "double-leg-stretch",
+      "name": "Double Leg Stretch - Extended Legs",
+      "disciplines": [
+        "pilates"
+      ],
+      "difficulty": 8,
+      "phase": "workout",
+      "metrics": {
+        "mobility": 80,
+        "rotation": 40,
+        "flexibility": 75
+      },
+      "instructions": [
+        "Begin in standard position",
+        "Extend legs lower (30-45 degrees) while extending arms",
+        "Maintain core engagement and lower back connection",
+        "Circle arms wider for greater challenge",
+        "Keep legs straight and together",
+        "Coordinate breath precisely with movement",
+        "Complete 8-10 repetitions with full control"
+      ],
+      "tags": [
+        "core",
+        "legs",
+        "bilateral"
+      ]
+    },
+    {
+      "id": "criss-cross-beginner",
+      "exerciseId": "criss-cross",
+      "name": "Criss Cross - Beginner",
+      "disciplines": [
+        "pilates"
+      ],
+      "difficulty": 4,
+      "phase": "warmup",
+      "metrics": {
+        "mobility": 55,
+        "rotation": 50,
+        "flexibility": 50
+      },
+      "instructions": [
+        "Lie supine, lift head and shoulders off mat",
+        "Bring both knees to chest, hands behind head",
+        "Extend right leg to tabletop, rotate left shoulder toward right knee",
+        "Switch: extend left leg, rotate right shoulder toward left knee",
+        "Keep elbows wide, avoid pulling on neck",
+        "Maintain core engagement throughout",
+        "Complete 8-10 repetitions per side"
+      ],
+      "tags": [
+        "core",
+        "legs",
+        "unilateral",
+        "rotation"
+      ]
+    },
+    {
+      "id": "criss-cross-standard",
+      "exerciseId": "criss-cross",
+      "name": "Criss Cross - Standard",
+      "disciplines": [
+        "pilates"
+      ],
+      "difficulty": 6,
+      "phase": "workout",
+      "metrics": {
+        "mobility": 70,
+        "rotation": 70,
+        "flexibility": 65
+      },
+      "instructions": [
+        "Lie supine, lift head and shoulders off mat",
+        "Bring both knees to chest, hands behind head",
+        "Extend right leg to 45 degrees, rotate left shoulder toward right knee",
+        "Switch legs and rotation with controlled movement",
+        "Focus on spinal rotation, not just shoulder movement",
+        "Keep lower back pressed into mat",
+        "Complete 10-12 repetitions per side"
+      ],
+      "tags": [
+        "core",
+        "legs",
+        "unilateral",
+        "rotation"
+      ]
+    },
+    {
+      "id": "criss-cross-extended",
+      "exerciseId": "criss-cross",
+      "name": "Criss Cross - Extended Legs",
+      "disciplines": [
+        "pilates"
+      ],
+      "difficulty": 8,
+      "phase": "workout",
+      "metrics": {
+        "mobility": 85,
+        "rotation": 85,
+        "flexibility": 80
+      },
+      "instructions": [
+        "Begin in standard position",
+        "Extend legs lower (30-45 degrees) while rotating",
+        "Increase rotation range with extended legs",
+        "Maintain core stability throughout rotation",
+        "Keep lower back connected to mat",
+        "Complete 8-10 repetitions per side"
+      ],
+      "tags": [
+        "core",
+        "legs",
+        "unilateral",
+        "rotation"
+      ]
+    },
+    {
+      "id": "scissors-beginner",
+      "exerciseId": "scissors",
+      "name": "Scissors - Beginner",
+      "disciplines": [
+        "pilates"
+      ],
+      "difficulty": 5,
+      "phase": "warmup",
+      "metrics": {
+        "mobility": 60,
+        "rotation": 25,
+        "flexibility": 65
+      },
+      "instructions": [
+        "Lie supine, lift head and shoulders off mat",
+        "Bring both legs to tabletop position",
+        "Hold right leg with both hands, extend left leg toward ceiling",
+        "Switch legs in scissor motion",
+        "Keep head lifted, core engaged",
+        "Maintain stable torso throughout",
+        "Complete 8-10 repetitions per side"
+      ],
+      "tags": [
+        "core",
+        "legs",
+        "unilateral"
+      ]
+    },
+    {
+      "id": "scissors-standard",
+      "exerciseId": "scissors",
+      "name": "Scissors - Standard",
+      "disciplines": [
+        "pilates"
+      ],
+      "difficulty": 7,
+      "phase": "workout",
+      "metrics": {
+        "mobility": 75,
+        "rotation": 35,
+        "flexibility": 80
+      },
+      "instructions": [
+        "Lie supine, lift head and shoulders off mat",
+        "Bring both legs to tabletop",
+        "Hold right leg with both hands, extend left leg toward ceiling",
+        "Switch legs in controlled scissor motion",
+        "Keep legs straight, toes pointed",
+        "Maintain lower back connection to mat",
+        "Complete 10-12 repetitions per side"
+      ],
+      "tags": [
+        "core",
+        "legs",
+        "unilateral"
+      ]
+    },
+    {
+      "id": "scissors-double-pump",
+      "exerciseId": "scissors",
+      "name": "Scissors - Double Pump",
+      "disciplines": [
+        "pilates"
+      ],
+      "difficulty": 9,
+      "phase": "workout",
+      "metrics": {
+        "mobility": 90,
+        "rotation": 45,
+        "flexibility": 90
+      },
+      "instructions": [
+        "Begin in standard scissors position",
+        "Perform two small pumps with extended leg before switching",
+        "Maintain stable torso throughout double pump",
+        "Switch legs and repeat double pump",
+        "Requires exceptional core control and hamstring flexibility",
+        "Complete 8-10 repetitions per side"
+      ],
+      "tags": [
+        "core",
+        "legs",
+        "unilateral"
+      ]
+    },
+    {
+      "id": "bicycle-beginner",
+      "exerciseId": "bicycle",
+      "name": "Bicycle - Beginner",
+      "disciplines": [
+        "pilates"
+      ],
+      "difficulty": 4,
+      "phase": "warmup",
+      "metrics": {
+        "mobility": 50,
+        "rotation": 45,
+        "flexibility": 45
+      },
+      "instructions": [
+        "Lie supine, lift head and shoulders off mat",
+        "Bring both knees to chest, hands behind head",
+        "Extend right leg, bring left knee in, rotate right shoulder toward left knee",
+        "Switch: extend left leg, bring right knee in, rotate left shoulder toward right knee",
+        "Keep elbows wide, move with control",
+        "Complete 8-10 repetitions per side"
+      ],
+      "tags": [
+        "core",
+        "legs",
+        "unilateral",
+        "rotation"
+      ]
+    },
+    {
+      "id": "bicycle-standard",
+      "exerciseId": "bicycle",
+      "name": "Bicycle - Standard",
+      "disciplines": [
+        "pilates"
+      ],
+      "difficulty": 6,
+      "phase": "workout",
+      "metrics": {
+        "mobility": 70,
+        "rotation": 65,
+        "flexibility": 60
+      },
+      "instructions": [
+        "Lie supine, lift head and shoulders off mat",
+        "Bring both knees to chest, hands behind head",
+        "Extend right leg to 45 degrees, bring left knee in",
+        "Rotate right shoulder toward left knee with spinal rotation",
+        "Switch sides with controlled movement",
+        "Focus on rotation through spine, not just shoulders",
+        "Complete 10-12 repetitions per side"
+      ],
+      "tags": [
+        "core",
+        "legs",
+        "unilateral",
+        "rotation"
+      ]
+    },
+    {
+      "id": "bicycle-extended",
+      "exerciseId": "bicycle",
+      "name": "Bicycle - Extended Legs",
+      "disciplines": [
+        "pilates"
+      ],
+      "difficulty": 8,
+      "phase": "workout",
+      "metrics": {
+        "mobility": 85,
+        "rotation": 80,
+        "flexibility": 75
+      },
+      "instructions": [
+        "Begin in standard position",
+        "Extend working leg lower (30-45 degrees)",
+        "Increase rotation range with extended leg",
+        "Maintain core stability and lower back connection",
+        "Complete 8-10 repetitions per side"
+      ],
+      "tags": [
+        "back",
+        "legs",
+        "shoulders",
+        "unilateral",
+        "rotation"
+      ]
+    },
+    {
+      "id": "shoulder-bridge-basic",
+      "exerciseId": "shoulder-bridge",
+      "name": "Shoulder Bridge - Basic",
+      "disciplines": [
+        "pilates"
+      ],
+      "difficulty": 3,
+      "phase": "warmup",
+      "metrics": {
+        "mobility": 45,
+        "rotation": 15,
+        "flexibility": 40
+      },
+      "instructions": [
+        "Lie supine with knees bent, feet flat on mat",
+        "Arms alongside body, palms down",
+        "Inhale to prepare, exhale and lift hips off mat",
+        "Lift vertebra by vertebra until body forms straight line",
+        "Hold for 2-3 breaths, engaging glutes and hamstrings",
+        "Lower with control, vertebra by vertebra",
+        "Complete 8-10 repetitions"
+      ],
+      "tags": [
+        "back",
+        "legs",
+        "bilateral",
+        "isometric"
+      ]
+    },
+    {
+      "id": "shoulder-bridge-single-leg",
+      "exerciseId": "shoulder-bridge",
+      "name": "Shoulder Bridge - Single Leg",
+      "disciplines": [
+        "pilates"
+      ],
+      "difficulty": 6,
+      "phase": "workout",
+      "metrics": {
+        "mobility": 70,
+        "rotation": 30,
+        "flexibility": 65
+      },
+      "instructions": [
+        "Begin in basic bridge position",
+        "Lift one leg, extending it toward ceiling",
+        "Maintain bridge height with supporting leg",
+        "Keep hips level, avoid tilting",
+        "Hold for 2-3 breaths, then lower leg",
+        "Alternate legs, complete 6-8 repetitions per side"
+      ],
+      "tags": [
+        "back",
+        "legs",
+        "unilateral",
+        "isometric"
+      ]
+    },
+    {
+      "id": "shoulder-bridge-marching",
+      "exerciseId": "shoulder-bridge",
+      "name": "Shoulder Bridge - Marching",
+      "disciplines": [
+        "pilates"
+      ],
+      "difficulty": 7,
+      "phase": "workout",
+      "metrics": {
+        "mobility": 75,
+        "rotation": 35,
+        "flexibility": 70
+      },
+      "instructions": [
+        "Begin in basic bridge position",
+        "Lift one foot off mat, bringing knee toward chest",
+        "Return foot to mat, lift opposite foot",
+        "Continue marching motion while maintaining bridge",
+        "Keep hips level and stable throughout",
+        "Complete 10-12 repetitions per side"
+      ],
+      "tags": [
+        "back",
+        "legs",
+        "unilateral",
+        "isometric"
+      ]
+    },
+    {
+      "id": "shoulder-bridge-leg-lift",
+      "exerciseId": "shoulder-bridge",
+      "name": "Shoulder Bridge - Leg Lift",
+      "disciplines": [
+        "pilates"
+      ],
+      "difficulty": 8,
+      "phase": "workout",
+      "metrics": {
+        "mobility": 80,
+        "rotation": 40,
+        "flexibility": 75
+      },
+      "instructions": [
+        "Begin in basic bridge position",
+        "Lift one leg and extend it straight toward ceiling",
+        "Lower leg with control, keeping bridge height",
+        "Alternate legs, maintaining stable bridge",
+        "Complete 8-10 repetitions per side"
+      ],
+      "tags": [
+        "back",
+        "legs",
+        "unilateral",
+        "isometric"
+      ]
+    },
+    {
+      "id": "spine-stretch-forward-seated",
+      "exerciseId": "spine-stretch-forward",
+      "name": "Spine Stretch Forward - Seated",
+      "disciplines": [
+        "pilates"
+      ],
+      "difficulty": 4,
+      "phase": "warmup",
+      "metrics": {
+        "mobility": 50,
+        "rotation": 20,
+        "flexibility": 60
+      },
+      "instructions": [
+        "Sit tall with legs extended, feet flexed",
+        "Arms extended forward at shoulder height",
+        "Inhale to lengthen spine, exhale and articulate forward",
+        "Roll forward vertebra by vertebra",
+        "Reach forward over legs, maintaining length",
+        "Inhale at bottom, exhale to roll back up",
+        "Complete 8-10 repetitions"
+      ],
+      "tags": [
+        "back",
+        "legs",
+        "bilateral"
+      ]
+    },
+    {
+      "id": "spine-stretch-forward-deep",
+      "exerciseId": "spine-stretch-forward",
+      "name": "Spine Stretch Forward - Deep",
+      "disciplines": [
+        "pilates"
+      ],
+      "difficulty": 6,
+      "phase": "cooldown",
+      "metrics": {
+        "mobility": 70,
+        "rotation": 30,
+        "flexibility": 80
+      },
+      "instructions": [
+        "Sit tall with legs extended, feet flexed",
+        "Arms extended forward at shoulder height",
+        "Inhale to lengthen, exhale and roll forward deeply",
+        "Reach further forward, increasing hamstring stretch",
+        "Maintain spinal articulation throughout",
+        "Complete 8-10 repetitions with full range"
+      ],
+      "tags": [
+        "back",
+        "legs",
+        "bilateral"
+      ]
+    },
+    {
+      "id": "spine-stretch-forward-single-leg",
+      "exerciseId": "spine-stretch-forward",
+      "name": "Spine Stretch Forward - Single Leg",
+      "disciplines": [
+        "pilates"
+      ],
+      "difficulty": 7,
+      "phase": "cooldown",
+      "metrics": {
+        "mobility": 75,
+        "rotation": 35,
+        "flexibility": 85
+      },
+      "instructions": [
+        "Sit with one leg extended, one leg bent (foot on mat)",
+        "Arms extended forward",
+        "Roll forward over extended leg",
+        "Switch legs and repeat",
+        "Complete 6-8 repetitions per side"
+      ],
+      "tags": [
+        "back",
+        "legs",
+        "unilateral"
+      ]
+    },
+    {
+      "id": "saw-basic",
+      "exerciseId": "saw",
+      "name": "Saw - Basic",
+      "disciplines": [
+        "pilates"
+      ],
+      "difficulty": 5,
+      "phase": "warmup",
+      "metrics": {
+        "mobility": 60,
+        "rotation": 60,
+        "flexibility": 65
+      },
+      "instructions": [
+        "Sit tall with legs extended wide, feet flexed",
+        "Arms extended to sides at shoulder height",
+        "Rotate torso to right, reach left hand toward right foot",
+        "Saw motion: reach further with each exhale",
+        "Return to center, rotate to left side",
+        "Complete 6-8 repetitions per side"
+      ],
+      "tags": [
+        "back",
+        "legs",
+        "shoulders",
+        "unilateral",
+        "rotation"
+      ]
+    },
+    {
+      "id": "saw-deep",
+      "exerciseId": "saw",
+      "name": "Saw - Deep Rotation",
+      "disciplines": [
+        "pilates"
+      ],
+      "difficulty": 7,
+      "phase": "warmup",
+      "metrics": {
+        "mobility": 75,
+        "rotation": 80,
+        "flexibility": 80
+      },
+      "instructions": [
+        "Sit tall with legs extended wide",
+        "Increase rotation range, reaching further",
+        "Deepen saw motion with each repetition",
+        "Maintain spinal length throughout rotation",
+        "Complete 8-10 repetitions per side"
+      ],
+      "tags": [
+        "back",
+        "legs",
+        "shoulders",
+        "unilateral",
+        "rotation"
+      ]
+    },
+    {
+      "id": "saw-single-leg",
+      "exerciseId": "saw",
+      "name": "Saw - Single Leg",
+      "disciplines": [
+        "pilates"
+      ],
+      "difficulty": 8,
+      "phase": "warmup",
+      "metrics": {
+        "mobility": 80,
+        "rotation": 85,
+        "flexibility": 85
+      },
+      "instructions": [
+        "Sit with one leg extended, one leg bent",
+        "Perform saw motion over extended leg",
+        "Switch legs and repeat",
+        "Complete 6-8 repetitions per side"
+      ],
+      "tags": [
+        "back",
+        "legs",
+        "shoulders",
+        "unilateral",
+        "rotation"
+      ]
+    },
+    {
+      "id": "swimming-basic",
+      "exerciseId": "swimming",
+      "name": "Swimming - Basic",
+      "disciplines": [
+        "pilates"
+      ],
+      "difficulty": 5,
+      "phase": "workout",
+      "metrics": {
+        "mobility": 60,
+        "rotation": 25,
+        "flexibility": 55
+      },
+      "instructions": [
+        "Lie prone, arms extended overhead, legs together",
+        "Lift opposite arm and leg simultaneously",
+        "Lower and lift opposite side",
+        "Create swimming motion with arms and legs",
+        "Keep head in neutral position",
+        "Complete 10-12 repetitions per side"
+      ],
+      "tags": [
+        "back",
+        "shoulders",
+        "unilateral",
+        "isometric"
+      ]
+    },
+    {
+      "id": "swimming-standard",
+      "exerciseId": "swimming",
+      "name": "Swimming - Standard",
+      "disciplines": [
+        "pilates"
+      ],
+      "difficulty": 7,
+      "phase": "workout",
+      "metrics": {
+        "mobility": 75,
+        "rotation": 35,
+        "flexibility": 70
+      },
+      "instructions": [
+        "Lie prone, arms extended overhead",
+        "Lift opposite arm and leg higher",
+        "Increase range of motion in swimming motion",
+        "Maintain length through spine",
+        "Complete 12-15 repetitions per side"
+      ],
+      "tags": [
+        "back",
+        "shoulders",
+        "unilateral",
+        "isometric"
+      ]
+    },
+    {
+      "id": "swimming-double-lift",
+      "exerciseId": "swimming",
+      "name": "Swimming - Double Lift",
+      "disciplines": [
+        "pilates"
+      ],
+      "difficulty": 9,
+      "phase": "workout",
+      "metrics": {
+        "mobility": 90,
+        "rotation": 50,
+        "flexibility": 85
+      },
+      "instructions": [
+        "Begin in standard position",
+        "Lift both arms and both legs simultaneously",
+        "Hold briefly, then lower",
+        "Repeat with controlled movement",
+        "Requires exceptional back strength",
+        "Complete 8-10 repetitions"
+      ],
+      "tags": [
+        "back",
+        "shoulders",
+        "bilateral",
+        "isometric"
+      ]
+    },
+    {
+      "id": "leg-pull-front-basic",
+      "exerciseId": "leg-pull-front",
+      "name": "Leg Pull Front - Basic",
+      "disciplines": [
+        "pilates"
+      ],
+      "difficulty": 5,
+      "phase": "workout",
+      "metrics": {
+        "mobility": 55,
+        "rotation": 20,
+        "flexibility": 50
+      },
+      "instructions": [
+        "Start in plank position, hands under shoulders",
+        "Lift one leg, extending it straight back",
+        "Lower leg with control",
+        "Alternate legs, maintaining plank position",
+        "Complete 8-10 repetitions per side"
+      ],
+      "tags": [
+        "core",
+        "shoulders",
+        "legs",
+        "unilateral",
+        "isometric"
+      ]
+    },
+    {
+      "id": "leg-pull-front-extended",
+      "exerciseId": "leg-pull-front",
+      "name": "Leg Pull Front - Extended Hold",
+      "disciplines": [
+        "pilates"
+      ],
+      "difficulty": 7,
+      "phase": "workout",
+      "metrics": {
+        "mobility": 70,
+        "rotation": 30,
+        "flexibility": 65
+      },
+      "instructions": [
+        "Start in plank position",
+        "Lift one leg and hold extended for 3-5 breaths",
+        "Lower with control, lift opposite leg",
+        "Maintain stable plank throughout",
+        "Complete 6-8 repetitions per side"
+      ],
+      "tags": [
+        "core",
+        "shoulders",
+        "legs",
+        "unilateral",
+        "isometric"
+      ]
+    },
+    {
+      "id": "leg-pull-front-alternating",
+      "exerciseId": "leg-pull-front",
+      "name": "Leg Pull Front - Alternating",
+      "disciplines": [
+        "pilates"
+      ],
+      "difficulty": 8,
+      "phase": "workout",
+      "metrics": {
+        "mobility": 75,
+        "rotation": 35,
+        "flexibility": 70
+      },
+      "instructions": [
+        "Start in plank position",
+        "Alternate lifting legs in quick succession",
+        "Maintain plank stability throughout",
+        "Complete 12-15 repetitions per side"
+      ],
+      "tags": [
+        "legs",
+        "core",
+        "unilateral"
+      ]
+    },
+    {
+      "id": "side-kicks-basic",
+      "exerciseId": "side-kicks",
+      "name": "Side Kicks - Basic",
+      "disciplines": [
+        "pilates"
+      ],
+      "difficulty": 4,
+      "phase": "warmup",
+      "metrics": {
+        "mobility": 50,
+        "rotation": 30,
+        "flexibility": 55
+      },
+      "instructions": [
+        "Lie on side, bottom arm supporting head, top hand on mat",
+        "Lift top leg to hip height, kick forward and back",
+        "Keep leg straight, toes pointed",
+        "Maintain stable torso throughout",
+        "Complete 10-12 repetitions per side"
+      ],
+      "tags": [
+        "legs",
+        "core",
+        "unilateral"
+      ]
+    },
+    {
+      "id": "side-kicks-circles",
+      "exerciseId": "side-kicks",
+      "name": "Side Kicks - Circles",
+      "disciplines": [
+        "pilates"
+      ],
+      "difficulty": 6,
+      "phase": "workout",
+      "metrics": {
+        "mobility": 70,
+        "rotation": 50,
+        "flexibility": 70
+      },
+      "instructions": [
+        "Lie on side in basic position",
+        "Lift top leg and make small circles forward",
+        "Reverse direction, making circles backward",
+        "Keep torso stable, leg moving independently",
+        "Complete 8-10 circles each direction per side"
+      ],
+      "tags": [
+        "legs",
+        "core",
+        "unilateral"
+      ]
+    },
+    {
+      "id": "side-kicks-lifts",
+      "exerciseId": "side-kicks",
+      "name": "Side Kicks - Lifts",
+      "disciplines": [
+        "pilates"
+      ],
+      "difficulty": 7,
+      "phase": "workout",
+      "metrics": {
+        "mobility": 75,
+        "rotation": 55,
+        "flexibility": 75
+      },
+      "instructions": [
+        "Lie on side in basic position",
+        "Lift top leg as high as possible",
+        "Lower with control, maintaining height",
+        "Focus on hip abductor engagement",
+        "Complete 10-12 repetitions per side"
+      ],
+      "tags": [
+        "legs",
+        "core",
+        "unilateral"
+      ]
+    },
+    {
+      "id": "mermaid-basic",
+      "exerciseId": "mermaid",
+      "name": "Mermaid - Basic",
+      "disciplines": [
+        "pilates"
+      ],
+      "difficulty": 5,
+      "phase": "cooldown",
+      "metrics": {
+        "mobility": 60,
+        "rotation": 40,
+        "flexibility": 70
+      },
+      "instructions": [
+        "Sit on side with legs bent to one side",
+        "Bottom arm extended on mat, top arm overhead",
+        "Lateral flex spine, reaching top arm to side",
+        "Return to center with control",
+        "Complete 8-10 repetitions per side"
+      ],
+      "tags": [
+        "core",
+        "shoulders",
+        "unilateral"
+      ]
+    },
+    {
+      "id": "mermaid-deep",
+      "exerciseId": "mermaid",
+      "name": "Mermaid - Deep Lateral Flexion",
+      "disciplines": [
+        "pilates"
+      ],
+      "difficulty": 7,
+      "phase": "cooldown",
+      "metrics": {
+        "mobility": 75,
+        "rotation": 50,
+        "flexibility": 85
+      },
+      "instructions": [
+        "Sit on side with legs bent",
+        "Increase lateral flexion range",
+        "Reach top arm further to side",
+        "Deepen stretch with each repetition",
+        "Complete 8-10 repetitions per side"
+      ],
+      "tags": [
+        "core",
+        "shoulders",
+        "unilateral"
+      ]
+    },
+    {
+      "id": "mermaid-extended",
+      "exerciseId": "mermaid",
+      "name": "Mermaid - Extended",
+      "disciplines": [
+        "pilates"
+      ],
+      "difficulty": 8,
+      "phase": "cooldown",
+      "metrics": {
+        "mobility": 80,
+        "rotation": 55,
+        "flexibility": 90
+      },
+      "instructions": [
+        "Sit on side with legs extended to one side",
+        "Perform lateral flexion with extended legs",
+        "Increases challenge and range of motion",
+        "Complete 6-8 repetitions per side"
+      ],
+      "tags": [
+        "core",
+        "shoulders",
+        "unilateral"
+      ]
+    },
+    {
+      "id": "seal-basic",
+      "exerciseId": "seal",
+      "name": "Seal - Basic",
+      "disciplines": [
+        "pilates"
+      ],
+      "difficulty": 5,
+      "phase": "warmup",
+      "metrics": {
+        "mobility": 55,
+        "rotation": 25,
+        "flexibility": 60
+      },
+      "instructions": [
+        "Sit with knees bent, feet together, hands holding ankles",
+        "Roll back onto shoulders, balancing on sit bones",
+        "Roll forward to seated position",
+        "Maintain balance and control throughout",
+        "Complete 8-10 repetitions"
+      ],
+      "tags": [
+        "core",
+        "bilateral"
+      ]
+    },
+    {
+      "id": "seal-extended",
+      "exerciseId": "seal",
+      "name": "Seal - Extended",
+      "disciplines": [
+        "pilates"
+      ],
+      "difficulty": 7,
+      "phase": "workout",
+      "metrics": {
+        "mobility": 75,
+        "rotation": 35,
+        "flexibility": 80
+      },
+      "instructions": [
+        "Begin in basic seal position",
+        "Extend legs further, increasing balance challenge",
+        "Roll back and forward with greater range",
+        "Maintain control and balance",
+        "Complete 8-10 repetitions"
+      ],
+      "tags": [
+        "core",
+        "bilateral"
+      ]
+    },
+    {
+      "id": "seal-clapping",
+      "exerciseId": "seal",
+      "name": "Seal - Clapping",
+      "disciplines": [
+        "pilates"
+      ],
+      "difficulty": 8,
+      "phase": "workout",
+      "metrics": {
+        "mobility": 80,
+        "rotation": 40,
+        "flexibility": 85
+      },
+      "instructions": [
+        "Begin in seal position",
+        "Clap feet together while balancing",
+        "Maintain balance during clapping motion",
+        "Complete 10-12 repetitions"
+      ],
+      "tags": [
+        "core",
+        "legs",
+        "bilateral",
+        "rotation"
+      ]
+    },
+    {
+      "id": "corkscrew-basic",
+      "exerciseId": "corkscrew",
+      "name": "Corkscrew - Basic",
+      "disciplines": [
+        "pilates"
+      ],
+      "difficulty": 6,
+      "phase": "workout",
+      "metrics": {
+        "mobility": 65,
+        "rotation": 60,
+        "flexibility": 70
+      },
+      "instructions": [
+        "Lie supine, arms alongside body",
+        "Lift both legs to 90 degrees",
+        "Circle legs in one direction, maintaining control",
+        "Reverse direction, circling opposite way",
+        "Keep lower back pressed into mat",
+        "Complete 6-8 circles each direction"
+      ],
+      "tags": [
+        "core",
+        "legs",
+        "bilateral",
+        "rotation"
+      ]
+    },
+    {
+      "id": "corkscrew-extended",
+      "exerciseId": "corkscrew",
+      "name": "Corkscrew - Extended",
+      "disciplines": [
+        "pilates"
+      ],
+      "difficulty": 8,
+      "phase": "workout",
+      "metrics": {
+        "mobility": 85,
+        "rotation": 75,
+        "flexibility": 85
+      },
+      "instructions": [
+        "Begin in basic position",
+        "Lower legs to 45 degrees while circling",
+        "Increase circle size and range",
+        "Maintain core control throughout",
+        "Complete 8-10 circles each direction"
+      ],
+      "tags": [
+        "core",
+        "legs",
+        "bilateral",
+        "rotation"
+      ]
+    },
+    {
+      "id": "corkscrew-single-leg",
+      "exerciseId": "corkscrew",
+      "name": "Corkscrew - Single Leg",
+      "disciplines": [
+        "pilates"
+      ],
+      "difficulty": 7,
+      "phase": "workout",
+      "metrics": {
+        "mobility": 75,
+        "rotation": 70,
+        "flexibility": 80
+      },
+      "instructions": [
+        "Lie supine, lift one leg to 90 degrees",
+        "Circle leg in one direction",
+        "Reverse direction, then switch legs",
+        "Complete 6-8 circles per leg each direction"
+      ],
+      "tags": [
+        "core",
+        "legs",
+        "unilateral",
+        "rotation"
+      ]
+    },
+    {
+      "id": "jackknife-basic",
+      "exerciseId": "jackknife",
+      "name": "Jackknife - Basic",
+      "disciplines": [
+        "pilates"
+      ],
+      "difficulty": 6,
+      "phase": "workout",
+      "metrics": {
+        "mobility": 70,
+        "rotation": 30,
+        "flexibility": 75
+      },
+      "instructions": [
+        "Lie supine, arms alongside body",
+        "Lift both legs toward ceiling",
+        "Lift hips off mat, bringing legs over head",
+        "Lower with control, vertebra by vertebra",
+        "Complete 6-8 repetitions"
+      ],
+      "tags": [
+        "core",
+        "legs",
+        "shoulders",
+        "bilateral"
+      ]
+    },
+    {
+      "id": "jackknife-extended",
+      "exerciseId": "jackknife",
+      "name": "Jackknife - Extended",
+      "disciplines": [
+        "pilates"
+      ],
+      "difficulty": 8,
+      "phase": "workout",
+      "metrics": {
+        "mobility": 85,
+        "rotation": 40,
+        "flexibility": 90
+      },
+      "instructions": [
+        "Begin in basic position",
+        "Extend legs further over head",
+        "Increase range of motion",
+        "Maintain control throughout",
+        "Complete 6-8 repetitions"
+      ],
+      "tags": [
+        "core",
+        "legs",
+        "shoulders",
+        "bilateral"
+      ]
+    },
+    {
+      "id": "jackknife-single-leg",
+      "exerciseId": "jackknife",
+      "name": "Jackknife - Single Leg",
+      "disciplines": [
+        "pilates"
+      ],
+      "difficulty": 9,
+      "phase": "workout",
+      "metrics": {
+        "mobility": 90,
+        "rotation": 45,
+        "flexibility": 95
+      },
+      "instructions": [
+        "Lie supine, lift one leg toward ceiling",
+        "Lift hips, bringing leg over head",
+        "Lower with control, switch legs",
+        "Complete 6-8 repetitions per side"
+      ],
+      "tags": [
+        "core",
+        "legs",
+        "shoulders",
+        "unilateral"
+      ]
     }
   ]
 }
-

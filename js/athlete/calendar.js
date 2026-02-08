@@ -1,6 +1,7 @@
 // Athlete Calendar View Manager
 import { getCalendarViewPreference, saveCalendarViewPreference, getTrainingSystem } from '../core/storage.js';
 import { cleanFrameworkName } from '../core/constants.js';
+import { formatDisciplines } from '../core/ui-utils.js';
 
 export class AthleteCalendarManager {
     constructor() {
@@ -556,8 +557,11 @@ export class AthleteCalendarManager {
         }
         // For future weeks, show all training days (no additional check needed)
         
+        // Create a new object without the 'id' field since this is a pattern session
+        // (not an actual created session - PRIORITY 1 failed, so no exact date match exists)
+        const { id, ...sessionWithoutId } = sessionTemplate;
         return {
-            ...sessionTemplate,
+            ...sessionWithoutId,
             date: dateStr,
             dayOfWeek: dateDayOfWeek,
             framework: sessionTemplate.framework || sessionTemplate.workout || sessionTemplate.workoutType
@@ -790,7 +794,7 @@ export class AthleteCalendarManager {
                     }
                 }
                 
-                if (!draggedSession || !draggedSession.id) {
+                if (!draggedSession) {
                     console.warn('[Drop] No dragged session data available');
                     dayElement.classList.remove('drag-over', 'drop-valid', 'drop-invalid');
                     return;
@@ -839,11 +843,19 @@ export class AthleteCalendarManager {
                     return;
                 }
                 
-                // Update session date in Firebase
+                // Update or create session in Firebase
                 try {
-                    console.log('[Drop] Updating session date...');
-                    await this.updateSessionDate(draggedSession.id, targetDate);
-                    console.log('[Drop] Session date updated successfully');
+                    if (draggedSession.id) {
+                        // Session exists, update it
+                        console.log('[Drop] Updating session date...');
+                        await this.updateSessionDate(draggedSession.id, targetDate);
+                        console.log('[Drop] Session date updated successfully');
+                    } else {
+                        // Session is a pattern (no ID), create new session
+                        console.log('[Drop] Creating session from pattern...');
+                        await this.createSessionFromPattern(draggedSession, targetDate);
+                        console.log('[Drop] Session created successfully');
+                    }
                     
                     // Clear dragged session immediately
                     this.draggedSession = null;
@@ -852,12 +864,31 @@ export class AthleteCalendarManager {
                     // Re-render calendar to show updated session
                     await this.renderCalendar();
                     
+                    // Clear training system cache to force fresh load on next access
+                    // This ensures the homepage will see the updated session date
+                    try {
+                        const { getTrainingSystem } = await import('../core/storage.js');
+                        const currentSystem = await getTrainingSystem();
+                        if (currentSystem && currentSystem.id) {
+                            // Remove localStorage cache to force fresh load
+                            localStorage.removeItem('trainingSystem');
+                            // Also clear the Firestore cache key
+                            const cacheKey = `firestore_cache_training_system_${user.uid}_${currentSystem.id}`;
+                            localStorage.removeItem(cacheKey);
+                        }
+                    } catch (error) {
+                        console.warn('[Calendar] Failed to clear cache:', error.message);
+                    }
+                    
                     // Trigger dashboard refresh if on home page
                     if (typeof window.initDashboard === 'function') {
-                        window.initDashboard();
+                        // Use setTimeout to ensure cache is cleared first
+                        setTimeout(() => {
+                            window.initDashboard();
+                        }, 100);
                     }
                 } catch (error) {
-                    console.error('[Drop] Error updating session date:', error);
+                    console.error('[Drop] Error moving session:', error);
                     alert('Error moving session. Please try again.');
                 }
                 
@@ -900,10 +931,16 @@ export class AthleteCalendarManager {
         }
         
         // Update session with new date
+        // IMPORTANT: If session was completed on its original date, reset completed flag
+        // when moving to a new date, so it can be done again on the new date
         const updatedSession = {
             ...session,
             date: newDate,
-            id: sessionId
+            id: sessionId,
+            // Reset completed flag when moving to a new date
+            // The session should be available to complete on its new date
+            completed: false,
+            completedAt: undefined
         };
         
         // Save to Firebase
@@ -918,6 +955,81 @@ export class AthleteCalendarManager {
                 await saveTrainingSystem(trainingSystem);
             }
         }
+    }
+    
+    /**
+     * Create a new session in Firebase from a pattern session (session without ID)
+     * @param {Object} patternSession - Pattern session data from drag
+     * @param {string} newDate - New date string (YYYY-MM-DD)
+     */
+    async createSessionFromPattern(patternSession, newDate) {
+        const { getAuthUser } = await import('../core/auth-manager.js');
+        const { saveSessionToSystem } = await import('../services/dbService.js');
+        const { getTrainingSystem } = await import('../core/storage.js');
+        
+        const user = getAuthUser();
+        if (!user) {
+            throw new Error('User must be authenticated');
+        }
+        
+        const trainingSystem = await getTrainingSystem();
+        if (!trainingSystem || !trainingSystem.id) {
+            throw new Error('Training system not found');
+        }
+        
+        // Get the pattern session template from the training system
+        const originalDate = patternSession.date ? this.parseLocalDateString(patternSession.date) : null;
+        let sessionTemplate = null;
+        
+        if (originalDate && trainingSystem.trainingDaysOfWeek && trainingSystem.sessions) {
+            // Find the template by matching the day of week
+            const originalDayOfWeek = originalDate.getDay();
+            const dayIndex = trainingSystem.trainingDaysOfWeek.indexOf(originalDayOfWeek);
+            if (dayIndex >= 0 && dayIndex < trainingSystem.sessions.length) {
+                sessionTemplate = trainingSystem.sessions[dayIndex];
+            }
+        }
+        
+        // If no template found, try to get session from the date
+        if (!sessionTemplate && originalDate) {
+            sessionTemplate = this.getSessionForDate(originalDate, trainingSystem);
+        }
+        
+        // If still no template, create basic session from dragged data
+        if (!sessionTemplate) {
+            sessionTemplate = {
+                framework: patternSession.framework,
+                discipline: patternSession.discipline,
+                workout: patternSession.workout,
+                phases: { warmup: [], workout: [], cooldown: [] }
+            };
+        }
+        
+        // Create new session with new date
+        const newDateObj = this.parseLocalDateString(newDate);
+        const newSession = {
+            ...sessionTemplate,
+            date: newDate,
+            dayOfWeek: originalDate ? originalDate.getDay() : newDateObj.getDay(),
+            editable: true,
+            completed: false
+        };
+        
+        // Remove id if present (we want to create a new session)
+        delete newSession.id;
+        
+        // Save to Firebase (this will create a new session)
+        const newSessionId = await saveSessionToSystem(user.uid, trainingSystem.id, newSession);
+        
+        // Update local cache
+        if (trainingSystem.sessions) {
+            const sessionWithId = { ...newSession, id: newSessionId };
+            trainingSystem.sessions.push(sessionWithId);
+            const { saveTrainingSystem } = await import('../core/storage.js');
+            await saveTrainingSystem(trainingSystem);
+        }
+        
+        return newSessionId;
     }
 
     /**
@@ -955,7 +1067,7 @@ export class AthleteCalendarManager {
                  data-session-id="${sessionId}"
                  data-session-date="${originalDate}"
                  data-session-framework="${framework}"
-                 data-session-discipline="${session.discipline || ''}"
+                 data-session-discipline="${formatDisciplines(session.discipline) || ''}"
                  data-session-workout="${session.workout || ''}">
                 ${framework}
             </div>
@@ -1132,7 +1244,7 @@ export class AthleteCalendarManager {
         // Extract framework name
         const rawFramework = session.framework || session.workout || 'Workout';
         const framework = this.extractFrameworkName(rawFramework);
-        const discipline = session.discipline || '';
+        const discipline = formatDisciplines(session.discipline) || '';
         
         // Format date
         const sessionDate = dateStr || session.date || this.getTodayLocalDateString();

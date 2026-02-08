@@ -3,32 +3,211 @@
     {
       "id": "squat",
       "name": "Squat",
-      "targetMuscleGroups": ["quadriceps", "glutes", "hamstrings", "core", "calves"],
+      "targetMuscleGroups": [
+        "quadriceps",
+        "glutes",
+        "hamstrings",
+        "core",
+        "calves"
+      ],
       "category": "lower-body"
     },
     {
       "id": "deadlift",
       "name": "Deadlift",
-      "targetMuscleGroups": ["hamstrings", "glutes", "erector-spinae", "lats", "core", "traps"],
+      "targetMuscleGroups": [
+        "hamstrings",
+        "glutes",
+        "erector-spinae",
+        "lats",
+        "core",
+        "traps"
+      ],
       "category": "posterior-chain"
     },
     {
       "id": "bench-press",
       "name": "Bench Press",
-      "targetMuscleGroups": ["pectorals", "anterior-deltoids", "triceps", "core"],
+      "targetMuscleGroups": [
+        "pectorals",
+        "anterior-deltoids",
+        "triceps",
+        "core"
+      ],
       "category": "push"
     },
     {
       "id": "overhead-press",
       "name": "Overhead Press",
-      "targetMuscleGroups": ["anterior-deltoids", "lateral-deltoids", "triceps", "core", "upper-trapezius"],
+      "targetMuscleGroups": [
+        "anterior-deltoids",
+        "lateral-deltoids",
+        "triceps",
+        "core",
+        "upper-trapezius"
+      ],
       "category": "push"
     },
     {
       "id": "barbell-row",
       "name": "Barbell Row",
-      "targetMuscleGroups": ["latissimus-dorsi", "rhomboids", "middle-trapezius", "posterior-deltoids", "biceps", "core"],
+      "targetMuscleGroups": [
+        "latissimus-dorsi",
+        "rhomboids",
+        "middle-trapezius",
+        "posterior-deltoids",
+        "biceps",
+        "core"
+      ],
       "category": "pull"
+    },
+    {
+      "id": "lunges",
+      "name": "Lunges",
+      "targetMuscleGroups": [
+        "quadriceps",
+        "glutes",
+        "hamstrings",
+        "core",
+        "calves"
+      ],
+      "category": "lower-body"
+    },
+    {
+      "id": "bulgarian-split-squat",
+      "name": "Bulgarian Split Squat",
+      "targetMuscleGroups": [
+        "quadriceps",
+        "glutes",
+        "core",
+        "balance",
+        "stability"
+      ],
+      "category": "lower-body"
+    },
+    {
+      "id": "hip-thrust",
+      "name": "Hip Thrust",
+      "targetMuscleGroups": [
+        "glutes",
+        "hamstrings",
+        "core",
+        "posterior-chain"
+      ],
+      "category": "posterior-chain"
+    },
+    {
+      "id": "romanian-deadlift",
+      "name": "Romanian Deadlift",
+      "targetMuscleGroups": [
+        "hamstrings",
+        "glutes",
+        "erector-spinae",
+        "core"
+      ],
+      "category": "posterior-chain"
+    },
+    {
+      "id": "bicep-curl",
+      "name": "Bicep Curl",
+      "targetMuscleGroups": [
+        "biceps",
+        "forearms",
+        "core"
+      ],
+      "category": "pull"
+    },
+    {
+      "id": "tricep-extension",
+      "name": "Tricep Extension",
+      "targetMuscleGroups": [
+        "triceps",
+        "shoulders",
+        "core"
+      ],
+      "category": "push"
+    },
+    {
+      "id": "lateral-raise",
+      "name": "Lateral Raise",
+      "targetMuscleGroups": [
+        "lateral-deltoids",
+        "core",
+        "stability"
+      ],
+      "category": "push"
+    },
+    {
+      "id": "chest-fly",
+      "name": "Chest Fly",
+      "targetMuscleGroups": [
+        "pectorals",
+        "anterior-deltoids",
+        "core"
+      ],
+      "category": "push"
+    },
+    {
+      "id": "pullover",
+      "name": "Pullover",
+      "targetMuscleGroups": [
+        "lats",
+        "pectorals",
+        "triceps",
+        "core"
+      ],
+      "category": "pull"
+    },
+    {
+      "id": "shoulder-shrug",
+      "name": "Shoulder Shrug",
+      "targetMuscleGroups": [
+        "upper-trapezius",
+        "core"
+      ],
+      "category": "pull"
+    },
+    {
+      "id": "calf-raise",
+      "name": "Calf Raise",
+      "targetMuscleGroups": [
+        "calves",
+        "core",
+        "balance"
+      ],
+      "category": "lower-body"
+    },
+    {
+      "id": "good-morning",
+      "name": "Good Morning",
+      "targetMuscleGroups": [
+        "hamstrings",
+        "glutes",
+        "erector-spinae",
+        "core"
+      ],
+      "category": "posterior-chain"
+    },
+    {
+      "id": "leg-press",
+      "name": "Leg Press",
+      "targetMuscleGroups": [
+        "quadriceps",
+        "glutes",
+        "hamstrings",
+        "calves"
+      ],
+      "category": "lower-body"
+    },
+    {
+      "id": "leg-curl",
+      "name": "Leg Curl",
+      "targetMuscleGroups": [
+        "hamstrings",
+        "glutes",
+        "calves"
+      ],
+      "category": "lower-body"
     }
   ],
   "variations": [
@@ -36,7 +215,11 @@
       "id": "squat-goblet",
       "exerciseId": "squat",
       "name": "Goblet Squat",
-      "disciplines": ["weights"],
+      "disciplines": [
+        "weights"
+      ],
+      "tags": ["legs", "core", "squat", "bilateral"],
+      "phase": "warmup",
       "difficulty": 3,
       "metrics": {
         "mobility": 65,
@@ -54,17 +237,17 @@
         "Maintain upright torso throughout movement",
         "Focus on depth and control over speed",
         "3 sets of 8-12 repetitions"
-      ],
-      "metadata": {
-        "bilaterality": true,
-        "equipment": ["dumbbell", "kettlebell"]
-      }
+      ]
     },
     {
       "id": "squat-back-barbell",
       "exerciseId": "squat",
       "name": "Back Squat - Barbell",
-      "disciplines": ["weights"],
+      "disciplines": [
+        "weights"
+      ],
+      "tags": ["legs", "core", "squat", "bilateral", "explosive"],
+      "phase": "workout",
       "difficulty": 6,
       "metrics": {
         "mobility": 75,
@@ -83,17 +266,17 @@
         "Rise explosively, maintain torso angle on ascent",
         "Keep bar path vertical, avoid forward lean",
         "4 sets of 5-8 repetitions at working weight"
-      ],
-      "metadata": {
-        "bilaterality": true,
-        "equipment": ["barbell", "squat-rack"]
-      }
+      ]
     },
     {
       "id": "squat-front-barbell",
       "exerciseId": "squat",
       "name": "Front Squat - Barbell",
-      "disciplines": ["weights"],
+      "disciplines": [
+        "weights"
+      ],
+      "tags": ["legs", "core", "squat", "bilateral", "explosive"],
+      "phase": "workout",
       "difficulty": 8,
       "metrics": {
         "mobility": 85,
@@ -112,17 +295,17 @@
         "Drive up explosively, keeping torso vertical",
         "This variation requires superior ankle, hip, and thoracic spine mobility",
         "3-4 sets of 4-6 repetitions - typically 10-15% lighter than back squat"
-      ],
-      "metadata": {
-        "bilaterality": true,
-        "equipment": ["barbell", "squat-rack"]
-      }
+      ]
     },
     {
       "id": "deadlift-romanian-dumbbell",
       "exerciseId": "deadlift",
       "name": "Romanian Deadlift - Dumbbell",
-      "disciplines": ["weights"],
+      "disciplines": [
+        "weights"
+      ],
+      "tags": ["legs", "back", "core", "hinge", "bilateral"],
+      "phase": "workout",
       "difficulty": 4,
       "metrics": {
         "mobility": 60,
@@ -140,17 +323,17 @@
         "Maintain neutral spine - avoid rounding or overextending",
         "Focus on hamstring and glute engagement over range of motion",
         "3 sets of 10-12 repetitions"
-      ],
-      "metadata": {
-        "bilaterality": true,
-        "equipment": ["dumbbell"]
-      }
+      ]
     },
     {
       "id": "deadlift-conventional-barbell",
       "exerciseId": "deadlift",
       "name": "Conventional Deadlift - Barbell",
-      "disciplines": ["weights"],
+      "disciplines": [
+        "weights"
+      ],
+      "tags": ["legs", "back", "core", "hinge", "bilateral", "explosive"],
+      "phase": "workout",
       "difficulty": 7,
       "metrics": {
         "mobility": 70,
@@ -170,17 +353,17 @@
         "Control descent by reversing the movement pattern",
         "Reset between reps: release bar, re-establish setup position",
         "4-5 sets of 3-6 repetitions at working weight"
-      ],
-      "metadata": {
-        "bilaterality": true,
-        "equipment": ["barbell", "weight-plates"]
-      }
+      ]
     },
     {
       "id": "deadlift-sumo-barbell",
       "exerciseId": "deadlift",
       "name": "Sumo Deadlift - Barbell",
-      "disciplines": ["weights"],
+      "disciplines": [
+        "weights"
+      ],
+      "tags": ["legs", "back", "core", "hinge", "bilateral", "explosive"],
+      "phase": "workout",
       "difficulty": 8,
       "metrics": {
         "mobility": 80,
@@ -200,17 +383,17 @@
         "Sumo reduces range of motion but increases mobility demands",
         "Common for athletes with longer limbs or hip mobility restrictions",
         "4-5 sets of 3-5 repetitions - typically allows 5-10% more weight than conventional"
-      ],
-      "metadata": {
-        "bilaterality": true,
-        "equipment": ["barbell", "weight-plates"]
-      }
+      ]
     },
     {
       "id": "bench-press-dumbbell",
       "exerciseId": "bench-press",
       "name": "Dumbbell Bench Press",
-      "disciplines": ["weights"],
+      "disciplines": [
+        "weights"
+      ],
+      "tags": ["chest", "shoulders", "core", "push", "bilateral"],
+      "phase": "workout",
       "difficulty": 4,
       "metrics": {
         "mobility": 50,
@@ -228,17 +411,17 @@
         "Press explosively but controlled - full lockout at top",
         "Dumbbells allow greater range of motion than barbell",
         "3 sets of 8-12 repetitions"
-      ],
-      "metadata": {
-        "bilaterality": true,
-        "equipment": ["dumbbell", "bench"]
-      }
+      ]
     },
     {
       "id": "bench-press-barbell-flat",
       "exerciseId": "bench-press",
       "name": "Barbell Bench Press - Flat",
-      "disciplines": ["weights"],
+      "disciplines": [
+        "weights"
+      ],
+      "tags": ["chest", "shoulders", "core", "push", "bilateral", "explosive"],
+      "phase": "workout",
       "difficulty": 6,
       "metrics": {
         "mobility": 55,
@@ -258,17 +441,17 @@
         "Press through entire foot, maintain tight arch",
         "Lockout over shoulders, maintain shoulder blade position",
         "4-5 sets of 4-8 repetitions at working weight"
-      ],
-      "metadata": {
-        "bilaterality": true,
-        "equipment": ["barbell", "bench", "weight-plates"]
-      }
+      ]
     },
     {
       "id": "bench-press-incline-barbell",
       "exerciseId": "bench-press",
       "name": "Incline Barbell Bench Press",
-      "disciplines": ["weights"],
+      "disciplines": [
+        "weights"
+      ],
+      "tags": ["chest", "shoulders", "core", "push", "bilateral"],
+      "phase": "workout",
       "difficulty": 7,
       "metrics": {
         "mobility": 65,
@@ -287,17 +470,17 @@
         "Control negative phase - gravity assistance requires extra control",
         "Typically 10-20% lighter than flat bench for same rep range",
         "4 sets of 5-8 repetitions - excellent upper chest development"
-      ],
-      "metadata": {
-        "bilaterality": true,
-        "equipment": ["barbell", "incline-bench", "weight-plates"]
-      }
+      ]
     },
     {
       "id": "overhead-press-dumbbell-standing",
       "exerciseId": "overhead-press",
       "name": "Standing Dumbbell Shoulder Press",
-      "disciplines": ["weights"],
+      "disciplines": [
+        "weights"
+      ],
+      "tags": ["shoulders", "core", "push", "bilateral"],
+      "phase": "workout",
       "difficulty": 5,
       "metrics": {
         "mobility": 70,
@@ -315,17 +498,17 @@
         "Can press both simultaneously or alternate (unilateral increases core demand)",
         "Standing position challenges stability and core strength significantly",
         "3-4 sets of 8-10 repetitions"
-      ],
-      "metadata": {
-        "bilaterality": true,
-        "equipment": ["dumbbell"]
-      }
+      ]
     },
     {
       "id": "overhead-press-barbell-strict",
       "exerciseId": "overhead-press",
       "name": "Standing Barbell Strict Press",
-      "disciplines": ["weights"],
+      "disciplines": [
+        "weights"
+      ],
+      "tags": ["shoulders", "core", "push", "bilateral"],
+      "phase": "workout",
       "difficulty": 7,
       "metrics": {
         "mobility": 75,
@@ -345,17 +528,17 @@
         "No momentum from legs - pure upper body strength movement",
         "Thoracic spine extension and shoulder mobility are critical",
         "4 sets of 5-6 repetitions - typically 60-70% of push press weight"
-      ],
-      "metadata": {
-        "bilaterality": true,
-        "equipment": ["barbell", "weight-plates"]
-      }
+      ]
     },
     {
       "id": "overhead-press-behind-neck",
       "exerciseId": "overhead-press",
       "name": "Behind-Neck Press - Barbell",
-      "disciplines": ["weights"],
+      "disciplines": [
+        "weights"
+      ],
+      "tags": ["shoulders", "core", "push", "bilateral"],
+      "phase": "workout",
       "difficulty": 9,
       "metrics": {
         "mobility": 90,
@@ -375,17 +558,17 @@
         "Only for athletes with excellent shoulder mobility and strength",
         "Higher injury risk if mobility insufficient - use with caution",
         "3-4 sets of 4-6 repetitions - typically 10-15% lighter than front press"
-      ],
-      "metadata": {
-        "bilaterality": true,
-        "equipment": ["barbell", "weight-plates"]
-      }
+      ]
     },
     {
       "id": "barbell-row-bent-over-dumbbell",
       "exerciseId": "barbell-row",
       "name": "Bent-Over Dumbbell Row",
-      "disciplines": ["weights"],
+      "disciplines": [
+        "weights"
+      ],
+      "tags": ["back", "core", "pull", "bilateral"],
+      "phase": "workout",
       "difficulty": 4,
       "metrics": {
         "mobility": 60,
@@ -403,17 +586,17 @@
         "Focus on lat and rhomboid engagement over weight moved",
         "Keep head in neutral position - avoid looking up",
         "3 sets of 10-12 repetitions per side if alternating"
-      ],
-      "metadata": {
-        "bilaterality": true,
-        "equipment": ["dumbbell"]
-      }
+      ]
     },
     {
       "id": "barbell-row-pendlay",
       "exerciseId": "barbell-row",
       "name": "Pendlay Row - Barbell",
-      "disciplines": ["weights"],
+      "disciplines": [
+        "weights"
+      ],
+      "tags": ["back", "core", "pull", "bilateral", "explosive"],
+      "phase": "workout",
       "difficulty": 7,
       "metrics": {
         "mobility": 70,
@@ -433,17 +616,17 @@
         "Full reset allows maximum force production each repetition",
         "Excellent for developing posterior chain and upper back strength",
         "4-5 sets of 5-8 repetitions at working weight"
-      ],
-      "metadata": {
-        "bilaterality": true,
-        "equipment": ["barbell", "weight-plates"]
-      }
+      ]
     },
     {
       "id": "barbell-row-yates",
       "exerciseId": "barbell-row",
       "name": "Yates Row - Barbell (Underhand Grip)",
-      "disciplines": ["weights"],
+      "disciplines": [
+        "weights"
+      ],
+      "tags": ["back", "core", "pull", "bilateral"],
+      "phase": "workout",
       "difficulty": 6,
       "metrics": {
         "mobility": 65,
@@ -462,12 +645,1001 @@
         "Controlled negative - 2 second descent",
         "Keep core engaged throughout - maintain torso angle",
         "4 sets of 6-10 repetitions - popular bodybuilding variation"
+      ]
+    },
+    {
+      "id": "lunges-bodyweight",
+      "exerciseId": "lunges",
+      "name": "Bodyweight Lunges",
+      "disciplines": [
+        "weights"
       ],
-      "metadata": {
-        "bilaterality": true,
-        "equipment": ["barbell", "weight-plates"]
-      }
+      "tags": ["legs", "core", "lunge", "unilateral"],
+      "phase": "warmup",
+      "difficulty": 3,
+      "metrics": {
+        "mobility": 60,
+        "rotation": 25,
+        "flexibility": 65
+      },
+      "instructions": [
+        "Stand tall, step forward with one leg",
+        "Lower body until both knees are at 90 degrees",
+        "Front knee should not extend past toes",
+        "Push through front heel to return to start",
+        "Alternate legs, complete 10-12 repetitions per side"
+      ]
+    },
+    {
+      "id": "lunges-dumbbell",
+      "exerciseId": "lunges",
+      "name": "Dumbbell Lunges",
+      "disciplines": [
+        "weights"
+      ],
+      "tags": ["legs", "core", "lunge", "unilateral"],
+      "phase": "workout",
+      "difficulty": 5,
+      "metrics": {
+        "mobility": 65,
+        "rotation": 30,
+        "flexibility": 70
+      },
+      "instructions": [
+        "Hold dumbbells at sides",
+        "Step forward into lunge position",
+        "Lower with control, maintain upright torso",
+        "Push through front heel to return",
+        "Complete 8-10 repetitions per side"
+      ]
+    },
+    {
+      "id": "lunges-walking",
+      "exerciseId": "lunges",
+      "name": "Walking Lunges",
+      "disciplines": [
+        "weights"
+      ],
+      "tags": ["legs", "core", "lunge", "unilateral"],
+      "phase": "workout",
+      "difficulty": 6,
+      "metrics": {
+        "mobility": 70,
+        "rotation": 35,
+        "flexibility": 75
+      },
+      "instructions": [
+        "Hold dumbbells at sides",
+        "Step forward into lunge, then step through",
+        "Continue walking forward in lunge pattern",
+        "Maintain control and balance",
+        "Complete 10-12 steps per leg"
+      ]
+    },
+    {
+      "id": "lunges-reverse",
+      "exerciseId": "lunges",
+      "name": "Reverse Lunges",
+      "disciplines": [
+        "weights"
+      ],
+      "tags": ["legs", "core", "lunge", "unilateral"],
+      "phase": "workout",
+      "difficulty": 5,
+      "metrics": {
+        "mobility": 65,
+        "rotation": 30,
+        "flexibility": 70
+      },
+      "instructions": [
+        "Hold dumbbells at sides",
+        "Step backward into lunge position",
+        "Lower with control",
+        "Return to start by stepping forward",
+        "Complete 8-10 repetitions per side"
+      ]
+    },
+    {
+      "id": "lunges-lateral",
+      "exerciseId": "lunges",
+      "name": "Lateral Lunges",
+      "disciplines": [
+        "weights"
+      ],
+      "tags": ["legs", "core", "lunge", "unilateral", "rotation"],
+      "phase": "workout",
+      "difficulty": 6,
+      "metrics": {
+        "mobility": 75,
+        "rotation": 50,
+        "flexibility": 80
+      },
+      "instructions": [
+        "Hold dumbbell at chest or sides",
+        "Step to side, lowering into lunge",
+        "Keep other leg straight",
+        "Push through heel to return",
+        "Complete 8-10 repetitions per side"
+      ]
+    },
+    {
+      "id": "bulgarian-split-squat-bodyweight",
+      "exerciseId": "bulgarian-split-squat",
+      "name": "Bulgarian Split Squat - Bodyweight",
+      "disciplines": [
+        "weights"
+      ],
+      "tags": ["legs", "core", "squat", "unilateral"],
+      "phase": "workout",
+      "difficulty": 4,
+      "metrics": {
+        "mobility": 65,
+        "rotation": 25,
+        "flexibility": 70
+      },
+      "instructions": [
+        "Place back foot on bench or elevated surface",
+        "Lower body on front leg",
+        "Keep front knee tracking over ankle",
+        "Push through front heel to return",
+        "Complete 10-12 repetitions per side"
+      ]
+    },
+    {
+      "id": "bulgarian-split-squat-dumbbell",
+      "exerciseId": "bulgarian-split-squat",
+      "name": "Bulgarian Split Squat - Dumbbell",
+      "disciplines": [
+        "weights"
+      ],
+      "tags": ["legs", "core", "squat", "unilateral"],
+      "phase": "workout",
+      "difficulty": 6,
+      "metrics": {
+        "mobility": 70,
+        "rotation": 30,
+        "flexibility": 75
+      },
+      "instructions": [
+        "Hold dumbbells at sides",
+        "Place back foot on bench",
+        "Lower body on front leg with added weight",
+        "Maintain control and balance",
+        "Complete 8-10 repetitions per side"
+      ]
+    },
+    {
+      "id": "bulgarian-split-squat-front-loaded",
+      "exerciseId": "bulgarian-split-squat",
+      "name": "Bulgarian Split Squat - Front Loaded",
+      "disciplines": [
+        "weights"
+      ],
+      "tags": ["legs", "core", "squat", "unilateral"],
+      "phase": "workout",
+      "difficulty": 7,
+      "metrics": {
+        "mobility": 75,
+        "rotation": 35,
+        "flexibility": 80
+      },
+      "instructions": [
+        "Hold dumbbell or weight plate at chest",
+        "Place back foot on bench",
+        "Lower with front-loaded weight",
+        "Increases core challenge",
+        "Complete 8-10 repetitions per side"
+      ]
+    },
+    {
+      "id": "bulgarian-split-squat-overhead",
+      "exerciseId": "bulgarian-split-squat",
+      "name": "Bulgarian Split Squat - Overhead",
+      "disciplines": [
+        "weights"
+      ],
+      "tags": ["legs", "core", "squat", "unilateral"],
+      "phase": "workout",
+      "difficulty": 8,
+      "metrics": {
+        "mobility": 85,
+        "rotation": 40,
+        "flexibility": 85
+      },
+      "instructions": [
+        "Hold weight plate or dumbbell overhead",
+        "Place back foot on bench",
+        "Lower while maintaining overhead position",
+        "Requires exceptional stability and mobility",
+        "Complete 6-8 repetitions per side"
+      ]
+    },
+    {
+      "id": "hip-thrust-bodyweight",
+      "exerciseId": "hip-thrust",
+      "name": "Hip Thrust - Bodyweight",
+      "disciplines": [
+        "weights"
+      ],
+      "tags": ["legs", "core", "hinge", "bilateral"],
+      "phase": "warmup",
+      "difficulty": 3,
+      "metrics": {
+        "mobility": 50,
+        "rotation": 15,
+        "flexibility": 45
+      },
+      "instructions": [
+        "Sit with upper back against bench",
+        "Feet flat on floor, knees bent",
+        "Drive hips up, squeezing glutes",
+        "Lower with control",
+        "Complete 12-15 repetitions"
+      ]
+    },
+    {
+      "id": "hip-thrust-barbell",
+      "exerciseId": "hip-thrust",
+      "name": "Hip Thrust - Barbell",
+      "disciplines": [
+        "weights"
+      ],
+      "tags": ["legs", "core", "hinge", "bilateral"],
+      "phase": "workout",
+      "difficulty": 6,
+      "metrics": {
+        "mobility": 65,
+        "rotation": 25,
+        "flexibility": 60
+      },
+      "instructions": [
+        "Position barbell across hips",
+        "Upper back against bench",
+        "Drive hips up with weight",
+        "Squeeze glutes at top",
+        "Complete 8-12 repetitions"
+      ]
+    },
+    {
+      "id": "hip-thrust-single-leg",
+      "exerciseId": "hip-thrust",
+      "name": "Hip Thrust - Single Leg",
+      "disciplines": [
+        "weights"
+      ],
+      "tags": ["legs", "core", "hinge", "unilateral"],
+      "phase": "workout",
+      "difficulty": 7,
+      "metrics": {
+        "mobility": 70,
+        "rotation": 30,
+        "flexibility": 65
+      },
+      "instructions": [
+        "Position with one leg extended",
+        "Drive hips up on single leg",
+        "Maintain control and balance",
+        "Complete 8-10 repetitions per side"
+      ]
+    },
+    {
+      "id": "hip-thrust-feet-elevated",
+      "exerciseId": "hip-thrust",
+      "name": "Hip Thrust - Feet Elevated",
+      "disciplines": [
+        "weights"
+      ],
+      "tags": ["legs", "core", "hinge", "bilateral"],
+      "phase": "workout",
+      "difficulty": 8,
+      "metrics": {
+        "mobility": 75,
+        "rotation": 35,
+        "flexibility": 70
+      },
+      "instructions": [
+        "Place feet on bench or box",
+        "Upper back against bench",
+        "Drive hips up with increased range",
+        "Complete 8-12 repetitions"
+      ]
+    },
+    {
+      "id": "romanian-deadlift-dumbbell",
+      "exerciseId": "romanian-deadlift",
+      "name": "Romanian Deadlift - Dumbbell",
+      "disciplines": [
+        "weights"
+      ],
+      "tags": ["legs", "back", "core", "hinge", "bilateral"],
+      "phase": "workout",
+      "difficulty": 5,
+      "metrics": {
+        "mobility": 65,
+        "rotation": 25,
+        "flexibility": 75
+      },
+      "instructions": [
+        "Hold dumbbells at sides",
+        "Hinge at hips, keeping back flat",
+        "Lower weights along front of legs",
+        "Feel stretch in hamstrings",
+        "Drive hips forward to return",
+        "Complete 10-12 repetitions"
+      ]
+    },
+    {
+      "id": "romanian-deadlift-barbell",
+      "exerciseId": "romanian-deadlift",
+      "name": "Romanian Deadlift - Barbell",
+      "disciplines": [
+        "weights"
+      ],
+      "tags": ["legs", "back", "core", "hinge", "bilateral"],
+      "phase": "workout",
+      "difficulty": 7,
+      "metrics": {
+        "mobility": 70,
+        "rotation": 30,
+        "flexibility": 80
+      },
+      "instructions": [
+        "Hold barbell with overhand grip",
+        "Hinge at hips, keeping back flat",
+        "Lower bar along front of legs",
+        "Feel stretch in hamstrings",
+        "Drive hips forward to return",
+        "Complete 8-10 repetitions"
+      ]
+    },
+    {
+      "id": "romanian-deadlift-single-leg",
+      "exerciseId": "romanian-deadlift",
+      "name": "Romanian Deadlift - Single Leg",
+      "disciplines": [
+        "weights"
+      ],
+      "tags": ["legs", "back", "core", "hinge", "unilateral"],
+      "phase": "workout",
+      "difficulty": 8,
+      "metrics": {
+        "mobility": 80,
+        "rotation": 40,
+        "flexibility": 85
+      },
+      "instructions": [
+        "Hold dumbbell in one hand",
+        "Balance on opposite leg",
+        "Hinge at hip, extending free leg back",
+        "Maintain balance and control",
+        "Complete 8-10 repetitions per side"
+      ]
+    },
+    {
+      "id": "bicep-curl-dumbbell",
+      "exerciseId": "bicep-curl",
+      "name": "Bicep Curl - Dumbbell",
+      "disciplines": [
+        "weights"
+      ],
+      "tags": ["back", "pull", "bilateral"],
+      "phase": "workout",
+      "difficulty": 3,
+      "metrics": {
+        "mobility": 40,
+        "rotation": 15,
+        "flexibility": 35
+      },
+      "instructions": [
+        "Hold dumbbells at sides, palms forward",
+        "Curl weights to shoulders",
+        "Lower with control",
+        "Keep elbows stationary",
+        "Complete 10-12 repetitions"
+      ]
+    },
+    {
+      "id": "bicep-curl-hammer",
+      "exerciseId": "bicep-curl",
+      "name": "Hammer Curl",
+      "disciplines": [
+        "weights"
+      ],
+      "tags": ["back", "pull", "bilateral"],
+      "phase": "workout",
+      "difficulty": 4,
+      "metrics": {
+        "mobility": 45,
+        "rotation": 20,
+        "flexibility": 40
+      },
+      "instructions": [
+        "Hold dumbbells with neutral grip",
+        "Curl weights to shoulders",
+        "Targets different part of biceps",
+        "Complete 10-12 repetitions"
+      ]
+    },
+    {
+      "id": "bicep-curl-alternating",
+      "exerciseId": "bicep-curl",
+      "name": "Alternating Bicep Curl",
+      "disciplines": [
+        "weights"
+      ],
+      "tags": ["back", "pull", "unilateral"],
+      "phase": "workout",
+      "difficulty": 4,
+      "metrics": {
+        "mobility": 45,
+        "rotation": 20,
+        "flexibility": 40
+      },
+      "instructions": [
+        "Hold dumbbells at sides",
+        "Curl one arm at a time",
+        "Alternate between arms",
+        "Complete 10-12 repetitions per arm"
+      ]
+    },
+    {
+      "id": "bicep-curl-concentration",
+      "exerciseId": "bicep-curl",
+      "name": "Concentration Curl",
+      "disciplines": [
+        "weights"
+      ],
+      "tags": ["back", "pull", "unilateral"],
+      "phase": "workout",
+      "difficulty": 5,
+      "metrics": {
+        "mobility": 50,
+        "rotation": 25,
+        "flexibility": 45
+      },
+      "instructions": [
+        "Sit with arm braced against leg",
+        "Curl dumbbell with isolated movement",
+        "Focus on muscle contraction",
+        "Complete 10-12 repetitions per arm"
+      ]
+    },
+    {
+      "id": "tricep-extension-overhead",
+      "exerciseId": "tricep-extension",
+      "name": "Overhead Tricep Extension",
+      "disciplines": [
+        "weights"
+      ],
+      "tags": ["shoulders", "push", "bilateral"],
+      "phase": "workout",
+      "difficulty": 4,
+      "metrics": {
+        "mobility": 50,
+        "rotation": 20,
+        "flexibility": 45
+      },
+      "instructions": [
+        "Hold dumbbell overhead with both hands",
+        "Lower weight behind head",
+        "Extend arms back to start",
+        "Keep elbows close to head",
+        "Complete 10-12 repetitions"
+      ]
+    },
+    {
+      "id": "tricep-extension-lying",
+      "exerciseId": "tricep-extension",
+      "name": "Lying Tricep Extension",
+      "disciplines": [
+        "weights"
+      ],
+      "tags": ["shoulders", "push", "bilateral"],
+      "phase": "workout",
+      "difficulty": 5,
+      "metrics": {
+        "mobility": 55,
+        "rotation": 25,
+        "flexibility": 50
+      },
+      "instructions": [
+        "Lie on bench, hold dumbbells overhead",
+        "Lower weights toward head",
+        "Extend arms back to start",
+        "Complete 10-12 repetitions"
+      ]
+    },
+    {
+      "id": "tricep-extension-kickback",
+      "exerciseId": "tricep-extension",
+      "name": "Tricep Kickback",
+      "disciplines": [
+        "weights"
+      ],
+      "tags": ["shoulders", "push", "unilateral"],
+      "phase": "workout",
+      "difficulty": 4,
+      "metrics": {
+        "mobility": 50,
+        "rotation": 20,
+        "flexibility": 45
+      },
+      "instructions": [
+        "Bend forward, hold dumbbell in one hand",
+        "Extend arm back, squeezing tricep",
+        "Lower with control",
+        "Complete 10-12 repetitions per arm"
+      ]
+    },
+    {
+      "id": "lateral-raise-dumbbell",
+      "exerciseId": "lateral-raise",
+      "name": "Lateral Raise - Dumbbell",
+      "disciplines": [
+        "weights"
+      ],
+      "tags": ["shoulders", "push", "bilateral"],
+      "phase": "workout",
+      "difficulty": 4,
+      "metrics": {
+        "mobility": 55,
+        "rotation": 25,
+        "flexibility": 50
+      },
+      "instructions": [
+        "Hold dumbbells at sides",
+        "Raise arms to shoulder height",
+        "Lower with control",
+        "Keep slight bend in elbows",
+        "Complete 10-12 repetitions"
+      ]
+    },
+    {
+      "id": "lateral-raise-seated",
+      "exerciseId": "lateral-raise",
+      "name": "Lateral Raise - Seated",
+      "disciplines": [
+        "weights"
+      ],
+      "tags": ["shoulders", "push", "bilateral"],
+      "phase": "workout",
+      "difficulty": 5,
+      "metrics": {
+        "mobility": 60,
+        "rotation": 30,
+        "flexibility": 55
+      },
+      "instructions": [
+        "Sit on bench, hold dumbbells at sides",
+        "Raise arms to shoulder height",
+        "Eliminates momentum from legs",
+        "Complete 10-12 repetitions"
+      ]
+    },
+    {
+      "id": "lateral-raise-alternating",
+      "exerciseId": "lateral-raise",
+      "name": "Alternating Lateral Raise",
+      "disciplines": [
+        "weights"
+      ],
+      "tags": ["shoulders", "push", "unilateral"],
+      "phase": "workout",
+      "difficulty": 5,
+      "metrics": {
+        "mobility": 60,
+        "rotation": 30,
+        "flexibility": 55
+      },
+      "instructions": [
+        "Hold dumbbells at sides",
+        "Raise one arm at a time",
+        "Alternate between arms",
+        "Complete 10-12 repetitions per arm"
+      ]
+    },
+    {
+      "id": "chest-fly-dumbbell",
+      "exerciseId": "chest-fly",
+      "name": "Chest Fly - Dumbbell",
+      "disciplines": [
+        "weights"
+      ],
+      "tags": ["chest", "shoulders", "push", "bilateral"],
+      "phase": "workout",
+      "difficulty": 4,
+      "metrics": {
+        "mobility": 50,
+        "rotation": 30,
+        "flexibility": 45
+      },
+      "instructions": [
+        "Lie on bench, hold dumbbells above chest",
+        "Lower weights in arc motion",
+        "Feel stretch in chest",
+        "Bring weights back together",
+        "Complete 10-12 repetitions"
+      ]
+    },
+    {
+      "id": "chest-fly-incline",
+      "exerciseId": "chest-fly",
+      "name": "Incline Chest Fly",
+      "disciplines": [
+        "weights"
+      ],
+      "tags": ["chest", "shoulders", "push", "bilateral"],
+      "phase": "workout",
+      "difficulty": 5,
+      "metrics": {
+        "mobility": 60,
+        "rotation": 35,
+        "flexibility": 50
+      },
+      "instructions": [
+        "Lie on incline bench",
+        "Hold dumbbells above chest",
+        "Lower in arc motion",
+        "Targets upper chest",
+        "Complete 10-12 repetitions"
+      ]
+    },
+    {
+      "id": "chest-fly-decline",
+      "exerciseId": "chest-fly",
+      "name": "Decline Chest Fly",
+      "disciplines": [
+        "weights"
+      ],
+      "tags": ["chest", "shoulders", "push", "bilateral"],
+      "phase": "workout",
+      "difficulty": 6,
+      "metrics": {
+        "mobility": 65,
+        "rotation": 40,
+        "flexibility": 55
+      },
+      "instructions": [
+        "Lie on decline bench",
+        "Hold dumbbells above chest",
+        "Lower in arc motion",
+        "Targets lower chest",
+        "Complete 10-12 repetitions"
+      ]
+    },
+    {
+      "id": "pullover-dumbbell",
+      "exerciseId": "pullover",
+      "name": "Pullover - Dumbbell",
+      "disciplines": [
+        "weights"
+      ],
+      "tags": ["chest", "back", "pull", "bilateral"],
+      "phase": "workout",
+      "difficulty": 5,
+      "metrics": {
+        "mobility": 60,
+        "rotation": 35,
+        "flexibility": 65
+      },
+      "instructions": [
+        "Lie on bench, hold dumbbell overhead",
+        "Lower weight behind head",
+        "Feel stretch in lats and chest",
+        "Pull weight back to start",
+        "Complete 10-12 repetitions"
+      ]
+    },
+    {
+      "id": "pullover-barbell",
+      "exerciseId": "pullover",
+      "name": "Pullover - Barbell",
+      "disciplines": [
+        "weights"
+      ],
+      "tags": ["chest", "back", "pull", "bilateral"],
+      "phase": "workout",
+      "difficulty": 6,
+      "metrics": {
+        "mobility": 65,
+        "rotation": 40,
+        "flexibility": 70
+      },
+      "instructions": [
+        "Lie on bench, hold barbell overhead",
+        "Lower weight behind head",
+        "Pull back to start",
+        "Complete 8-10 repetitions"
+      ]
+    },
+    {
+      "id": "shoulder-shrug-dumbbell",
+      "exerciseId": "shoulder-shrug",
+      "name": "Shoulder Shrug - Dumbbell",
+      "disciplines": [
+        "weights"
+      ],
+      "tags": ["shoulders", "back", "pull", "bilateral"],
+      "phase": "workout",
+      "difficulty": 3,
+      "metrics": {
+        "mobility": 40,
+        "rotation": 15,
+        "flexibility": 35
+      },
+      "instructions": [
+        "Hold dumbbells at sides",
+        "Shrug shoulders up toward ears",
+        "Lower with control",
+        "Complete 12-15 repetitions"
+      ]
+    },
+    {
+      "id": "shoulder-shrug-barbell",
+      "exerciseId": "shoulder-shrug",
+      "name": "Shoulder Shrug - Barbell",
+      "disciplines": [
+        "weights"
+      ],
+      "tags": ["shoulders", "back", "pull", "bilateral"],
+      "phase": "workout",
+      "difficulty": 4,
+      "metrics": {
+        "mobility": 45,
+        "rotation": 20,
+        "flexibility": 40
+      },
+      "instructions": [
+        "Hold barbell with overhand grip",
+        "Shrug shoulders up",
+        "Lower with control",
+        "Complete 12-15 repetitions"
+      ]
+    },
+    {
+      "id": "calf-raise-standing",
+      "exerciseId": "calf-raise",
+      "name": "Standing Calf Raise",
+      "disciplines": [
+        "weights"
+      ],
+      "tags": ["legs", "bilateral"],
+      "phase": "workout",
+      "difficulty": 3,
+      "metrics": {
+        "mobility": 45,
+        "rotation": 15,
+        "flexibility": 50
+      },
+      "instructions": [
+        "Stand holding dumbbells at sides",
+        "Rise onto toes",
+        "Lower with control",
+        "Complete 15-20 repetitions"
+      ]
+    },
+    {
+      "id": "calf-raise-seated",
+      "exerciseId": "calf-raise",
+      "name": "Seated Calf Raise",
+      "disciplines": [
+        "weights"
+      ],
+      "tags": ["legs", "bilateral"],
+      "phase": "workout",
+      "difficulty": 4,
+      "metrics": {
+        "mobility": 50,
+        "rotation": 20,
+        "flexibility": 55
+      },
+      "instructions": [
+        "Sit with weight on thighs",
+        "Rise onto toes",
+        "Targets different part of calves",
+        "Complete 15-20 repetitions"
+      ]
+    },
+    {
+      "id": "calf-raise-single-leg",
+      "exerciseId": "calf-raise",
+      "name": "Single Leg Calf Raise",
+      "disciplines": [
+        "weights"
+      ],
+      "tags": ["legs", "unilateral"],
+      "phase": "workout",
+      "difficulty": 5,
+      "metrics": {
+        "mobility": 55,
+        "rotation": 25,
+        "flexibility": 60
+      },
+      "instructions": [
+        "Hold dumbbell in one hand",
+        "Balance on one leg",
+        "Rise onto toe",
+        "Complete 12-15 repetitions per side"
+      ]
+    },
+    {
+      "id": "good-morning-bodyweight",
+      "exerciseId": "good-morning",
+      "name": "Good Morning - Bodyweight",
+      "disciplines": [
+        "weights"
+      ],
+      "tags": ["legs", "back", "core", "hinge", "bilateral"],
+      "phase": "workout",
+      "difficulty": 4,
+      "metrics": {
+        "mobility": 60,
+        "rotation": 20,
+        "flexibility": 70
+      },
+      "instructions": [
+        "Stand with hands behind head",
+        "Hinge at hips, keeping back flat",
+        "Lower torso toward floor",
+        "Drive hips forward to return",
+        "Complete 10-12 repetitions"
+      ]
+    },
+    {
+      "id": "good-morning-barbell",
+      "exerciseId": "good-morning",
+      "name": "Good Morning - Barbell",
+      "disciplines": [
+        "weights"
+      ],
+      "tags": ["legs", "back", "core", "hinge", "bilateral"],
+      "phase": "workout",
+      "difficulty": 7,
+      "metrics": {
+        "mobility": 70,
+        "rotation": 30,
+        "flexibility": 80
+      },
+      "instructions": [
+        "Position barbell across upper back",
+        "Hinge at hips, keeping back flat",
+        "Lower with control",
+        "Drive hips forward to return",
+        "Complete 8-10 repetitions"
+      ]
+    },
+    {
+      "id": "leg-press-machine",
+      "exerciseId": "leg-press",
+      "name": "Leg Press - Machine",
+      "disciplines": [
+        "weights"
+      ],
+      "tags": ["legs", "squat", "bilateral"],
+      "phase": "workout",
+      "difficulty": 4,
+      "metrics": {
+        "mobility": 55,
+        "rotation": 20,
+        "flexibility": 50
+      },
+      "instructions": [
+        "Sit in leg press machine",
+        "Place feet on platform",
+        "Lower weight by bending knees",
+        "Press weight back up",
+        "Complete 10-12 repetitions"
+      ]
+    },
+    {
+      "id": "leg-press-single-leg",
+      "exerciseId": "leg-press",
+      "name": "Leg Press - Single Leg",
+      "disciplines": [
+        "weights"
+      ],
+      "tags": ["legs", "squat", "unilateral"],
+      "phase": "workout",
+      "difficulty": 6,
+      "metrics": {
+        "mobility": 65,
+        "rotation": 30,
+        "flexibility": 60
+      },
+      "instructions": [
+        "Sit in leg press machine",
+        "Place one foot on platform",
+        "Press with single leg",
+        "Complete 8-10 repetitions per side"
+      ]
+    },
+    {
+      "id": "leg-press-wide-stance",
+      "exerciseId": "leg-press",
+      "name": "Leg Press - Wide Stance",
+      "disciplines": [
+        "weights"
+      ],
+      "tags": ["legs", "squat", "bilateral"],
+      "phase": "workout",
+      "difficulty": 5,
+      "metrics": {
+        "mobility": 70,
+        "rotation": 40,
+        "flexibility": 65
+      },
+      "instructions": [
+        "Sit in leg press machine",
+        "Place feet wide on platform",
+        "Targets inner thighs more",
+        "Complete 10-12 repetitions"
+      ]
+    },
+    {
+      "id": "leg-curl-machine",
+      "exerciseId": "leg-curl",
+      "name": "Leg Curl - Machine",
+      "disciplines": [
+        "weights"
+      ],
+      "tags": ["legs", "pull", "bilateral"],
+      "phase": "workout",
+      "difficulty": 4,
+      "metrics": {
+        "mobility": 50,
+        "rotation": 20,
+        "flexibility": 55
+      },
+      "instructions": [
+        "Lie face down on leg curl machine",
+        "Curl heels toward glutes",
+        "Lower with control",
+        "Complete 10-12 repetitions"
+      ]
+    },
+    {
+      "id": "leg-curl-standing",
+      "exerciseId": "leg-curl",
+      "name": "Standing Leg Curl",
+      "disciplines": [
+        "weights"
+      ],
+      "tags": ["legs", "pull", "unilateral"],
+      "phase": "workout",
+      "difficulty": 5,
+      "metrics": {
+        "mobility": 55,
+        "rotation": 25,
+        "flexibility": 60
+      },
+      "instructions": [
+        "Stand in leg curl machine",
+        "Curl one leg at a time",
+        "Maintain balance",
+        "Complete 10-12 repetitions per side"
+      ]
+    },
+    {
+      "id": "leg-curl-single-leg",
+      "exerciseId": "leg-curl",
+      "name": "Single Leg Curl",
+      "disciplines": [
+        "weights"
+      ],
+      "tags": ["legs", "pull", "unilateral"],
+      "phase": "workout",
+      "difficulty": 6,
+      "metrics": {
+        "mobility": 60,
+        "rotation": 30,
+        "flexibility": 65
+      },
+      "instructions": [
+        "Lie on leg curl machine",
+        "Curl one leg at a time",
+        "Focus on each leg individually",
+        "Complete 10-12 repetitions per side"
+      ]
     }
   ]
 }
-
