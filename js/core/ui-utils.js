@@ -84,3 +84,28 @@ export function animateProgressBars() {
     });
 }
 
+/**
+ * Normalize discipline field to always return an array
+ * Handles both string (legacy) and array (new) formats
+ * @param {string|string[]|undefined} discipline - Discipline field from session
+ * @returns {string[]} Array of disciplines
+ */
+export function normalizeDisciplines(discipline) {
+    if (!discipline) return [];
+    if (Array.isArray(discipline)) return discipline;
+    if (typeof discipline === 'string') return [discipline];
+    return [];
+}
+
+/**
+ * Format disciplines for display (e.g., "Pilates, Weights, Crossfit")
+ * @param {string|string[]|undefined} discipline - Discipline field from session
+ * @returns {string} Formatted string for display
+ */
+export function formatDisciplines(discipline) {
+    const disciplines = normalizeDisciplines(discipline);
+    if (disciplines.length === 0) return '';
+    if (disciplines.length === 1) return disciplines[0];
+    return disciplines.join(', ');
+}
+

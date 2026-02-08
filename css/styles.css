@@ -6,12 +6,55 @@
 @tailwind utilities;
 
 /* ============================================================================
+   FONT FACE DECLARATIONS - MERRIWEATHER
+   ============================================================================ */
+@font-face {
+    font-family: 'Merriweather';
+    src: url('../assets/fonts/Merriweather_24pt-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Merriweather';
+    src: url('../assets/fonts/Merriweather_24pt-LightItalic.ttf') format('truetype');
+    font-weight: 300;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Merriweather';
+    src: url('../assets/fonts/Merriweather_120pt_SemiCondensed-SemiBold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Merriweather';
+    src: url('../assets/fonts/Merriweather_24pt_SemiCondensed-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Merriweather';
+    src: url('../assets/fonts/Merriweather_24pt_SemiCondensed-ExtraBoldItalic.ttf') format('truetype');
+    font-weight: 800;
+    font-style: italic;
+    font-display: swap;
+}
+
+/* ============================================================================
    REGAIN DESIGN SYSTEM - CSS CUSTOM PROPERTIES
    ============================================================================ */
 :root {
     /* Colors */
-    --color-bg-primary: #000000;
-    --color-text-primary: #FFFFFF;
+    --color-bg-primary: #323434;
+    --color-text-primary: #F2ECE1;
     --color-text-secondary: rgba(255, 255, 255, 0.7);
     --color-text-tertiary: rgba(255, 255, 255, 0.6);
     --color-text-muted: rgba(255, 255, 255, 0.5);
@@ -78,18 +121,245 @@
     --shadow-subtle: 0 2px 8px rgba(0, 0, 0, 0.2);
     --shadow-medium: 0 10px 30px rgba(255, 255, 255, 0.1);
     --shadow-white: 0 0 0 0 rgba(255, 255, 255, 0.4);
+    
+    /* Typography - Merriweather Hierarchy */
+    --font-family-primary: 'Merriweather', serif;
+    
+    /* Style 1: Regular (400) - Base text, body, paragraphs */
+    --font-base: 400 normal 'Merriweather', serif;
+    
+    /* Style 2: SemiBold (600) SemiCondensed - Subtitles, navigation, important elements */
+    --font-medium: 600 normal 'Merriweather', serif;
+    
+    /* Style 3: Bold (700) SemiCondensed - Main titles, headings */
+    --font-bold: 700 normal 'Merriweather', serif;
+    
+    /* Style 4: Light Italic (300) - Elegant subtle text, quotes */
+    --font-italic: 300 italic 'Merriweather', serif;
+    
+    /* Style 5: ExtraBold Italic (800) SemiCondensed - Strong emphasis, highlights */
+    --font-strong-italic: 800 italic 'Merriweather', serif;
 }
 
 /* ============================================================================
    BASE STYLES
    ============================================================================ */
 * {
-    font-family: 'Inter', sans-serif;
+    font-family: var(--font-family-primary);
+}
+
+/* Override Tailwind text-white to use bone color */
+.text-white {
+    color: #F2ECE1 !important;
+}
+
+/* Override text-white opacity variations to use bone color with opacity */
+.text-white\/50,
+.text-white\/60,
+.text-white\/70,
+.text-white\/80,
+.text-white\/90 {
+    color: rgba(242, 236, 225, var(--tw-text-opacity, 1)) !important;
+}
+
+/* Specific opacity values */
+.text-white\/50 {
+    color: rgba(242, 236, 225, 0.5) !important;
+}
+
+.text-white\/60 {
+    color: rgba(242, 236, 225, 0.6) !important;
+}
+
+.text-white\/70 {
+    color: rgba(242, 236, 225, 0.7) !important;
+}
+
+.text-white\/80 {
+    color: rgba(242, 236, 225, 0.8) !important;
+}
+
+.text-white\/90 {
+    color: rgba(242, 236, 225, 0.9) !important;
 }
 
 body {
     background: var(--color-bg-primary);
     color: var(--color-text-primary);
+    font: var(--font-base);
+    font-size: 1rem;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+/* ============================================================================
+   TYPOGRAPHY HIERARCHY - MERRIWEATHER
+   ============================================================================ */
+
+/* Style 1: Regular (400) - Base text, paragraphs, body content */
+p, 
+span, 
+div:not([class*="heading"]):not([class*="title"]):not([class*="label"]):not([class*="nav"]):not([class*="sidebar"]),
+input, 
+textarea, 
+select,
+a:not([class*="heading"]):not([class*="nav"]):not([class*="sidebar"]) {
+    font: var(--font-base);
+}
+
+/* Style 2: SemiBold (600) SemiCondensed - Subtitles, navigation, important elements */
+h3, 
+h4, 
+h5, 
+h6,
+.subtitle,
+.nav-item,
+.sidebar-label,
+.profile-switcher-option,
+.toggle-label,
+.exercise-card-phase,
+.set-header-cell,
+.calendar-day,
+.label,
+.caption,
+.text-sm,
+.text-xs {
+    font: var(--font-medium);
+    letter-spacing: -0.01em;
+}
+
+/* Style 3: Bold (700) SemiCondensed - Main titles, headings, prominent text */
+h1, 
+h2,
+.heading,
+.title,
+.exercise-card-title,
+.sidebar-brand-text,
+.onboarding-header h1,
+.onboarding-header h2,
+.calendar-day-number,
+.set-cell--index,
+.metric-value,
+.stat-number,
+.session-title,
+.workout-title {
+    font: var(--font-bold);
+    letter-spacing: -0.02em;
+}
+
+/* Style 4: Light Italic (300) - Elegant subtle text, quotes, emphasis */
+em,
+.italic,
+.emphasis,
+blockquote,
+.quote,
+.highlight-text {
+    font: var(--font-italic);
+    font-size: 1.05em;
+    line-height: 1.8;
+}
+
+/* Style 5: ExtraBold Italic (800) SemiCondensed - Strong emphasis, highlights */
+.strong-italic,
+blockquote strong,
+.emphasis-strong,
+.highlight-strong {
+    font: var(--font-strong-italic);
+    letter-spacing: -0.01em;
+}
+
+/* Special cases for navigation and interactive elements */
+.nav-item.active,
+.sidebar-brand-text {
+    font: var(--font-bold);
+}
+
+.profile-switcher-option.active {
+    font: var(--font-bold);
+}
+
+/* Calendar and session elements */
+.calendar-day.today {
+    font: var(--font-bold);
+}
+
+.exercise-card-title {
+    font: var(--font-bold);
+    font-size: 1rem;
+}
+
+/* Form elements */
+input:focus,
+select:focus,
+textarea:focus {
+    font: var(--font-medium);
+}
+
+/* Button text */
+button:not(.set-done-btn):not(.set-delete-btn) {
+    font: var(--font-medium);
+    color: #323434;
+}
+
+.set-done-btn {
+    font: var(--font-medium);
+    color: #323434;
+}
+
+/* White buttons - change to #F2ECE1 */
+button.bg-white,
+button[class*="bg-white"] {
+    background-color: #F2ECE1 !important;
+}
+
+button.bg-white:hover,
+button[class*="bg-white"]:hover,
+button.hover\:bg-white\/90:hover {
+    background-color: #F2ECE1 !important;
+    opacity: 0.9;
+}
+
+/* Onboarding and cards */
+.onboarding-card h3 {
+    font: var(--font-bold);
+}
+
+.onboarding-card p {
+    font: var(--font-base);
+}
+
+/* Page content headings */
+.page-content h2 {
+    font: var(--font-bold);
+    font-size: 2.5rem;
+    line-height: 1.2;
+    letter-spacing: -0.03em;
+}
+
+.page-content h3 {
+    font: var(--font-medium);
+    font-size: 1.5rem;
+    line-height: 1.3;
+    letter-spacing: -0.02em;
+}
+
+/* Numbers and metrics */
+.calendar-day-number,
+.set-cell--index,
+.metric-value,
+.stat-number {
+    font: var(--font-bold);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.02em;
+}
+
+/* Session and workout specific typography */
+.session-subtitle,
+.workout-subtitle {
+    font: var(--font-medium);
+    font-size: 1rem;
 }
 
 /* ============================================================================
@@ -110,23 +380,29 @@ body {
 }
 
 /* ============================================================================
-   CUSTOM SCROLLBAR
+   CUSTOM SCROLLBAR - PREMIUM DARK / OLED
    ============================================================================ */
+.custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: #2a2a2a transparent; /* Firefox */
+}
+
 .custom-scrollbar::-webkit-scrollbar {
-    width: 6px;
+    width: 4px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
-    background: var(--glass-bg-standard);
+    background: transparent; /* Seamless rail */
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-    background: var(--glass-border-hover);
-    border-radius: var(--radius-xs);
+    background-color: #2a2a2a;
+    border-radius: 999px;
+    border: 1px solid transparent;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: var(--glass-border-active);
+    background-color: #3a3a3a;
 }
 
 /* ============================================================================
@@ -169,10 +445,6 @@ button, a, .interactive {
     50% {
         box-shadow: 0 0 0 10px rgba(255, 255, 255, 0);
     }
-}
-
-.fab-pulse {
-    animation: pulse 2s infinite;
 }
 
 /* Phase Variations Animation */
@@ -539,92 +811,18 @@ main {
 /* Tablet adjustments - already handled in main sidebar styles */
 
 /* ============================================================================
-   EXPLORE FEED (TikTok/Reels Style)
-   ============================================================================ */
-#page-explore {
-    padding: 0;
-    height: 100vh;
-    overflow: hidden;
-}
-
-.explore-feed {
-    scroll-snap-type: y mandatory;
-    height: 100vh;
-    overflow-y: scroll;
-    scroll-behavior: smooth;
-}
-
-.explore-card {
-    scroll-snap-align: start;
-    height: 100vh;
-    width: 100%;
-    position: relative;
-}
-
-.reel-video {
-    width: 100%;
-    height: 100vh;
-    position: relative;
-}
-
-.reel-overlay-bottom {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    padding: var(--spacing-md);
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
-    width: 100%;
-    z-index: var(--z-sidebar);
-}
-
-.reel-actions {
-    position: absolute;
-    right: var(--spacing-sm);
-    bottom: 6rem;
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-md);
-    z-index: var(--z-sidebar);
-}
-
-.reel-action-btn {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 3.5rem;
-    height: 3.5rem;
-    background: var(--glass-bg-dark);
-    backdrop-filter: blur(var(--glass-blur-small));
-    border: 1px solid var(--glass-border-standard);
-    border-radius: var(--radius-circle);
-    cursor: pointer;
-    transition: var(--transition-standard);
-}
-
-.reel-action-btn:hover {
-    background: var(--glass-bg-hover);
-    transform: scale(1.1);
-    border-color: var(--glass-border-active);
-}
-
-.reel-action-btn:active {
-    transform: scale(0.95);
-}
-
-/* ============================================================================
-   FORM ELEMENTS
+   FORM ELEMENTS - NEUTRAL / GRAYSCALE
    ============================================================================ */
 input, select, textarea {
-    background: var(--glass-bg-standard);
-    border: 1px solid var(--glass-border-standard);
-    color: var(--color-text-primary);
+    background: #1e1e1e;
+    border: 1px solid #333333;
+    color: #F2ECE1;
 }
 
 input:focus, select:focus, textarea:focus {
     outline: none;
-    border-color: var(--glass-border-active);
-    background: var(--glass-bg-strong);
+    border-color: #4ade80;
+    background: #232323;
 }
 
 /* ============================================================================
@@ -745,102 +943,6 @@ input:focus, select:focus, textarea:focus {
 }
 
 /* ============================================================================
-   VOICE INPUT
-   ============================================================================ */
-.voice-mic-button {
-    cursor: pointer;
-    border: 1px solid var(--glass-border-standard);
-    transition: var(--transition-standard);
-}
-
-.voice-mic-button:hover {
-    border-color: var(--glass-border-active);
-    transform: scale(1.05);
-}
-
-.voice-mic-button.voice-listening {
-    animation: pulse 2s infinite;
-    border-color: var(--glass-border-focus);
-    background: var(--glass-bg-hover);
-}
-
-.voice-mic-button.voice-processing {
-    border-color: var(--glass-border-active);
-    background: var(--glass-bg-strong);
-}
-
-.voice-mic-button.voice-success {
-    border-color: var(--glass-border-focus);
-    background: rgba(255, 255, 255, 0.15);
-}
-
-.voice-mic-button.voice-error {
-    border-color: var(--glass-border-hover);
-    background: var(--glass-bg-standard);
-}
-
-.voice-transcription {
-    border: 1px solid var(--glass-border-standard);
-    transition: var(--transition-standard);
-}
-
-/* ============================================================================
-   VOICE FEEDBACK MODAL
-   ============================================================================ */
-.voice-feedback-overlay {
-    background: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-}
-
-.voice-feedback-modal {
-    border: 1px solid var(--glass-border-standard);
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-}
-
-.voice-transcription-text {
-    border: 1px solid var(--glass-border-standard);
-    transition: var(--transition-standard);
-    word-wrap: break-word;
-}
-
-.voice-message {
-    padding: 0.75rem;
-    border-radius: 0.5rem;
-    transition: var(--transition-standard);
-}
-
-.voice-message-success {
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: var(--color-text-primary);
-}
-
-.voice-message-error {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    color: var(--color-text-primary);
-}
-
-.voice-message-info {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid var(--glass-border-standard);
-    color: var(--color-text-primary);
-}
-
-.voice-listening-indicator {
-    animation: fadeIn 0.3s ease-in-out;
-}
-
-.voice-processing-indicator {
-    animation: fadeIn 0.3s ease-in-out;
-}
-
-.voice-pulse-dot {
-    animation: pulse 2s infinite;
-}
-
-/* ============================================================================
    CALENDAR TOGGLE SWITCH (Apple Style)
    ============================================================================ */
 .calendar-toggle-container {
@@ -879,20 +981,20 @@ input:focus, select:focus, textarea:focus {
     text-align: center;
     font-size: 13px;
     font-weight: 500;
-    color: var(--color-text-muted);
+    color: #323434;
     transition: var(--transition-color);
     z-index: 2;
 }
 
 .toggle-label-active {
-    color: var(--color-text-on-white);
+    color: #323434;
 }
 
 .toggle-slider {
     position: absolute;
     width: 68px;
     height: 32px;
-    background: rgba(255, 255, 255, 0.95);
+    background: #F2ECE1;
     border-radius: 16px;
     transition: var(--transition-transform);
     z-index: 1;
@@ -905,19 +1007,19 @@ input:focus, select:focus, textarea:focus {
 }
 
 .calendar-toggle[data-view="weekly"] .toggle-label:first-child {
-    color: var(--color-text-on-white);
+    color: #323434;
 }
 
 .calendar-toggle[data-view="weekly"] .toggle-label:last-child {
-    color: var(--color-text-muted);
+    color: #323434;
 }
 
 .calendar-toggle[data-view="monthly"] .toggle-label:first-child {
-    color: var(--color-text-muted);
+    color: #323434;
 }
 
 .calendar-toggle[data-view="monthly"] .toggle-label:last-child {
-    color: var(--color-text-on-white);
+    color: #323434;
 }
 
 /* ============================================================================
@@ -944,17 +1046,17 @@ input:focus, select:focus, textarea:focus {
 .calendar-grid.weekly-view {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    gap: var(--spacing-xs);
+    gap: 0.25rem;
 }
 
 .calendar-grid.weekly-view .calendar-day {
-    min-height: 120px;
-    padding: var(--spacing-sm);
+    min-height: 70px;
+    padding: 0.375rem;
     background: var(--glass-bg-standard);
     backdrop-filter: blur(var(--glass-blur-small));
     -webkit-backdrop-filter: blur(var(--glass-blur-small));
     border: 1px solid var(--glass-border-standard);
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-sm);
     display: flex;
     flex-direction: column;
     transition: var(--transition-standard);
@@ -970,7 +1072,7 @@ input:focus, select:focus, textarea:focus {
 .calendar-grid.monthly-view {
     display: grid;
     grid-template-columns: repeat(7, minmax(0, 1fr));
-    gap: 0.5rem;
+    gap: 0.25rem;
     width: 100%;
 }
 
@@ -978,12 +1080,12 @@ input:focus, select:focus, textarea:focus {
     aspect-ratio: 1;
     min-height: 0;
     min-width: 0;
-    padding: 0.5rem;
+    padding: 0.25rem;
     background: var(--glass-bg-standard);
     backdrop-filter: blur(var(--glass-blur-small));
     -webkit-backdrop-filter: blur(var(--glass-blur-small));
     border: 1px solid var(--glass-border-standard);
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-sm);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -994,7 +1096,7 @@ input:focus, select:focus, textarea:focus {
 
 /* Ensure calendar header matches grid gap */
 .calendar-header {
-    gap: 0.5rem;
+    gap: 0.25rem;
 }
 
 .calendar-grid.monthly-view .calendar-day:hover {
@@ -1006,7 +1108,7 @@ input:focus, select:focus, textarea:focus {
 /* Calendar Day States */
 .calendar-day {
     color: var(--color-text-tertiary);
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 500;
 }
 
@@ -1022,20 +1124,20 @@ input:focus, select:focus, textarea:focus {
 }
 
 .calendar-day-number {
-    font-size: 16px;
+    font-size: 13px;
     font-weight: 600;
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.125rem;
 }
 
 .calendar-day-events {
-    font-size: 11px;
+    font-size: 10px;
     color: var(--color-text-muted);
     margin-top: auto;
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.25rem;
+    gap: 0.125rem;
     flex-wrap: nowrap;
 }
 
@@ -1094,8 +1196,8 @@ input:focus, select:focus, textarea:focus {
 }
 
 .session-progress-container {
-    background: rgba(255, 255, 255, 0.03);
-    border-bottom: 1px solid var(--glass-border-standard);
+    background: rgba(0, 0, 0, 0.9);
+    border-bottom: 1px solid #111111;
 }
 
 .session-progress-bar {
@@ -1116,6 +1218,301 @@ input:focus, select:focus, textarea:focus {
 }
 
 .session-controls {
-    background: rgba(255, 255, 255, 0.03);
-    border-top: 1px solid var(--glass-border-standard);
+    background: rgba(0, 0, 0, 0.92);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-top: 1px solid #111111;
+}
+
+/* Finish Session primary button */
+#session-finish-btn {
+    background: #f5f5f5 !important;
+    color: #000000 !important;
+    border-radius: 0.9rem !important;
+    box-shadow: 0 0 0 transparent !important;
+}
+
+#session-finish-btn:hover {
+    background: #ffffff !important;
+    transform: translateY(-1px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6) !important;
+}
+
+/* Workout session scroll container (journal view) */
+#workout-session-container {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+}
+
+/* ============================================================================
+   WORKOUT JOURNAL
+   ============================================================================ */
+
+.workout-journal {
+    padding-bottom: 5.5rem; /* Ensure last card clears footer button */
+}
+
+.exercise-card {
+    background: #121212;
+    border-radius: 1.1rem; /* Slightly sharper */
+    padding: 0.9rem 1.1rem 1.1rem;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.7);
+    border: 1px solid #1f1f1f;
+}
+
+.exercise-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.exercise-card-phase {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-text-muted);
+    margin-bottom: 0.25rem;
+}
+
+.exercise-card-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+}
+
+.exercise-card-grid-header {
+    display: grid;
+    /* Set | Prev Kg | Prev Reps | Kg | Reps | Done */
+    grid-template-columns: 0.5fr 0.9fr 0.9fr 0.9fr 0.9fr 0.9fr;
+    gap: 0.4rem;
+    padding: 0.4rem 0.6rem;
+    margin-bottom: 0.15rem;
+    border-radius: var(--radius-md);
+    background: #121212;
+}
+
+.set-header-cell {
+    font-size: 0.7rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-text-muted);
+}
+
+.exercise-card-sets {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.set-row {
+    display: grid;
+    /* Set | Prev Kg | Prev Reps | Kg | Reps | Done */
+    grid-template-columns: 0.5fr 0.9fr 0.9fr 0.9fr 0.9fr 0.9fr;
+    gap: 0.4rem;
+    padding: 0.45rem 0.6rem;
+    border-radius: var(--radius-md);
+    background: #141414;
+    border: 1px solid #262626;
+    align-items: center;
+}
+
+.set-row--done {
+    background: #151515;
+    border-color: rgba(34, 197, 94, 0.45);
+    opacity: 1;
+}
+
+.set-cell {
+    font-size: 0.8rem;
+    color: var(--color-text-secondary);
+}
+
+.set-cell--index {
+    font-weight: 600;
+    color: var(--color-text-primary);
+}
+
+.set-cell--previous .set-previous-text {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.ghost-text {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.set-cell--input {
+    display: flex;
+    align-items: center;
+}
+
+.set-input {
+    width: 100%;
+    max-width: 6rem; /* Make weight/reps inputs visually narrower */
+    background: #1e1e1e;
+    border-radius: var(--radius-md);
+    border: 1px solid #333333;
+    padding: 0.35rem 0.5rem;
+    font-size: 0.8rem;
+    color: #F2ECE1;
+    text-align: center;
+    outline: none;
+    transition: var(--transition-standard);
+}
+
+.set-input::placeholder {
+    color: #8a8a8a;
+}
+
+.set-input:focus {
+    border-color: rgba(74, 222, 128, 0.75);
+    box-shadow: 0 0 0 1px rgba(74, 222, 128, 0.35);
+    background: #232323;
+}
+
+.set-row--done .set-input {
+    opacity: 0.7;
+}
+
+.set-cell--action {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.set-done-btn {
+    min-width: 64px;
+    padding: 0.35rem 0.7rem;
+    border-radius: 999px;
+    border: 1px solid #3a3a3a;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    background: #181818;
+    color: #f5f5f5;
+    box-shadow: none;
+}
+
+.set-done-btn:hover {
+    background: #222222;
+    border-color: #4a4a4a;
+}
+
+.set-row--done .set-done-btn {
+    background: rgba(22, 163, 74, 0.28);
+    border-color: rgba(74, 222, 128, 0.7);
+    color: #dcfce7;
+}
+
+.set-delete-btn {
+    width: 26px;
+    height: 26px;
+    border-radius: 999px;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    cursor: pointer;
+    background: #1b1b1b;
+    color: #9ca3af;
+}
+
+.set-delete-btn:hover {
+    background: #b91c1c;
+    color: #f9fafb;
+}
+
+.set-add-btn {
+    margin-top: 0.35rem;
+    font-size: 0.8rem;
+    color: #a1a1a1;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.25rem 0.6rem;
+    border-radius: 999px;
+    border: 1px dashed #4b5563;
+    background: transparent;
+    cursor: pointer;
+}
+
+.set-add-btn:hover {
+    border-style: solid;
+    border-color: #e5e7eb;
+    color: #e5e5e5;
+}
+
+/* ============================================================================
+   PROFILE SEGMENTED SWITCHER
+   ============================================================================ */
+.profile-switcher {
+    display: inline-flex;
+    background: var(--glass-bg-dark);
+    backdrop-filter: blur(var(--glass-blur-standard));
+    -webkit-backdrop-filter: blur(var(--glass-blur-standard));
+    border: 1px solid var(--glass-border-standard);
+    border-radius: var(--radius-pill);
+    padding: 4px;
+    gap: 4px;
+}
+
+.profile-switcher-option {
+    padding: 10px 20px;
+    border-radius: var(--radius-pill);
+    background: transparent;
+    border: none;
+    color: #323434;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition-standard);
+    white-space: nowrap;
+    position: relative;
+}
+
+.profile-switcher-option:hover {
+    color: #323434;
+}
+
+.profile-switcher-option.active {
+    background: #F2ECE1;
+    color: #323434;
+    font-weight: 600;
+}
+
+.profile-content-container {
+    position: relative;
+    min-height: 400px;
+}
+
+.profile-content-section {
+    display: none;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.profile-content-section.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }

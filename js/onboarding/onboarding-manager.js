@@ -1,5 +1,4 @@
 // Onboarding Manager for athlete onboarding flow
-import { VoiceInputManager } from './voice-input.js';
 import { saveOnboardingData, setUserRole, saveBaselineAssessment } from '../core/storage.js';
 import { BaselineAssessmentManager } from './baseline-assessment-manager.js';
 
@@ -7,12 +6,10 @@ export class OnboardingManager {
     constructor(onRoleSelect, onComplete) {
         this.currentStep = 'role-selection';
         this.answers = {
-            sedentaryImpact: null,
             discomforts: [],
             primaryDiscipline: [],
             objectives: []
         };
-        this.voiceManager = new VoiceInputManager();
         this.baselineManager = null;
         this.onRoleSelect = onRoleSelect; // Callback for role selection
         this.onComplete = onComplete; // Callback for completing onboarding
@@ -44,15 +41,7 @@ export class OnboardingManager {
     }
 
     setupQuestionHandlers() {
-        // Question 1: Sedentary Impact
-        document.querySelectorAll('[data-answer="sedentary"]').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const value = btn.getAttribute('data-value');
-                this.handleAnswer('sedentary', value);
-            });
-        });
-
-        // Question 2: Discomforts (multi-select)
+        // Question 1: Discomforts (multi-select)
         document.querySelectorAll('[data-answer="discomfort"]').forEach(btn => {
             btn.addEventListener('click', () => {
                 const value = btn.getAttribute('data-value');
@@ -60,17 +49,17 @@ export class OnboardingManager {
             });
         });
 
-        // Question 2: Next button
+        // Question 1: Next button
         const discomfortNext = document.getElementById('discomfort-next');
         if (discomfortNext) {
             discomfortNext.addEventListener('click', () => {
                 if (this.answers.discomforts.length > 0) {
-                    this.showQuestion(3);
+                    this.showQuestion(2);
                 }
             });
         }
 
-        // Question 3: Discipline (multi-select)
+        // Question 2: Discipline (multi-select)
         document.querySelectorAll('[data-answer="discipline"]').forEach(btn => {
             btn.addEventListener('click', () => {
                 const value = btn.getAttribute('data-value');
@@ -78,12 +67,8 @@ export class OnboardingManager {
             });
         });
 
-        // Voice input buttons and Continue button (using event delegation)
+        // Continue button (using event delegation)
         document.addEventListener('click', (e) => {
-            if (e.target.closest('.voice-mic-button')) {
-                this.handleVoiceInput();
-            }
-            
             // Handle Continue button click (Question 3)
             if (e.target && (e.target.id === 'discipline-complete' || e.target.closest('#discipline-complete'))) {
                 e.preventDefault();
@@ -115,7 +100,7 @@ export class OnboardingManager {
     }
 
     startAthleteFlow() {
-        this.showQuestion(1);
+        this.showQuestion(1); // Start with discomforts (question 1)
     }
 
     showQuestion(step) {
@@ -126,17 +111,10 @@ export class OnboardingManager {
             questionEl.classList.remove('hidden');
             this.currentStep = `question-${step}`;
             
-            // Reset voice transcription in this question
-            const transcriptionEl = questionEl.querySelector('.voice-transcription');
-            if (transcriptionEl) {
-                transcriptionEl.classList.add('hidden');
-                transcriptionEl.textContent = '';
-            }
-            
-            // Update UI state for question 3 (discipline)
-            if (step === 3) {
+            // Update UI state for question 2 (discipline)
+            if (step === 2) {
                 this.updateDisciplineUI();
-            } else if (step === 2) {
+            } else if (step === 1) {
                 this.updateDiscomfortUI();
             }
         }
@@ -149,22 +127,7 @@ export class OnboardingManager {
     }
 
     handleAnswer(questionId, answer) {
-        if (questionId === 'sedentary') {
-            this.answers.sedentaryImpact = answer;
-            // Update UI - remove selected from all buttons
-            document.querySelectorAll('[data-answer="sedentary"]').forEach(btn => {
-                btn.classList.remove('selected');
-            });
-            // Add selected to the chosen button (works for both option and scale buttons)
-            const selectedBtn = document.querySelector(`[data-answer="sedentary"][data-value="${answer}"]`);
-            if (selectedBtn) {
-                selectedBtn.classList.add('selected');
-            }
-            
-            setTimeout(() => {
-                this.showQuestion(2);
-            }, 300);
-        }
+        // This method is kept for future use if needed
     }
 
     toggleDiscomfort(value) {
@@ -245,55 +208,6 @@ export class OnboardingManager {
         }
     }
 
-    handleVoiceInput() {
-        if (this.voiceManager.isListening) {
-            this.voiceManager.stopListening();
-            return;
-        }
-
-        let questionType = null;
-        if (this.currentStep === 'question-1') {
-            questionType = 'sedentary';
-        } else if (this.currentStep === 'question-2') {
-            questionType = 'discomforts';
-        } else if (this.currentStep === 'question-3') {
-            questionType = 'discipline';
-        }
-
-        if (questionType) {
-            this.voiceManager.startListening(questionType, (result) => {
-                this.handleVoiceResult(questionType, result);
-            });
-        }
-    }
-
-    handleVoiceResult(questionType, result) {
-        if (questionType === 'sedentary') {
-            this.handleAnswer('sedentary', result);
-        } else if (questionType === 'discomforts') {
-            if (Array.isArray(result)) {
-                result.forEach(discomfort => {
-                    const index = this.answers.discomforts.indexOf(discomfort);
-                    if (index === -1) {
-                        this.toggleDiscomfort(discomfort);
-                    }
-                });
-                this.updateDiscomfortUI();
-            } else if (result) {
-                this.toggleDiscomfort(result);
-                this.updateDiscomfortUI();
-            }
-        } else if (questionType === 'discipline') {
-            if (result) {
-                const index = this.answers.primaryDiscipline.indexOf(result);
-                if (index === -1) {
-                    this.toggleDiscipline(result);
-                    this.updateDisciplineUI();
-                }
-            }
-        }
-    }
-
     startBaselineAssessment() {
         // Initialize baseline assessment manager
         this.baselineManager = new BaselineAssessmentManager(async (assessment) => {
@@ -301,8 +215,8 @@ export class OnboardingManager {
         });
         this.baselineManager.init();
         
-        // Show question 4 (first baseline assessment question)
-        this.showQuestion(4);
+        // Show question 3 (first baseline assessment question)
+        this.showQuestion(3);
     }
 
     async handleBaselineComplete(assessment) {
@@ -338,8 +252,7 @@ export class OnboardingManager {
                     equipment: [],
                     goals: this.answers.objectives || [],
                     objectives: this.answers.objectives || [],
-                    currentMilestones: {},
-                    sedentaryImpact: this.answers.sedentaryImpact || null
+                    currentMilestones: {}
                 });
             }
         } catch (error) {

@@ -3,32 +3,218 @@
     {
       "id": "downward-facing-dog",
       "name": "Downward Facing Dog",
-      "targetMuscleGroups": ["shoulders", "hamstrings", "core", "calves", "back"],
+      "targetMuscleGroups": [
+        "shoulders",
+        "hamstrings",
+        "core",
+        "calves",
+        "back"
+      ],
       "category": "flexibility"
     },
     {
       "id": "warrior-ii",
       "name": "Warrior II",
-      "targetMuscleGroups": ["quads", "glutes", "hip flexors", "core", "shoulders"],
+      "targetMuscleGroups": [
+        "quads",
+        "glutes",
+        "hip flexors",
+        "core",
+        "shoulders"
+      ],
       "category": "strength"
     },
     {
       "id": "tree-pose",
       "name": "Tree Pose",
-      "targetMuscleGroups": ["glutes", "hip flexors", "core", "ankles", "balance"],
+      "targetMuscleGroups": [
+        "glutes",
+        "hip flexors",
+        "core",
+        "ankles",
+        "balance"
+      ],
       "category": "balance"
     },
     {
       "id": "childs-pose",
       "name": "Child's Pose",
-      "targetMuscleGroups": ["hips", "back", "shoulders", "ankles"],
+      "targetMuscleGroups": [
+        "hips",
+        "back",
+        "shoulders",
+        "ankles"
+      ],
       "category": "flexibility"
     },
     {
       "id": "triangle-pose",
       "name": "Triangle Pose",
-      "targetMuscleGroups": ["hamstrings", "hip flexors", "core", "side body", "shoulders"],
+      "targetMuscleGroups": [
+        "hamstrings",
+        "hip flexors",
+        "core",
+        "side body",
+        "shoulders"
+      ],
       "category": "flexibility"
+    },
+    {
+      "id": "warrior-i",
+      "name": "Warrior I",
+      "targetMuscleGroups": [
+        "quads",
+        "glutes",
+        "hip flexors",
+        "core",
+        "shoulders"
+      ],
+      "category": "strength"
+    },
+    {
+      "id": "warrior-iii",
+      "name": "Warrior III",
+      "targetMuscleGroups": [
+        "hamstrings",
+        "glutes",
+        "core",
+        "balance",
+        "shoulders"
+      ],
+      "category": "balance"
+    },
+    {
+      "id": "half-moon-pose",
+      "name": "Half Moon Pose",
+      "targetMuscleGroups": [
+        "hamstrings",
+        "glutes",
+        "core",
+        "balance",
+        "side body"
+      ],
+      "category": "balance"
+    },
+    {
+      "id": "pigeon-pose",
+      "name": "Pigeon Pose",
+      "targetMuscleGroups": [
+        "hip flexors",
+        "glutes",
+        "back",
+        "flexibility"
+      ],
+      "category": "flexibility"
+    },
+    {
+      "id": "cobra-pose",
+      "name": "Cobra Pose",
+      "targetMuscleGroups": [
+        "back extensors",
+        "shoulders",
+        "core",
+        "posterior chain"
+      ],
+      "category": "extension"
+    },
+    {
+      "id": "bridge-pose",
+      "name": "Bridge Pose",
+      "targetMuscleGroups": [
+        "glutes",
+        "hamstrings",
+        "back",
+        "core"
+      ],
+      "category": "extension"
+    },
+    {
+      "id": "plank-pose",
+      "name": "Plank Pose",
+      "targetMuscleGroups": [
+        "core",
+        "shoulders",
+        "arms",
+        "stability"
+      ],
+      "category": "strength"
+    },
+    {
+      "id": "side-plank",
+      "name": "Side Plank",
+      "targetMuscleGroups": [
+        "core",
+        "obliques",
+        "shoulders",
+        "stability"
+      ],
+      "category": "strength"
+    },
+    {
+      "id": "chair-pose",
+      "name": "Chair Pose",
+      "targetMuscleGroups": [
+        "quads",
+        "glutes",
+        "core",
+        "shoulders"
+      ],
+      "category": "strength"
+    },
+    {
+      "id": "crescent-lunge",
+      "name": "Crescent Lunge",
+      "targetMuscleGroups": [
+        "quads",
+        "hip flexors",
+        "glutes",
+        "core",
+        "shoulders"
+      ],
+      "category": "strength"
+    },
+    {
+      "id": "revolved-triangle",
+      "name": "Revolved Triangle",
+      "targetMuscleGroups": [
+        "hamstrings",
+        "obliques",
+        "spinal rotation",
+        "shoulders"
+      ],
+      "category": "flexibility"
+    },
+    {
+      "id": "seated-forward-fold",
+      "name": "Seated Forward Fold",
+      "targetMuscleGroups": [
+        "hamstrings",
+        "back",
+        "flexibility"
+      ],
+      "category": "flexibility"
+    },
+    {
+      "id": "camel-pose",
+      "name": "Camel Pose",
+      "targetMuscleGroups": [
+        "hip flexors",
+        "back extensors",
+        "shoulders",
+        "flexibility"
+      ],
+      "category": "extension"
+    },
+    {
+      "id": "wheel-pose",
+      "name": "Wheel Pose",
+      "targetMuscleGroups": [
+        "back extensors",
+        "shoulders",
+        "hip flexors",
+        "flexibility"
+      ],
+      "category": "extension"
     }
   ],
   "variations": [
@@ -36,7 +222,9 @@
       "id": "downward-dog-bent-knees",
       "exerciseId": "downward-facing-dog",
       "name": "Downward Dog - Bent Knees Modification",
-      "disciplines": ["yoga"],
+      "disciplines": [
+        "yoga"
+      ],
       "difficulty": 3,
       "metrics": {
         "mobility": 45,
@@ -51,16 +239,25 @@
         "Keep head between arms, neck relaxed",
         "Hold for 5-8 breaths, focusing on lengthening spine"
       ],
-      "metadata": {
-        "bilaterality": true,
-        "equipment": []
-      }
+      "tags": [
+        "shoulders",
+        "back",
+        "core",
+        "legs",
+        "push",
+        "hinge",
+        "bilateral",
+        "isometric"
+      ],
+      "phase": "warmup"
     },
     {
       "id": "downward-dog-standard",
       "exerciseId": "downward-facing-dog",
       "name": "Downward Dog - Standard",
-      "disciplines": ["yoga"],
+      "disciplines": [
+        "yoga"
+      ],
       "difficulty": 5,
       "metrics": {
         "mobility": 65,
@@ -76,16 +273,25 @@
         "Engage core to protect lower back",
         "Hold for 8-10 breaths, breathing deeply"
       ],
-      "metadata": {
-        "bilaterality": true,
-        "equipment": []
-      }
+      "tags": [
+        "shoulders",
+        "back",
+        "core",
+        "legs",
+        "push",
+        "hinge",
+        "bilateral",
+        "isometric"
+      ],
+      "phase": "warmup"
     },
     {
       "id": "downward-dog-one-legged",
       "exerciseId": "downward-facing-dog",
       "name": "Downward Dog - One Leg Lift",
-      "disciplines": ["yoga"],
+      "disciplines": [
+        "yoga"
+      ],
       "difficulty": 7,
       "metrics": {
         "mobility": 80,
@@ -101,16 +307,25 @@
         "Hold for 5 breaths, then switch sides",
         "Return to standard downward dog between sides"
       ],
-      "metadata": {
-        "bilaterality": false,
-        "equipment": []
-      }
+      "tags": [
+        "shoulders",
+        "back",
+        "core",
+        "legs",
+        "push",
+        "hinge",
+        "unilateral",
+        "isometric"
+      ],
+      "phase": "workout"
     },
     {
       "id": "warrior-ii-beginner",
       "exerciseId": "warrior-ii",
       "name": "Warrior II - Modified Stance",
-      "disciplines": ["yoga"],
+      "disciplines": [
+        "yoga"
+      ],
       "difficulty": 4,
       "metrics": {
         "mobility": 55,
@@ -126,16 +341,24 @@
         "Gaze over front middle finger",
         "Hold for 5-7 breaths, focusing on hip stability"
       ],
-      "metadata": {
-        "bilaterality": false,
-        "equipment": []
-      }
+      "tags": [
+        "legs",
+        "shoulders",
+        "core",
+        "lunge",
+        "rotation",
+        "bilateral",
+        "isometric"
+      ],
+      "phase": "warmup"
     },
     {
       "id": "warrior-ii-standard",
       "exerciseId": "warrior-ii",
       "name": "Warrior II - Standard",
-      "disciplines": ["yoga"],
+      "disciplines": [
+        "yoga"
+      ],
       "difficulty": 6,
       "metrics": {
         "mobility": 70,
@@ -152,16 +375,24 @@
         "Gaze over front middle finger, keep neck aligned",
         "Hold for 8-10 breaths with steady, deep breathing"
       ],
-      "metadata": {
-        "bilaterality": false,
-        "equipment": []
-      }
+      "tags": [
+        "legs",
+        "shoulders",
+        "core",
+        "lunge",
+        "rotation",
+        "bilateral",
+        "isometric"
+      ],
+      "phase": "workout"
     },
     {
       "id": "warrior-ii-extended",
       "exerciseId": "warrior-ii",
       "name": "Warrior II - Extended Hold with Reverse Bind",
-      "disciplines": ["yoga"],
+      "disciplines": [
+        "yoga"
+      ],
       "difficulty": 8,
       "metrics": {
         "mobility": 85,
@@ -178,16 +409,26 @@
         "Hold for 5-8 breaths, then release and switch sides",
         "This variation requires significant shoulder mobility"
       ],
-      "metadata": {
-        "bilaterality": false,
-        "equipment": []
-      }
+      "tags": [
+        "legs",
+        "shoulders",
+        "core",
+        "back",
+        "lunge",
+        "rotation",
+        "pull",
+        "bilateral",
+        "isometric"
+      ],
+      "phase": "workout"
     },
     {
       "id": "tree-pose-ankle",
       "exerciseId": "tree-pose",
       "name": "Tree Pose - Foot at Ankle",
-      "disciplines": ["yoga"],
+      "disciplines": [
+        "yoga"
+      ],
       "difficulty": 3,
       "metrics": {
         "mobility": 40,
@@ -203,16 +444,21 @@
         "Hold for 5-7 breaths, then switch legs",
         "Focus on rooting down through standing leg"
       ],
-      "metadata": {
-        "bilaterality": false,
-        "equipment": []
-      }
+      "tags": [
+        "legs",
+        "core",
+        "unilateral",
+        "isometric"
+      ],
+      "phase": "warmup"
     },
     {
       "id": "tree-pose-calf",
       "exerciseId": "tree-pose",
       "name": "Tree Pose - Foot at Calf",
-      "disciplines": ["yoga"],
+      "disciplines": [
+        "yoga"
+      ],
       "difficulty": 5,
       "metrics": {
         "mobility": 60,
@@ -229,16 +475,22 @@
         "Hold for 8-10 breaths with steady breathing",
         "Maintain core engagement throughout"
       ],
-      "metadata": {
-        "bilaterality": false,
-        "equipment": []
-      }
+      "tags": [
+        "legs",
+        "core",
+        "shoulders",
+        "unilateral",
+        "isometric"
+      ],
+      "phase": "warmup"
     },
     {
       "id": "tree-pose-full",
       "exerciseId": "tree-pose",
       "name": "Tree Pose - Full with Arms Overhead",
-      "disciplines": ["yoga"],
+      "disciplines": [
+        "yoga"
+      ],
       "difficulty": 7,
       "metrics": {
         "mobility": 75,
@@ -255,16 +507,23 @@
         "Fix gaze on a point ahead, breathe steadily",
         "Hold for 10-15 breaths, building balance and focus"
       ],
-      "metadata": {
-        "bilaterality": false,
-        "equipment": []
-      }
+      "tags": [
+        "legs",
+        "core",
+        "shoulders",
+        "push",
+        "unilateral",
+        "isometric"
+      ],
+      "phase": "workout"
     },
     {
       "id": "childs-pose-standard",
       "exerciseId": "childs-pose",
       "name": "Child's Pose - Standard",
-      "disciplines": ["yoga"],
+      "disciplines": [
+        "yoga"
+      ],
       "difficulty": 2,
       "metrics": {
         "mobility": 50,
@@ -281,16 +540,23 @@
         "Hold for 10-20 breaths or as needed for recovery",
         "This is a resting pose - find comfort and ease"
       ],
-      "metadata": {
-        "bilaterality": true,
-        "equipment": []
-      }
+      "tags": [
+        "back",
+        "shoulders",
+        "legs",
+        "pull",
+        "bilateral",
+        "isometric"
+      ],
+      "phase": "cooldown"
     },
     {
       "id": "childs-pose-extended",
       "exerciseId": "childs-pose",
       "name": "Child's Pose - Extended Arms",
-      "disciplines": ["yoga"],
+      "disciplines": [
+        "yoga"
+      ],
       "difficulty": 4,
       "metrics": {
         "mobility": 65,
@@ -307,16 +573,23 @@
         "Breathe deeply and hold for 10-15 breaths",
         "To deepen, press hips back more actively"
       ],
-      "metadata": {
-        "bilaterality": true,
-        "equipment": []
-      }
+      "tags": [
+        "back",
+        "shoulders",
+        "legs",
+        "pull",
+        "bilateral",
+        "isometric"
+      ],
+      "phase": "cooldown"
     },
     {
       "id": "childs-pose-side-stretch",
       "exerciseId": "childs-pose",
       "name": "Child's Pose - Side Stretch Variation",
-      "disciplines": ["yoga"],
+      "disciplines": [
+        "yoga"
+      ],
       "difficulty": 5,
       "metrics": {
         "mobility": 70,
@@ -333,16 +606,25 @@
         "Walk hands back to center, then repeat on left side",
         "Focus on lateral flexion and rotation of spine"
       ],
-      "metadata": {
-        "bilaterality": false,
-        "equipment": []
-      }
+      "tags": [
+        "back",
+        "shoulders",
+        "legs",
+        "core",
+        "rotation",
+        "pull",
+        "bilateral",
+        "isometric"
+      ],
+      "phase": "cooldown"
     },
     {
       "id": "triangle-pose-with-block",
       "exerciseId": "triangle-pose",
       "name": "Triangle Pose - With Block Support",
-      "disciplines": ["yoga"],
+      "disciplines": [
+        "yoga"
+      ],
       "difficulty": 4,
       "metrics": {
         "mobility": 60,
@@ -359,16 +641,25 @@
         "Keep both legs engaged, avoid locking knees",
         "Hold for 5-8 breaths, then switch sides"
       ],
-      "metadata": {
-        "bilaterality": false,
-        "equipment": ["yoga-block"]
-      }
+      "tags": [
+        "legs",
+        "shoulders",
+        "core",
+        "back",
+        "hinge",
+        "rotation",
+        "bilateral",
+        "isometric"
+      ],
+      "phase": "warmup"
     },
     {
       "id": "triangle-pose-standard",
       "exerciseId": "triangle-pose",
       "name": "Triangle Pose - Standard",
-      "disciplines": ["yoga"],
+      "disciplines": [
+        "yoga"
+      ],
       "difficulty": 6,
       "metrics": {
         "mobility": 75,
@@ -385,16 +676,25 @@
         "Gaze up toward top hand or forward for neck comfort",
         "Keep hips level, engage core, hold for 8-10 breaths"
       ],
-      "metadata": {
-        "bilaterality": false,
-        "equipment": []
-      }
+      "tags": [
+        "legs",
+        "shoulders",
+        "core",
+        "back",
+        "hinge",
+        "rotation",
+        "bilateral",
+        "isometric"
+      ],
+      "phase": "workout"
     },
     {
       "id": "triangle-pose-reverse-bind",
       "exerciseId": "triangle-pose",
       "name": "Triangle Pose - Reverse Bind",
-      "disciplines": ["yoga"],
+      "disciplines": [
+        "yoga"
+      ],
       "difficulty": 8,
       "metrics": {
         "mobility": 90,
@@ -412,10 +712,1174 @@
         "Hold for 5-8 breaths, focusing on breath in restricted position",
         "Release carefully and switch sides"
       ],
-      "metadata": {
-        "bilaterality": false,
-        "equipment": []
-      }
+      "tags": [
+        "legs",
+        "shoulders",
+        "core",
+        "back",
+        "chest",
+        "hinge",
+        "rotation",
+        "pull",
+        "bilateral",
+        "isometric"
+      ],
+      "phase": "workout"
+    },
+    {
+      "id": "warrior-i-basic",
+      "exerciseId": "warrior-i",
+      "name": "Warrior I - Basic",
+      "disciplines": [
+        "yoga"
+      ],
+      "difficulty": 5,
+      "metrics": {
+        "mobility": 60,
+        "rotation": 40,
+        "flexibility": 65
+      },
+      "instructions": [
+        "Step one foot forward into lunge",
+        "Turn back foot out 45 degrees",
+        "Square hips forward",
+        "Bend front knee to 90 degrees",
+        "Raise arms overhead",
+        "Hold for 5-8 breaths, then switch sides"
+      ],
+      "tags": [
+        "legs",
+        "shoulders",
+        "core",
+        "lunge",
+        "push",
+        "bilateral",
+        "isometric"
+      ],
+      "phase": "warmup"
+    },
+    {
+      "id": "warrior-i-extended",
+      "exerciseId": "warrior-i",
+      "name": "Warrior I - Extended Hold",
+      "disciplines": [
+        "yoga"
+      ],
+      "difficulty": 6,
+      "metrics": {
+        "mobility": 70,
+        "rotation": 50,
+        "flexibility": 70
+      },
+      "instructions": [
+        "Establish basic warrior I",
+        "Hold for extended time",
+        "Deepen front knee bend",
+        "Reach arms higher",
+        "Hold for 10-15 breaths per side"
+      ],
+      "tags": [
+        "legs",
+        "shoulders",
+        "core",
+        "lunge",
+        "push",
+        "bilateral",
+        "isometric"
+      ],
+      "phase": "workout"
+    },
+    {
+      "id": "warrior-i-humble",
+      "exerciseId": "warrior-i",
+      "name": "Humble Warrior",
+      "disciplines": [
+        "yoga"
+      ],
+      "difficulty": 7,
+      "metrics": {
+        "mobility": 75,
+        "rotation": 60,
+        "flexibility": 75
+      },
+      "instructions": [
+        "Begin in warrior I",
+        "Clasp hands behind back",
+        "Fold forward, bringing head toward front knee",
+        "Hold for 5-8 breaths per side"
+      ],
+      "tags": [
+        "legs",
+        "shoulders",
+        "core",
+        "back",
+        "lunge",
+        "hinge",
+        "pull",
+        "bilateral",
+        "isometric"
+      ],
+      "phase": "workout"
+    },
+    {
+      "id": "warrior-iii-basic",
+      "exerciseId": "warrior-iii",
+      "name": "Warrior III - Basic",
+      "disciplines": [
+        "yoga"
+      ],
+      "difficulty": 6,
+      "metrics": {
+        "mobility": 70,
+        "rotation": 35,
+        "flexibility": 75
+      },
+      "instructions": [
+        "Stand on one leg",
+        "Hinge forward, extending other leg back",
+        "Arms extended forward or alongside body",
+        "Body forms T-shape",
+        "Hold for 5-8 breaths per side"
+      ],
+      "tags": [
+        "legs",
+        "core",
+        "shoulders",
+        "back",
+        "hinge",
+        "unilateral",
+        "isometric"
+      ],
+      "phase": "workout"
+    },
+    {
+      "id": "warrior-iii-extended",
+      "exerciseId": "warrior-iii",
+      "name": "Warrior III - Extended Hold",
+      "disciplines": [
+        "yoga"
+      ],
+      "difficulty": 7,
+      "metrics": {
+        "mobility": 80,
+        "rotation": 40,
+        "flexibility": 80
+      },
+      "instructions": [
+        "Begin in basic warrior III",
+        "Hold for extended time",
+        "Maintain balance and alignment",
+        "Hold for 10-15 breaths per side"
+      ],
+      "tags": [
+        "legs",
+        "core",
+        "shoulders",
+        "back",
+        "hinge",
+        "unilateral",
+        "isometric"
+      ],
+      "phase": "workout"
+    },
+    {
+      "id": "warrior-iii-arms-variation",
+      "exerciseId": "warrior-iii",
+      "name": "Warrior III - Arms Variation",
+      "disciplines": [
+        "yoga"
+      ],
+      "difficulty": 8,
+      "metrics": {
+        "mobility": 85,
+        "rotation": 45,
+        "flexibility": 85
+      },
+      "instructions": [
+        "Begin in warrior III",
+        "Extend arms to sides or overhead",
+        "Variations challenge balance differently",
+        "Hold for 5-8 breaths per side"
+      ],
+      "tags": [
+        "legs",
+        "core",
+        "shoulders",
+        "back",
+        "hinge",
+        "push",
+        "unilateral",
+        "isometric"
+      ],
+      "phase": "workout"
+    },
+    {
+      "id": "half-moon-basic",
+      "exerciseId": "half-moon-pose",
+      "name": "Half Moon Pose - Basic",
+      "disciplines": [
+        "yoga"
+      ],
+      "difficulty": 6,
+      "metrics": {
+        "mobility": 75,
+        "rotation": 70,
+        "flexibility": 80
+      },
+      "instructions": [
+        "Start in triangle pose",
+        "Bend front knee, place hand on floor or block",
+        "Lift back leg parallel to floor",
+        "Extend top arm toward ceiling",
+        "Open chest and hips",
+        "Hold for 5-8 breaths per side"
+      ],
+      "tags": [
+        "legs",
+        "shoulders",
+        "core",
+        "back",
+        "hinge",
+        "rotation",
+        "unilateral",
+        "isometric"
+      ],
+      "phase": "workout"
+    },
+    {
+      "id": "half-moon-extended",
+      "exerciseId": "half-moon-pose",
+      "name": "Half Moon Pose - Extended",
+      "disciplines": [
+        "yoga"
+      ],
+      "difficulty": 7,
+      "metrics": {
+        "mobility": 80,
+        "rotation": 75,
+        "flexibility": 85
+      },
+      "instructions": [
+        "Begin in basic half moon",
+        "Extend top arm further",
+        "Open chest more",
+        "Hold for 8-10 breaths per side"
+      ],
+      "tags": [
+        "legs",
+        "shoulders",
+        "core",
+        "back",
+        "hinge",
+        "rotation",
+        "unilateral",
+        "isometric"
+      ],
+      "phase": "workout"
+    },
+    {
+      "id": "half-moon-bind",
+      "exerciseId": "half-moon-pose",
+      "name": "Half Moon Pose - Bind",
+      "disciplines": [
+        "yoga"
+      ],
+      "difficulty": 9,
+      "metrics": {
+        "mobility": 90,
+        "rotation": 85,
+        "flexibility": 90
+      },
+      "instructions": [
+        "Begin in half moon",
+        "Reach top arm behind back",
+        "Grasp back leg or create bind",
+        "Requires exceptional flexibility",
+        "Hold for 3-5 breaths per side"
+      ],
+      "tags": [
+        "legs",
+        "shoulders",
+        "core",
+        "back",
+        "hinge",
+        "rotation",
+        "pull",
+        "unilateral",
+        "isometric"
+      ],
+      "phase": "workout"
+    },
+    {
+      "id": "pigeon-pose-basic",
+      "exerciseId": "pigeon-pose",
+      "name": "Pigeon Pose - Basic",
+      "disciplines": [
+        "yoga"
+      ],
+      "difficulty": 5,
+      "metrics": {
+        "mobility": 70,
+        "rotation": 50,
+        "flexibility": 75
+      },
+      "instructions": [
+        "Start on hands and knees",
+        "Bring one knee forward to wrist",
+        "Extend back leg straight",
+        "Square hips forward",
+        "Hold for 10-15 breaths per side"
+      ],
+      "tags": [
+        "legs",
+        "back",
+        "core",
+        "lunge",
+        "rotation",
+        "unilateral",
+        "isometric"
+      ],
+      "phase": "cooldown"
+    },
+    {
+      "id": "pigeon-pose-forward-fold",
+      "exerciseId": "pigeon-pose",
+      "name": "Pigeon Pose - Forward Fold",
+      "disciplines": [
+        "yoga"
+      ],
+      "difficulty": 6,
+      "metrics": {
+        "mobility": 75,
+        "rotation": 55,
+        "flexibility": 80
+      },
+      "instructions": [
+        "Begin in basic pigeon",
+        "Fold forward over front leg",
+        "Deepens hip stretch",
+        "Hold for 10-15 breaths per side"
+      ],
+      "tags": [
+        "legs",
+        "back",
+        "core",
+        "hinge",
+        "rotation",
+        "unilateral",
+        "isometric"
+      ],
+      "phase": "cooldown"
+    },
+    {
+      "id": "pigeon-pose-king",
+      "exerciseId": "pigeon-pose",
+      "name": "King Pigeon Pose",
+      "disciplines": [
+        "yoga"
+      ],
+      "difficulty": 8,
+      "metrics": {
+        "mobility": 85,
+        "rotation": 70,
+        "flexibility": 90
+      },
+      "instructions": [
+        "Begin in pigeon pose",
+        "Bend back leg, reaching for foot",
+        "Bring foot toward head",
+        "Requires exceptional flexibility",
+        "Hold for 5-8 breaths per side"
+      ],
+      "tags": [
+        "legs",
+        "back",
+        "core",
+        "shoulders",
+        "lunge",
+        "rotation",
+        "pull",
+        "unilateral",
+        "isometric"
+      ],
+      "phase": "cooldown"
+    },
+    {
+      "id": "cobra-pose-basic",
+      "exerciseId": "cobra-pose",
+      "name": "Cobra Pose - Basic",
+      "disciplines": [
+        "yoga"
+      ],
+      "difficulty": 3,
+      "metrics": {
+        "mobility": 50,
+        "rotation": 20,
+        "flexibility": 55
+      },
+      "instructions": [
+        "Lie prone, hands under shoulders",
+        "Press into hands, lift chest",
+        "Keep hips on floor",
+        "Hold for 5-8 breaths"
+      ],
+      "tags": [
+        "back",
+        "shoulders",
+        "core",
+        "chest",
+        "push",
+        "bilateral",
+        "isometric"
+      ],
+      "phase": "warmup"
+    },
+    {
+      "id": "cobra-pose-extended",
+      "exerciseId": "cobra-pose",
+      "name": "Cobra Pose - Extended",
+      "disciplines": [
+        "yoga"
+      ],
+      "difficulty": 5,
+      "metrics": {
+        "mobility": 65,
+        "rotation": 30,
+        "flexibility": 70
+      },
+      "instructions": [
+        "Begin in basic cobra",
+        "Straighten arms, lift chest higher",
+        "Increase back extension",
+        "Hold for 5-8 breaths"
+      ],
+      "tags": [
+        "back",
+        "shoulders",
+        "core",
+        "chest",
+        "push",
+        "bilateral",
+        "isometric"
+      ],
+      "phase": "warmup"
+    },
+    {
+      "id": "cobra-pose-rotating",
+      "exerciseId": "cobra-pose",
+      "name": "Rotating Cobra",
+      "disciplines": [
+        "yoga"
+      ],
+      "difficulty": 6,
+      "metrics": {
+        "mobility": 70,
+        "rotation": 60,
+        "flexibility": 75
+      },
+      "instructions": [
+        "Begin in cobra",
+        "Rotate torso to one side",
+        "Look over shoulder",
+        "Return to center, rotate other side",
+        "Complete 3-5 rotations per side"
+      ],
+      "tags": [
+        "back",
+        "shoulders",
+        "core",
+        "chest",
+        "push",
+        "rotation",
+        "bilateral",
+        "isometric"
+      ],
+      "phase": "warmup"
+    },
+    {
+      "id": "bridge-pose-basic",
+      "exerciseId": "bridge-pose",
+      "name": "Bridge Pose - Basic",
+      "disciplines": [
+        "yoga"
+      ],
+      "difficulty": 4,
+      "metrics": {
+        "mobility": 55,
+        "rotation": 25,
+        "flexibility": 60
+      },
+      "instructions": [
+        "Lie supine, knees bent, feet flat",
+        "Lift hips off floor",
+        "Clasp hands under back",
+        "Hold for 5-8 breaths"
+      ],
+      "tags": [
+        "legs",
+        "back",
+        "core",
+        "hinge",
+        "bilateral",
+        "isometric"
+      ],
+      "phase": "warmup"
+    },
+    {
+      "id": "bridge-pose-one-leg",
+      "exerciseId": "bridge-pose",
+      "name": "Bridge Pose - One Leg",
+      "disciplines": [
+        "yoga"
+      ],
+      "difficulty": 6,
+      "metrics": {
+        "mobility": 70,
+        "rotation": 35,
+        "flexibility": 75
+      },
+      "instructions": [
+        "Begin in bridge",
+        "Lift one leg, extending toward ceiling",
+        "Hold for 5-8 breaths",
+        "Lower and switch sides"
+      ],
+      "tags": [
+        "legs",
+        "back",
+        "core",
+        "hinge",
+        "unilateral",
+        "isometric"
+      ],
+      "phase": "workout"
+    },
+    {
+      "id": "bridge-pose-wheeling",
+      "exerciseId": "bridge-pose",
+      "name": "Wheeling Bridge",
+      "disciplines": [
+        "yoga"
+      ],
+      "difficulty": 7,
+      "metrics": {
+        "mobility": 75,
+        "rotation": 40,
+        "flexibility": 80
+      },
+      "instructions": [
+        "Begin in bridge",
+        "Roll onto shoulders, bringing knees toward head",
+        "Return to bridge",
+        "Complete 5-8 repetitions"
+      ],
+      "tags": [
+        "legs",
+        "back",
+        "core",
+        "hinge",
+        "bilateral"
+      ],
+      "phase": "warmup"
+    },
+    {
+      "id": "plank-pose-basic",
+      "exerciseId": "plank-pose",
+      "name": "Plank Pose - Basic",
+      "disciplines": [
+        "yoga"
+      ],
+      "difficulty": 3,
+      "metrics": {
+        "mobility": 45,
+        "rotation": 20,
+        "flexibility": 40
+      },
+      "instructions": [
+        "Start in push-up position",
+        "Hold body straight, core engaged",
+        "Hold for 30-60 seconds"
+      ],
+      "tags": [
+        "core",
+        "shoulders",
+        "chest",
+        "push",
+        "bilateral",
+        "isometric"
+      ],
+      "phase": "workout"
+    },
+    {
+      "id": "plank-pose-extended",
+      "exerciseId": "plank-pose",
+      "name": "Plank Pose - Extended Hold",
+      "disciplines": [
+        "yoga"
+      ],
+      "difficulty": 5,
+      "metrics": {
+        "mobility": 60,
+        "rotation": 30,
+        "flexibility": 55
+      },
+      "instructions": [
+        "Begin in basic plank",
+        "Hold for extended time",
+        "Maintain perfect form",
+        "Hold for 60-120 seconds"
+      ],
+      "tags": [
+        "core",
+        "shoulders",
+        "chest",
+        "push",
+        "bilateral",
+        "isometric"
+      ],
+      "phase": "workout"
+    },
+    {
+      "id": "plank-pose-alternating",
+      "exerciseId": "plank-pose",
+      "name": "Alternating Plank",
+      "disciplines": [
+        "yoga"
+      ],
+      "difficulty": 6,
+      "metrics": {
+        "mobility": 65,
+        "rotation": 40,
+        "flexibility": 60
+      },
+      "instructions": [
+        "Begin in plank",
+        "Lift one arm, then opposite leg",
+        "Alternate sides",
+        "Complete 10-12 repetitions per side"
+      ],
+      "tags": [
+        "core",
+        "shoulders",
+        "chest",
+        "legs",
+        "push",
+        "unilateral",
+        "isometric"
+      ],
+      "phase": "workout"
+    },
+    {
+      "id": "side-plank-basic",
+      "exerciseId": "side-plank",
+      "name": "Side Plank - Basic",
+      "disciplines": [
+        "yoga"
+      ],
+      "difficulty": 4,
+      "metrics": {
+        "mobility": 55,
+        "rotation": 50,
+        "flexibility": 50
+      },
+      "instructions": [
+        "Start in plank, rotate to side",
+        "Stack feet, one hand on floor",
+        "Extend top arm toward ceiling",
+        "Hold for 30-60 seconds per side"
+      ],
+      "tags": [
+        "core",
+        "shoulders",
+        "rotation",
+        "push",
+        "unilateral",
+        "isometric"
+      ],
+      "phase": "workout"
+    },
+    {
+      "id": "side-plank-extended",
+      "exerciseId": "side-plank",
+      "name": "Side Plank - Extended Hold",
+      "disciplines": [
+        "yoga"
+      ],
+      "difficulty": 6,
+      "metrics": {
+        "mobility": 70,
+        "rotation": 65,
+        "flexibility": 65
+      },
+      "instructions": [
+        "Begin in basic side plank",
+        "Hold for extended time",
+        "Maintain alignment",
+        "Hold for 60-90 seconds per side"
+      ],
+      "tags": [
+        "core",
+        "shoulders",
+        "rotation",
+        "push",
+        "unilateral",
+        "isometric"
+      ],
+      "phase": "workout"
+    },
+    {
+      "id": "side-plank-top-leg-lift",
+      "exerciseId": "side-plank",
+      "name": "Side Plank - Top Leg Lift",
+      "disciplines": [
+        "yoga"
+      ],
+      "difficulty": 7,
+      "metrics": {
+        "mobility": 75,
+        "rotation": 70,
+        "flexibility": 70
+      },
+      "instructions": [
+        "Begin in side plank",
+        "Lift top leg",
+        "Hold for 5-8 breaths",
+        "Lower and repeat",
+        "Complete 5-8 repetitions per side"
+      ],
+      "tags": [
+        "core",
+        "shoulders",
+        "legs",
+        "rotation",
+        "push",
+        "unilateral",
+        "isometric"
+      ],
+      "phase": "workout"
+    },
+    {
+      "id": "chair-pose-basic",
+      "exerciseId": "chair-pose",
+      "name": "Chair Pose - Basic",
+      "disciplines": [
+        "yoga"
+      ],
+      "difficulty": 4,
+      "metrics": {
+        "mobility": 55,
+        "rotation": 30,
+        "flexibility": 50
+      },
+      "instructions": [
+        "Stand with feet together",
+        "Bend knees, sit back as if in chair",
+        "Raise arms overhead",
+        "Hold for 5-8 breaths"
+      ],
+      "tags": [
+        "legs",
+        "shoulders",
+        "core",
+        "squat",
+        "push",
+        "bilateral",
+        "isometric"
+      ],
+      "phase": "workout"
+    },
+    {
+      "id": "chair-pose-twist",
+      "exerciseId": "chair-pose",
+      "name": "Revolved Chair Pose",
+      "disciplines": [
+        "yoga"
+      ],
+      "difficulty": 6,
+      "metrics": {
+        "mobility": 70,
+        "rotation": 70,
+        "flexibility": 65
+      },
+      "instructions": [
+        "Begin in chair pose",
+        "Rotate torso to one side",
+        "Bring opposite elbow to outside of knee",
+        "Hold for 5-8 breaths per side"
+      ],
+      "tags": [
+        "legs",
+        "shoulders",
+        "core",
+        "squat",
+        "rotation",
+        "bilateral",
+        "isometric"
+      ],
+      "phase": "workout"
+    },
+    {
+      "id": "crescent-lunge-basic",
+      "exerciseId": "crescent-lunge",
+      "name": "Crescent Lunge - Basic",
+      "disciplines": [
+        "yoga"
+      ],
+      "difficulty": 5,
+      "metrics": {
+        "mobility": 65,
+        "rotation": 40,
+        "flexibility": 70
+      },
+      "instructions": [
+        "Step one foot forward into lunge",
+        "Raise arms overhead",
+        "Lift back heel off floor",
+        "Hold for 5-8 breaths per side"
+      ],
+      "tags": [
+        "legs",
+        "shoulders",
+        "core",
+        "lunge",
+        "push",
+        "bilateral",
+        "isometric"
+      ],
+      "phase": "warmup"
+    },
+    {
+      "id": "crescent-lunge-twist",
+      "exerciseId": "crescent-lunge",
+      "name": "Revolved Crescent Lunge",
+      "disciplines": [
+        "yoga"
+      ],
+      "difficulty": 7,
+      "metrics": {
+        "mobility": 75,
+        "rotation": 75,
+        "flexibility": 80
+      },
+      "instructions": [
+        "Begin in crescent lunge",
+        "Rotate torso to one side",
+        "Bring opposite elbow to outside of front knee",
+        "Hold for 5-8 breaths per side"
+      ],
+      "tags": [
+        "legs",
+        "shoulders",
+        "core",
+        "lunge",
+        "rotation",
+        "bilateral",
+        "isometric"
+      ],
+      "phase": "workout"
+    },
+    {
+      "id": "revolved-triangle-basic",
+      "exerciseId": "revolved-triangle",
+      "name": "Revolved Triangle - Basic",
+      "disciplines": [
+        "yoga"
+      ],
+      "difficulty": 6,
+      "metrics": {
+        "mobility": 75,
+        "rotation": 80,
+        "flexibility": 80
+      },
+      "instructions": [
+        "Start in triangle pose",
+        "Rotate torso, bringing opposite hand to floor or block",
+        "Extend other arm toward ceiling",
+        "Hold for 5-8 breaths per side"
+      ],
+      "tags": [
+        "legs",
+        "shoulders",
+        "core",
+        "back",
+        "hinge",
+        "rotation",
+        "bilateral",
+        "isometric"
+      ],
+      "phase": "workout"
+    },
+    {
+      "id": "revolved-triangle-extended",
+      "exerciseId": "revolved-triangle",
+      "name": "Revolved Triangle - Extended",
+      "disciplines": [
+        "yoga"
+      ],
+      "difficulty": 8,
+      "metrics": {
+        "mobility": 85,
+        "rotation": 90,
+        "flexibility": 85
+      },
+      "instructions": [
+        "Begin in basic revolved triangle",
+        "Increase rotation range",
+        "Reach further with top arm",
+        "Hold for 5-8 breaths per side"
+      ],
+      "tags": [
+        "legs",
+        "shoulders",
+        "core",
+        "back",
+        "hinge",
+        "rotation",
+        "bilateral",
+        "isometric"
+      ],
+      "phase": "workout"
+    },
+    {
+      "id": "seated-forward-fold-basic",
+      "exerciseId": "seated-forward-fold",
+      "name": "Seated Forward Fold - Basic",
+      "disciplines": [
+        "yoga"
+      ],
+      "difficulty": 4,
+      "metrics": {
+        "mobility": 60,
+        "rotation": 25,
+        "flexibility": 70
+      },
+      "instructions": [
+        "Sit with legs extended",
+        "Fold forward over legs",
+        "Reach for feet or shins",
+        "Hold for 10-15 breaths"
+      ],
+      "tags": [
+        "legs",
+        "back",
+        "core",
+        "hinge",
+        "bilateral",
+        "isometric"
+      ],
+      "phase": "cooldown"
+    },
+    {
+      "id": "seated-forward-fold-deep",
+      "exerciseId": "seated-forward-fold",
+      "name": "Seated Forward Fold - Deep",
+      "disciplines": [
+        "yoga"
+      ],
+      "difficulty": 6,
+      "metrics": {
+        "mobility": 75,
+        "rotation": 35,
+        "flexibility": 85
+      },
+      "instructions": [
+        "Begin in basic forward fold",
+        "Fold deeper, bringing chest closer to legs",
+        "Increase hamstring stretch",
+        "Hold for 10-15 breaths"
+      ],
+      "tags": [
+        "legs",
+        "back",
+        "core",
+        "hinge",
+        "bilateral",
+        "isometric"
+      ],
+      "phase": "cooldown"
+    },
+    {
+      "id": "seated-forward-fold-wide-leg",
+      "exerciseId": "seated-forward-fold",
+      "name": "Wide-Leg Forward Fold",
+      "disciplines": [
+        "yoga"
+      ],
+      "difficulty": 5,
+      "metrics": {
+        "mobility": 70,
+        "rotation": 40,
+        "flexibility": 80
+      },
+      "instructions": [
+        "Sit with legs wide apart",
+        "Fold forward between legs",
+        "Reach forward or to sides",
+        "Hold for 10-15 breaths"
+      ],
+      "tags": [
+        "legs",
+        "back",
+        "core",
+        "hinge",
+        "bilateral",
+        "isometric"
+      ],
+      "phase": "cooldown"
+    },
+    {
+      "id": "camel-pose-basic",
+      "exerciseId": "camel-pose",
+      "name": "Camel Pose - Basic",
+      "disciplines": [
+        "yoga"
+      ],
+      "difficulty": 5,
+      "metrics": {
+        "mobility": 70,
+        "rotation": 40,
+        "flexibility": 75
+      },
+      "instructions": [
+        "Kneel on floor",
+        "Place hands on lower back",
+        "Lift chest, arch back",
+        "Hold for 5-8 breaths"
+      ],
+      "tags": [
+        "back",
+        "chest",
+        "shoulders",
+        "core",
+        "legs",
+        "bilateral",
+        "isometric"
+      ],
+      "phase": "cooldown"
+    },
+    {
+      "id": "camel-pose-full",
+      "exerciseId": "camel-pose",
+      "name": "Full Camel Pose",
+      "disciplines": [
+        "yoga"
+      ],
+      "difficulty": 7,
+      "metrics": {
+        "mobility": 80,
+        "rotation": 50,
+        "flexibility": 85
+      },
+      "instructions": [
+        "Begin in basic camel",
+        "Reach hands back to grasp heels",
+        "Lift chest higher",
+        "Hold for 5-8 breaths"
+      ],
+      "tags": [
+        "back",
+        "chest",
+        "shoulders",
+        "core",
+        "legs",
+        "pull",
+        "bilateral",
+        "isometric"
+      ],
+      "phase": "cooldown"
+    },
+    {
+      "id": "wheel-pose-basic",
+      "exerciseId": "wheel-pose",
+      "name": "Wheel Pose - Basic",
+      "disciplines": [
+        "yoga"
+      ],
+      "difficulty": 7,
+      "metrics": {
+        "mobility": 80,
+        "rotation": 45,
+        "flexibility": 85
+      },
+      "instructions": [
+        "Lie supine, knees bent",
+        "Place hands by ears, fingers toward shoulders",
+        "Press up into wheel position",
+        "Hold for 5-8 breaths"
+      ],
+      "tags": [
+        "back",
+        "chest",
+        "shoulders",
+        "core",
+        "legs",
+        "push",
+        "bilateral",
+        "isometric"
+      ],
+      "phase": "workout"
+    },
+    {
+      "id": "wheel-pose-one-leg",
+      "exerciseId": "wheel-pose",
+      "name": "Wheel Pose - One Leg",
+      "disciplines": [
+        "yoga"
+      ],
+      "difficulty": 9,
+      "metrics": {
+        "mobility": 90,
+        "rotation": 55,
+        "flexibility": 95
+      },
+      "instructions": [
+        "Begin in wheel pose",
+        "Lift one leg, extending toward ceiling",
+        "Maintain balance",
+        "Hold for 3-5 breaths per side"
+      ],
+      "tags": [
+        "back",
+        "chest",
+        "shoulders",
+        "core",
+        "legs",
+        "push",
+        "unilateral",
+        "isometric"
+      ],
+      "phase": "workout"
+    },
+    {
+      "id": "wheel-pose-walking",
+      "exerciseId": "wheel-pose",
+      "name": "Walking Wheel",
+      "disciplines": [
+        "yoga"
+      ],
+      "difficulty": 8,
+      "metrics": {
+        "mobility": 85,
+        "rotation": 50,
+        "flexibility": 90
+      },
+      "instructions": [
+        "Begin in wheel pose",
+        "Walk hands toward feet",
+        "Increase back extension",
+        "Return to start",
+        "Complete 3-5 repetitions"
+      ],
+      "tags": [
+        "back",
+        "chest",
+        "shoulders",
+        "core",
+        "legs",
+        "push",
+        "bilateral"
+      ],
+      "phase": "workout"
     }
   ]
 }

@@ -3,44 +3,279 @@
     {
       "id": "beast-crawl",
       "name": "Beast Crawl",
-      "targetMuscleGroups": ["shoulders", "triceps", "core", "quadriceps", "glutes"],
+      "targetMuscleGroups": [
+        "shoulders",
+        "triceps",
+        "core",
+        "quadriceps",
+        "glutes"
+      ],
       "category": "locomotion"
     },
     {
       "id": "crab-reach",
       "name": "Crab Reach",
-      "targetMuscleGroups": ["shoulders", "triceps", "core", "glutes", "hamstrings"],
+      "targetMuscleGroups": [
+        "shoulders",
+        "triceps",
+        "core",
+        "glutes",
+        "hamstrings"
+      ],
       "category": "reach"
     },
     {
       "id": "ape-reach",
       "name": "Ape Reach",
-      "targetMuscleGroups": ["shoulders", "lats", "core", "hip-flexors", "quadriceps"],
+      "targetMuscleGroups": [
+        "shoulders",
+        "lats",
+        "core",
+        "hip-flexors",
+        "quadriceps"
+      ],
       "category": "reach"
     },
     {
       "id": "loaded-beast",
       "name": "Loaded Beast",
-      "targetMuscleGroups": ["shoulders", "triceps", "core", "quadriceps", "glutes", "hip-flexors"],
+      "targetMuscleGroups": [
+        "shoulders",
+        "triceps",
+        "core",
+        "quadriceps",
+        "glutes",
+        "hip-flexors"
+      ],
       "category": "transition"
     },
     {
       "id": "side-kickthrough",
       "name": "Side Kickthrough",
-      "targetMuscleGroups": ["core", "obliques", "hip-flexors", "shoulders", "glutes"],
+      "targetMuscleGroups": [
+        "core",
+        "obliques",
+        "hip-flexors",
+        "shoulders",
+        "glutes"
+      ],
       "category": "transition"
     },
     {
       "id": "underswitch",
       "name": "Underswitch",
-      "targetMuscleGroups": ["core", "obliques", "shoulders", "hip-flexors", "glutes"],
+      "targetMuscleGroups": [
+        "core",
+        "obliques",
+        "shoulders",
+        "hip-flexors",
+        "glutes"
+      ],
       "category": "transition"
     },
     {
       "id": "front-kickthrough",
       "name": "Front Kickthrough",
-      "targetMuscleGroups": ["core", "hip-flexors", "shoulders", "quadriceps", "glutes"],
+      "targetMuscleGroups": [
+        "core",
+        "hip-flexors",
+        "shoulders",
+        "quadriceps",
+        "glutes"
+      ],
       "category": "transition"
+    },
+    {
+      "id": "scorpion-reach",
+      "name": "Scorpion Reach",
+      "targetMuscleGroups": [
+        "shoulders",
+        "core",
+        "hip-flexors",
+        "glutes",
+        "spinal-rotation"
+      ],
+      "category": "reach"
+    },
+    {
+      "id": "flowing-scorpion",
+      "name": "Flowing Scorpion",
+      "targetMuscleGroups": [
+        "shoulders",
+        "core",
+        "hip-flexors",
+        "glutes",
+        "flexibility"
+      ],
+      "category": "transition"
+    },
+    {
+      "id": "side-flow",
+      "name": "Side Flow",
+      "targetMuscleGroups": [
+        "core",
+        "obliques",
+        "shoulders",
+        "hip-flexors",
+        "glutes"
+      ],
+      "category": "transition"
+    },
+    {
+      "id": "forward-flow",
+      "name": "Forward Flow",
+      "targetMuscleGroups": [
+        "shoulders",
+        "core",
+        "hip-flexors",
+        "quadriceps",
+        "coordination"
+      ],
+      "category": "locomotion"
+    },
+    {
+      "id": "reverse-flow",
+      "name": "Reverse Flow",
+      "targetMuscleGroups": [
+        "shoulders",
+        "core",
+        "glutes",
+        "hamstrings",
+        "coordination"
+      ],
+      "category": "locomotion"
+    },
+    {
+      "id": "crab-tap",
+      "name": "Crab Tap",
+      "targetMuscleGroups": [
+        "shoulders",
+        "triceps",
+        "core",
+        "glutes",
+        "coordination"
+      ],
+      "category": "reach"
+    },
+    {
+      "id": "beast-reach",
+      "name": "Beast Reach",
+      "targetMuscleGroups": [
+        "shoulders",
+        "core",
+        "hip-flexors",
+        "glutes",
+        "stability"
+      ],
+      "category": "reach"
+    },
+    {
+      "id": "thread-the-needle",
+      "name": "Thread the Needle",
+      "targetMuscleGroups": [
+        "shoulders",
+        "core",
+        "obliques",
+        "spinal-rotation",
+        "flexibility"
+      ],
+      "category": "transition"
+    },
+    {
+      "id": "inchworm",
+      "name": "Inchworm",
+      "targetMuscleGroups": [
+        "shoulders",
+        "core",
+        "hamstrings",
+        "flexibility",
+        "coordination"
+      ],
+      "category": "locomotion"
+    },
+    {
+      "id": "lizard-crawl",
+      "name": "Lizard Crawl",
+      "targetMuscleGroups": [
+        "shoulders",
+        "core",
+        "hip-flexors",
+        "quadriceps",
+        "coordination"
+      ],
+      "category": "locomotion"
+    },
+    {
+      "id": "frog-stand",
+      "name": "Frog Stand",
+      "targetMuscleGroups": [
+        "shoulders",
+        "core",
+        "arms",
+        "balance",
+        "stability"
+      ],
+      "category": "strength"
+    },
+    {
+      "id": "crab-walk",
+      "name": "Crab Walk",
+      "targetMuscleGroups": [
+        "shoulders",
+        "triceps",
+        "core",
+        "glutes",
+        "coordination"
+      ],
+      "category": "locomotion"
+    },
+    {
+      "id": "bear-walk",
+      "name": "Bear Walk",
+      "targetMuscleGroups": [
+        "shoulders",
+        "core",
+        "quadriceps",
+        "glutes",
+        "coordination"
+      ],
+      "category": "locomotion"
+    },
+    {
+      "id": "duck-walk",
+      "name": "Duck Walk",
+      "targetMuscleGroups": [
+        "quadriceps",
+        "glutes",
+        "core",
+        "hip-flexors",
+        "mobility"
+      ],
+      "category": "locomotion"
+    },
+    {
+      "id": "caterpillar",
+      "name": "Caterpillar",
+      "targetMuscleGroups": [
+        "shoulders",
+        "core",
+        "hamstrings",
+        "flexibility",
+        "coordination"
+      ],
+      "category": "locomotion"
+    },
+    {
+      "id": "lateral-shuffle",
+      "name": "Lateral Shuffle",
+      "targetMuscleGroups": [
+        "core",
+        "obliques",
+        "hip-abductors",
+        "shoulders",
+        "coordination"
+      ],
+      "category": "locomotion"
     }
   ],
   "variations": [
@@ -48,13 +283,16 @@
       "id": "beast-crawl-static",
       "exerciseId": "beast-crawl",
       "name": "Static Beast Hold",
-      "disciplines": ["animal-flow"],
+      "disciplines": [
+        "animal-flow"
+      ],
       "difficulty": 2,
       "metrics": {
         "mobility": 45,
         "rotation": 20,
         "flexibility": 50
       },
+      "phase": "warmup",
       "instructions": [
         "Start on hands and knees with knees hovering 1-2 inches off ground",
         "Position hands directly under shoulders, fingers spread wide",
@@ -64,22 +302,22 @@
         "Focus on shoulder stability and core engagement",
         "Keep weight evenly distributed between hands and feet"
       ],
-      "metadata": {
-        "bilaterality": true,
-        "equipment": []
-      }
+      "tags": ["core", "shoulders", "legs", "isometric", "bilateral"]
     },
     {
       "id": "beast-crawl-forward",
       "exerciseId": "beast-crawl",
       "name": "Forward Beast Crawl",
-      "disciplines": ["animal-flow"],
+      "disciplines": [
+        "animal-flow"
+      ],
       "difficulty": 4,
       "metrics": {
         "mobility": 60,
         "rotation": 30,
         "flexibility": 65
       },
+      "phase": "warmup",
       "instructions": [
         "Start in static beast position with knees hovering",
         "Move opposite hand and foot simultaneously (right hand, left foot)",
@@ -89,22 +327,22 @@
         "Move forward in straight line",
         "Focus on smooth, coordinated movement patterns"
       ],
-      "metadata": {
-        "bilaterality": true,
-        "equipment": []
-      }
+      "tags": ["core", "shoulders", "legs", "push", "unilateral"]
     },
     {
       "id": "beast-crawl-backward",
       "exerciseId": "beast-crawl",
       "name": "Backward Beast Crawl",
-      "disciplines": ["animal-flow"],
+      "disciplines": [
+        "animal-flow"
+      ],
       "difficulty": 5,
       "metrics": {
         "mobility": 65,
         "rotation": 35,
         "flexibility": 70
       },
+      "phase": "workout",
       "instructions": [
         "Start in static beast position",
         "Move opposite hand and foot backward simultaneously",
@@ -114,22 +352,22 @@
         "Move backward in controlled, coordinated pattern",
         "More challenging than forward crawl due to reduced visibility"
       ],
-      "metadata": {
-        "bilaterality": true,
-        "equipment": []
-      }
+      "tags": ["core", "shoulders", "legs", "pull", "unilateral"]
     },
     {
       "id": "beast-crawl-lateral",
       "exerciseId": "beast-crawl",
       "name": "Lateral Beast Crawl",
-      "disciplines": ["animal-flow"],
+      "disciplines": [
+        "animal-flow"
+      ],
       "difficulty": 6,
       "metrics": {
         "mobility": 70,
         "rotation": 50,
         "flexibility": 75
       },
+      "phase": "workout",
       "instructions": [
         "Start in static beast position",
         "Move both hands to one side, then both feet",
@@ -139,22 +377,22 @@
         "Move in controlled side-to-side pattern",
         "Advanced progression requiring greater mobility and control"
       ],
-      "metadata": {
-        "bilaterality": true,
-        "equipment": []
-      }
+      "tags": ["core", "shoulders", "legs", "rotation", "bilateral"]
     },
     {
       "id": "crab-reach-static",
       "exerciseId": "crab-reach",
       "name": "Static Crab Position",
-      "disciplines": ["animal-flow"],
+      "disciplines": [
+        "animal-flow"
+      ],
       "difficulty": 3,
       "metrics": {
         "mobility": 55,
         "rotation": 25,
         "flexibility": 70
       },
+      "phase": "warmup",
       "instructions": [
         "Sit on ground with hands behind you, fingers pointing toward body",
         "Lift hips up to create tabletop position",
@@ -164,22 +402,22 @@
         "Focus on shoulder extension and hip extension",
         "Breathe steadily while maintaining position"
       ],
-      "metadata": {
-        "bilaterality": true,
-        "equipment": []
-      }
+      "tags": ["core", "shoulders", "back", "legs", "isometric", "bilateral"]
     },
     {
       "id": "crab-reach-same-side",
       "exerciseId": "crab-reach",
       "name": "Same-Side Crab Reach",
-      "disciplines": ["animal-flow"],
+      "disciplines": [
+        "animal-flow"
+      ],
       "difficulty": 5,
       "metrics": {
         "mobility": 70,
         "rotation": 40,
         "flexibility": 80
       },
+      "phase": "workout",
       "instructions": [
         "Start in static crab position",
         "Lift same-side hand and foot simultaneously",
@@ -190,22 +428,22 @@
         "Alternate sides for each repetition",
         "Requires significant shoulder mobility and core stability"
       ],
-      "metadata": {
-        "bilaterality": false,
-        "equipment": []
-      }
+      "tags": ["core", "shoulders", "back", "legs", "push", "unilateral"]
     },
     {
       "id": "crab-reach-opposite-side",
       "exerciseId": "crab-reach",
       "name": "Opposite-Side Crab Reach",
-      "disciplines": ["animal-flow"],
+      "disciplines": [
+        "animal-flow"
+      ],
       "difficulty": 6,
       "metrics": {
         "mobility": 75,
         "rotation": 55,
         "flexibility": 85
       },
+      "phase": "workout",
       "instructions": [
         "Start in static crab position",
         "Lift opposite hand and foot simultaneously (right hand, left foot)",
@@ -216,22 +454,22 @@
         "Return to center with control",
         "More challenging due to cross-body coordination"
       ],
-      "metadata": {
-        "bilaterality": false,
-        "equipment": []
-      }
+      "tags": ["core", "shoulders", "back", "legs", "rotation", "unilateral"]
     },
     {
       "id": "crab-reach-rotational",
       "exerciseId": "crab-reach",
       "name": "Rotational Crab Reach",
-      "disciplines": ["animal-flow"],
+      "disciplines": [
+        "animal-flow"
+      ],
       "difficulty": 7,
       "metrics": {
         "mobility": 80,
         "rotation": 70,
         "flexibility": 90
       },
+      "phase": "workout",
       "instructions": [
         "Start in static crab position",
         "Reach one hand across body and rotate torso",
@@ -242,22 +480,22 @@
         "Requires exceptional spinal rotation and shoulder mobility",
         "Advanced movement combining reach with rotation"
       ],
-      "metadata": {
-        "bilaterality": false,
-        "equipment": []
-      }
+      "tags": ["core", "shoulders", "back", "legs", "rotation", "unilateral"]
     },
     {
       "id": "ape-reach-static",
       "exerciseId": "ape-reach",
       "name": "Static Ape Position",
-      "disciplines": ["animal-flow"],
+      "disciplines": [
+        "animal-flow"
+      ],
       "difficulty": 3,
       "metrics": {
         "mobility": 60,
         "rotation": 20,
         "flexibility": 65
       },
+      "phase": "warmup",
       "instructions": [
         "Start in deep squat position with feet wider than shoulder-width",
         "Place hands on ground in front of you, shoulder-width apart",
@@ -267,22 +505,22 @@
         "Focus on hip and ankle mobility",
         "Breathe deeply while maintaining position"
       ],
-      "metadata": {
-        "bilaterality": true,
-        "equipment": []
-      }
+      "tags": ["core", "legs", "shoulders", "squat", "isometric", "bilateral"]
     },
     {
       "id": "ape-reach-forward",
       "exerciseId": "ape-reach",
       "name": "Forward Ape Reach",
-      "disciplines": ["animal-flow"],
+      "disciplines": [
+        "animal-flow"
+      ],
       "difficulty": 5,
       "metrics": {
         "mobility": 70,
         "rotation": 30,
         "flexibility": 75
       },
+      "phase": "workout",
       "instructions": [
         "Start in static ape position",
         "Shift weight forward onto hands",
@@ -293,22 +531,22 @@
         "Requires hip flexibility and shoulder stability",
         "Move in controlled, deliberate pattern"
       ],
-      "metadata": {
-        "bilaterality": false,
-        "equipment": []
-      }
+      "tags": ["core", "legs", "shoulders", "squat", "push", "unilateral"]
     },
     {
       "id": "ape-reach-lateral",
       "exerciseId": "ape-reach",
       "name": "Lateral Ape Reach",
-      "disciplines": ["animal-flow"],
+      "disciplines": [
+        "animal-flow"
+      ],
       "difficulty": 6,
       "metrics": {
         "mobility": 75,
         "rotation": 45,
         "flexibility": 80
       },
+      "phase": "workout",
       "instructions": [
         "Start in static ape position",
         "Shift weight to one side",
@@ -319,22 +557,22 @@
         "Requires greater hip mobility and rotational control",
         "Advanced progression of forward reach"
       ],
-      "metadata": {
-        "bilaterality": false,
-        "equipment": []
-      }
+      "tags": ["core", "legs", "shoulders", "squat", "rotation", "unilateral"]
     },
     {
       "id": "ape-reach-rotational",
       "exerciseId": "ape-reach",
       "name": "Rotational Ape Reach",
-      "disciplines": ["animal-flow"],
+      "disciplines": [
+        "animal-flow"
+      ],
       "difficulty": 8,
       "metrics": {
         "mobility": 85,
         "rotation": 75,
         "flexibility": 90
       },
+      "phase": "workout",
       "instructions": [
         "Start in static ape position",
         "Rotate torso and reach hand behind opposite leg",
@@ -345,22 +583,22 @@
         "Requires exceptional hip flexibility and spinal rotation",
         "Ultimate test of ape position mobility"
       ],
-      "metadata": {
-        "bilaterality": false,
-        "equipment": []
-      }
+      "tags": ["core", "legs", "shoulders", "squat", "rotation", "unilateral"]
     },
     {
       "id": "loaded-beast-basic",
       "exerciseId": "loaded-beast",
       "name": "Basic Loaded Beast",
-      "disciplines": ["animal-flow"],
+      "disciplines": [
+        "animal-flow"
+      ],
       "difficulty": 4,
       "metrics": {
         "mobility": 65,
         "rotation": 25,
         "flexibility": 70
       },
+      "phase": "warmup",
       "instructions": [
         "Start in static beast position",
         "Lift one hand and opposite foot simultaneously",
@@ -371,22 +609,22 @@
         "Alternate sides for each repetition",
         "Foundation for more advanced loaded beast variations"
       ],
-      "metadata": {
-        "bilaterality": false,
-        "equipment": []
-      }
+      "tags": ["core", "shoulders", "legs", "push", "unilateral"]
     },
     {
       "id": "loaded-beast-rotational",
       "exerciseId": "loaded-beast",
       "name": "Rotational Loaded Beast",
-      "disciplines": ["animal-flow"],
+      "disciplines": [
+        "animal-flow"
+      ],
       "difficulty": 6,
       "metrics": {
         "mobility": 75,
         "rotation": 60,
         "flexibility": 80
       },
+      "phase": "workout",
       "instructions": [
         "Start in static beast position",
         "Lift one hand and rotate it across body",
@@ -397,22 +635,22 @@
         "Return to center with control",
         "Requires significant rotational mobility and stability"
       ],
-      "metadata": {
-        "bilaterality": false,
-        "equipment": []
-      }
+      "tags": ["core", "shoulders", "legs", "rotation", "unilateral"]
     },
     {
       "id": "loaded-beast-extended",
       "exerciseId": "loaded-beast",
       "name": "Extended Loaded Beast",
-      "disciplines": ["animal-flow"],
+      "disciplines": [
+        "animal-flow"
+      ],
       "difficulty": 7,
       "metrics": {
         "mobility": 80,
         "rotation": 65,
         "flexibility": 85
       },
+      "phase": "workout",
       "instructions": [
         "Start in static beast position",
         "Lift one hand and reach it fully extended forward",
@@ -424,22 +662,22 @@
         "Requires exceptional shoulder and hip flexibility",
         "Advanced progression emphasizing full-body extension"
       ],
-      "metadata": {
-        "bilaterality": false,
-        "equipment": []
-      }
+      "tags": ["core", "shoulders", "legs", "push", "unilateral"]
     },
     {
       "id": "side-kickthrough-basic",
       "exerciseId": "side-kickthrough",
       "name": "Basic Side Kickthrough",
-      "disciplines": ["animal-flow"],
+      "disciplines": [
+        "animal-flow"
+      ],
       "difficulty": 5,
       "metrics": {
         "mobility": 70,
         "rotation": 50,
         "flexibility": 75
       },
+      "phase": "workout",
       "instructions": [
         "Start in beast position",
         "Shift weight to one side",
@@ -450,22 +688,22 @@
         "Maintain control throughout rotation",
         "Foundation movement for side transitions"
       ],
-      "metadata": {
-        "bilaterality": false,
-        "equipment": []
-      }
+      "tags": ["core", "legs", "shoulders", "rotation", "unilateral"]
     },
     {
       "id": "side-kickthrough-extended",
       "exerciseId": "side-kickthrough",
       "name": "Extended Side Kickthrough",
-      "disciplines": ["animal-flow"],
+      "disciplines": [
+        "animal-flow"
+      ],
       "difficulty": 7,
       "metrics": {
         "mobility": 80,
         "rotation": 70,
         "flexibility": 85
       },
+      "phase": "workout",
       "instructions": [
         "Start in beast position",
         "Shift weight to one side",
@@ -477,22 +715,22 @@
         "Requires exceptional hip mobility and rotational control",
         "Advanced progression emphasizing range of motion"
       ],
-      "metadata": {
-        "bilaterality": false,
-        "equipment": []
-      }
+      "tags": ["core", "legs", "shoulders", "rotation", "unilateral"]
     },
     {
       "id": "side-kickthrough-flow",
       "exerciseId": "side-kickthrough",
       "name": "Side Kickthrough Flow",
-      "disciplines": ["animal-flow"],
+      "disciplines": [
+        "animal-flow"
+      ],
       "difficulty": 8,
       "metrics": {
         "mobility": 85,
         "rotation": 80,
         "flexibility": 90
       },
+      "phase": "workout",
       "instructions": [
         "Start in beast position",
         "Perform side kickthrough to one side",
@@ -504,22 +742,22 @@
         "Requires mastery of individual components",
         "Advanced flow pattern combining multiple transitions"
       ],
-      "metadata": {
-        "bilaterality": false,
-        "equipment": []
-      }
+      "tags": ["core", "legs", "shoulders", "back", "rotation", "unilateral"]
     },
     {
       "id": "underswitch-basic",
       "exerciseId": "underswitch",
       "name": "Basic Underswitch",
-      "disciplines": ["animal-flow"],
+      "disciplines": [
+        "animal-flow"
+      ],
       "difficulty": 6,
       "metrics": {
         "mobility": 75,
         "rotation": 65,
         "flexibility": 80
       },
+      "phase": "workout",
       "instructions": [
         "Start in beast position",
         "Shift weight to one hand",
@@ -530,22 +768,22 @@
         "Maintain control throughout rotation",
         "Foundation for underswitch transitions"
       ],
-      "metadata": {
-        "bilaterality": false,
-        "equipment": []
-      }
+      "tags": ["core", "shoulders", "legs", "rotation", "unilateral"]
     },
     {
       "id": "underswitch-extended",
       "exerciseId": "underswitch",
       "name": "Extended Underswitch",
-      "disciplines": ["animal-flow"],
+      "disciplines": [
+        "animal-flow"
+      ],
       "difficulty": 7,
       "metrics": {
         "mobility": 80,
         "rotation": 75,
         "flexibility": 85
       },
+      "phase": "workout",
       "instructions": [
         "Start in beast position",
         "Perform basic underswitch",
@@ -556,22 +794,22 @@
         "Return to center with control",
         "Requires exceptional rotational mobility and core stability"
       ],
-      "metadata": {
-        "bilaterality": false,
-        "equipment": []
-      }
+      "tags": ["core", "shoulders", "legs", "rotation", "unilateral"]
     },
     {
       "id": "underswitch-flow",
       "exerciseId": "underswitch",
       "name": "Underswitch Flow",
-      "disciplines": ["animal-flow"],
+      "disciplines": [
+        "animal-flow"
+      ],
       "difficulty": 9,
       "metrics": {
         "mobility": 90,
         "rotation": 85,
         "flexibility": 95
       },
+      "phase": "workout",
       "instructions": [
         "Start in beast position",
         "Perform underswitch to one side",
@@ -583,22 +821,22 @@
         "Requires mastery of rotation and position transitions",
         "Ultimate flow pattern combining multiple advanced movements"
       ],
-      "metadata": {
-        "bilaterality": false,
-        "equipment": []
-      }
+      "tags": ["core", "shoulders", "back", "legs", "rotation", "unilateral"]
     },
     {
       "id": "front-kickthrough-basic",
       "exerciseId": "front-kickthrough",
       "name": "Basic Front Kickthrough",
-      "disciplines": ["animal-flow"],
+      "disciplines": [
+        "animal-flow"
+      ],
       "difficulty": 5,
       "metrics": {
         "mobility": 70,
         "rotation": 30,
         "flexibility": 80
       },
+      "phase": "workout",
       "instructions": [
         "Start in beast position",
         "Shift weight to one side",
@@ -609,22 +847,22 @@
         "Maintain control throughout movement",
         "Foundation for front transitions"
       ],
-      "metadata": {
-        "bilaterality": false,
-        "equipment": []
-      }
+      "tags": ["core", "legs", "shoulders", "lunge", "unilateral"]
     },
     {
       "id": "front-kickthrough-extended",
       "exerciseId": "front-kickthrough",
       "name": "Extended Front Kickthrough",
-      "disciplines": ["animal-flow"],
+      "disciplines": [
+        "animal-flow"
+      ],
       "difficulty": 7,
       "metrics": {
         "mobility": 80,
         "rotation": 40,
         "flexibility": 90
       },
+      "phase": "workout",
       "instructions": [
         "Start in beast position",
         "Shift weight to one side",
@@ -636,22 +874,22 @@
         "Requires exceptional hip flexor flexibility and core strength",
         "Advanced progression emphasizing forward range of motion"
       ],
-      "metadata": {
-        "bilaterality": false,
-        "equipment": []
-      }
+      "tags": ["core", "legs", "shoulders", "lunge", "unilateral"]
     },
     {
       "id": "front-kickthrough-ape-transition",
       "exerciseId": "front-kickthrough",
       "name": "Front Kickthrough to Ape",
-      "disciplines": ["animal-flow"],
+      "disciplines": [
+        "animal-flow"
+      ],
       "difficulty": 8,
       "metrics": {
         "mobility": 85,
         "rotation": 50,
         "flexibility": 95
       },
+      "phase": "workout",
       "instructions": [
         "Start in beast position",
         "Perform front kickthrough",
@@ -663,11 +901,1067 @@
         "Requires mastery of both positions and transition",
         "Advanced flow pattern combining beast and ape positions"
       ],
-      "metadata": {
-        "bilaterality": false,
-        "equipment": []
-      }
+      "tags": ["core", "legs", "shoulders", "squat", "lunge", "unilateral"]
+    },
+    {
+      "id": "scorpion-reach-basic",
+      "exerciseId": "scorpion-reach",
+      "name": "Scorpion Reach - Basic",
+      "disciplines": [
+        "animal-flow"
+      ],
+      "difficulty": 5,
+      "metrics": {
+        "mobility": 70,
+        "rotation": 55,
+        "flexibility": 75
+      },
+      "phase": "workout",
+      "instructions": [
+        "Start in beast position",
+        "Lift one leg and reach it across body",
+        "Rotate torso to allow leg passage",
+        "Reach leg as far as possible",
+        "Return to center with control",
+        "Complete 6-8 repetitions per side"
+      ],
+      "tags": ["core", "legs", "shoulders", "rotation", "unilateral"]
+    },
+    {
+      "id": "scorpion-reach-extended",
+      "exerciseId": "scorpion-reach",
+      "name": "Scorpion Reach - Extended",
+      "disciplines": [
+        "animal-flow"
+      ],
+      "difficulty": 7,
+      "metrics": {
+        "mobility": 80,
+        "rotation": 70,
+        "flexibility": 85
+      },
+      "phase": "workout",
+      "instructions": [
+        "Start in beast position",
+        "Lift leg and reach further across body",
+        "Increase rotation and reach range",
+        "Hold extended position briefly",
+        "Complete 6-8 repetitions per side"
+      ],
+      "tags": ["core", "legs", "shoulders", "rotation", "unilateral"]
+    },
+    {
+      "id": "scorpion-reach-flow",
+      "exerciseId": "scorpion-reach",
+      "name": "Scorpion Reach - Flow",
+      "disciplines": [
+        "animal-flow"
+      ],
+      "difficulty": 8,
+      "metrics": {
+        "mobility": 85,
+        "rotation": 75,
+        "flexibility": 90
+      },
+      "phase": "workout",
+      "instructions": [
+        "Start in beast position",
+        "Perform scorpion reach to one side",
+        "Flow through to crab position",
+        "Return to beast through reverse movement",
+        "Complete continuous flow pattern",
+        "Complete 5-6 repetitions per side"
+      ],
+      "tags": ["core", "legs", "shoulders", "back", "rotation", "unilateral"]
+    },
+    {
+      "id": "flowing-scorpion-basic",
+      "exerciseId": "flowing-scorpion",
+      "name": "Flowing Scorpion - Basic",
+      "disciplines": [
+        "animal-flow"
+      ],
+      "difficulty": 6,
+      "metrics": {
+        "mobility": 75,
+        "rotation": 65,
+        "flexibility": 80
+      },
+      "phase": "workout",
+      "instructions": [
+        "Start in beast position",
+        "Lift leg and reach across body",
+        "Flow leg through to opposite side",
+        "Transition smoothly between positions",
+        "Complete 6-8 repetitions per side"
+      ],
+      "tags": ["core", "legs", "shoulders", "rotation", "unilateral"]
+    },
+    {
+      "id": "flowing-scorpion-extended",
+      "exerciseId": "flowing-scorpion",
+      "name": "Flowing Scorpion - Extended",
+      "disciplines": [
+        "animal-flow"
+      ],
+      "difficulty": 8,
+      "metrics": {
+        "mobility": 85,
+        "rotation": 80,
+        "flexibility": 90
+      },
+      "phase": "workout",
+      "instructions": [
+        "Begin in basic position",
+        "Increase flow range and rotation",
+        "Extend leg further through transition",
+        "Maintain smooth, continuous movement",
+        "Complete 6-8 repetitions per side"
+      ],
+      "tags": ["core", "legs", "shoulders", "rotation", "unilateral"]
+    },
+    {
+      "id": "side-flow-basic",
+      "exerciseId": "side-flow",
+      "name": "Side Flow - Basic",
+      "disciplines": [
+        "animal-flow"
+      ],
+      "difficulty": 5,
+      "metrics": {
+        "mobility": 65,
+        "rotation": 60,
+        "flexibility": 70
+      },
+      "phase": "workout",
+      "instructions": [
+        "Start in beast position",
+        "Shift weight to one side",
+        "Flow leg through to side",
+        "Transition to side position",
+        "Return to center",
+        "Complete 6-8 repetitions per side"
+      ],
+      "tags": ["core", "legs", "shoulders", "rotation", "unilateral"]
+    },
+    {
+      "id": "side-flow-extended",
+      "exerciseId": "side-flow",
+      "name": "Side Flow - Extended",
+      "disciplines": [
+        "animal-flow"
+      ],
+      "difficulty": 7,
+      "metrics": {
+        "mobility": 80,
+        "rotation": 75,
+        "flexibility": 85
+      },
+      "phase": "workout",
+      "instructions": [
+        "Begin in basic position",
+        "Increase side flow range",
+        "Extend leg further to side",
+        "Maintain control throughout",
+        "Complete 6-8 repetitions per side"
+      ],
+      "tags": ["core", "legs", "shoulders", "rotation", "unilateral"]
+    },
+    {
+      "id": "side-flow-continuous",
+      "exerciseId": "side-flow",
+      "name": "Side Flow - Continuous",
+      "disciplines": [
+        "animal-flow"
+      ],
+      "difficulty": 9,
+      "metrics": {
+        "mobility": 90,
+        "rotation": 85,
+        "flexibility": 95
+      },
+      "phase": "workout",
+      "instructions": [
+        "Start in beast position",
+        "Flow continuously from side to side",
+        "Maintain smooth transitions",
+        "Create flowing wave motion",
+        "Complete 10-12 repetitions per side"
+      ],
+      "tags": ["core", "legs", "shoulders", "rotation", "unilateral"]
+    },
+    {
+      "id": "forward-flow-basic",
+      "exerciseId": "forward-flow",
+      "name": "Forward Flow - Basic",
+      "disciplines": [
+        "animal-flow"
+      ],
+      "difficulty": 4,
+      "metrics": {
+        "mobility": 60,
+        "rotation": 25,
+        "flexibility": 65
+      },
+      "phase": "warmup",
+      "instructions": [
+        "Start in beast position",
+        "Move forward in coordinated pattern",
+        "Alternate opposite hand and foot",
+        "Maintain stable core throughout",
+        "Complete 10-12 steps forward"
+      ],
+      "tags": ["core", "shoulders", "legs", "push", "unilateral"]
+    },
+    {
+      "id": "forward-flow-fast",
+      "exerciseId": "forward-flow",
+      "name": "Forward Flow - Fast",
+      "disciplines": [
+        "animal-flow"
+      ],
+      "difficulty": 6,
+      "metrics": {
+        "mobility": 70,
+        "rotation": 30,
+        "flexibility": 75
+      },
+      "phase": "workout",
+      "instructions": [
+        "Begin in basic position",
+        "Increase movement speed",
+        "Maintain control and coordination",
+        "Complete 15-20 steps forward"
+      ],
+      "tags": ["core", "shoulders", "legs", "push", "explosive", "unilateral"]
+    },
+    {
+      "id": "forward-flow-lateral",
+      "exerciseId": "forward-flow",
+      "name": "Forward Flow - Lateral",
+      "disciplines": [
+        "animal-flow"
+      ],
+      "difficulty": 7,
+      "metrics": {
+        "mobility": 75,
+        "rotation": 50,
+        "flexibility": 80
+      },
+      "phase": "workout",
+      "instructions": [
+        "Start in beast position",
+        "Move forward with lateral component",
+        "Add rotation to forward movement",
+        "Complete 10-12 steps"
+      ],
+      "tags": ["core", "shoulders", "legs", "push", "rotation", "unilateral"]
+    },
+    {
+      "id": "reverse-flow-basic",
+      "exerciseId": "reverse-flow",
+      "name": "Reverse Flow - Basic",
+      "disciplines": [
+        "animal-flow"
+      ],
+      "difficulty": 5,
+      "metrics": {
+        "mobility": 65,
+        "rotation": 30,
+        "flexibility": 70
+      },
+      "phase": "workout",
+      "instructions": [
+        "Start in beast position",
+        "Move backward in coordinated pattern",
+        "Alternate opposite hand and foot",
+        "Maintain stable core",
+        "Complete 10-12 steps backward"
+      ],
+      "tags": ["core", "shoulders", "legs", "pull", "unilateral"]
+    },
+    {
+      "id": "reverse-flow-fast",
+      "exerciseId": "reverse-flow",
+      "name": "Reverse Flow - Fast",
+      "disciplines": [
+        "animal-flow"
+      ],
+      "difficulty": 7,
+      "metrics": {
+        "mobility": 75,
+        "rotation": 35,
+        "flexibility": 80
+      },
+      "phase": "workout",
+      "instructions": [
+        "Begin in basic position",
+        "Increase backward movement speed",
+        "Maintain control and coordination",
+        "Complete 15-20 steps backward"
+      ],
+      "tags": ["core", "shoulders", "legs", "pull", "explosive", "unilateral"]
+    },
+    {
+      "id": "reverse-flow-lateral",
+      "exerciseId": "reverse-flow",
+      "name": "Reverse Flow - Lateral",
+      "disciplines": [
+        "animal-flow"
+      ],
+      "difficulty": 8,
+      "metrics": {
+        "mobility": 80,
+        "rotation": 55,
+        "flexibility": 85
+      },
+      "phase": "workout",
+      "instructions": [
+        "Start in beast position",
+        "Move backward with lateral component",
+        "Add rotation to backward movement",
+        "Complete 10-12 steps"
+      ],
+      "tags": ["core", "shoulders", "legs", "pull", "rotation", "unilateral"]
+    },
+    {
+      "id": "crab-tap-basic",
+      "exerciseId": "crab-tap",
+      "name": "Crab Tap - Basic",
+      "disciplines": [
+        "animal-flow"
+      ],
+      "difficulty": 4,
+      "metrics": {
+        "mobility": 55,
+        "rotation": 30,
+        "flexibility": 65
+      },
+      "phase": "warmup",
+      "instructions": [
+        "Start in crab position",
+        "Lift one hand and tap opposite shoulder",
+        "Return hand to mat",
+        "Alternate sides",
+        "Complete 8-10 repetitions per side"
+      ],
+      "tags": ["core", "shoulders", "back", "rotation", "unilateral"]
+    },
+    {
+      "id": "crab-tap-extended",
+      "exerciseId": "crab-tap",
+      "name": "Crab Tap - Extended",
+      "disciplines": [
+        "animal-flow"
+      ],
+      "difficulty": 6,
+      "metrics": {
+        "mobility": 70,
+        "rotation": 45,
+        "flexibility": 75
+      },
+      "phase": "workout",
+      "instructions": [
+        "Begin in crab position",
+        "Lift hand and reach further across body",
+        "Tap opposite shoulder with greater range",
+        "Complete 8-10 repetitions per side"
+      ],
+      "tags": ["core", "shoulders", "back", "rotation", "unilateral"]
+    },
+    {
+      "id": "crab-tap-simultaneous",
+      "exerciseId": "crab-tap",
+      "name": "Crab Tap - Simultaneous",
+      "disciplines": [
+        "animal-flow"
+      ],
+      "difficulty": 7,
+      "metrics": {
+        "mobility": 75,
+        "rotation": 50,
+        "flexibility": 80
+      },
+      "phase": "workout",
+      "instructions": [
+        "Start in crab position",
+        "Lift opposite hand and foot simultaneously",
+        "Tap hand to opposite shoulder",
+        "Return to center, alternate sides",
+        "Complete 8-10 repetitions per side"
+      ],
+      "tags": ["core", "shoulders", "back", "legs", "rotation", "unilateral"]
+    },
+    {
+      "id": "beast-reach-basic",
+      "exerciseId": "beast-reach",
+      "name": "Beast Reach - Basic",
+      "disciplines": [
+        "animal-flow"
+      ],
+      "difficulty": 4,
+      "metrics": {
+        "mobility": 60,
+        "rotation": 25,
+        "flexibility": 65
+      },
+      "phase": "warmup",
+      "instructions": [
+        "Start in beast position",
+        "Lift one hand and reach forward",
+        "Maintain beast position with other limbs",
+        "Return hand to mat",
+        "Alternate sides, complete 8-10 repetitions per side"
+      ],
+      "tags": ["core", "shoulders", "push", "unilateral"]
+    },
+    {
+      "id": "beast-reach-extended",
+      "exerciseId": "beast-reach",
+      "name": "Beast Reach - Extended",
+      "disciplines": [
+        "animal-flow"
+      ],
+      "difficulty": 6,
+      "metrics": {
+        "mobility": 70,
+        "rotation": 35,
+        "flexibility": 75
+      },
+      "phase": "workout",
+      "instructions": [
+        "Begin in beast position",
+        "Lift hand and reach further forward",
+        "Extend reach with greater range",
+        "Complete 8-10 repetitions per side"
+      ],
+      "tags": ["core", "shoulders", "push", "unilateral"]
+    },
+    {
+      "id": "beast-reach-opposite",
+      "exerciseId": "beast-reach",
+      "name": "Beast Reach - Opposite Leg",
+      "disciplines": [
+        "animal-flow"
+      ],
+      "difficulty": 7,
+      "metrics": {
+        "mobility": 75,
+        "rotation": 40,
+        "flexibility": 80
+      },
+      "phase": "workout",
+      "instructions": [
+        "Start in beast position",
+        "Lift opposite hand and foot simultaneously",
+        "Reach hand forward while lifting foot",
+        "Return to center, alternate sides",
+        "Complete 8-10 repetitions per side"
+      ],
+      "tags": ["core", "shoulders", "legs", "push", "unilateral"]
+    },
+    {
+      "id": "thread-the-needle-basic",
+      "exerciseId": "thread-the-needle",
+      "name": "Thread the Needle - Basic",
+      "disciplines": [
+        "animal-flow"
+      ],
+      "difficulty": 5,
+      "metrics": {
+        "mobility": 65,
+        "rotation": 65,
+        "flexibility": 70
+      },
+      "phase": "workout",
+      "instructions": [
+        "Start in beast position",
+        "Lift one hand and thread it under opposite arm",
+        "Rotate torso to allow arm passage",
+        "Return to center",
+        "Complete 6-8 repetitions per side"
+      ],
+      "tags": ["core", "shoulders", "rotation", "unilateral"]
+    },
+    {
+      "id": "thread-the-needle-extended",
+      "exerciseId": "thread-the-needle",
+      "name": "Thread the Needle - Extended",
+      "disciplines": [
+        "animal-flow"
+      ],
+      "difficulty": 7,
+      "metrics": {
+        "mobility": 80,
+        "rotation": 80,
+        "flexibility": 85
+      },
+      "phase": "workout",
+      "instructions": [
+        "Begin in basic position",
+        "Thread arm further under body",
+        "Increase rotation range",
+        "Complete 6-8 repetitions per side"
+      ],
+      "tags": ["core", "shoulders", "rotation", "unilateral"]
+    },
+    {
+      "id": "thread-the-needle-flow",
+      "exerciseId": "thread-the-needle",
+      "name": "Thread the Needle - Flow",
+      "disciplines": [
+        "animal-flow"
+      ],
+      "difficulty": 8,
+      "metrics": {
+        "mobility": 85,
+        "rotation": 85,
+        "flexibility": 90
+      },
+      "phase": "workout",
+      "instructions": [
+        "Start in beast position",
+        "Thread arm through to transition to side position",
+        "Flow back through to beast",
+        "Create continuous flow pattern",
+        "Complete 5-6 repetitions per side"
+      ],
+      "tags": ["core", "shoulders", "rotation", "unilateral"]
+    },
+    {
+      "id": "inchworm-basic",
+      "exerciseId": "inchworm",
+      "name": "Inchworm - Basic",
+      "disciplines": [
+        "animal-flow"
+      ],
+      "difficulty": 4,
+      "metrics": {
+        "mobility": 55,
+        "rotation": 20,
+        "flexibility": 70
+      },
+      "phase": "warmup",
+      "instructions": [
+        "Start standing, fold forward",
+        "Walk hands out to plank position",
+        "Walk feet back toward hands",
+        "Return to standing",
+        "Complete 6-8 repetitions"
+      ],
+      "tags": ["core", "shoulders", "legs", "hinge", "bilateral"]
+    },
+    {
+      "id": "inchworm-extended",
+      "exerciseId": "inchworm",
+      "name": "Inchworm - Extended",
+      "disciplines": [
+        "animal-flow"
+      ],
+      "difficulty": 6,
+      "metrics": {
+        "mobility": 70,
+        "rotation": 30,
+        "flexibility": 85
+      },
+      "phase": "warmup",
+      "instructions": [
+        "Begin in basic position",
+        "Walk hands further forward",
+        "Increase hamstring stretch",
+        "Complete 6-8 repetitions"
+      ],
+      "tags": ["core", "shoulders", "legs", "hinge", "bilateral"]
+    },
+    {
+      "id": "inchworm-pushup",
+      "exerciseId": "inchworm",
+      "name": "Inchworm - With Push-up",
+      "disciplines": [
+        "animal-flow"
+      ],
+      "difficulty": 7,
+      "metrics": {
+        "mobility": 75,
+        "rotation": 35,
+        "flexibility": 85
+      },
+      "phase": "workout",
+      "instructions": [
+        "Start in basic position",
+        "Perform push-up in plank position",
+        "Continue inchworm movement",
+        "Complete 6-8 repetitions"
+      ],
+      "tags": ["core", "chest", "shoulders", "legs", "push", "hinge", "bilateral"]
+    },
+    {
+      "id": "lizard-crawl-basic",
+      "exerciseId": "lizard-crawl",
+      "name": "Lizard Crawl - Basic",
+      "disciplines": [
+        "animal-flow"
+      ],
+      "difficulty": 5,
+      "metrics": {
+        "mobility": 70,
+        "rotation": 40,
+        "flexibility": 75
+      },
+      "phase": "workout",
+      "instructions": [
+        "Start in low lunge position",
+        "Walk hands forward, dragging back leg",
+        "Alternate legs in crawling motion",
+        "Maintain low position throughout",
+        "Complete 10-12 steps forward"
+      ],
+      "tags": ["core", "shoulders", "legs", "lunge", "push", "unilateral"]
+    },
+    {
+      "id": "lizard-crawl-extended",
+      "exerciseId": "lizard-crawl",
+      "name": "Lizard Crawl - Extended",
+      "disciplines": [
+        "animal-flow"
+      ],
+      "difficulty": 7,
+      "metrics": {
+        "mobility": 80,
+        "rotation": 50,
+        "flexibility": 85
+      },
+      "phase": "workout",
+      "instructions": [
+        "Begin in basic position",
+        "Increase crawl range",
+        "Lower body position further",
+        "Complete 10-12 steps forward"
+      ],
+      "tags": ["core", "shoulders", "legs", "lunge", "push", "unilateral"]
+    },
+    {
+      "id": "lizard-crawl-lateral",
+      "exerciseId": "lizard-crawl",
+      "name": "Lizard Crawl - Lateral",
+      "disciplines": [
+        "animal-flow"
+      ],
+      "difficulty": 8,
+      "metrics": {
+        "mobility": 85,
+        "rotation": 60,
+        "flexibility": 90
+      },
+      "phase": "workout",
+      "instructions": [
+        "Start in low lunge position",
+        "Crawl laterally to one side",
+        "Maintain low position",
+        "Complete 8-10 steps per side"
+      ],
+      "tags": ["core", "shoulders", "legs", "lunge", "rotation", "unilateral"]
+    },
+    {
+      "id": "frog-stand-basic",
+      "exerciseId": "frog-stand",
+      "name": "Frog Stand - Basic",
+      "disciplines": [
+        "animal-flow"
+      ],
+      "difficulty": 6,
+      "metrics": {
+        "mobility": 65,
+        "rotation": 30,
+        "flexibility": 60
+      },
+      "phase": "workout",
+      "instructions": [
+        "Start in deep squat position",
+        "Place hands on mat between knees",
+        "Shift weight forward onto hands",
+        "Lift feet off ground, balancing on hands",
+        "Hold for 3-5 seconds",
+        "Complete 5-8 repetitions"
+      ],
+      "tags": ["core", "shoulders", "legs", "squat", "isometric", "bilateral"]
+    },
+    {
+      "id": "frog-stand-extended",
+      "exerciseId": "frog-stand",
+      "name": "Frog Stand - Extended Hold",
+      "disciplines": [
+        "animal-flow"
+      ],
+      "difficulty": 8,
+      "metrics": {
+        "mobility": 80,
+        "rotation": 40,
+        "flexibility": 70
+      },
+      "phase": "workout",
+      "instructions": [
+        "Begin in basic position",
+        "Hold balance for 10-15 seconds",
+        "Maintain stable position",
+        "Complete 3-5 repetitions"
+      ],
+      "tags": ["core", "shoulders", "legs", "squat", "isometric", "bilateral"]
+    },
+    {
+      "id": "frog-stand-one-leg",
+      "exerciseId": "frog-stand",
+      "name": "Frog Stand - One Leg",
+      "disciplines": [
+        "animal-flow"
+      ],
+      "difficulty": 9,
+      "metrics": {
+        "mobility": 85,
+        "rotation": 45,
+        "flexibility": 75
+      },
+      "phase": "workout",
+      "instructions": [
+        "Start in frog stand position",
+        "Extend one leg straight back",
+        "Maintain balance on hands and one leg",
+        "Switch legs",
+        "Complete 3-5 repetitions per side"
+      ],
+      "tags": ["core", "shoulders", "legs", "squat", "isometric", "unilateral"]
+    },
+    {
+      "id": "crab-walk-basic",
+      "exerciseId": "crab-walk",
+      "name": "Crab Walk - Basic",
+      "disciplines": [
+        "animal-flow"
+      ],
+      "difficulty": 4,
+      "metrics": {
+        "mobility": 55,
+        "rotation": 25,
+        "flexibility": 65
+      },
+      "phase": "warmup",
+      "instructions": [
+        "Start in crab position",
+        "Move forward by stepping with hands and feet",
+        "Maintain crab position throughout",
+        "Complete 10-12 steps forward"
+      ],
+      "tags": ["core", "shoulders", "back", "legs", "push", "bilateral"]
+    },
+    {
+      "id": "crab-walk-backward",
+      "exerciseId": "crab-walk",
+      "name": "Crab Walk - Backward",
+      "disciplines": [
+        "animal-flow"
+      ],
+      "difficulty": 5,
+      "metrics": {
+        "mobility": 60,
+        "rotation": 30,
+        "flexibility": 70
+      },
+      "phase": "workout",
+      "instructions": [
+        "Start in crab position",
+        "Move backward by stepping",
+        "Maintain crab position",
+        "Complete 10-12 steps backward"
+      ],
+      "tags": ["core", "shoulders", "back", "legs", "pull", "bilateral"]
+    },
+    {
+      "id": "crab-walk-lateral",
+      "exerciseId": "crab-walk",
+      "name": "Crab Walk - Lateral",
+      "disciplines": [
+        "animal-flow"
+      ],
+      "difficulty": 6,
+      "metrics": {
+        "mobility": 65,
+        "rotation": 40,
+        "flexibility": 75
+      },
+      "phase": "workout",
+      "instructions": [
+        "Start in crab position",
+        "Move laterally by stepping to side",
+        "Maintain crab position",
+        "Complete 8-10 steps per side"
+      ],
+      "tags": ["core", "shoulders", "back", "legs", "rotation", "bilateral"]
+    },
+    {
+      "id": "bear-walk-basic",
+      "exerciseId": "bear-walk",
+      "name": "Bear Walk - Basic",
+      "disciplines": [
+        "animal-flow"
+      ],
+      "difficulty": 4,
+      "metrics": {
+        "mobility": 60,
+        "rotation": 25,
+        "flexibility": 65
+      },
+      "phase": "warmup",
+      "instructions": [
+        "Start on hands and knees",
+        "Lift knees slightly off ground",
+        "Walk forward on hands and feet",
+        "Maintain stable core",
+        "Complete 10-12 steps forward"
+      ],
+      "tags": ["core", "shoulders", "legs", "push", "bilateral"]
+    },
+    {
+      "id": "bear-walk-backward",
+      "exerciseId": "bear-walk",
+      "name": "Bear Walk - Backward",
+      "disciplines": [
+        "animal-flow"
+      ],
+      "difficulty": 5,
+      "metrics": {
+        "mobility": 65,
+        "rotation": 30,
+        "flexibility": 70
+      },
+      "phase": "workout",
+      "instructions": [
+        "Start in bear position",
+        "Walk backward on hands and feet",
+        "Maintain stable core",
+        "Complete 10-12 steps backward"
+      ],
+      "tags": ["core", "shoulders", "legs", "pull", "bilateral"]
+    },
+    {
+      "id": "bear-walk-lateral",
+      "exerciseId": "bear-walk",
+      "name": "Bear Walk - Lateral",
+      "disciplines": [
+        "animal-flow"
+      ],
+      "difficulty": 6,
+      "metrics": {
+        "mobility": 70,
+        "rotation": 45,
+        "flexibility": 75
+      },
+      "phase": "workout",
+      "instructions": [
+        "Start in bear position",
+        "Walk laterally to one side",
+        "Maintain stable core",
+        "Complete 8-10 steps per side"
+      ],
+      "tags": ["core", "shoulders", "legs", "rotation", "bilateral"]
+    },
+    {
+      "id": "duck-walk-basic",
+      "exerciseId": "duck-walk",
+      "name": "Duck Walk - Basic",
+      "disciplines": [
+        "animal-flow"
+      ],
+      "difficulty": 5,
+      "metrics": {
+        "mobility": 70,
+        "rotation": 30,
+        "flexibility": 75
+      },
+      "phase": "workout",
+      "instructions": [
+        "Start in deep squat position",
+        "Walk forward while maintaining squat",
+        "Keep feet wide, toes pointed out",
+        "Maintain low position",
+        "Complete 10-12 steps forward"
+      ],
+      "tags": ["core", "legs", "squat", "bilateral"]
+    },
+    {
+      "id": "duck-walk-backward",
+      "exerciseId": "duck-walk",
+      "name": "Duck Walk - Backward",
+      "disciplines": [
+        "animal-flow"
+      ],
+      "difficulty": 6,
+      "metrics": {
+        "mobility": 75,
+        "rotation": 35,
+        "flexibility": 80
+      },
+      "phase": "workout",
+      "instructions": [
+        "Start in deep squat position",
+        "Walk backward while maintaining squat",
+        "Complete 10-12 steps backward"
+      ],
+      "tags": ["core", "legs", "squat", "bilateral"]
+    },
+    {
+      "id": "duck-walk-lateral",
+      "exerciseId": "duck-walk",
+      "name": "Duck Walk - Lateral",
+      "disciplines": [
+        "animal-flow"
+      ],
+      "difficulty": 7,
+      "metrics": {
+        "mobility": 80,
+        "rotation": 50,
+        "flexibility": 85
+      },
+      "phase": "workout",
+      "instructions": [
+        "Start in deep squat position",
+        "Walk laterally while maintaining squat",
+        "Complete 8-10 steps per side"
+      ],
+      "tags": ["core", "legs", "squat", "rotation", "bilateral"]
+    },
+    {
+      "id": "caterpillar-basic",
+      "exerciseId": "caterpillar",
+      "name": "Caterpillar - Basic",
+      "disciplines": [
+        "animal-flow"
+      ],
+      "difficulty": 5,
+      "metrics": {
+        "mobility": 65,
+        "rotation": 30,
+        "flexibility": 75
+      },
+      "phase": "warmup",
+      "instructions": [
+        "Start standing, fold forward",
+        "Walk hands out to plank",
+        "Walk feet back toward hands in small steps",
+        "Return to standing",
+        "Complete 6-8 repetitions"
+      ],
+      "tags": ["core", "shoulders", "legs", "hinge", "bilateral"]
+    },
+    {
+      "id": "caterpillar-extended",
+      "exerciseId": "caterpillar",
+      "name": "Caterpillar - Extended",
+      "disciplines": [
+        "animal-flow"
+      ],
+      "difficulty": 7,
+      "metrics": {
+        "mobility": 75,
+        "rotation": 40,
+        "flexibility": 85
+      },
+      "phase": "warmup",
+      "instructions": [
+        "Begin in basic position",
+        "Walk hands further forward",
+        "Increase range of motion",
+        "Complete 6-8 repetitions"
+      ],
+      "tags": ["core", "shoulders", "legs", "hinge", "bilateral"]
+    },
+    {
+      "id": "caterpillar-lateral",
+      "exerciseId": "caterpillar",
+      "name": "Caterpillar - Lateral",
+      "disciplines": [
+        "animal-flow"
+      ],
+      "difficulty": 8,
+      "metrics": {
+        "mobility": 80,
+        "rotation": 55,
+        "flexibility": 90
+      },
+      "phase": "workout",
+      "instructions": [
+        "Start in basic position",
+        "Add lateral component to movement",
+        "Walk hands and feet in lateral pattern",
+        "Complete 6-8 repetitions per side"
+      ],
+      "tags": ["core", "shoulders", "legs", "hinge", "rotation", "bilateral"]
+    },
+    {
+      "id": "lateral-shuffle-basic",
+      "exerciseId": "lateral-shuffle",
+      "name": "Lateral Shuffle - Basic",
+      "disciplines": [
+        "animal-flow"
+      ],
+      "difficulty": 5,
+      "metrics": {
+        "mobility": 60,
+        "rotation": 50,
+        "flexibility": 65
+      },
+      "phase": "workout",
+      "instructions": [
+        "Start in beast position",
+        "Shuffle laterally to one side",
+        "Move both hands and feet together",
+        "Maintain beast position",
+        "Complete 8-10 shuffles per side"
+      ],
+      "tags": ["core", "shoulders", "legs", "rotation", "bilateral"]
+    },
+    {
+      "id": "lateral-shuffle-fast",
+      "exerciseId": "lateral-shuffle",
+      "name": "Lateral Shuffle - Fast",
+      "disciplines": [
+        "animal-flow"
+      ],
+      "difficulty": 7,
+      "metrics": {
+        "mobility": 75,
+        "rotation": 65,
+        "flexibility": 75
+      },
+      "phase": "workout",
+      "instructions": [
+        "Begin in basic position",
+        "Increase shuffle speed",
+        "Maintain control and coordination",
+        "Complete 12-15 shuffles per side"
+      ],
+      "tags": ["core", "shoulders", "legs", "rotation", "explosive", "bilateral"]
+    },
+    {
+      "id": "lateral-shuffle-extended",
+      "exerciseId": "lateral-shuffle",
+      "name": "Lateral Shuffle - Extended Range",
+      "disciplines": [
+        "animal-flow"
+      ],
+      "difficulty": 8,
+      "metrics": {
+        "mobility": 80,
+        "rotation": 70,
+        "flexibility": 80
+      },
+      "phase": "workout",
+      "instructions": [
+        "Start in beast position",
+        "Increase lateral range of movement",
+        "Shuffle further to each side",
+        "Complete 8-10 shuffles per side"
+      ],
+      "tags": ["core", "shoulders", "legs", "rotation", "bilateral"]
     }
   ]
 }
-

@@ -6,9 +6,13 @@ import { SessionView } from './session-view.js';
 import { init as initDashboardUI } from '../../src/ui/dashboard.js';
 import { getAuthUser } from '../core/auth-manager.js';
 import { cleanFrameworkName } from '../core/constants.js';
+import { EditSessionManager } from '../ui/edit-session-manager.js';
+import { formatDisciplines } from '../core/ui-utils.js';
 
 let athleteCalendarManager = null;
 let routerInstance = null;
+let editSessionManager = null;
+let currentTrainingSystemId = null;
 
 /**
  * Initialize athlete-specific functionality
@@ -47,6 +51,14 @@ export function initializeAthleteApp(router) {
             setTimeout(async () => {
                 const { initProfile } = await import('./profile.js');
                 await initProfile();
+            }, 100);
+        }
+        
+        // Initialize insights when insights page is shown
+        if (page === 'insights') {
+            setTimeout(async () => {
+                const { initInsights } = await import('./insights.js');
+                await initInsights();
             }, 100);
         }
         
@@ -303,8 +315,16 @@ async function getActiveSession(sessions, userId, trainingSystem = null) {
     
     const { isSessionCompleted } = await import('../services/dbService.js');
     
-    // Find today's session
-    const todaySession = sessions.find(s => s.date === today);
+    // Find today's session - normalize date comparison to handle different date formats
+    const todaySession = sessions.find(s => {
+        if (!s || !s.date) return false;
+        // Normalize session date for comparison (handle both string and Date formats)
+        const sessionDateStr = typeof s.date === 'string' 
+            ? s.date.split('T')[0] 
+            : new Date(s.date).toISOString().split('T')[0];
+        // Compare with today's date (both should be in YYYY-MM-DD format)
+        return sessionDateStr === today;
+    });
     
     if (todaySession) {
         // Check if today's session is completed
@@ -352,27 +372,19 @@ function getAdjacentSessions(sessions, currentSession) {
 export async function initDashboard() {
     try {
         // Load userProfile (merge onboarding data) - now async
-        // Force fresh fetch from Firestore if cache was cleared
+        // Force fresh fetch from Firestore to get updated streak
         const user = getAuthUser();
         let userProfile;
         if (user) {
-            // Check if cache was cleared (indicates we need fresh data)
-            const cacheKey = `firestore_cache_profile_${user.uid}`;
-            const cacheCleared = !localStorage.getItem(cacheKey) && !localStorage.getItem('userProfile');
-            
-            if (cacheCleared) {
-                // Force fresh fetch from Firestore
-                const { getUserProfile: getFirestoreProfile } = await import('../services/dbService.js');
-                const freshProfile = await getFirestoreProfile(user.uid, { skipCache: true });
-                if (freshProfile) {
-                    // Merge with local profile structure
-                    userProfile = await getUserProfile();
-                    userProfile = { ...userProfile, ...freshProfile };
-                    // Update localStorage
-                    localStorage.setItem('userProfile', JSON.stringify(userProfile));
-                } else {
-                    userProfile = await getUserProfile();
-                }
+            // Always fetch fresh profile to get updated streak after session completion
+            const { getUserProfile: getFirestoreProfile } = await import('../services/dbService.js');
+            const freshProfile = await getFirestoreProfile(user.uid, { skipCache: true });
+            if (freshProfile) {
+                // Merge with local profile structure
+                const localProfile = await getUserProfile();
+                userProfile = { ...localProfile, ...freshProfile };
+                // Update localStorage with fresh data
+                localStorage.setItem('userProfile', JSON.stringify(userProfile));
             } else {
                 userProfile = await getUserProfile();
             }
@@ -386,6 +398,24 @@ export async function initDashboard() {
         // Check if training system exists - use skipCache to detect deletions
         let trainingSystem = await getTrainingSystem({ skipCache: true });
         
+        // If no training system in Firebase but exists in localStorage, sync it
+        if (!trainingSystem && user && user.uid) {
+            console.log('[Dashboard] No training system in Firebase, checking localStorage...');
+            const { syncTrainingSystemFromLocalStorage } = await import('../services/dbService.js');
+            try {
+                const syncedSystemId = await syncTrainingSystemFromLocalStorage(user.uid);
+                if (syncedSystemId) {
+                    console.log('[Dashboard] Training system synced from localStorage to Firebase');
+                    // Reload training system after sync
+                    trainingSystem = await getTrainingSystem({ skipCache: true });
+                }
+            } catch (error) {
+                console.warn('[Dashboard] Error syncing training system:', error);
+                // Continue - try to load from localStorage
+                trainingSystem = await getTrainingSystem({ skipCache: false });
+            }
+        }
+        
         if (!trainingSystem) {
             // No training system - show empty state with "Generate My First Plan"
             renderEmptyState();
@@ -395,6 +425,9 @@ export async function initDashboard() {
             await initDashboardUI({ mobility: 0, rotation: 0, flexibility: 0 });
             return;
         }
+
+        // Store current training system id for Edit Session drawer
+        currentTrainingSystemId = trainingSystem.id || null;
         
         // Check and generate next week's sessions if needed (background process)
         if (user && trainingSystem && trainingSystem.id) {
@@ -410,11 +443,96 @@ export async function initDashboard() {
             });
         }
         
-        // Check if today is a training day
+        // CRITICAL: Always load fresh sessions from Firestore FIRST
+        // This catches sessions that were moved to today via drag-and-drop
+        const { isSessionCompleted, getSystemSessions } = await import('../services/dbService.js');
+        const today = getTodayDate();
+        
+        console.log('[Dashboard] Loading sessions for date:', today);
+        
+        // Always load fresh sessions from Firestore to ensure we have the latest data
+        let sessions = trainingSystem.sessions || [];
+        if (user?.uid && trainingSystem.id) {
+            try {
+                const freshSessions = await getSystemSessions(user.uid, trainingSystem.id);
+                if (freshSessions && Array.isArray(freshSessions)) {
+                    sessions = freshSessions;
+                    // Update trainingSystem with fresh sessions for consistency
+                    trainingSystem.sessions = sessions;
+                    console.log('[Dashboard] Loaded', sessions.length, 'fresh sessions from Firestore');
+                }
+            } catch (error) {
+                console.warn('[Dashboard] Failed to load fresh sessions, using cached:', error.message);
+                // Continue with cached sessions if fresh load fails
+            }
+        }
+        
+        // Find today's session - normalize date comparison to handle different date formats
+        const todaySession = sessions.find(s => {
+            if (!s || !s.date) return false;
+            // Normalize session date for comparison (handle both string and Date formats)
+            const sessionDateStr = typeof s.date === 'string' 
+                ? s.date.split('T')[0] 
+                : new Date(s.date).toISOString().split('T')[0];
+            // Compare with today's date (both should be in YYYY-MM-DD format)
+            const matches = sessionDateStr === today;
+            if (matches) {
+                console.log('[Dashboard] Found session for today:', s.id, 'date:', s.date);
+            }
+            return matches;
+        });
+        
+        // If there's a session for today, it's a training day (regardless of weekly pattern)
+        if (todaySession) {
+            // Check if today's session is completed
+            // PRIORITY 1: Check the session object's completed flag first (most reliable)
+            // PRIORITY 2: Then check completedSessions collection by date
+            let activeSession = null;
+            
+            console.log('[Dashboard] Found session for today:', {
+                id: todaySession.id,
+                date: todaySession.date,
+                completed: todaySession.completed,
+                completedAt: todaySession.completedAt
+            });
+            
+            // If session object itself says it's not completed, show it (regardless of completedSessions)
+            if (!todaySession.completed) {
+                activeSession = todaySession;
+                console.log('[Dashboard] Session is not completed (by session.completed flag), showing it');
+            } else if (user?.uid) {
+                // Session object says completed, but double-check completedSessions for today's date
+                // This handles edge cases where session was moved after completion
+                const completedByDate = await isSessionCompleted(user.uid, today);
+                console.log('[Dashboard] Session completed check by date for', today, ':', completedByDate);
+                
+                // If there's no completion entry for TODAY's date, show the session
+                // (it might have been completed on a different date before being moved)
+                if (!completedByDate) {
+                    activeSession = todaySession;
+                    console.log('[Dashboard] No completion entry for today, showing session (may have been moved)');
+                } else {
+                    console.log('[Dashboard] Session was completed today, not showing it');
+                }
+            } else {
+                // No user ID, show session anyway
+                activeSession = todaySession;
+            }
+            
+            if (activeSession) {
+                // Show session rating section for training days
+                toggleSessionRatingSection(true);
+                await renderDailySession(activeSession, sessions, user?.uid);
+                return;
+            }
+        }
+        
+        // No session for today - check if today is a training day by weekly pattern
         const isTrainingDay = isTodayTrainingDay(trainingSystem);
         
         if (!isTrainingDay) {
             // Today is NOT a training day - show rest day state
+            console.log('[Dashboard] No session for today and not a training day - showing rest day');
             renderRestDayState(userProfile, trainingSystem);
             // Hide session rating section for rest days
             toggleSessionRatingSection(false);
@@ -423,22 +541,14 @@ export async function initDashboard() {
             return;
         }
         
-        // Today IS a training day - get active session
-        const activeSession = await getActiveSession(trainingSystem.sessions, user?.uid, trainingSystem);
+        // Today IS a training day by pattern but no session found or session is completed
+        console.log('[Dashboard] Today is a training day but no active session available');
+        renderEmptyState();
+        // Hide session rating section when no active session
+        toggleSessionRatingSection(false);
+        // No active session - show zeros for session rating
+        await initDashboardUI({ mobility: 0, rotation: 0, flexibility: 0 });
         
-        if (activeSession) {
-            // Show session rating section for training days
-            toggleSessionRatingSection(true);
-            await renderDailySession(activeSession, trainingSystem.sessions, user?.uid);
-        } else {
-            // Today is a training day but no active session (completed or missing)
-            // Show empty state (but don't show "Generate My First Plan" since system exists)
-            renderEmptyState();
-            // Hide session rating section when no active session
-            toggleSessionRatingSection(false);
-            // No active session - show zeros for session rating
-            await initDashboardUI({ mobility: 0, rotation: 0, flexibility: 0 });
-        }
     } catch (error) {
         console.error('Error initializing dashboard:', error);
         renderEmptyState();
@@ -455,6 +565,17 @@ export async function initDashboard() {
 
 // Store current session for swap functionality
 let currentSession = null;
+
+/**
+ * Lazy-initialize EditSessionManager
+ * @returns {EditSessionManager}
+ */
+function getEditSessionManager() {
+    if (!editSessionManager) {
+        editSessionManager = new EditSessionManager();
+    }
+    return editSessionManager;
+}
 
 /**
  * Populate existing Daily Session card with session data
@@ -497,7 +618,7 @@ async function renderDailySession(session, allSessions = [], userId = null) {
             <div class="flex items-center justify-between mb-6">
                 <div>
                     <h3 class="text-xl font-semibold text-white" id="session-title">${framework} Session</h3>
-                    <p class="text-sm text-white/60 mt-1" id="session-workout-info">${session.discipline || ''}</p>
+                    <p class="text-sm text-white/60 mt-1" id="session-workout-info">${formatDisciplines(session.discipline) || ''}</p>
                 </div>
                 <span class="text-xs text-white bg-white/10 px-3 py-1 rounded-full border border-white/20">${dateText}</span>
             </div>
@@ -521,7 +642,7 @@ async function renderDailySession(session, allSessions = [], userId = null) {
     }
     
     if (workoutInfoEl) {
-        workoutInfoEl.textContent = session.discipline || '';
+        workoutInfoEl.textContent = formatDisciplines(session.discipline) || '';
     }
     
     // Update date badge
@@ -556,6 +677,13 @@ async function renderDailySession(session, allSessions = [], userId = null) {
         startBtn.onclick = () => handleStartSession(session);
         startBtn.disabled = false;
     }
+
+    // Wire Edit Session button
+    const editBtn = document.getElementById('edit-session-btn');
+    if (editBtn) {
+        editBtn.onclick = () => handleEditSession(session);
+        editBtn.disabled = false;
+    }
     
     // Calculate and update session rating (projected metrics)
     try {
@@ -566,6 +694,19 @@ async function renderDailySession(session, allSessions = [], userId = null) {
         console.error('Error calculating projected metrics:', error);
         // Still show dashboard with zeros if calculation fails
         await initDashboardUI({ mobility: 0, rotation: 0, flexibility: 0 });
+    }
+}
+
+/**
+ * Handle Edit Session button click
+ * @param {Object} session - Current session object
+ */
+async function handleEditSession(session) {
+    try {
+        const manager = getEditSessionManager();
+        await manager.open(session, currentTrainingSystemId);
+    } catch (error) {
+        console.error('[Dashboard] Error opening Edit Session drawer:', error);
     }
 }
 
@@ -930,11 +1071,23 @@ async function handleGeneratePlan() {
         }
         
         // Save system to Firestore with sessions in sub-collection
-        await saveTrainingSystem(system);
-        console.log('[Plan Generation] System saved to Firestore');
-        
-        // Get user ID for session navigation
         const user = getAuthUser();
+        if (!user || !user.uid) {
+            throw new Error('User not authenticated');
+        }
+        
+        console.log('[Plan Generation] Saving system to Firestore...', {
+            systemId: system.id,
+            sessionsCount: system.sessions.length,
+            userId: user.uid
+        });
+        
+        const { saveTrainingSystem: saveDbTrainingSystem } = await import('../services/dbService.js');
+        const savedSystemId = await saveDbTrainingSystem(user.uid, system);
+        console.log('[Plan Generation] System saved to Firestore successfully', { savedSystemId });
+        
+        // Also save to localStorage for cache
+        await saveTrainingSystem(system);
         
         // Check if today is a training day
         const isTrainingDay = isTodayTrainingDay(system);

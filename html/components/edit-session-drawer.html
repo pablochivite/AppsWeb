@@ -1,0 +1,161 @@
+<div id="edit-session-drawer" class="fixed inset-0 z-40 hidden">
+  <!-- Backdrop -->
+  <div class="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity" data-edit-session-backdrop></div>
+
+  <!-- Drawer Panel -->
+  <div class="absolute inset-y-0 right-0 w-full max-w-xl bg-zinc-950 border-l border-zinc-800 shadow-2xl flex flex-col transform translate-x-full transition-transform duration-300 ease-out"
+       data-edit-session-panel>
+    <!-- Header -->
+    <div class="flex items-center justify-between px-6 py-4 border-b border-zinc-800">
+      <div>
+        <h3 class="text-lg font-semibold text-white">Edit Session</h3>
+        <p class="text-xs text-white/60 mt-1" id="edit-session-subtitle">
+          Adjust the structure of today&apos;s session. Sets &amp; reps are configured during the workout.
+        </p>
+      </div>
+      <button type="button"
+              class="w-8 h-8 flex items-center justify-center rounded-full bg-white/5 hover:bg-white/10 text-white transition-colors"
+              data-edit-session-close>
+        <i class="fas fa-times text-sm"></i>
+      </button>
+    </div>
+
+    <!-- Content -->
+    <div class="flex-1 overflow-y-auto px-6 py-4 space-y-6">
+      <!-- Phase: Warm-up -->
+      <section class="space-y-3" data-phase-section="warmup">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center border border-white/20">
+              <i class="fas fa-fire text-white text-sm"></i>
+            </div>
+            <div>
+              <h4 class="text-sm font-semibold text-white">Warm-up</h4>
+              <p class="text-xs text-white/60" data-phase-count-label="warmup">0 exercises</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2">
+            <button type="button"
+                    class="text-xs text-white/70 hover:text-white px-2 py-1 rounded-md bg-white/5 hover:bg-white/10 transition-colors"
+                    data-phase-ai-suggest="warmup">
+              AI Suggestions
+            </button>
+            <button type="button"
+                    class="text-xs text-white/70 hover:text-white px-2 py-1 rounded-md bg-white/5 hover:bg-white/10 transition-colors"
+                    data-phase-add="warmup">
+              Add
+            </button>
+          </div>
+        </div>
+        <div class="space-y-2" data-phase-list="warmup">
+          <!-- Warm-up items injected here -->
+        </div>
+      </section>
+
+      <hr class="border-zinc-800">
+
+      <!-- Phase: Workout -->
+      <section class="space-y-3" data-phase-section="workout">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center border border-white/20">
+              <i class="fas fa-dumbbell text-white text-sm"></i>
+            </div>
+            <div>
+              <h4 class="text-sm font-semibold text-white">Workout</h4>
+              <p class="text-xs text-white/60" data-phase-count-label="workout">0 exercises</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2">
+            <button type="button"
+                    class="text-xs text-white/70 hover:text-white px-2 py-1 rounded-md bg-white/5 hover:bg-white/10 transition-colors"
+                    data-phase-ai-suggest="workout">
+              AI Suggestions
+            </button>
+            <button type="button"
+                    class="text-xs text-white/70 hover:text-white px-2 py-1 rounded-md bg-white/5 hover:bg-white/10 transition-colors"
+                    data-phase-add="workout">
+              Add
+            </button>
+          </div>
+        </div>
+        <div class="space-y-2" data-phase-list="workout">
+          <!-- Workout items injected here -->
+        </div>
+      </section>
+
+      <hr class="border-zinc-800">
+
+      <!-- Phase: Cool Down -->
+      <section class="space-y-3" data-phase-section="cooldown">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center border border-white/20">
+              <i class="fas fa-wind text-white text-sm"></i>
+            </div>
+            <div>
+              <h4 class="text-sm font-semibold text-white">Cool Down</h4>
+              <p class="text-xs text-white/60" data-phase-count-label="cooldown">0 exercises</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2">
+            <button type="button"
+                    class="text-xs text-white/70 hover:text-white px-2 py-1 rounded-md bg-white/5 hover:bg-white/10 transition-colors"
+                    data-phase-ai-suggest="cooldown">
+              AI Suggestions
+            </button>
+            <button type="button"
+                    class="text-xs text-white/70 hover:text-white px-2 py-1 rounded-md bg-white/5 hover:bg-white/10 transition-colors"
+                    data-phase-add="cooldown">
+              Add
+            </button>
+          </div>
+        </div>
+        <div class="space-y-2" data-phase-list="cooldown">
+          <!-- Cooldown items injected here -->
+        </div>
+      </section>
+
+      <!-- Search / Suggestions Panel -->
+      <section class="mt-4 space-y-3">
+        <div class="flex items-center justify-between">
+          <h4 class="text-sm font-semibold text-white">Search Exercises</h4>
+        </div>
+        <div class="relative">
+          <input
+            type="text"
+            id="edit-session-search-input"
+            class="w-full bg-zinc-900 border border-zinc-800 rounded-lg px-3 py-2 text-sm text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-white/20 focus:border-white/40"
+            placeholder="Search by exercise or variation name..."
+            autocomplete="off"
+          />
+          <i class="fas fa-search absolute right-3 top-1/2 -translate-y-1/2 text-white/40 text-xs"></i>
+        </div>
+        <div id="edit-session-search-results" class="max-h-56 overflow-y-auto space-y-2">
+          <!-- Search results injected here -->
+        </div>
+      </section>
+    </div>
+
+    <!-- Footer -->
+    <div class="px-6 py-4 border-t border-zinc-800 flex items-center justify-between bg-zinc-950/95 backdrop-blur">
+      <p class="text-xs text-white/60">
+        Changes affect only this session. You will configure load, sets &amp; reps during the workout.
+      </p>
+      <div class="flex items-center gap-2">
+        <button type="button"
+                class="px-3 py-2 text-xs font-medium rounded-lg border border-white/10 text-white/80 hover:bg-white/5 transition-colors"
+                data-edit-session-cancel>
+          Cancel
+        </button>
+        <button type="button"
+                class="px-4 py-2 text-xs font-semibold rounded-lg bg-white text-black hover:bg-white/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                data-edit-session-save>
+          Save Session
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+

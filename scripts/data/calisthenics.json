@@ -3,32 +3,219 @@
     {
       "id": "push-up",
       "name": "Push-Up",
-      "targetMuscleGroups": ["chest", "triceps", "shoulders", "core"],
+      "targetMuscleGroups": [
+        "chest",
+        "triceps",
+        "shoulders",
+        "core"
+      ],
       "category": "push"
     },
     {
       "id": "pull-up",
       "name": "Pull-Up",
-      "targetMuscleGroups": ["lats", "biceps", "rhomboids", "rear-deltoids"],
+      "targetMuscleGroups": [
+        "lats",
+        "biceps",
+        "rhomboids",
+        "rear-deltoids"
+      ],
       "category": "pull"
     },
     {
       "id": "dip",
       "name": "Dip",
-      "targetMuscleGroups": ["triceps", "chest", "shoulders", "core"],
+      "targetMuscleGroups": [
+        "triceps",
+        "chest",
+        "shoulders",
+        "core"
+      ],
       "category": "push"
     },
     {
       "id": "pistol-squat",
       "name": "Pistol Squat",
-      "targetMuscleGroups": ["quadriceps", "glutes", "hamstrings", "calves", "core"],
+      "targetMuscleGroups": [
+        "quadriceps",
+        "glutes",
+        "hamstrings",
+        "calves",
+        "core"
+      ],
       "category": "legs"
     },
     {
       "id": "muscle-up",
       "name": "Muscle-Up",
-      "targetMuscleGroups": ["lats", "triceps", "chest", "shoulders", "core"],
+      "targetMuscleGroups": [
+        "lats",
+        "triceps",
+        "chest",
+        "shoulders",
+        "core"
+      ],
       "category": "pull"
+    },
+    {
+      "id": "handstand",
+      "name": "Handstand",
+      "targetMuscleGroups": [
+        "shoulders",
+        "core",
+        "balance",
+        "stability",
+        "coordination"
+      ],
+      "category": "strength"
+    },
+    {
+      "id": "planche",
+      "name": "Planche",
+      "targetMuscleGroups": [
+        "shoulders",
+        "core",
+        "chest",
+        "triceps",
+        "balance"
+      ],
+      "category": "strength"
+    },
+    {
+      "id": "front-lever",
+      "name": "Front Lever",
+      "targetMuscleGroups": [
+        "lats",
+        "core",
+        "shoulders",
+        "back",
+        "grip"
+      ],
+      "category": "strength"
+    },
+    {
+      "id": "back-lever",
+      "name": "Back Lever",
+      "targetMuscleGroups": [
+        "lats",
+        "core",
+        "shoulders",
+        "back",
+        "grip"
+      ],
+      "category": "strength"
+    },
+    {
+      "id": "human-flag",
+      "name": "Human Flag",
+      "targetMuscleGroups": [
+        "shoulders",
+        "core",
+        "obliques",
+        "lats",
+        "grip"
+      ],
+      "category": "strength"
+    },
+    {
+      "id": "l-sit",
+      "name": "L-Sit",
+      "targetMuscleGroups": [
+        "core",
+        "hip-flexors",
+        "triceps",
+        "shoulders",
+        "balance"
+      ],
+      "category": "strength"
+    },
+    {
+      "id": "hanging-leg-raise",
+      "name": "Hanging Leg Raise",
+      "targetMuscleGroups": [
+        "core",
+        "hip-flexors",
+        "grip",
+        "shoulders"
+      ],
+      "category": "core"
+    },
+    {
+      "id": "dragon-flag",
+      "name": "Dragon Flag",
+      "targetMuscleGroups": [
+        "core",
+        "abdominals",
+        "hip-flexors",
+        "shoulders"
+      ],
+      "category": "core"
+    },
+    {
+      "id": "hollow-body-hold",
+      "name": "Hollow Body Hold",
+      "targetMuscleGroups": [
+        "core",
+        "abdominals",
+        "hip-flexors"
+      ],
+      "category": "core"
+    },
+    {
+      "id": "arch-body-hold",
+      "name": "Arch Body Hold",
+      "targetMuscleGroups": [
+        "back-extensors",
+        "glutes",
+        "shoulders",
+        "posterior-chain"
+      ],
+      "category": "extension"
+    },
+    {
+      "id": "wall-walk",
+      "name": "Wall Walk",
+      "targetMuscleGroups": [
+        "shoulders",
+        "core",
+        "balance",
+        "coordination"
+      ],
+      "category": "strength"
+    },
+    {
+      "id": "pike-pushup",
+      "name": "Pike Push-Up",
+      "targetMuscleGroups": [
+        "shoulders",
+        "triceps",
+        "core"
+      ],
+      "category": "push"
+    },
+    {
+      "id": "archer-pullup",
+      "name": "Archer Pull-Up",
+      "targetMuscleGroups": [
+        "lats",
+        "biceps",
+        "shoulders",
+        "core",
+        "grip"
+      ],
+      "category": "pull"
+    },
+    {
+      "id": "one-arm-pushup",
+      "name": "One-Arm Push-Up",
+      "targetMuscleGroups": [
+        "chest",
+        "triceps",
+        "shoulders",
+        "core",
+        "stability"
+      ],
+      "category": "push"
     }
   ],
   "variations": [
@@ -36,8 +223,11 @@
       "id": "push-up-incline",
       "exerciseId": "push-up",
       "name": "Incline Push-Up",
-      "disciplines": ["calisthenics"],
+      "disciplines": [
+        "calisthenics"
+      ],
       "difficulty": 2,
+      "phase": "workout",
       "metrics": {
         "mobility": 25,
         "rotation": 10,
@@ -51,17 +241,17 @@
         "Push back up to starting position",
         "Maintain core engagement throughout movement"
       ],
-      "metadata": {
-        "bilaterality": true,
-        "equipment": ["bench", "box", "wall"]
-      }
+      "tags": ["chest", "shoulders", "core", "push", "bilateral"]
     },
     {
       "id": "push-up-standard",
       "exerciseId": "push-up",
       "name": "Standard Push-Up",
-      "disciplines": ["calisthenics"],
+      "disciplines": [
+        "calisthenics"
+      ],
       "difficulty": 3,
+      "phase": "workout",
       "metrics": {
         "mobility": 40,
         "rotation": 15,
@@ -75,17 +265,17 @@
         "Push through palms to return to starting position",
         "Keep core tight and hips level throughout"
       ],
-      "metadata": {
-        "bilaterality": true,
-        "equipment": []
-      }
+      "tags": ["chest", "shoulders", "core", "push", "bilateral"]
     },
     {
       "id": "push-up-decline",
       "exerciseId": "push-up",
       "name": "Decline Push-Up",
-      "disciplines": ["calisthenics"],
+      "disciplines": [
+        "calisthenics"
+      ],
       "difficulty": 4,
+      "phase": "workout",
       "metrics": {
         "mobility": 50,
         "rotation": 20,
@@ -99,17 +289,17 @@
         "Push up explosively to starting position",
         "Focus on upper chest and anterior deltoid engagement"
       ],
-      "metadata": {
-        "bilaterality": true,
-        "equipment": ["bench", "box"]
-      }
+      "tags": ["chest", "shoulders", "core", "push", "bilateral", "explosive"]
     },
     {
       "id": "push-up-diamond",
       "exerciseId": "push-up",
       "name": "Diamond Push-Up",
-      "disciplines": ["calisthenics"],
+      "disciplines": [
+        "calisthenics"
+      ],
       "difficulty": 5,
+      "phase": "workout",
       "metrics": {
         "mobility": 60,
         "rotation": 25,
@@ -123,17 +313,17 @@
         "Push up focusing on triceps contraction",
         "Maintain strict form - no sagging or arching"
       ],
-      "metadata": {
-        "bilaterality": true,
-        "equipment": []
-      }
+      "tags": ["chest", "shoulders", "core", "push", "bilateral"]
     },
     {
       "id": "push-up-archer",
       "exerciseId": "push-up",
       "name": "Archer Push-Up",
-      "disciplines": ["calisthenics"],
+      "disciplines": [
+        "calisthenics"
+      ],
       "difficulty": 7,
+      "phase": "workout",
       "metrics": {
         "mobility": 75,
         "rotation": 50,
@@ -148,17 +338,17 @@
         "Alternate sides for each repetition",
         "Requires significant shoulder stability and core strength"
       ],
-      "metadata": {
-        "bilaterality": false,
-        "equipment": []
-      }
+      "tags": ["chest", "shoulders", "core", "push", "unilateral", "rotation"]
     },
     {
       "id": "pull-up-assisted",
       "exerciseId": "pull-up",
       "name": "Assisted Pull-Up",
-      "disciplines": ["calisthenics"],
+      "disciplines": [
+        "calisthenics"
+      ],
       "difficulty": 2,
+      "phase": "workout",
       "metrics": {
         "mobility": 35,
         "rotation": 20,
@@ -173,17 +363,17 @@
         "Focus on engaging lats and biceps",
         "Reduce assistance as strength improves"
       ],
-      "metadata": {
-        "bilaterality": true,
-        "equipment": ["resistance-band", "assistance-machine"]
-      }
+      "tags": ["back", "shoulders", "core", "pull", "bilateral"]
     },
     {
       "id": "pull-up-standard",
       "exerciseId": "pull-up",
       "name": "Standard Pull-Up",
-      "disciplines": ["calisthenics"],
+      "disciplines": [
+        "calisthenics"
+      ],
       "difficulty": 5,
+      "phase": "workout",
       "metrics": {
         "mobility": 55,
         "rotation": 30,
@@ -198,17 +388,17 @@
         "Maintain hollow body position throughout",
         "Avoid kipping or swinging"
       ],
-      "metadata": {
-        "bilaterality": true,
-        "equipment": ["pull-up-bar"]
-      }
+      "tags": ["back", "shoulders", "core", "pull", "bilateral"]
     },
     {
       "id": "pull-up-wide-grip",
       "exerciseId": "pull-up",
       "name": "Wide Grip Pull-Up",
-      "disciplines": ["calisthenics"],
+      "disciplines": [
+        "calisthenics"
+      ],
       "difficulty": 6,
+      "phase": "workout",
       "metrics": {
         "mobility": 65,
         "rotation": 35,
@@ -223,17 +413,17 @@
         "Lower with full control",
         "Requires greater shoulder mobility and lat strength"
       ],
-      "metadata": {
-        "bilaterality": true,
-        "equipment": ["pull-up-bar"]
-      }
+      "tags": ["back", "shoulders", "core", "pull", "bilateral"]
     },
     {
       "id": "pull-up-l-sit",
       "exerciseId": "pull-up",
       "name": "L-Sit Pull-Up",
-      "disciplines": ["calisthenics"],
+      "disciplines": [
+        "calisthenics"
+      ],
       "difficulty": 8,
+      "phase": "workout",
       "metrics": {
         "mobility": 80,
         "rotation": 40,
@@ -248,17 +438,17 @@
         "Requires exceptional core strength and hip flexibility",
         "Advanced progression combining pull strength with core stability"
       ],
-      "metadata": {
-        "bilaterality": true,
-        "equipment": ["pull-up-bar"]
-      }
+      "tags": ["back", "shoulders", "core", "pull", "bilateral"]
     },
     {
       "id": "dip-bench",
       "exerciseId": "dip",
       "name": "Bench Dip",
-      "disciplines": ["calisthenics"],
+      "disciplines": [
+        "calisthenics"
+      ],
       "difficulty": 2,
+      "phase": "workout",
       "metrics": {
         "mobility": 30,
         "rotation": 15,
@@ -273,17 +463,17 @@
         "Keep feet on ground for assistance if needed",
         "Focus on triceps engagement"
       ],
-      "metadata": {
-        "bilaterality": true,
-        "equipment": ["bench"]
-      }
+      "tags": ["shoulders", "core", "push", "bilateral"]
     },
     {
       "id": "dip-standard",
       "exerciseId": "dip",
       "name": "Standard Dip",
-      "disciplines": ["calisthenics"],
+      "disciplines": [
+        "calisthenics"
+      ],
       "difficulty": 4,
+      "phase": "workout",
       "metrics": {
         "mobility": 50,
         "rotation": 25,
@@ -298,17 +488,17 @@
         "Keep core engaged and avoid swinging",
         "Focus on triceps and anterior deltoids"
       ],
-      "metadata": {
-        "bilaterality": true,
-        "equipment": ["parallel-bars", "dip-station"]
-      }
+      "tags": ["chest", "shoulders", "core", "push", "bilateral", "explosive"]
     },
     {
       "id": "dip-ring",
       "exerciseId": "dip",
       "name": "Ring Dip",
-      "disciplines": ["calisthenics"],
+      "disciplines": [
+        "calisthenics"
+      ],
       "difficulty": 7,
+      "phase": "workout",
       "metrics": {
         "mobility": 75,
         "rotation": 60,
@@ -323,17 +513,17 @@
         "Requires significant shoulder stability and wrist strength",
         "Much more challenging than bar dips due to instability"
       ],
-      "metadata": {
-        "bilaterality": true,
-        "equipment": ["gymnastic-rings"]
-      }
+      "tags": ["chest", "shoulders", "core", "push", "bilateral", "rotation"]
     },
     {
       "id": "dip-weighted",
       "exerciseId": "dip",
       "name": "Weighted Dip",
-      "disciplines": ["calisthenics"],
+      "disciplines": [
+        "calisthenics"
+      ],
       "difficulty": 6,
+      "phase": "workout",
       "metrics": {
         "mobility": 55,
         "rotation": 30,
@@ -348,17 +538,17 @@
         "Focus on progressive overload",
         "Ensure shoulder mobility before adding weight"
       ],
-      "metadata": {
-        "bilaterality": true,
-        "equipment": ["parallel-bars", "dip-belt", "weighted-vest"]
-      }
+      "tags": ["chest", "shoulders", "core", "push", "bilateral", "explosive"]
     },
     {
       "id": "pistol-squat-assisted",
       "exerciseId": "pistol-squat",
       "name": "Assisted Pistol Squat",
-      "disciplines": ["calisthenics"],
+      "disciplines": [
+        "calisthenics"
+      ],
       "difficulty": 4,
+      "phase": "workout",
       "metrics": {
         "mobility": 70,
         "rotation": 30,
@@ -373,17 +563,17 @@
         "Push up through heel to return to standing",
         "Focus on ankle mobility and hip flexibility"
       ],
-      "metadata": {
-        "bilaterality": false,
-        "equipment": ["pole", "trx", "door-frame"]
-      }
+      "tags": ["legs", "core", "squat", "unilateral"]
     },
     {
       "id": "pistol-squat-standard",
       "exerciseId": "pistol-squat",
       "name": "Standard Pistol Squat",
-      "disciplines": ["calisthenics"],
+      "disciplines": [
+        "calisthenics"
+      ],
       "difficulty": 7,
+      "phase": "workout",
       "metrics": {
         "mobility": 85,
         "rotation": 40,
@@ -398,17 +588,17 @@
         "Push through heel to return to standing",
         "Requires exceptional leg strength, balance, and flexibility"
       ],
-      "metadata": {
-        "bilaterality": false,
-        "equipment": []
-      }
+      "tags": ["legs", "core", "squat", "unilateral"]
     },
     {
       "id": "pistol-squat-elevated",
       "exerciseId": "pistol-squat",
       "name": "Elevated Pistol Squat",
-      "disciplines": ["calisthenics"],
+      "disciplines": [
+        "calisthenics"
+      ],
       "difficulty": 5,
+      "phase": "workout",
       "metrics": {
         "mobility": 75,
         "rotation": 35,
@@ -423,17 +613,17 @@
         "Easier than standard due to reduced range of motion",
         "Good progression toward full pistol squat"
       ],
-      "metadata": {
-        "bilaterality": false,
-        "equipment": ["box", "platform"]
-      }
+      "tags": ["legs", "core", "squat", "unilateral"]
     },
     {
       "id": "pistol-squat-weighted",
       "exerciseId": "pistol-squat",
       "name": "Weighted Pistol Squat",
-      "disciplines": ["calisthenics"],
+      "disciplines": [
+        "calisthenics"
+      ],
       "difficulty": 9,
+      "phase": "workout",
       "metrics": {
         "mobility": 90,
         "rotation": 45,
@@ -448,17 +638,17 @@
         "Extreme test of single-leg strength and stability",
         "Progressive overload for advanced athletes"
       ],
-      "metadata": {
-        "bilaterality": false,
-        "equipment": ["weight-plate", "kettlebell", "dumbbell"]
-      }
+      "tags": ["legs", "core", "squat", "unilateral", "explosive"]
     },
     {
       "id": "muscle-up-strict",
       "exerciseId": "muscle-up",
       "name": "Strict Muscle-Up",
-      "disciplines": ["calisthenics"],
+      "disciplines": [
+        "calisthenics"
+      ],
       "difficulty": 8,
+      "phase": "workout",
       "metrics": {
         "mobility": 80,
         "rotation": 50,
@@ -473,17 +663,17 @@
         "No kipping or momentum allowed",
         "Requires exceptional pulling and pushing strength"
       ],
-      "metadata": {
-        "bilaterality": true,
-        "equipment": ["pull-up-bar"]
-      }
+      "tags": ["back", "chest", "shoulders", "core", "pull", "push", "bilateral", "explosive", "rotation"]
     },
     {
       "id": "muscle-up-kipping",
       "exerciseId": "muscle-up",
       "name": "Kipping Muscle-Up",
-      "disciplines": ["calisthenics"],
+      "disciplines": [
+        "calisthenics"
+      ],
       "difficulty": 6,
+      "phase": "workout",
       "metrics": {
         "mobility": 70,
         "rotation": 55,
@@ -498,16 +688,15 @@
         "Lower with control",
         "Easier than strict but requires coordination"
       ],
-      "metadata": {
-        "bilaterality": true,
-        "equipment": ["pull-up-bar"]
-      }
+      "tags": ["back", "chest", "shoulders", "core", "pull", "push", "bilateral", "plyometric", "rotation"]
     },
     {
       "id": "muscle-up-ring",
       "exerciseId": "muscle-up",
       "name": "Ring Muscle-Up",
-      "disciplines": ["calisthenics"],
+      "disciplines": [
+        "calisthenics"
+      ],
       "difficulty": 9,
       "metrics": {
         "mobility": 85,
@@ -523,17 +712,17 @@
         "Much more challenging due to instability",
         "Ultimate test of upper body strength and coordination"
       ],
-      "metadata": {
-        "bilaterality": true,
-        "equipment": ["gymnastic-rings"]
-      }
+      "tags": ["back", "chest", "shoulders", "core", "pull", "push", "bilateral", "explosive", "rotation"]
     },
     {
       "id": "muscle-up-assisted",
       "exerciseId": "muscle-up",
       "name": "Assisted Muscle-Up",
-      "disciplines": ["calisthenics"],
+      "disciplines": [
+        "calisthenics"
+      ],
       "difficulty": 4,
+      "phase": "workout",
       "metrics": {
         "mobility": 65,
         "rotation": 40,
@@ -548,11 +737,846 @@
         "Good progression toward unassisted muscle-up",
         "Practice false grip and transition separately"
       ],
-      "metadata": {
-        "bilaterality": true,
-        "equipment": ["pull-up-bar", "resistance-band"]
-      }
+      "tags": ["back", "chest", "shoulders", "core", "pull", "push", "bilateral", "rotation"]
+    },
+    {
+      "id": "handstand-wall",
+      "exerciseId": "handstand",
+      "name": "Handstand - Wall Supported",
+      "disciplines": [
+        "calisthenics"
+      ],
+      "difficulty": 4,
+      "phase": "workout",
+      "metrics": {
+        "mobility": 70,
+        "rotation": 30,
+        "flexibility": 65
+      },
+      "instructions": [
+        "Place hands on floor, feet against wall",
+        "Walk feet up wall to handstand position",
+        "Hold position, building strength and balance",
+        "Lower with control",
+        "Complete 3-5 holds of 10-30 seconds"
+      ],
+      "tags": ["shoulders", "core", "isometric", "bilateral"]
+    },
+    {
+      "id": "handstand-freestanding",
+      "exerciseId": "handstand",
+      "name": "Freestanding Handstand",
+      "disciplines": [
+        "calisthenics"
+      ],
+      "difficulty": 8,
+      "phase": "workout",
+      "metrics": {
+        "mobility": 85,
+        "rotation": 50,
+        "flexibility": 80
+      },
+      "instructions": [
+        "Kick up into handstand position",
+        "Balance on hands without wall support",
+        "Use fingers to maintain balance",
+        "Hold for as long as possible",
+        "Complete 3-5 attempts"
+      ],
+      "tags": ["shoulders", "core", "isometric", "bilateral"]
+    },
+    {
+      "id": "handstand-walk",
+      "exerciseId": "handstand",
+      "name": "Handstand Walk",
+      "disciplines": [
+        "calisthenics"
+      ],
+      "difficulty": 9,
+      "phase": "workout",
+      "metrics": {
+        "mobility": 90,
+        "rotation": 60,
+        "flexibility": 85
+      },
+      "instructions": [
+        "Begin in handstand position",
+        "Walk forward on hands",
+        "Maintain balance while moving",
+        "Complete 5-10 steps"
+      ],
+      "tags": ["shoulders", "core", "bilateral"]
+    },
+    {
+      "id": "planche-tuck",
+      "exerciseId": "planche",
+      "name": "Tuck Planche",
+      "disciplines": [
+        "calisthenics"
+      ],
+      "difficulty": 6,
+      "phase": "workout",
+      "metrics": {
+        "mobility": 70,
+        "rotation": 40,
+        "flexibility": 60
+      },
+      "instructions": [
+        "Start in push-up position",
+        "Bring knees to chest, lifting feet",
+        "Balance on hands with knees tucked",
+        "Hold position",
+        "Complete 3-5 holds of 5-15 seconds"
+      ],
+      "tags": ["chest", "shoulders", "core", "push", "isometric", "bilateral"]
+    },
+    {
+      "id": "planche-advanced-tuck",
+      "exerciseId": "planche",
+      "name": "Advanced Tuck Planche",
+      "disciplines": [
+        "calisthenics"
+      ],
+      "difficulty": 7,
+      "phase": "workout",
+      "metrics": {
+        "mobility": 80,
+        "rotation": 50,
+        "flexibility": 70
+      },
+      "instructions": [
+        "Begin in tuck planche",
+        "Extend legs slightly, bringing knees forward",
+        "Increase difficulty while maintaining balance",
+        "Complete 3-5 holds of 5-15 seconds"
+      ],
+      "tags": ["chest", "shoulders", "core", "push", "isometric", "bilateral"]
+    },
+    {
+      "id": "planche-straddle",
+      "exerciseId": "planche",
+      "name": "Straddle Planche",
+      "disciplines": [
+        "calisthenics"
+      ],
+      "difficulty": 8,
+      "metrics": {
+        "mobility": 85,
+        "rotation": 55,
+        "flexibility": 75
+      },
+      "instructions": [
+        "Begin in advanced tuck",
+        "Extend legs to sides in straddle position",
+        "Maintain balance on hands",
+        "Complete 3-5 holds of 3-10 seconds"
+      ],
+      "tags": ["chest", "shoulders", "core", "push", "isometric", "bilateral"]
+    },
+    {
+      "id": "planche-full",
+      "exerciseId": "planche",
+      "name": "Full Planche",
+      "disciplines": [
+        "calisthenics"
+      ],
+      "difficulty": 10,
+      "metrics": {
+        "mobility": 95,
+        "rotation": 60,
+        "flexibility": 80
+      },
+      "instructions": [
+        "Begin in straddle planche",
+        "Bring legs together, extending fully",
+        "Hold full planche position",
+        "Ultimate calisthenics strength feat",
+        "Complete 1-3 holds of 1-5 seconds"
+      ],
+      "tags": ["chest", "shoulders", "core", "push", "isometric", "bilateral"]
+    },
+    {
+      "id": "front-lever-tuck",
+      "exerciseId": "front-lever",
+      "name": "Tuck Front Lever",
+      "disciplines": [
+        "calisthenics"
+      ],
+      "difficulty": 5,
+      "phase": "workout",
+      "metrics": {
+        "mobility": 65,
+        "rotation": 35,
+        "flexibility": 70
+      },
+      "instructions": [
+        "Hang from bar with overhand grip",
+        "Bring knees to chest, lifting body horizontal",
+        "Hold tuck position",
+        "Complete 3-5 holds of 5-15 seconds"
+      ],
+      "tags": ["back", "shoulders", "core", "pull", "isometric", "bilateral"]
+    },
+    {
+      "id": "front-lever-advanced-tuck",
+      "exerciseId": "front-lever",
+      "name": "Advanced Tuck Front Lever",
+      "disciplines": [
+        "calisthenics"
+      ],
+      "difficulty": 6,
+      "phase": "workout",
+      "metrics": {
+        "mobility": 75,
+        "rotation": 40,
+        "flexibility": 75
+      },
+      "instructions": [
+        "Begin in tuck front lever",
+        "Extend legs slightly, bringing knees forward",
+        "Increase difficulty",
+        "Complete 3-5 holds of 5-15 seconds"
+      ],
+      "tags": ["back", "shoulders", "core", "pull", "isometric", "bilateral"]
+    },
+    {
+      "id": "front-lever-one-leg",
+      "exerciseId": "front-lever",
+      "name": "One-Leg Front Lever",
+      "disciplines": [
+        "calisthenics"
+      ],
+      "difficulty": 7,
+      "phase": "workout",
+      "metrics": {
+        "mobility": 80,
+        "rotation": 45,
+        "flexibility": 80
+      },
+      "instructions": [
+        "Begin in advanced tuck",
+        "Extend one leg straight",
+        "Hold position with one leg extended",
+        "Complete 3-5 holds of 3-10 seconds per side"
+      ],
+      "tags": ["back", "shoulders", "core", "pull", "isometric", "unilateral"]
+    },
+    {
+      "id": "front-lever-full",
+      "exerciseId": "front-lever",
+      "name": "Full Front Lever",
+      "disciplines": [
+        "calisthenics"
+      ],
+      "difficulty": 9,
+      "phase": "workout",
+      "metrics": {
+        "mobility": 90,
+        "rotation": 55,
+        "flexibility": 85
+      },
+      "instructions": [
+        "Hang from bar",
+        "Lift body to horizontal position",
+        "Extend legs fully, body parallel to ground",
+        "Hold full front lever",
+        "Complete 1-3 holds of 1-5 seconds"
+      ],
+      "tags": ["back", "shoulders", "core", "pull", "isometric", "bilateral"]
+    },
+    {
+      "id": "back-lever-skin-cat",
+      "exerciseId": "back-lever",
+      "name": "Skin the Cat",
+      "disciplines": [
+        "calisthenics"
+      ],
+      "difficulty": 5,
+      "phase": "workout",
+      "metrics": {
+        "mobility": 70,
+        "rotation": 50,
+        "flexibility": 75
+      },
+      "instructions": [
+        "Hang from bar",
+        "Bring feet through arms, rotating around bar",
+        "Return to hang position",
+        "Complete 5-8 repetitions"
+      ],
+      "tags": ["back", "shoulders", "core", "pull", "bilateral", "rotation"]
+    },
+    {
+      "id": "back-lever-tuck",
+      "exerciseId": "back-lever",
+      "name": "Tuck Back Lever",
+      "disciplines": [
+        "calisthenics"
+      ],
+      "difficulty": 6,
+      "phase": "workout",
+      "metrics": {
+        "mobility": 75,
+        "rotation": 55,
+        "flexibility": 80
+      },
+      "instructions": [
+        "Hang from bar with overhand grip",
+        "Bring knees to chest, rotating to face up",
+        "Hold tuck back lever position",
+        "Complete 3-5 holds of 5-15 seconds"
+      ],
+      "tags": ["back", "shoulders", "core", "pull", "isometric", "bilateral", "rotation"]
+    },
+    {
+      "id": "back-lever-advanced-tuck",
+      "exerciseId": "back-lever",
+      "name": "Advanced Tuck Back Lever",
+      "disciplines": [
+        "calisthenics"
+      ],
+      "difficulty": 7,
+      "phase": "workout",
+      "metrics": {
+        "mobility": 80,
+        "rotation": 60,
+        "flexibility": 85
+      },
+      "instructions": [
+        "Begin in tuck back lever",
+        "Extend legs slightly",
+        "Increase difficulty",
+        "Complete 3-5 holds of 5-15 seconds"
+      ],
+      "tags": ["back", "shoulders", "core", "pull", "isometric", "bilateral", "rotation"]
+    },
+    {
+      "id": "back-lever-full",
+      "exerciseId": "back-lever",
+      "name": "Full Back Lever",
+      "disciplines": [
+        "calisthenics"
+      ],
+      "difficulty": 9,
+      "metrics": {
+        "mobility": 90,
+        "rotation": 65,
+        "flexibility": 90
+      },
+      "instructions": [
+        "Hang from bar",
+        "Rotate to face up, extending legs fully",
+        "Hold body horizontal, facing up",
+        "Complete 1-3 holds of 1-5 seconds"
+      ],
+      "tags": ["back", "shoulders", "core", "pull", "isometric", "bilateral", "rotation"]
+    },
+    {
+      "id": "human-flag-basic",
+      "exerciseId": "human-flag",
+      "name": "Human Flag - Basic",
+      "disciplines": [
+        "calisthenics"
+      ],
+      "difficulty": 6,
+      "metrics": {
+        "mobility": 70,
+        "rotation": 60,
+        "flexibility": 65
+      },
+      "instructions": [
+        "Grasp vertical pole with both hands",
+        "Lift body to horizontal position",
+        "Hold body perpendicular to pole",
+        "Complete 3-5 holds of 3-10 seconds"
+      ],
+      "tags": ["shoulders", "core", "back", "isometric", "bilateral", "rotation"]
+    },
+    {
+      "id": "human-flag-extended",
+      "exerciseId": "human-flag",
+      "name": "Human Flag - Extended Hold",
+      "disciplines": [
+        "calisthenics"
+      ],
+      "difficulty": 8,
+      "phase": "workout",
+      "metrics": {
+        "mobility": 85,
+        "rotation": 75,
+        "flexibility": 75
+      },
+      "instructions": [
+        "Begin in basic human flag",
+        "Hold position for extended time",
+        "Maintain perfect form",
+        "Complete 3-5 holds of 10-30 seconds"
+      ],
+      "tags": ["shoulders", "core", "back", "isometric", "bilateral", "rotation"]
+    },
+    {
+      "id": "l-sit-parallel-bars",
+      "exerciseId": "l-sit",
+      "name": "L-Sit - Parallel Bars",
+      "disciplines": [
+        "calisthenics"
+      ],
+      "difficulty": 5,
+      "metrics": {
+        "mobility": 65,
+        "rotation": 30,
+        "flexibility": 70
+      },
+      "instructions": [
+        "Sit on parallel bars",
+        "Press down with hands, lifting body",
+        "Extend legs forward, parallel to ground",
+        "Hold L-sit position",
+        "Complete 3-5 holds of 5-15 seconds"
+      ],
+      "tags": ["core", "shoulders", "isometric", "bilateral"]
+    },
+    {
+      "id": "l-sit-floor",
+      "exerciseId": "l-sit",
+      "name": "L-Sit - Floor",
+      "disciplines": [
+        "calisthenics"
+      ],
+      "difficulty": 7,
+      "metrics": {
+        "mobility": 80,
+        "rotation": 40,
+        "flexibility": 85
+      },
+      "instructions": [
+        "Sit on floor with hands by sides",
+        "Press down, lifting body off floor",
+        "Extend legs forward",
+        "Hold L-sit on floor",
+        "Complete 3-5 holds of 3-10 seconds"
+      ],
+      "tags": ["core", "shoulders", "isometric", "bilateral"]
+    },
+    {
+      "id": "l-sit-compression",
+      "exerciseId": "l-sit",
+      "name": "L-Sit - Compression",
+      "disciplines": [
+        "calisthenics"
+      ],
+      "difficulty": 8,
+      "phase": "workout",
+      "metrics": {
+        "mobility": 85,
+        "rotation": 45,
+        "flexibility": 90
+      },
+      "instructions": [
+        "Begin in L-sit position",
+        "Compress legs closer to body",
+        "Increase difficulty",
+        "Complete 3-5 holds of 3-10 seconds"
+      ],
+      "tags": ["core", "shoulders", "isometric", "bilateral"]
+    },
+    {
+      "id": "hanging-leg-raise-knees",
+      "exerciseId": "hanging-leg-raise",
+      "name": "Hanging Leg Raise - Knees to Chest",
+      "disciplines": [
+        "calisthenics"
+      ],
+      "difficulty": 4,
+      "phase": "workout",
+      "metrics": {
+        "mobility": 55,
+        "rotation": 25,
+        "flexibility": 60
+      },
+      "instructions": [
+        "Hang from bar",
+        "Bring knees to chest",
+        "Lower with control",
+        "Complete 10-15 repetitions"
+      ],
+      "tags": ["core", "shoulders", "bilateral"]
+    },
+    {
+      "id": "hanging-leg-raise-legs",
+      "exerciseId": "hanging-leg-raise",
+      "name": "Hanging Leg Raise - Straight Legs",
+      "disciplines": [
+        "calisthenics"
+      ],
+      "difficulty": 6,
+      "phase": "workout",
+      "metrics": {
+        "mobility": 70,
+        "rotation": 35,
+        "flexibility": 75
+      },
+      "instructions": [
+        "Hang from bar",
+        "Raise straight legs to horizontal",
+        "Lower with control",
+        "Complete 8-12 repetitions"
+      ],
+      "tags": ["core", "shoulders", "bilateral"]
+    },
+    {
+      "id": "hanging-leg-raise-toes-bar",
+      "exerciseId": "hanging-leg-raise",
+      "name": "Hanging Leg Raise - Toes to Bar",
+      "disciplines": [
+        "calisthenics"
+      ],
+      "difficulty": 8,
+      "metrics": {
+        "mobility": 85,
+        "rotation": 45,
+        "flexibility": 90
+      },
+      "instructions": [
+        "Hang from bar",
+        "Raise straight legs to touch bar",
+        "Lower with control",
+        "Complete 6-10 repetitions"
+      ],
+      "tags": ["core", "shoulders", "bilateral"]
+    },
+    {
+      "id": "dragon-flag-basic",
+      "exerciseId": "dragon-flag",
+      "name": "Dragon Flag - Basic",
+      "disciplines": [
+        "calisthenics"
+      ],
+      "difficulty": 6,
+      "phase": "workout",
+      "metrics": {
+        "mobility": 70,
+        "rotation": 35,
+        "flexibility": 75
+      },
+      "instructions": [
+        "Lie on bench, grasp behind head",
+        "Lift legs and hips off bench",
+        "Lower with control, keeping body straight",
+        "Complete 6-10 repetitions"
+      ],
+      "tags": ["core", "shoulders", "bilateral"]
+    },
+    {
+      "id": "dragon-flag-hold",
+      "exerciseId": "dragon-flag",
+      "name": "Dragon Flag - Hold",
+      "disciplines": [
+        "calisthenics"
+      ],
+      "difficulty": 7,
+      "phase": "workout",
+      "metrics": {
+        "mobility": 75,
+        "rotation": 40,
+        "flexibility": 80
+      },
+      "instructions": [
+        "Begin in dragon flag position",
+        "Hold body horizontal",
+        "Maintain straight line",
+        "Complete 3-5 holds of 5-15 seconds"
+      ],
+      "tags": ["core", "shoulders", "isometric", "bilateral"]
+    },
+    {
+      "id": "hollow-body-hold-basic",
+      "exerciseId": "hollow-body-hold",
+      "name": "Hollow Body Hold - Basic",
+      "disciplines": [
+        "calisthenics"
+      ],
+      "difficulty": 3,
+      "phase": "workout",
+      "metrics": {
+        "mobility": 45,
+        "rotation": 15,
+        "flexibility": 50
+      },
+      "instructions": [
+        "Lie supine, lift head and shoulders",
+        "Lift legs to tabletop position",
+        "Hold position, engaging core",
+        "Complete 3-5 holds of 15-30 seconds"
+      ],
+      "tags": ["core", "isometric", "bilateral"]
+    },
+    {
+      "id": "hollow-body-hold-extended",
+      "exerciseId": "hollow-body-hold",
+      "name": "Hollow Body Hold - Extended Legs",
+      "disciplines": [
+        "calisthenics"
+      ],
+      "difficulty": 5,
+      "phase": "workout",
+      "metrics": {
+        "mobility": 65,
+        "rotation": 25,
+        "flexibility": 70
+      },
+      "instructions": [
+        "Begin in basic position",
+        "Extend legs to 45 degrees",
+        "Hold with extended legs",
+        "Complete 3-5 holds of 10-20 seconds"
+      ],
+      "tags": ["core", "isometric", "bilateral"]
+    },
+    {
+      "id": "arch-body-hold-basic",
+      "exerciseId": "arch-body-hold",
+      "name": "Arch Body Hold - Basic",
+      "disciplines": [
+        "calisthenics"
+      ],
+      "difficulty": 4,
+      "phase": "workout",
+      "metrics": {
+        "mobility": 55,
+        "rotation": 20,
+        "flexibility": 60
+      },
+      "instructions": [
+        "Lie prone, lift chest and legs",
+        "Hold arch position",
+        "Engage glutes and back extensors",
+        "Complete 3-5 holds of 15-30 seconds"
+      ],
+      "tags": ["back", "legs", "core", "isometric", "bilateral"]
+    },
+    {
+      "id": "arch-body-hold-extended",
+      "exerciseId": "arch-body-hold",
+      "name": "Arch Body Hold - Extended",
+      "disciplines": [
+        "calisthenics"
+      ],
+      "difficulty": 6,
+      "phase": "workout",
+      "metrics": {
+        "mobility": 70,
+        "rotation": 30,
+        "flexibility": 75
+      },
+      "instructions": [
+        "Begin in basic position",
+        "Lift chest and legs higher",
+        "Increase arch range",
+        "Complete 3-5 holds of 10-20 seconds"
+      ],
+      "tags": ["back", "legs", "core", "isometric", "bilateral"]
+    },
+    {
+      "id": "wall-walk-basic",
+      "exerciseId": "wall-walk",
+      "name": "Wall Walk - Basic",
+      "disciplines": [
+        "calisthenics"
+      ],
+      "difficulty": 5,
+      "phase": "workout",
+      "metrics": {
+        "mobility": 70,
+        "rotation": 35,
+        "flexibility": 65
+      },
+      "instructions": [
+        "Start in push-up position facing wall",
+        "Walk feet up wall while walking hands closer",
+        "Approach handstand position",
+        "Walk back down",
+        "Complete 5-8 repetitions"
+      ],
+      "tags": ["shoulders", "core", "push", "bilateral"]
+    },
+    {
+      "id": "wall-walk-handstand",
+      "exerciseId": "wall-walk",
+      "name": "Wall Walk to Handstand",
+      "disciplines": [
+        "calisthenics"
+      ],
+      "difficulty": 7,
+      "phase": "workout",
+      "metrics": {
+        "mobility": 80,
+        "rotation": 45,
+        "flexibility": 75
+      },
+      "instructions": [
+        "Begin in basic wall walk",
+        "Continue until in handstand position",
+        "Hold handstand briefly",
+        "Walk back down",
+        "Complete 3-5 repetitions"
+      ],
+      "tags": ["shoulders", "core", "push", "isometric", "bilateral"]
+    },
+    {
+      "id": "pike-pushup-basic",
+      "exerciseId": "pike-pushup",
+      "name": "Pike Push-Up - Basic",
+      "disciplines": [
+        "calisthenics"
+      ],
+      "difficulty": 4,
+      "phase": "workout",
+      "metrics": {
+        "mobility": 60,
+        "rotation": 30,
+        "flexibility": 55
+      },
+      "instructions": [
+        "Start in downward dog position",
+        "Lower head toward floor",
+        "Push back up",
+        "Complete 8-12 repetitions"
+      ],
+      "tags": ["shoulders", "core", "push", "bilateral"]
+    },
+    {
+      "id": "pike-pushup-elevated",
+      "exerciseId": "pike-pushup",
+      "name": "Pike Push-Up - Feet Elevated",
+      "disciplines": [
+        "calisthenics"
+      ],
+      "difficulty": 6,
+      "phase": "workout",
+      "metrics": {
+        "mobility": 75,
+        "rotation": 40,
+        "flexibility": 70
+      },
+      "instructions": [
+        "Place feet on elevated surface",
+        "Perform pike push-up with increased angle",
+        "More challenging shoulder workout",
+        "Complete 6-10 repetitions"
+      ],
+      "tags": ["shoulders", "core", "push", "bilateral"]
+    },
+    {
+      "id": "archer-pullup-basic",
+      "exerciseId": "archer-pullup",
+      "name": "Archer Pull-Up - Basic",
+      "disciplines": [
+        "calisthenics"
+      ],
+      "difficulty": 6,
+      "phase": "workout",
+      "metrics": {
+        "mobility": 75,
+        "rotation": 55,
+        "flexibility": 70
+      },
+      "instructions": [
+        "Hang from bar with wide grip",
+        "Pull up, shifting weight to one side",
+        "Extend opposite arm",
+        "Lower and alternate sides",
+        "Complete 5-8 repetitions per side"
+      ],
+      "tags": ["back", "shoulders", "core", "pull", "unilateral", "rotation"]
+    },
+    {
+      "id": "archer-pullup-advanced",
+      "exerciseId": "archer-pullup",
+      "name": "Archer Pull-Up - Advanced",
+      "disciplines": [
+        "calisthenics"
+      ],
+      "difficulty": 8,
+      "phase": "workout",
+      "metrics": {
+        "mobility": 85,
+        "rotation": 70,
+        "flexibility": 80
+      },
+      "instructions": [
+        "Begin in basic position",
+        "Increase weight shift to one side",
+        "Extend opposite arm further",
+        "Complete 4-6 repetitions per side"
+      ],
+      "tags": ["back", "shoulders", "core", "pull", "unilateral", "rotation"]
+    },
+    {
+      "id": "one-arm-pushup-incline",
+      "exerciseId": "one-arm-pushup",
+      "name": "One-Arm Push-Up - Incline",
+      "disciplines": [
+        "calisthenics"
+      ],
+      "difficulty": 5,
+      "phase": "workout",
+      "metrics": {
+        "mobility": 65,
+        "rotation": 50,
+        "flexibility": 60
+      },
+      "instructions": [
+        "Place hands on elevated surface",
+        "Perform push-up with one arm",
+        "Other arm behind back",
+        "Complete 5-8 repetitions per side"
+      ],
+      "tags": ["chest", "shoulders", "core", "push", "unilateral", "rotation"]
+    },
+    {
+      "id": "one-arm-pushup-standard",
+      "exerciseId": "one-arm-pushup",
+      "name": "One-Arm Push-Up - Standard",
+      "disciplines": [
+        "calisthenics"
+      ],
+      "difficulty": 8,
+      "phase": "workout",
+      "metrics": {
+        "mobility": 80,
+        "rotation": 65,
+        "flexibility": 75
+      },
+      "instructions": [
+        "Start in push-up position",
+        "Perform push-up with one arm",
+        "Maintain body alignment",
+        "Complete 3-6 repetitions per side"
+      ],
+      "tags": ["chest", "shoulders", "core", "push", "unilateral", "rotation"]
+    },
+    {
+      "id": "one-arm-pushup-decline",
+      "exerciseId": "one-arm-pushup",
+      "name": "One-Arm Push-Up - Decline",
+      "disciplines": [
+        "calisthenics"
+      ],
+      "difficulty": 9,
+      "phase": "workout",
+      "metrics": {
+        "mobility": 85,
+        "rotation": 70,
+        "flexibility": 80
+      },
+      "instructions": [
+        "Place feet on elevated surface",
+        "Perform one-arm push-up with increased difficulty",
+        "Ultimate upper body strength challenge",
+        "Complete 2-4 repetitions per side"
+      ],
+      "tags": ["chest", "shoulders", "core", "push", "unilateral", "rotation"]
     }
   ]
 }
-

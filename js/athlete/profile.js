@@ -1,47 +1,409 @@
 // Profile Management for Athletes
 import { getUserProfile, saveUserProfile } from '../core/storage.js';
-import { loadTemplate } from '../core/template-loader.js';
-import { initAnalysisChat } from '../ui/analysis-chat.js';
+import { getAuthUser } from '../core/auth-manager.js';
+import { saveUserProfile as saveFirestoreProfile } from '../services/dbService.js';
 
 /**
  * Initialize profile page
  */
 export async function initProfile() {
     try {
-        const userProfile = await getUserProfile();
+        console.log('[Profile] Initializing profile page...');
         
-        // Load and initialize analysis chat component
-        await initAnalysisChatComponent();
+        // Show loading state
+        showLoadingState();
+        
+        // Load profile data from Firebase
+        console.log('[Profile] Loading profile data...');
+        const userProfile = await loadProfileData();
+        console.log('[Profile] Profile data loaded:', userProfile);
+        
+        // Render all sections
+        console.log('[Profile] Rendering sections...');
+        renderPhysiologicalData(userProfile);
+        renderPreferences(userProfile);
+        renderBenchmarks(userProfile);
         
         // Load and display milestones
         await renderMilestones(userProfile);
         
-        // Load and display personal info (if needed)
-        // TODO: Add personal info loading when those fields are implemented
+        // Setup segmented switcher
+        setupSegmentedSwitcher();
+        
+        // Setup save functionality
+        setupSaveFunctionality();
+        
+        console.log('[Profile] Profile page initialized successfully');
     } catch (error) {
-        console.error('Error initializing profile:', error);
+        console.error('[Profile] Error initializing profile:', error);
+        console.error('[Profile] Error stack:', error.stack);
+        showErrorState('Error loading profile data. Please refresh the page.');
     }
 }
 
 /**
- * Initialize analysis chat component
+ * Load profile data from Firebase
+ * @returns {Promise<Object>} User profile object
  */
-async function initAnalysisChatComponent() {
+async function loadProfileData() {
     try {
-        const container = document.getElementById('analysis-chat-container');
-        if (!container) {
-            console.warn('Analysis chat container not found');
+        const userProfile = await getUserProfile();
+        
+        // If no profile data, return empty structure
+        if (!userProfile) {
+            return {
+                baselineAssessment: {},
+                preferredDisciplines: [],
+                objectives: [],
+                discomforts: []
+            };
+        }
+        
+        return userProfile;
+    } catch (error) {
+        console.error('Error loading profile data:', error);
+        throw error;
+    }
+}
+
+/**
+ * Show loading state
+ */
+function showLoadingState() {
+    // Sections are now controlled by the switcher, so we don't need to show/hide them here
+    // The first section (physiological) will be active by default
+}
+
+/**
+ * Hide loading state
+ */
+function hideLoadingState() {
+    // Loading state will be replaced by actual content
+    // This function is kept for consistency but doesn't need to do anything
+    // since render functions replace the innerHTML
+}
+
+/**
+ * Show error state
+ * @param {string} message - Error message
+ */
+function showErrorState(message) {
+    console.error('[Profile] Error state:', message);
+    // Show error in console, but don't replace form content
+    // The form will still render with empty/default values
+}
+
+/**
+ * Render physiological data section
+ * @param {Object} userProfile - User profile object
+ */
+function renderPhysiologicalData(userProfile) {
+    try {
+        const physiological = userProfile?.baselineAssessment?.physiological || {};
+        
+        // Set values from Firebase data (safe access with fallbacks)
+        const ageInput = document.getElementById('profile-age');
+        const weightInput = document.getElementById('profile-weight');
+        const heightInput = document.getElementById('profile-height');
+        const bodyFatInput = document.getElementById('profile-bodyfat');
+        const activityLevelSelect = document.getElementById('profile-activity-level');
+        const injuryHistoryTextarea = document.getElementById('profile-injury-history');
+        
+        if (ageInput) ageInput.value = physiological.age || '';
+        if (weightInput) weightInput.value = physiological.weight || '';
+        if (heightInput) heightInput.value = physiological.height || '';
+        if (bodyFatInput) bodyFatInput.value = physiological.bodyFatPercent || '';
+        if (activityLevelSelect) {
+            activityLevelSelect.value = physiological.activityLevel || '';
+        }
+        if (injuryHistoryTextarea) {
+            injuryHistoryTextarea.value = physiological.injuryHistory || '';
+        }
+        
+        console.log('[Profile] Physiological data rendered');
+    } catch (error) {
+        console.error('[Profile] Error rendering physiological data:', error);
+    }
+}
+
+/**
+ * Render preferences section
+ * @param {Object} userProfile - User profile object
+ */
+function renderPreferences(userProfile) {
+    try {
+        const disciplines = userProfile?.preferredDisciplines || [];
+        const objectives = userProfile?.objectives || [];
+        const discomforts = userProfile?.discomforts || [];
+        
+        // Render disciplines as tags
+        const disciplinesContainer = document.getElementById('profile-disciplines');
+        if (disciplinesContainer) {
+            if (disciplines.length > 0) {
+                disciplinesContainer.innerHTML = disciplines.map(d => 
+                    `<span class="px-3 py-1 rounded-full bg-white/10 text-white text-sm border border-white/20">${d}</span>`
+                ).join('');
+            } else {
+                disciplinesContainer.innerHTML = '<span class="text-white/50 text-sm">No disciplines selected</span>';
+            }
+        }
+        
+        // Render objectives as tags
+        const objectivesContainer = document.getElementById('profile-objectives');
+        if (objectivesContainer) {
+            if (objectives.length > 0) {
+                objectivesContainer.innerHTML = objectives.map(o => 
+                    `<span class="px-3 py-1 rounded-full bg-white/10 text-white text-sm border border-white/20">${o}</span>`
+                ).join('');
+            } else {
+                objectivesContainer.innerHTML = '<span class="text-white/50 text-sm">No objectives selected</span>';
+            }
+        }
+        
+        // Render discomforts as tags
+        const discomfortsContainer = document.getElementById('profile-discomforts');
+        if (discomfortsContainer) {
+            if (discomforts.length > 0) {
+                discomfortsContainer.innerHTML = discomforts.map(d => 
+                    `<span class="px-3 py-1 rounded-full bg-white/10 text-white text-sm border border-white/20">${d}</span>`
+                ).join('');
+            } else {
+                discomfortsContainer.innerHTML = '<span class="text-white/50 text-sm">No discomforts selected</span>';
+            }
+        }
+        
+        
+        console.log('[Profile] Preferences rendered');
+    } catch (error) {
+        console.error('[Profile] Error rendering preferences:', error);
+    }
+}
+
+/**
+ * Render benchmarks section
+ * @param {Object} userProfile - User profile object
+ */
+function renderBenchmarks(userProfile) {
+    try {
+        const baseline = userProfile?.baselineAssessment || {};
+        const mobility = baseline.mobility || {};
+        const rotation = baseline.rotation || {};
+        const flexibility = baseline.flexibility || {};
+        const baselineMetrics = baseline.baselineMetrics || {};
+    
+    // Helper function to format score (1-5 scale)
+    const formatScore = (score) => {
+        if (score === null || score === undefined) return '-';
+        return `${score}/5`;
+    };
+    
+    // Helper function to format frequency
+    const formatFrequency = (freq) => {
+        if (freq === null || freq === undefined) return '-';
+        const labels = { 1: 'Rarely', 2: 'Sometimes', 3: 'Often', 4: 'Very Often' };
+        return labels[freq] || `${freq}/4`;
+    };
+    
+    // Mobility benchmarks
+    const overheadReachEl = document.getElementById('benchmark-overhead-reach');
+    if (overheadReachEl) overheadReachEl.textContent = formatScore(mobility.overheadReach);
+    
+    const shoulderRotationEl = document.getElementById('benchmark-shoulder-rotation');
+    if (shoulderRotationEl) shoulderRotationEl.textContent = formatScore(mobility.shoulderRotation);
+    
+    const hipFlexibilityEl = document.getElementById('benchmark-hip-flexibility');
+    if (hipFlexibilityEl) hipFlexibilityEl.textContent = formatScore(mobility.hipFlexibility);
+    
+    const mobilityOverallEl = document.getElementById('benchmark-mobility-overall');
+    if (mobilityOverallEl) mobilityOverallEl.textContent = mobility.overallScore ? `${mobility.overallScore.toFixed(1)}/5` : '-';
+    
+    // Rotation benchmarks
+    const spinalRotationEl = document.getElementById('benchmark-spinal-rotation');
+    if (spinalRotationEl) spinalRotationEl.textContent = formatScore(rotation.spinalRotation);
+    
+    const rotationFrequencyEl = document.getElementById('benchmark-rotation-frequency');
+    if (rotationFrequencyEl) rotationFrequencyEl.textContent = formatFrequency(rotation.dailyRotationFrequency);
+    
+    const rotationOverallEl = document.getElementById('benchmark-rotation-overall');
+    if (rotationOverallEl) rotationOverallEl.textContent = rotation.overallScore ? `${rotation.overallScore.toFixed(1)}/5` : '-';
+    
+    // Flexibility benchmarks
+    const lowerBodyEl = document.getElementById('benchmark-lower-body');
+    if (lowerBodyEl) lowerBodyEl.textContent = formatScore(flexibility.lowerBody);
+    
+    const upperBodyEl = document.getElementById('benchmark-upper-body');
+    if (upperBodyEl) upperBodyEl.textContent = formatScore(flexibility.upperBody);
+    
+    const flexibilityOverallEl = document.getElementById('benchmark-flexibility-overall');
+    if (flexibilityOverallEl) flexibilityOverallEl.textContent = flexibility.overallScore ? `${flexibility.overallScore.toFixed(1)}/5` : '-';
+    
+    // Baseline metrics (0-100 scale)
+    const mobilityMetric = baselineMetrics.mobility || 0;
+    const rotationMetric = baselineMetrics.rotation || 0;
+    const flexibilityMetric = baselineMetrics.flexibility || 0;
+    
+    const mobilityMetricEl = document.getElementById('baseline-metric-mobility');
+    if (mobilityMetricEl) mobilityMetricEl.textContent = mobilityMetric > 0 ? `${mobilityMetric}/100` : '-';
+    
+    const rotationMetricEl = document.getElementById('baseline-metric-rotation');
+    if (rotationMetricEl) rotationMetricEl.textContent = rotationMetric > 0 ? `${rotationMetric}/100` : '-';
+    
+    const flexibilityMetricEl = document.getElementById('baseline-metric-flexibility');
+    if (flexibilityMetricEl) flexibilityMetricEl.textContent = flexibilityMetric > 0 ? `${flexibilityMetric}/100` : '-';
+    
+    // Update progress bars
+    const mobilityBar = document.getElementById('baseline-metric-mobility-bar');
+    if (mobilityBar) mobilityBar.style.width = `${mobilityMetric}%`;
+    
+    const rotationBar = document.getElementById('baseline-metric-rotation-bar');
+    if (rotationBar) rotationBar.style.width = `${rotationMetric}%`;
+    
+    const flexibilityBar = document.getElementById('baseline-metric-flexibility-bar');
+    if (flexibilityBar) flexibilityBar.style.width = `${flexibilityMetric}%`;
+    
+        console.log('[Profile] Benchmarks rendered');
+    } catch (error) {
+        console.error('[Profile] Error rendering benchmarks:', error);
+    }
+}
+
+/**
+ * Setup segmented switcher for profile sections
+ */
+function setupSegmentedSwitcher() {
+    const switcherOptions = document.querySelectorAll('.profile-switcher-option');
+    const contentSections = document.querySelectorAll('.profile-content-section');
+    
+    switcherOptions.forEach(option => {
+        option.addEventListener('click', () => {
+            const targetSection = option.dataset.section;
+            
+            // Remove active class from all options
+            switcherOptions.forEach(opt => opt.classList.remove('active'));
+            
+            // Add active class to clicked option
+            option.classList.add('active');
+            
+            // Hide all content sections
+            contentSections.forEach(section => section.classList.remove('active'));
+            
+            // Show target content section
+            const targetContent = document.getElementById(`${targetSection}-content`);
+            if (targetContent) {
+                targetContent.classList.add('active');
+            }
+        });
+    });
+}
+
+/**
+ * Setup save functionality for physiological data
+ */
+function setupSaveFunctionality() {
+    const saveBtn = document.getElementById('save-physiological-btn');
+    
+    if (saveBtn) {
+        saveBtn.addEventListener('click', async () => {
+            await saveProfileChanges();
+        });
+    }
+}
+
+/**
+ * Save profile changes to Firebase
+ */
+async function saveProfileChanges() {
+    try {
+        const user = getAuthUser();
+        if (!user) {
+            alert('You must be logged in to save changes.');
             return;
         }
-
-        // Load HTML template
-        const html = await loadTemplate('html/components/analysis-chat.html');
-        container.innerHTML = html;
-
-        // Initialize the chat component
-        initAnalysisChat();
+        
+        // Get current profile
+        const currentProfile = await getUserProfile();
+        
+        // Get form values
+        const age = parseInt(document.getElementById('profile-age')?.value);
+        const weight = parseFloat(document.getElementById('profile-weight')?.value);
+        const height = parseFloat(document.getElementById('profile-height')?.value);
+        const bodyFatPercent = parseFloat(document.getElementById('profile-bodyfat')?.value);
+        const activityLevel = document.getElementById('profile-activity-level')?.value;
+        const injuryHistory = document.getElementById('profile-injury-history')?.value.trim();
+        
+        // Validate inputs
+        if (age && (age < 18 || age > 99)) {
+            alert('Age must be between 18 and 99.');
+            return;
+        }
+        
+        if (weight && (weight < 30 || weight > 300)) {
+            alert('Weight must be between 30 and 300 kg.');
+            return;
+        }
+        
+        if (height && (height < 100 || height > 250)) {
+            alert('Height must be between 100 and 250 cm.');
+            return;
+        }
+        
+        if (bodyFatPercent && (bodyFatPercent < 0 || bodyFatPercent > 100)) {
+            alert('Body fat percentage must be between 0 and 100.');
+            return;
+        }
+        
+        // Prepare physiological data - only include fields that have values
+        const physiological = {};
+        
+        // Preserve existing values first
+        if (currentProfile.baselineAssessment?.physiological) {
+            Object.assign(physiological, currentProfile.baselineAssessment.physiological);
+        }
+        
+        // Update with new values (only if provided)
+        if (age) physiological.age = age;
+        if (weight) physiological.weight = weight;
+        if (height) physiological.height = height;
+        if (bodyFatPercent !== undefined && bodyFatPercent !== '') {
+            physiological.bodyFatPercent = bodyFatPercent;
+        }
+        if (activityLevel) physiological.activityLevel = activityLevel;
+        if (injuryHistory) physiological.injuryHistory = injuryHistory;
+        
+        // Update baseline assessment
+        const baselineAssessment = {
+            ...(currentProfile.baselineAssessment || {}),
+            physiological
+        };
+        
+        // Prepare profile update
+        const profileUpdate = {
+            ...currentProfile,
+            baselineAssessment
+        };
+        
+        // Save to Firebase using dbService
+        await saveFirestoreProfile(user.uid, profileUpdate);
+        
+        // Also update localStorage via storage.js for consistency
+        await saveUserProfile(profileUpdate);
+        
+        // Show success message
+        const saveBtn = document.getElementById('save-physiological-btn');
+        if (saveBtn) {
+            const originalText = saveBtn.textContent;
+            saveBtn.textContent = 'Saved!';
+            saveBtn.classList.add('bg-green-500');
+            setTimeout(() => {
+                saveBtn.textContent = originalText;
+                saveBtn.classList.remove('bg-green-500');
+            }, 2000);
+        }
+        
+        console.log('Profile updated successfully');
     } catch (error) {
-        console.error('Error initializing analysis chat:', error);
+        console.error('Error saving profile changes:', error);
+        alert('Failed to save changes. Please try again.');
     }
 }
 
@@ -62,7 +424,7 @@ async function renderMilestones(userProfile) {
         milestonesContainer.innerHTML = `
             <div class="glass rounded-lg p-4 border border-zinc-800 text-center">
                 <p class="text-sm text-white/60 mb-3">No milestones yet. Create your first one!</p>
-                <button id="add-milestone-btn" class="bg-white hover:bg-white/90 text-black font-semibold px-4 py-2 rounded-lg transition-all duration-300">
+                <button id="add-milestone-btn" class="bg-white hover:bg-white/90 font-semibold px-4 py-2 rounded-lg transition-all duration-300" style="background-color: #F2ECE1; color: #323434;">
                     Add Milestone
                 </button>
             </div>
@@ -79,10 +441,10 @@ async function renderMilestones(userProfile) {
                         </div>
                         <div class="flex items-center gap-2">
                             <button class="p-2 rounded-lg hover:bg-white/10 transition-all edit-milestone-btn" data-index="${index}" title="Edit">
-                                <i class="fas fa-edit text-white/60 hover:text-white"></i>
+                                <i class="fas fa-edit" style="color: #323434;"></i>
                             </button>
                             <button class="p-2 rounded-lg hover:bg-white/10 transition-all delete-milestone-btn" data-index="${index}" title="Delete">
-                                <i class="fas fa-trash text-white/60 hover:text-red-400"></i>
+                                <i class="fas fa-trash" style="color: #323434;"></i>
                             </button>
                         </div>
                     </div>
@@ -96,9 +458,9 @@ async function renderMilestones(userProfile) {
                 </div>
             `;
         }).join('') + `
-            <button id="add-milestone-btn" class="w-full glass rounded-lg p-4 border border-zinc-800 hover:bg-white/5 transition-all duration-300 text-center">
-                <i class="fas fa-plus text-white/60 mr-2"></i>
-                <span class="text-white font-medium">Add New Milestone</span>
+            <button id="add-milestone-btn" class="w-full glass rounded-lg p-4 border border-zinc-800 hover:bg-white/5 transition-all duration-300 text-center" style="background-color: #F2ECE1;">
+                <i class="fas fa-plus mr-2" style="color: #323434;"></i>
+                <span class="font-medium" style="color: #323434;">Add New Milestone</span>
             </button>
         `;
     }
@@ -239,7 +601,7 @@ function showMilestoneModal(milestone = null, index = -1) {
                 <button id="cancel-milestone-btn" class="flex-1 px-4 py-2 rounded-lg border border-white/20 text-white hover:bg-white/10 transition-all">
                     Cancel
                 </button>
-                <button id="save-milestone-btn" class="flex-1 px-4 py-2 rounded-lg bg-white text-black font-semibold hover:bg-white/90 transition-all">
+                <button id="save-milestone-btn" class="flex-1 px-4 py-2 rounded-lg bg-white font-semibold hover:bg-white/90 transition-all" style="background-color: #F2ECE1; color: #323434;">
                     ${isEdit ? 'Update' : 'Create'}
                 </button>
             </div>

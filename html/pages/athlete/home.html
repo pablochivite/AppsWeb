@@ -69,9 +69,14 @@
                                     </div>
                                 </div>
 
-                                <button id="start-session-btn" class="w-full mt-6 bg-white hover:bg-white/90 text-black font-semibold py-3 rounded-xl transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-white/20">
-                                    Start Now
-                                </button>
+                                <div class="mt-6 grid grid-cols-1 sm:grid-cols-[minmax(0,0.55fr)_minmax(0,1fr)] gap-3">
+                                    <button id="edit-session-btn" class="w-full border border-white/20 bg-transparent hover:bg-white/10 text-white font-semibold py-3 rounded-xl text-sm transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-white/10">
+                                        Edit Session
+                                    </button>
+                                    <button id="start-session-btn" class="w-full bg-white hover:bg-white/90 text-black font-semibold py-3 rounded-xl text-sm transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-white/20" style="background-color: #F2ECE1;">
+                                        Start Now
+                                    </button>
+                                </div>
                             </div>
                         </div>
 
@@ -151,4 +156,7 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Edit Session Drawer Container -->
+                <div id="edit-session-drawer-container"></div>
 

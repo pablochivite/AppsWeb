@@ -2,11 +2,11 @@
  * Weekly Session Generator Service
  * 
  * Automatically generates next week's training sessions when the current week ends.
- * Ensures exercise variety by comparing with current week's sessions.
+ * Uses LangGraph workflow via workoutGenerationService to generate sessions based on
+ * user onboarding data and exercises/variations from Firebase.
  */
 
-import { generateTrainingSystemWithAI } from './aiService.js';
-import { loadExercises } from '../core/workout-engine.js';
+import { generateWeeklySystem } from './workoutGenerationService.js';
 import { getSystemSessions, saveSessionToSystem, getTrainingSystem } from './dbService.js';
 import { getUserProfile } from './dbService.js';
 
@@ -129,28 +129,20 @@ function hasNextWeekSessions(allSessions) {
 }
 
 /**
- * Generate sessions for the next week
+ * Generate sessions for the next week using LangGraph workflow
  * @param {string} userId - User ID
  * @param {Object} trainingSystem - Training system object
- * @param {Array} currentWeekSessions - Current week's sessions for variety
+ * @param {Array} currentWeekSessions - Current week's sessions (not used, kept for compatibility)
  * @returns {Promise<Array>} Generated sessions for next week
  */
 async function generateNextWeekSessions(userId, trainingSystem, currentWeekSessions) {
     try {
-        console.log('[WeeklyGenerator] Generating next week sessions...');
+        console.log('[WeeklyGenerator] Generating next week sessions using LangGraph...');
         
-        // Get user profile
+        // Get user profile (includes onboarding data and baselineAssessment)
         const userProfile = await getUserProfile(userId);
         if (!userProfile) {
             throw new Error('User profile not found');
-        }
-        
-        // Load exercises
-        const exercisesData = await loadExercises();
-        const availableExercises = exercisesData.exercises || [];
-        
-        if (availableExercises.length === 0) {
-            throw new Error('No exercises available');
         }
         
         // Prepare config for next week
@@ -161,12 +153,14 @@ async function generateNextWeekSessions(userId, trainingSystem, currentWeekSessi
             startDate: formatDate(nextWeekStart)
         };
         
-        // Generate with previous week sessions for variety
-        const generatedSystem = await generateTrainingSystemWithAI(
+        // Generate using LangGraph workflow via workoutGenerationService
+        // LangGraph will:
+        // 1. Use user profile with baselineAssessment (onboarding data)
+        // 2. Get exercises and variations from Firebase
+        // 3. Generate sessions based on onboarding data, not exercise history
+        const generatedSystem = await generateWeeklySystem(
             userProfile,
-            availableExercises,
-            config,
-            currentWeekSessions // Pass current week sessions for variety
+            config
         );
         
         console.log('[WeeklyGenerator] Generated next week sessions:', generatedSystem.sessions.length);

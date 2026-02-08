@@ -209,6 +209,14 @@ function getUserTrainingSystemsRef(userId) {
 }
 
 /**
+ * Get user session reports sub-collection reference
+ * @param {string} userId - User ID
+ * @returns {import('firebase/firestore').CollectionReference}
+ */
+function getUserSessionReportsRef(userId) {
+  return collection(db, 'users', userId, 'sessionReports');
+}
+/**
  * Get sessions sub-collection reference (within a training system)
  * @param {string} userId - User ID
  * @param {string} systemId - Training system ID
@@ -362,43 +370,85 @@ async function fetchUserProfileFromFirestore(userId, cacheKey) {
  */
 export async function saveTrainingSystem(userId, trainingSystem) {
   try {
+    console.log('[saveTrainingSystem] Starting save process', {
+      userId,
+      systemId: trainingSystem.id,
+      hasSessions: !!(trainingSystem.sessions && trainingSystem.sessions.length > 0),
+      sessionsCount: trainingSystem.sessions?.length || 0
+    });
+    
     const systemsRef = getUserTrainingSystemsRef(userId);
     
     // Extract sessions separately (they're stored in sub-collection)
     const { sessions, ...systemDataWithoutSessions } = trainingSystem;
     
+    // Remove id from systemData as it's used as document ID, not a field
+    const { id, ...systemDataForFirestore } = systemDataWithoutSessions;
+    
     // Convert dates to Firestore Timestamps
     const systemData = {
-      ...systemDataWithoutSessions,
+      ...systemDataForFirestore,
+      type: systemDataForFirestore.type || 'weekly',
+      editable: systemDataForFirestore.editable !== undefined ? systemDataForFirestore.editable : true,
       startDate: trainingSystem.startDate ? Timestamp.fromDate(new Date(trainingSystem.startDate)) : null,
       createdAt: trainingSystem.createdAt ? Timestamp.fromDate(new Date(trainingSystem.createdAt)) : serverTimestamp(),
       updatedAt: serverTimestamp()
     };
     
+    console.log('[saveTrainingSystem] System data prepared', {
+      type: systemData.type,
+      daysPerWeek: systemData.daysPerWeek,
+      framework: systemData.framework,
+      hasStartDate: !!systemData.startDate
+    });
+    
     let systemId;
-    if (trainingSystem.id) {
-      // Update existing or create if doesn't exist (upsert)
-      const systemRef = doc(systemsRef, trainingSystem.id);
+    if (trainingSystem.id && trainingSystem.id.startsWith('weekly-system-')) {
+      // Use the provided ID but clean it if needed
+      // Firestore document IDs can contain alphanumeric characters, hyphens, and underscores
+      // weekly-system-{timestamp} should be valid, but let's ensure it's clean
+      systemId = trainingSystem.id.replace(/[^a-zA-Z0-9_-]/g, '_');
+      const systemRef = doc(systemsRef, systemId);
+      console.log('[saveTrainingSystem] Saving with existing ID:', systemId);
       await withTimeout(setDoc(systemRef, systemData, { merge: true }), NETWORK_TIMEOUT);
+      console.log('[saveTrainingSystem] System document saved successfully');
+    } else if (trainingSystem.id) {
+      // Update existing or create if doesn't exist (upsert)
       systemId = trainingSystem.id;
+      const systemRef = doc(systemsRef, systemId);
+      console.log('[saveTrainingSystem] Upserting with ID:', systemId);
+      await withTimeout(setDoc(systemRef, systemData, { merge: true }), NETWORK_TIMEOUT);
+      console.log('[saveTrainingSystem] System document upserted successfully');
     } else {
-      // Create new
+      // Create new - Firestore will generate ID
+      console.log('[saveTrainingSystem] Creating new system document');
       const docRef = await withTimeout(addDoc(systemsRef, systemData), NETWORK_TIMEOUT);
       systemId = docRef.id;
+      console.log('[saveTrainingSystem] New system document created with ID:', systemId);
     }
     
     // If sessions are provided, save them to the sub-collection
     if (sessions && Array.isArray(sessions) && sessions.length > 0) {
-      console.log(`Saving ${sessions.length} sessions to system ${systemId}`);
-      for (const session of sessions) {
-        await saveSessionToSystem(userId, systemId, session);
+      console.log(`[saveTrainingSystem] Saving ${sessions.length} sessions to system ${systemId}`);
+      for (let i = 0; i < sessions.length; i++) {
+        const session = sessions[i];
+        try {
+          await saveSessionToSystem(userId, systemId, session);
+          if ((i + 1) % 5 === 0 || i === sessions.length - 1) {
+            console.log(`[saveTrainingSystem] Saved ${i + 1}/${sessions.length} sessions`);
+          }
+        } catch (sessionError) {
+          console.error(`[saveTrainingSystem] Error saving session ${i + 1}:`, sessionError);
+          // Continue with other sessions even if one fails
+        }
       }
+      console.log(`[saveTrainingSystem] All ${sessions.length} sessions saved successfully`);
     }
     
     // Update cache optimistically
     const cacheKey = `${CACHE_KEYS.TRAINING_SYSTEM(userId)}_${systemId}`;
     const cachedSystem = {
-      ...systemDataWithoutSessions,
+      ...systemDataForFirestore,
       id: systemId,
       startDate: trainingSystem.startDate,
       createdAt: trainingSystem.createdAt || new Date().toISOString(),
@@ -410,6 +460,7 @@ export async function saveTrainingSystem(userId, trainingSystem) {
     // Also invalidate the list cache
     localStorage.removeItem(CACHE_KEYS.TRAINING_SYSTEMS(userId));
     
+    console.log('[saveTrainingSystem] Training system saved successfully', { systemId });
     return systemId;
   } catch (error) {
     if (isOfflineError(error)) {
@@ -418,7 +469,13 @@ export async function saveTrainingSystem(userId, trainingSystem) {
       return trainingSystem.id || `temp-${Date.now()}`;
     }
     
-    console.error('Error saving training system:', error);
+    console.error('[saveTrainingSystem] Error saving training system:', error);
+    console.error('[saveTrainingSystem] Error details:', {
+      message: error.message,
+      stack: error.stack,
+      userId,
+      systemId: trainingSystem.id
+    });
     throw new Error(`Failed to save training system: ${error.message}`);
   }
 }
@@ -638,6 +695,61 @@ async function fetchAllTrainingSystemsFromFirestore(userId, cacheKey) {
 }
 
 /**
+ * Sync training system from localStorage to Firestore
+ * Useful when training system exists locally but not in Firebase
+ * @param {string} userId - User ID
+ * @returns {Promise<string|null>} System ID if synced, null if no local system found
+ */
+export async function syncTrainingSystemFromLocalStorage(userId) {
+  try {
+    console.log('[syncTrainingSystemFromLocalStorage] Checking for local training system...');
+    
+    // Get training system from localStorage
+    const localSystemStr = localStorage.getItem('trainingSystem');
+    if (!localSystemStr) {
+      console.log('[syncTrainingSystemFromLocalStorage] No local training system found');
+      return null;
+    }
+    
+    const localSystem = JSON.parse(localSystemStr);
+    if (!localSystem || !localSystem.id) {
+      console.log('[syncTrainingSystemFromLocalStorage] Local training system has no ID');
+      return null;
+    }
+    
+    console.log('[syncTrainingSystemFromLocalStorage] Found local training system', {
+      id: localSystem.id,
+      type: localSystem.type,
+      sessionsCount: localSystem.sessions?.length || 0
+    });
+    
+    // Check if it already exists in Firebase
+    try {
+      const existingSystem = await getTrainingSystem(userId, localSystem.id, { skipCache: true });
+      if (existingSystem) {
+        console.log('[syncTrainingSystemFromLocalStorage] Training system already exists in Firebase');
+        return localSystem.id;
+      }
+    } catch (error) {
+      // If error is permission or not found, continue to save
+      if (!isPermissionError(error)) {
+        console.warn('[syncTrainingSystemFromLocalStorage] Error checking existing system:', error.message);
+      }
+    }
+    
+    // Save to Firebase
+    console.log('[syncTrainingSystemFromLocalStorage] Saving training system to Firebase...');
+    const systemId = await saveTrainingSystem(userId, localSystem);
+    console.log('[syncTrainingSystemFromLocalStorage] Training system synced successfully', { systemId });
+    
+    return systemId;
+  } catch (error) {
+    console.error('[syncTrainingSystemFromLocalStorage] Error syncing training system:', error);
+    throw error;
+  }
+}
+
+/**
  * Delete training system
  * @param {string} userId - User ID
  * @param {string} systemId - Training system ID
@@ -817,6 +929,43 @@ function getUserCompletedSessionsRef(userId) {
 }
 
 /**
+ * Remove undefined fields from an object recursively
+ * Firestore doesn't accept undefined values
+ * @param {*} obj - Object to clean
+ * @returns {*} Cleaned object
+ */
+function removeUndefinedFields(obj) {
+  if (obj === null || obj === undefined) {
+    return null;
+  }
+  
+  if (Array.isArray(obj)) {
+    return obj.map(item => removeUndefinedFields(item)).filter(item => item !== null && item !== undefined);
+  }
+  
+  if (typeof obj !== 'object') {
+    return obj;
+  }
+  
+  const cleaned = {};
+  for (const [key, value] of Object.entries(obj)) {
+    if (value !== undefined) {
+      if (typeof value === 'object' && value !== null && !(value instanceof Date) && !(value.toDate)) {
+        // Recursively clean nested objects (but skip Date objects and Firestore Timestamps)
+        const cleanedValue = removeUndefinedFields(value);
+        if (cleanedValue !== null && cleanedValue !== undefined) {
+          cleaned[key] = cleanedValue;
+        }
+      } else {
+        cleaned[key] = value;
+      }
+    }
+  }
+  
+  return cleaned;
+}
+
+/**
  * Save completed session to Firebase
  * Stores completed sessions in a separate sub-collection for easy querying
  * @param {string} userId - User ID
@@ -831,7 +980,7 @@ export async function saveCompletedSession(userId, sessionData) {
     const sessionDate = sessionData.date || new Date().toISOString().split('T')[0];
     
     // Convert dates to Firestore Timestamps
-    const sessionDoc = {
+    let sessionDoc = {
       ...sessionData,
       date: sessionDate,
       startedAt: sessionData.startedAt ? Timestamp.fromDate(new Date(sessionData.startedAt)) : serverTimestamp(),
@@ -839,6 +988,12 @@ export async function saveCompletedSession(userId, sessionData) {
       createdAt: serverTimestamp(),
       updatedAt: serverTimestamp()
     };
+    
+    // Remove all undefined fields before saving (Firestore doesn't accept undefined)
+    sessionDoc = removeUndefinedFields(sessionDoc);
+    
+    console.log('[saveCompletedSession] Cleaning session data, removing undefined fields');
+    console.log('[saveCompletedSession] Session date:', sessionDate);
     
     // Check if session already exists for this date
     const existingQuery = query(
@@ -856,10 +1011,12 @@ export async function saveCompletedSession(userId, sessionData) {
       const docRef = doc(sessionsRef, existingDoc.id);
       await withTimeout(updateDoc(docRef, sessionDoc), NETWORK_TIMEOUT);
       sessionId = existingDoc.id;
+      console.log('[saveCompletedSession] ✓ Updated existing session:', sessionId);
     } else {
       // Create new session
       const docRef = await withTimeout(addDoc(sessionsRef, sessionDoc), NETWORK_TIMEOUT);
       sessionId = docRef.id;
+      console.log('[saveCompletedSession] ✓ Created new session:', sessionId);
     }
     
     return sessionId;
@@ -871,6 +1028,11 @@ export async function saveCompletedSession(userId, sessionData) {
     }
     
     console.error('Error saving completed session:', error);
+    console.error('Error details:', {
+      message: error.message,
+      code: error.code,
+      stack: error.stack
+    });
     throw new Error(`Failed to save completed session: ${error.message}`);
   }
 }
@@ -919,6 +1081,249 @@ export async function getCompletedSessions(userId, options = {}) {
     
     console.error('Error getting completed sessions:', error);
     throw new Error(`Failed to get completed sessions: ${error.message}`);
+  }
+}
+
+// ============================================================================
+// SESSION REPORTS (PERFORMANCE ANALYST)
+// ============================================================================
+
+/**
+ * Save or update a performance report for a completed session.
+ * Stores both a lightweight summary (for listing) and the full reportData payload.
+ *
+ * @param {string} userId - User ID
+ * @param {Object} reportData - Report data object from workout-metrics
+ * @returns {Promise<string>} Report document ID
+ */
+export async function saveSessionReport(userId, reportData) {
+  try {
+    if (!userId || !reportData) {
+      throw new Error('userId and reportData are required');
+    }
+
+    const reportsRef = getUserSessionReportsRef(userId);
+    const sessionId = reportData.sessionId || null;
+    const sessionDate =
+      reportData.sessionDate || new Date().toISOString().split('T')[0];
+
+    // Build exercise summaries for quick listing (ensure no undefined values)
+    const exercises = Array.isArray(reportData.exercises)
+      ? reportData.exercises
+      : [];
+
+    const exerciseSummaries = exercises.map((ex) => {
+      const comp = ex.comparison || {};
+      const summary = {
+        exerciseId: ex.exerciseId || null,
+        variationId: ex.variationId || null,
+        name: ex.name || '',
+        metric: comp.metric || 'volume',
+        isPR: !!comp.isPR
+      };
+      
+      // Only include numeric fields if they have values
+      if (comp.currentVolume !== undefined && comp.currentVolume !== null) {
+        summary.currentVolume = comp.currentVolume;
+      }
+      if (comp.deltaPercent !== undefined && comp.deltaPercent !== null) {
+        summary.deltaPercent = comp.deltaPercent;
+      }
+      
+      return summary;
+    });
+
+    // Clean macroStats to remove undefined values
+    const macroStats = reportData.macroStats || {};
+    const cleanMacroStats = {};
+    Object.keys(macroStats).forEach(key => {
+      if (macroStats[key] !== undefined) {
+        cleanMacroStats[key] = macroStats[key];
+      }
+    });
+
+    const now = Timestamp.fromDate(new Date());
+
+    // Build report document
+    let reportDoc = {
+      userId,
+      sessionId: sessionId || null,
+      sessionDate,
+      macroStats: cleanMacroStats,
+      exerciseSummaries,
+      reportData: removeUndefinedFields(reportData), // Clean the full reportData
+      updatedAt: now
+    };
+
+    // Remove all undefined fields before saving (Firestore doesn't accept undefined)
+    reportDoc = removeUndefinedFields(reportDoc);
+
+    console.log('[saveSessionReport] Cleaning report data, removing undefined fields');
+    console.log('[saveSessionReport] Session ID:', sessionId, 'Date:', sessionDate);
+
+    // If we have a sessionId, try to upsert by that to keep a 1:1 mapping
+    let reportId;
+
+    if (sessionId) {
+      const existingQuery = query(
+        reportsRef,
+        where('sessionId', '==', sessionId),
+        limit(1)
+      );
+      const existingSnap = await withTimeout(
+        getDocs(existingQuery),
+        NETWORK_TIMEOUT
+      );
+
+      if (!existingSnap.empty) {
+        const existingDoc = existingSnap.docs[0];
+        const docRef = doc(reportsRef, existingDoc.id);
+        await withTimeout(
+          updateDoc(docRef, {
+            ...reportDoc,
+            createdAt: existingDoc.data().createdAt || now
+          }),
+          NETWORK_TIMEOUT
+        );
+        reportId = existingDoc.id;
+        console.log('[saveSessionReport] ✓ Updated existing report:', reportId);
+      } else {
+        const docRef = await withTimeout(
+          addDoc(reportsRef, {
+            ...reportDoc,
+            createdAt: now
+          }),
+          NETWORK_TIMEOUT
+        );
+        reportId = docRef.id;
+        console.log('[saveSessionReport] ✓ Created new report:', reportId);
+      }
+    } else {
+      // No sessionId (should be rare) – just add a new document
+      const docRef = await withTimeout(
+        addDoc(reportsRef, {
+          ...reportDoc,
+          createdAt: now
+        }),
+        NETWORK_TIMEOUT
+      );
+      reportId = docRef.id;
+      console.log('[saveSessionReport] ✓ Created new report (no sessionId):', reportId);
+    }
+
+    return reportId;
+  } catch (error) {
+    if (isOfflineError(error)) {
+      console.warn(
+        '[SessionReports] Offline detected while saving session report'
+      );
+      // Firestore persistence will retry when back online
+      return `temp-report-${Date.now()}`;
+    }
+
+    console.error('[SessionReports] Error saving session report:', error);
+    console.error('[SessionReports] Error details:', {
+      message: error.message,
+      code: error.code,
+      stack: error.stack
+    });
+    throw new Error(`Failed to save session report: ${error.message}`);
+  }
+}
+
+/**
+ * Get session performance reports for a user (for My Training UI).
+ *
+ * @param {string} userId - User ID
+ * @param {Object} options - { limit: number, skipCache: boolean }
+ * @returns {Promise<Array>} Array of report summaries
+ */
+export async function getSessionReports(userId, options = {}) {
+  try {
+    if (!userId) {
+      console.warn('getSessionReports: userId is required');
+      return [];
+    }
+
+    const { limit: limitCount = 50, skipCache = false } = options;
+    const reportsRef = getUserSessionReportsRef(userId);
+
+    // Always fetch fresh from Firestore (no cache for reports to ensure latest data)
+    const q = query(
+      reportsRef,
+      orderBy('sessionDate', 'desc'),
+      limit(limitCount)
+    );
+
+    const snap = await withTimeout(getDocs(q), NETWORK_TIMEOUT);
+
+    const reports = snap.docs.map((docSnap) => {
+      const data = docSnap.data();
+      return {
+        id: docSnap.id,
+        ...data,
+        // Normalize timestamps if they are Firestore Timestamp objects
+        createdAt:
+          data.createdAt?.toDate?.()?.toISOString() || data.createdAt || null,
+        updatedAt:
+          data.updatedAt?.toDate?.()?.toISOString() || data.updatedAt || null
+      };
+    });
+
+    console.log(`[SessionReports] Fetched ${reports.length} reports for user ${userId}`);
+    return reports;
+  } catch (error) {
+    if (isOfflineError(error)) {
+      console.warn('[SessionReports] Offline detected while fetching reports');
+      return [];
+    }
+
+    if (isPermissionError(error)) {
+      console.warn('[SessionReports] Permission error (expected for new users):', error.message);
+      return [];
+    }
+
+    console.error('[SessionReports] Error getting session reports:', error);
+    throw new Error(`Failed to get session reports: ${error.message}`);
+  }
+}
+
+/**
+ * Get a specific session report by ID
+ * @param {string} userId - User ID
+ * @param {string} reportId - Report document ID
+ * @returns {Promise<Object|null>} Report document or null if not found
+ */
+export async function getSessionReport(userId, reportId) {
+  try {
+    if (!userId || !reportId) {
+      console.warn('getSessionReport: userId and reportId are required');
+      return null;
+    }
+
+    const reportsRef = getUserSessionReportsRef(userId);
+    const reportDoc = doc(reportsRef, reportId);
+    const reportSnap = await withTimeout(getDoc(reportDoc), NETWORK_TIMEOUT);
+
+    if (!reportSnap.exists()) {
+      return null;
+    }
+
+    const data = reportSnap.data();
+    return {
+      id: reportSnap.id,
+      ...data,
+      createdAt: data.createdAt?.toDate?.()?.toISOString() || data.createdAt || null,
+      updatedAt: data.updatedAt?.toDate?.()?.toISOString() || data.updatedAt || null
+    };
+  } catch (error) {
+    if (isOfflineError(error)) {
+      console.warn('[SessionReport] Offline detected while fetching report');
+      return null;
+    }
+
+    console.error('[SessionReport] Error getting session report:', error);
+    throw new Error(`Failed to get session report: ${error.message}`);
   }
 }
 
@@ -984,6 +1389,105 @@ function docToObject(docSnap) {
     id: docSnap.id,
     ...converted
   };
+}
+
+/**
+ * Update user streak when a session is completed
+ * Increments currentStreak by 1 and updates longestStreak if needed
+ * Also updates lastSessionDate to track consecutive days
+ * 
+ * @param {string} userId - User ID
+ * @param {string} sessionDate - Session date in YYYY-MM-DD format
+ * @returns {Promise<Object>} Updated streak info { currentStreak, longestStreak }
+ */
+export async function updateStreakOnSessionComplete(userId, sessionDate) {
+  try {
+    const userRef = getUserDocRef(userId);
+    const userSnap = await withTimeout(getDoc(userRef), NETWORK_TIMEOUT);
+    
+    if (!userSnap.exists()) {
+      console.log('[Streak] User profile does not exist, creating with streak 1');
+      // First session - initialize streak
+      const newStreak = 1;
+      await withTimeout(setDoc(userRef, {
+        currentStreak: newStreak,
+        longestStreak: newStreak,
+        lastSessionDate: sessionDate,
+        updatedAt: serverTimestamp()
+      }), NETWORK_TIMEOUT);
+      
+      // Update cache
+      const cacheKey = CACHE_KEYS.PROFILE(userId);
+      saveToCache(cacheKey, {
+        id: userId,
+        currentStreak: newStreak,
+        longestStreak: newStreak,
+        lastSessionDate: sessionDate
+      });
+      
+      return { currentStreak: newStreak, longestStreak: newStreak };
+    }
+    
+    const userData = userSnap.data();
+    const currentStreak = userData.currentStreak || 0;
+    const longestStreak = userData.longestStreak || 0;
+    const lastSessionDate = userData.lastSessionDate;
+    
+    // Calculate new streak
+    let newStreak = 1; // Default to 1 if no previous session
+    
+    if (lastSessionDate) {
+      // Parse dates
+      const lastDate = new Date(lastSessionDate);
+      const currentDate = new Date(sessionDate);
+      
+      // Calculate days difference
+      const daysDiff = Math.floor((currentDate - lastDate) / (1000 * 60 * 60 * 24));
+      
+      if (daysDiff === 0) {
+        // Same day - don't increment (session already counted)
+        newStreak = currentStreak;
+      } else if (daysDiff === 1) {
+        // Consecutive day - increment streak
+        newStreak = currentStreak + 1;
+      } else {
+        // Gap in days - reset streak to 1
+        newStreak = 1;
+      }
+    } else {
+      // First session ever
+      newStreak = 1;
+    }
+    
+    // Update longestStreak if current streak exceeds it
+    const newLongestStreak = Math.max(longestStreak, newStreak);
+    
+    // Update user profile
+    await withTimeout(updateDoc(userRef, {
+      currentStreak: newStreak,
+      longestStreak: newLongestStreak,
+      lastSessionDate: sessionDate,
+      updatedAt: serverTimestamp()
+    }), NETWORK_TIMEOUT);
+    
+    // Update cache
+    const cacheKey = CACHE_KEYS.PROFILE(userId);
+    const cachedProfile = getFromCache(cacheKey) || {};
+    saveToCache(cacheKey, {
+      ...cachedProfile,
+      id: userId,
+      currentStreak: newStreak,
+      longestStreak: newLongestStreak,
+      lastSessionDate: sessionDate
+    });
+    
+    console.log(`[Streak] ✓ Updated streak: ${currentStreak} -> ${newStreak} (longest: ${newLongestStreak})`);
+    
+    return { currentStreak: newStreak, longestStreak: newLongestStreak };
+  } catch (error) {
+    console.error('[Streak] Error updating streak:', error);
+    throw new Error(`Failed to update streak: ${error.message}`);
+  }
 }
 
 /**

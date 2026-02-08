@@ -3,6 +3,8 @@ import { updateMilestone, getCurrentVariation, getNextVariation, isMilestoneAchi
 import { getUserProfile, saveUserProfile, saveSessionProgress, getSessionProgress, clearSessionProgress } from '../core/storage.js';
 import { getAuthUser } from '../core/auth-manager.js';
 import { saveSessionOnComplete } from '../../src/ui/session-view.js';
+import { WorkoutJournal } from '../ui/workout-journal.js';
+import { getAllExercises } from '../../src/services/exerciseService.js';
 
 /**
  * Show completion modal with streak information
@@ -106,16 +108,15 @@ async function showCompletionModal(userId) {
 export class SessionView {
     constructor(session) {
         this.session = session;
-        this.currentPhaseIndex = 0;
-        this.currentVariationIndex = 0;
-        this.currentSet = 1;
         this.completedSets = [];
+        this.setData = {}; // Store weight/reps/time for each set
         this.startedAt = new Date().toISOString();
         this.pausedAt = null;
         this.isPaused = false;
-        this.phases = ['warmup', 'workout', 'cooldown'];
-        this.currentPhase = this.phases[this.currentPhaseIndex];
         this.userProfile = null; // Will be loaded async
+        this.journal = null; // WorkoutJournal instance
+        this.allExercises = null; // Cache of all exercises for lookup
+        this.userId = null; // User ID for history lookup
     }
 
     /**
@@ -128,18 +129,68 @@ export class SessionView {
             return;
         }
 
-        // Load user profile
+        // Load user profile and get user ID
         if (!this.userProfile) {
             this.userProfile = await getUserProfile();
+        }
+        
+        const authUser = getAuthUser();
+        this.userId = authUser?.uid || null;
+
+        // Load all exercises for lookup
+        try {
+            this.allExercises = await getAllExercises();
+        } catch (error) {
+            console.warn('Failed to load exercises for lookup:', error);
+            this.allExercises = [];
         }
 
         overlay.classList.remove('hidden');
         
         // Set up event listeners
         this.setupEventListeners();
-        
-        // Start session
-        this.startSession();
+
+        // Initialize workout journal
+        this.initializeWorkoutJournal();
+    }
+
+    /**
+     * Initialize workout journal component
+     */
+    async initializeWorkoutJournal() {
+        try {
+            this.journal = new WorkoutJournal('workout-journal-container', {
+                session: this.session,
+                userId: this.userId,
+                onSetUpdated: (setKey, state) => {
+                    // Maintain backward-compatible structures expected by saveSessionOnComplete
+                    this.setData[setKey] = {
+                        weight: state.weight ?? undefined,
+                        reps: state.reps ?? undefined,
+                        time: state.time ?? undefined,
+                        completed: !!state.completed,
+                        notes: state.notes
+                    };
+
+                    if (state.completed && !this.completedSets.includes(setKey)) {
+                        this.completedSets.push(setKey);
+                    } else if (!state.completed && this.completedSets.includes(setKey)) {
+                        this.completedSets = this.completedSets.filter(key => key !== setKey);
+                    }
+                },
+                onSessionUpdated: () => {
+                    // Save lightweight progress snapshot for resume support
+                    this.saveProgress();
+                },
+                onAllSetsCompleted: async () => {
+                    await this.endSession().catch(err => console.error('Error in endSession:', err));
+                }
+            });
+
+            await this.journal.render();
+        } catch (error) {
+            console.error('Failed to initialize workout journal:', error);
+        }
     }
 
     /**
@@ -148,7 +199,7 @@ export class SessionView {
     setupEventListeners() {
         const backBtn = document.getElementById('session-back-btn');
         const pauseBtn = document.getElementById('session-pause-btn');
-        const completeBtn = document.getElementById('session-complete-btn');
+        const completeBtn = document.getElementById('session-finish-btn');
 
         if (backBtn) {
             backBtn.onclick = () => this.handleBack();
@@ -159,7 +210,7 @@ export class SessionView {
         }
 
         if (completeBtn) {
-            completeBtn.onclick = () => this.completeSet().catch(err => console.error('Error completing set:', err));
+            completeBtn.onclick = () => this.endSession().catch(err => console.error('Error ending session:', err));
         }
     }
 
@@ -167,58 +218,29 @@ export class SessionView {
      * Start session tracking
      */
     startSession() {
-        // Check for saved progress
-        const savedProgress = getSessionProgress();
-        if (savedProgress && savedProgress.sessionId === (this.session.date || this.session.day)) {
-            if (confirm('Resume previous session?')) {
-                this.resumeFromSaved(savedProgress);
-                return;
-            }
-        }
-
-        // Start fresh
-        this.currentPhaseIndex = 0;
-        this.currentVariationIndex = 0;
-        this.currentSet = 1;
+        // Journal-based session no longer uses wizard progression,
+        // but we keep startedAt/pausedAt tracking and progress persistence.
         this.completedSets = [];
-        this.updateProgress();
+        this.setData = {};
     }
 
     /**
-     * Resume session from saved progress
-     */
-    resumeFromSaved(savedProgress) {
-        this.currentPhaseIndex = savedProgress.phaseIndex || 0;
-        this.currentVariationIndex = savedProgress.variationIndex || 0;
-        this.currentSet = savedProgress.currentSet || 1;
-        this.completedSets = savedProgress.completedSets || [];
-        this.updateProgress();
-    }
-
-    /**
-     * Update progress bar and current exercise display
+     * Update progress bar
+     * For the journal, we base progress on completed sets vs total sets.
      */
     updateProgress() {
-        // Calculate total variations across all phases
-        let totalVariations = 0;
-        let currentVariationCount = 0;
+        const allSets = this.journal?.sets || [];
+        const totalSets = allSets.length;
+        const completedCount = allSets.filter(set => {
+            const key = set.key;
+            const data = this.setData[key];
+            return data && data.completed;
+        }).length;
 
-        this.phases.forEach((phase, phaseIdx) => {
-            const phaseVariations = this.session.phases[phase] || [];
-            totalVariations += phaseVariations.length;
-            
-            if (phaseIdx < this.currentPhaseIndex) {
-                currentVariationCount += phaseVariations.length;
-            } else if (phaseIdx === this.currentPhaseIndex) {
-                currentVariationCount += this.currentVariationIndex;
-            }
-        });
-
-        // Update progress bar
-        const progressPercent = totalVariations > 0 
-            ? (currentVariationCount / totalVariations) * 100 
+        const progressPercent = totalSets > 0
+            ? (completedCount / totalSets) * 100
             : 0;
-        
+
         const progressBar = document.getElementById('session-progress-bar');
         const progressText = document.getElementById('session-progress-text');
         
@@ -227,155 +249,8 @@ export class SessionView {
         }
         
         if (progressText) {
-            progressText.textContent = `${currentVariationCount + 1} / ${totalVariations}`;
+            progressText.textContent = `${completedCount} / ${totalSets}`;
         }
-
-        // Update phase indicator
-        const phaseIndicator = document.getElementById('session-phase-indicator');
-        if (phaseIndicator) {
-            const phaseNames = {
-                warmup: 'Warm-up',
-                workout: 'Workout',
-                cooldown: 'Cool Down'
-            };
-            phaseIndicator.textContent = phaseNames[this.currentPhase] || this.currentPhase;
-        }
-
-        // Show current variation
-        this.showCurrentVariation();
-    }
-
-    /**
-     * Display current variation
-     */
-    showCurrentVariation() {
-        const currentPhase = this.phases[this.currentPhaseIndex];
-        const phaseVariations = this.session.phases[currentPhase] || [];
-        
-        if (phaseVariations.length === 0 || this.currentVariationIndex >= phaseVariations.length) {
-            // Move to next phase
-            this.moveToNextPhase();
-            return;
-        }
-
-        const variation = phaseVariations[this.currentVariationIndex];
-        
-        // Update variation name
-        const variationNameEl = document.getElementById('session-variation-name');
-        if (variationNameEl) {
-            variationNameEl.textContent = variation.variationName || variation.exerciseName || 'Exercise';
-        }
-
-        // Update set counter
-        const currentSetEl = document.getElementById('session-current-set');
-        if (currentSetEl) {
-            currentSetEl.textContent = this.currentSet;
-        }
-
-        // Update reps (if available, otherwise show "-")
-        const currentRepsEl = document.getElementById('session-current-reps');
-        if (currentRepsEl) {
-            currentRepsEl.textContent = variation.reps || '-';
-        }
-
-        // Update technique cues
-        const cuesList = document.getElementById('session-cues-list');
-        if (cuesList && variation.technique_cues) {
-            cuesList.innerHTML = variation.technique_cues.map(cue => 
-                `<li class="text-sm text-white/80 flex items-start">
-                    <i class="fas fa-circle text-white/40 text-xs mt-1.5 mr-2"></i>
-                    <span>${cue}</span>
-                </li>`
-            ).join('');
-        }
-    }
-
-    /**
-     * Complete current set and move to next
-     */
-    async completeSet() {
-        const currentPhase = this.phases[this.currentPhaseIndex];
-        const phaseVariations = this.session.phases[currentPhase] || [];
-        const variation = phaseVariations[this.currentVariationIndex];
-        
-        if (!variation) {
-            this.moveToNextPhase();
-            return;
-        }
-
-        // Mark set as completed
-        const setKey = `${variation.exerciseId}-${variation.variationId}-set-${this.currentSet}`;
-        this.completedSets.push(setKey);
-
-        // Default to 3 sets per variation (can be customized)
-        const totalSets = 3;
-        
-        if (this.currentSet < totalSets) {
-            // Move to next set
-            this.currentSet++;
-        } else {
-            // Complete variation - update milestone
-            await this.completeVariation(variation);
-            
-            // Move to next variation
-            this.currentSet = 1;
-            this.currentVariationIndex++;
-        }
-
-        // Save progress
-        this.saveProgress();
-
-        // Update display
-        this.updateProgress();
-    }
-
-    /**
-     * Complete variation and update milestone
-     */
-    async completeVariation(variation) {
-        if (!variation || !variation.exerciseId || !variation.variationId) return;
-
-        // Ensure user profile is loaded
-        if (!this.userProfile) {
-            this.userProfile = await getUserProfile();
-        }
-
-        // Update milestone
-        const updatedMilestones = updateMilestone(
-            variation.exerciseId,
-            variation.variationId,
-            this.userProfile.currentMilestones || {}
-        );
-
-        // Update user profile
-        this.userProfile.currentMilestones = updatedMilestones;
-        await saveUserProfile(this.userProfile);
-
-        // Check if milestone achieved (3 sessions)
-        if (isMilestoneAchieved(variation.exerciseId, variation.variationId, updatedMilestones)) {
-            console.log(`Milestone achieved for ${variation.exerciseId}/${variation.variationId}`);
-            // Future: Show notification or suggest next variation
-        }
-    }
-
-    /**
-     * Move to next phase
-     */
-    moveToNextPhase() {
-        this.currentPhaseIndex++;
-        
-        if (this.currentPhaseIndex >= this.phases.length) {
-            // Session complete - call async endSession and handle promise
-            this.endSession().catch(err => {
-                console.error('Error in endSession:', err);
-            });
-            return;
-        }
-
-        this.currentPhase = this.phases[this.currentPhaseIndex];
-        this.currentVariationIndex = 0;
-        this.currentSet = 1;
-        this.updateProgress();
     }
 
     /**
@@ -423,6 +298,7 @@ export class SessionView {
             variationIndex: this.currentVariationIndex,
             currentSet: this.currentSet,
             completedSets: this.completedSets,
+            setData: this.setData, // Include set performance data
             startedAt: this.startedAt,
             pausedAt: this.pausedAt
         };
@@ -502,17 +378,31 @@ export class SessionView {
         if (window.initDashboard) {
             // Delay to ensure Firestore transaction completes and user sees the modal
             setTimeout(async () => {
-                // Force refresh profile data from Firestore by clearing cache
+                // Force refresh profile data from Firestore by clearing ALL caches
                 const { getAuthUser } = await import('../core/auth-manager.js');
                 const refreshUser = getAuthUser();
                 if (refreshUser) {
-                    // Clear both Firestore cache and localStorage cache to force refresh
-                    const cacheKey = `firestore_cache_profile_${refreshUser.uid}`;
-                    localStorage.removeItem(cacheKey);
-                    localStorage.removeItem('userProfile'); // Also clear localStorage cache
+                    // Clear profile cache
+                    const profileCacheKey = `firestore_cache_profile_${refreshUser.uid}`;
+                    localStorage.removeItem(profileCacheKey);
+                    localStorage.removeItem('userProfile');
+                    
+                    // Clear training system cache to force refresh of session list
+                    const trainingSystemCacheKey = `firestore_cache_training_system_${refreshUser.uid}`;
+                    localStorage.removeItem(trainingSystemCacheKey);
+                    localStorage.removeItem('trainingSystem');
+                    
+                    // Clear completed sessions cache
+                    const completedSessionsCacheKey = `firestore_cache_completed_sessions_${refreshUser.uid}`;
+                    localStorage.removeItem(completedSessionsCacheKey);
+                    
+                    console.log('[SessionView] ✓ All caches cleared, refreshing dashboard...');
                 }
+                
+                // Refresh dashboard
                 await window.initDashboard();
-            }, 2000); // Increased delay to ensure Firestore transaction completes
+                console.log('[SessionView] ✓ Dashboard refreshed');
+            }, 1500); // Reduced delay - 1.5 seconds should be enough
         }
     }
 

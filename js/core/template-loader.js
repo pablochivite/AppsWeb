@@ -10,9 +10,8 @@ const TEMPLATE_MAP = {
     'page-home': 'html/pages/athlete/home.html',
     'page-calendar': 'html/pages/athlete/calendar.html',
     'page-modus': 'html/pages/athlete/modus.html',
-    'page-explore': 'html/pages/athlete/explore.html',
+    'page-insights': 'html/pages/athlete/insights.html',
     'page-profile': 'html/pages/athlete/profile.html',
-    'voice-fab-container': 'html/components/voice-fab.html',
     'onboarding-overlay': 'html/overlays/onboarding.html',
     'session-overlay': 'html/overlays/session.html',
     'auth-overlay': 'html/overlays/auth.html'
